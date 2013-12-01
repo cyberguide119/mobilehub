@@ -7,11 +7,29 @@ and open the template in the editor.
         <title>Login Page</title>
     </head>
     <body>
-    <h3>Login Page</h3>
+    <h3>Log in</h3>
     <form action="/MobileHub/index.php/auth/authenticate" method="POST">
-        Username : <input type="text" name='uname' length="10" size="10">  <br>
-        Password: <input type="password" name='pword' length="15" size="30"> <br>
-        <input type="submit" value='Login'>
+    <table>
+    <tr>
+        <td><input type="text" name='uname' length="10" size="30" placeholder="Username"></td>
+    </tr>
+    <tr>
+        <td><input type="password" name='pword' length="15" size="30" placeholder="Password"></td>
+    </tr>
+   
+    <tr>
+        <td align="right"><input type="checkbox" name="remember" value='RememberLogin'>Stay signed in</td>
+    </tr>
+    <tr>
+        <td align="right"><a href="/MobileHub/index.php/auth/forgot">Forgot password</td>
+    </tr>
+    <tr>
+        <td align="right"><a href="/MobileHub/index.php/auth/register">Register as a new user</td>
+    </tr>
+    <tr>
+        <td align="right"><input type="submit" value='Login'></td>
+    </tr>
+    </table>
     </form>
     </body>
 </html>
