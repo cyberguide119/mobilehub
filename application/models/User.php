@@ -34,13 +34,6 @@
         
         function login($username,$pwd)
         {
-            /*$this->db->where(array('username' => $username,'password' => sha1($pwd)));
-            $res = $this->db->get('users',array('name'));
-            if ($res->num_rows() != 1) { // should be only ONE matching row!!
-                return false;
-            }
-            return $res->row_array();*/
-            
             $this->db->where(array('Username' => $username,'Password' => sha1($pwd)));
             $res = $this->db->get('user',array('name'));
             if ($res->num_rows() != 1) { // should be only ONE matching row!!
@@ -53,6 +46,18 @@
             $row = $res->row_array();
             $this->db->insert('logins',array('name' => $row['FullName'],'session_id' => $session_id));
             return $row;
+        }
+        
+        function emailExists($email)
+        {
+            $this->db->select('fullName');
+            $this->db->where('email',$email);
+            $result = $this->db->get('user');
+            if($result->num_rows() != 1){
+                return false;
+            }
+            $row = $result->row();
+            return $row->fullName;
         }
         
          

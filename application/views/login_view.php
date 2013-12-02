@@ -31,5 +31,8 @@ and open the template in the editor.
     </tr>
     </table>
     </form>
+    
+    <h2 style="color: red"><?php echo $errmsg;?></h2>
+    
     </body>
 </html>
