@@ -47,7 +47,6 @@ class auth extends CI_Controller{
             $data['errmsg'] = $errmsg;
             $this->load->view('login/RegisterView',$data);
         }
-
     }
     
     public function login()

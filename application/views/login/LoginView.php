@@ -13,6 +13,7 @@ and open the template in the editor.
     <div class="container">
         <form action="<?php echo site_url('auth/authenticate');?>" method="POST" role="form" class="form-signin">
             <h2>Log in</h2>
+            <p>Please log in using your credentials</p>
             <div class="form-group">
                 <input type="text" class="form-control" name='uname' length="10" size="30" placeholder="Username"><br/>
                 <input type="password" class="form-control" name='pword' length="15" size="30" placeholder="Password">
