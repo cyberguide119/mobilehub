@@ -30,7 +30,7 @@ class auth extends CI_Controller{
 
     public function register()
     {
-        $this->load->view('register_view',array('errmsg' => ''));
+        $this->load->view('login/RegisterView',array('errmsg' => ''));
     }
 
     public function createaccount()
@@ -45,7 +45,7 @@ class auth extends CI_Controller{
         }
         else {
             $data['errmsg'] = $errmsg;
-            $this->load->view('register_view',$data);
+            $this->load->view('login/RegisterView',$data);
         }
 
     }
@@ -53,13 +53,13 @@ class auth extends CI_Controller{
     public function login()
     {
         $data['errmsg'] = '';
-        $this->load->view('login_view',$data);
+        $this->load->view('login/LoginView',$data);
     }
     
     public function forgot()
     {
         $data['errmsg'] = '';
-        $this->load->view('forgotpassword_view',$data);
+        $this->load->view('login/ForgotPasswordView',$data);
     }
     
     public function sendResetLink()
@@ -75,7 +75,7 @@ class auth extends CI_Controller{
             {
                 // Validation failed. Send the error messages back to the forgot password view
                 $data['errmsg']= 'Please enter a valid email address';
-                $this->load->view('forgotpassword_view', $data);
+                $this->load->view('login/ForgotPasswordView', $data);
             }else{
                 $email = trim($this->input->post('email'));
                 $fullName = $this->ci->user->emailExists($email);
@@ -122,11 +122,11 @@ class auth extends CI_Controller{
         $password = $this->input->post('pword');
         $user = $this->authlib->login($username,$password);
         if ($user !== false) {
-            $this->load->view('homepage_view',array('name' => $user['name']));
+            $this->load->view('home/HomepageView',array('name' => $user['name']));
         }
         else {
             $data['errmsg'] = 'Unable to login - please try again';
-            $this->load->view('login_view',$data);
+            $this->load->view('login/LoginView',$data);
         }
 
     }

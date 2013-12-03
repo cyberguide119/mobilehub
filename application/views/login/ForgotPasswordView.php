@@ -11,7 +11,7 @@ and open the template in the editor.
     <body>
         <h3>Reset Password</h3>
         <p>If you are unable to access your account, we will send you a password reset link to your recovery email.</p>
-        <form method="POST" action="/MobileHub/index.php/auth/sendResetLink">
+        <form method="POST" action="/MobileHub/index.php/login/auth/sendResetLink">
             <table>
                 <tr>
                    <td><input type="text" name='email' length="10" size="30" placeholder="Email address"></td>
