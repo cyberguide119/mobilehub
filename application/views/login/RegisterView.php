@@ -14,7 +14,7 @@ and open the template in the editor.
     <body>
     <div class="container">
             <form action="<?php echo site_url('/auth/createaccount') ?>" method="POST" class="form-horizontal form-signup">
-                <h2>Create Account</h2><br>
+                <legend>Create Account</legend><br>
                 <div class="form-group">
                     <label class="control-label col-sm-4">Username</label>
                     <div class="col-sm-8">

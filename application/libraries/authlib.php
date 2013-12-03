@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /*
  * To change this template, choose Tools | Templates
@@ -15,18 +15,17 @@ class Authlib {
         $this->ci = &get_instance();
  
         $this->ci->load->model('user');
- 
     }
  
-    public function register($name,$user,$pwd,$conf_pwd)
+    public function register($name,$user,$pwd,$conf_pwd,$email,$website)
     {
-        if ($name == '' || $user == '' || $pwd == '' || $conf_pwd == '') {
+        if ($user == '' || $pwd == '' || $conf_pwd == '' || $email == '' || $website == '') {
             return 'Missing field';
         }
         if ($pwd != $conf_pwd) {
             return "Passwords do not match";
         }
-        return $this->ci->user->register($name,$user,$pwd);
+        return $this->ci->user->register($name,$user,$pwd,$email,$website);
     }
     
     public function login($user,$pwd)

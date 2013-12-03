@@ -14,7 +14,7 @@ and open the template in the editor.
     <body>
         <div class="container">
             <form method="POST" action="<?php echo site_url('auth/sendResetLink')?>" role="form" class="form-signup">
-                <h3>Reset Password</h3>
+                <legend>Reset Password</legend>
                 <p>If you are unable to access your account, we will send you a password reset link to your recovery email.</p>
                 <br>
                 <div class="form-group">

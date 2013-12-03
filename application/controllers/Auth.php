@@ -17,7 +17,6 @@ class auth extends CI_Controller{
     {
         parent::__construct();
         $this->load->library('authlib');
-        $this->load->helper('url');
         
         $this->ci = &get_instance();
         $this->ci->load->model('user');
@@ -39,8 +38,10 @@ class auth extends CI_Controller{
         $username = $this->input->post('uname');
         $password = $this->input->post('pword');
         $conf_password = $this->input->post('conf_pword');
+        $email = $this->input->post('email');
+        $website = $this->input->post('website');
 
-        if (!($errmsg = $this->authlib->register($name,$username,$password,$conf_password))) {
+        if (!($errmsg = $this->authlib->register($name,$username,$password,$conf_password,$email,$website))) {
             redirect('/auth/login');
         }
         else {
@@ -120,14 +121,28 @@ class auth extends CI_Controller{
         $username = $this->input->post('uname');
         $password = $this->input->post('pword');
         $user = $this->authlib->login($username,$password);
-        if ($user !== false) {
-            $this->load->view('home/HomepageView',array('name' => $user['name']));
+        $rememberLogin = $this->input->post('remember');
+
+        if ($user != false) {
+            
+            if($rememberLogin == false){
+                // User does not want to remember his session
+                $this->session->sess_expiration = 7200;
+                $this->session->sess_expire_on_close = TRUE;
+                $this->session->set_userdata($session_data);
+            }
+            $this->load->view('home/HomepageView', array('name' => $user['FullName']));
         }
         else {
             $data['errmsg'] = 'Unable to login - please try again';
             $this->load->view('login/LoginView',$data);
         }
-
+    }
+    
+    public function logout(){
+        // Clear the session and redirect to the homepage
+        $this->session->sess_destroy();
+        redirect(site_url());
     }
 }
 

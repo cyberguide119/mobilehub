@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /*
  * To change this template, choose Tools | Templates
@@ -17,7 +17,7 @@
             $this->load->database();
         }
 
-        function register($name,$username,$pwd)
+        function register($name,$username,$pwd,$email,$website)
         {
             // is username unique?
             $res = $this->db->get_where('user',array('Username' => $username));
@@ -26,8 +26,13 @@
             }
             // username is unique
             $hashpwd = sha1($pwd);
+            $this->load->helper('date');
+            $datestring = "%Y-%m-%d %h-%i-%a";
+            $time = time();
+
+            $formattedDate = mdate($datestring, $time);
             $data = array('FullName' => $name,'Username' => $username,
-                          'Password' => $hashpwd);
+                          'Password' => $hashpwd, 'Email' => $email, 'Website' => $website, 'JoinedDate' => $formattedDate);
             $this->db->insert('user',$data);
             return null; // no error message because all is ok
         }

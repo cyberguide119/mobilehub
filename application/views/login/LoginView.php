@@ -4,7 +4,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Login Page</title>
+        <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="<?php echo site_url('../resources/css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?php echo site_url('../resources/css/site-theme.css') ?>" rel="stylesheet">
@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
     <div class="container">
         <form action="<?php echo site_url('auth/authenticate');?>" method="POST" role="form" class="form-signin">
-            <h2>Log in</h2>
+            <legend>Log in</legend>
             <p>Please log in using your credentials</p>
             <div class="form-group">
                 <input type="text" class="form-control" name='uname' length="10" size="30" placeholder="Username"><br/>

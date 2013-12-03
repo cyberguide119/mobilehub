@@ -22,7 +22,7 @@ class Homepage extends CI_Controller {
             redirect('/auth/login');
 
         }
-        $this->load->view('home/homepage_view',array('name' => $loggedin));
+        $this->load->view('home/HomepageView',array('name' => $loggedin));
     }
 }
 
