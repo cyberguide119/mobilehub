@@ -1,0 +1,22 @@
+/* 
+    Document   : site-theme
+    Created on : Dec 3, 2013, 5:24:03 PM
+    Author     : DRX
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.form-signin {
+    max-width: 300px;
+    padding: 19px 29px 29px;
+    margin: 10% auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
