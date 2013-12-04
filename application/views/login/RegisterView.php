@@ -55,6 +55,7 @@ and open the template in the editor.
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                         <button type="submit" class="btn btn-success">Register</button>
+                        <button type="reset" class="btn btn-large btn-default">Reset</button>
                     </div>
                 </div>
                 <?php 

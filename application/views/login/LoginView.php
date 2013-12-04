@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
     <div class="container">
         <form action="<?php echo site_url('auth/authenticate');?>" method="POST" role="form" class="form-signin">
-            <legend>Log in</legend>
+            <legend><span class="glyphicon glyphicon-lock"></span>&nbsp;Log in</legend>
             <p>Please log in using your credentials</p>
             <div class="form-group">
                 <input type="text" class="form-control" name='uname' data-validation="required" placeholder="Username"><br/>
@@ -31,6 +31,7 @@ and open the template in the editor.
             </div>
             <div class="form-group">
                 <button class="btn btn-large btn-primary" type="submit">Log in</button>
+                <button type="reset" class="btn btn-large btn-default">Reset</button>
             </div>
             <?php 
                 if ($errmsg != NULL){

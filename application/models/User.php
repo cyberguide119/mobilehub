@@ -55,7 +55,7 @@
             $this->session->set_userdata(array('session_id' => $session_id)); 
             // remember current login
             $row = $res->row_array();
-            $this->db->insert('logins',array('name' => $row['FullName'],'session_id' => $session_id));
+            $this->db->insert('logins',array('name' => $row['Username'],'session_id' => $session_id));
             return $row;
         }
         

@@ -16,12 +16,10 @@ class Homepage extends CI_Controller {
     {
         $this->load->library('authlib');
         $loggedin = $this->authlib->is_loggedin();
-
-        if ($loggedin === false) {
-            $this->load->helper('url');
-            redirect('/auth/login');
-
-        }
+//        var_dump($loggedin);
+//        if ($loggedin === false) {
+//            redirect('/auth/login');
+//        }
         $this->load->view('home/HomepageView',array('name' => $loggedin));
     }
 }
