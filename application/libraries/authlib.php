@@ -28,12 +28,12 @@ class Authlib {
         return $this->ci->user->register($name,$user,$pwd,$email,$website);
     }
     
-    public function login($user,$pwd)
+    public function login($user,$pwd,$rememberLogin)
     {
         if ($user == '' || $pwd == '') {
             return false;
         }
-        return $this->ci->user->login($user,$pwd);
+        return $this->ci->user->login($user,$pwd,$rememberLogin);
     }
     
     public function is_loggedin()

@@ -37,7 +37,7 @@
             return null; // no error message because all is ok
         }
         
-        function login($username,$pwd)
+        function login($username,$pwd,$rememberLogin)
         {
             $this->db->where(array('Username' => $username,'Password' => sha1($pwd)));
             $res = $this->db->get('user',array('name'));
@@ -46,6 +46,11 @@
             }
 
             // remember login
+            if($rememberLogin == false){
+                // User does not want to remember his session
+                //$this->session->sess_expiration = 7200;
+                $this->session->sess_expire_on_close = TRUE;
+            }
             $session_id = $this->session->userdata('session_id');
             // remember current login
             $row = $res->row_array();

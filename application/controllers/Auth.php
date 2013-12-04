@@ -36,8 +36,8 @@ class auth extends CI_Controller{
     {
         $name = $this->input->post('name');
         $username = $this->input->post('uname');
-        $password = $this->input->post('pword');
-        $conf_password = $this->input->post('conf_pword');
+        $password = $this->input->post('pword_confirmation');
+        $conf_password = $this->input->post('pword');
         $email = $this->input->post('email');
         $website = $this->input->post('website');
 
@@ -120,17 +120,10 @@ class auth extends CI_Controller{
     {
         $username = $this->input->post('uname');
         $password = $this->input->post('pword');
-        $user = $this->authlib->login($username,$password);
         $rememberLogin = $this->input->post('remember');
+        $user = $this->authlib->login($username,$password,$rememberLogin);
 
         if ($user != false) {
-            
-            if($rememberLogin == false){
-                // User does not want to remember his session
-                $this->session->sess_expiration = 7200;
-                $this->session->sess_expire_on_close = TRUE;
-                $this->session->set_userdata($session_data);
-            }
             $this->load->view('home/HomepageView', array('name' => $user['FullName']));
         }
         else {

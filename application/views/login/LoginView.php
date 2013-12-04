@@ -15,8 +15,8 @@ and open the template in the editor.
             <legend>Log in</legend>
             <p>Please log in using your credentials</p>
             <div class="form-group">
-                <input type="text" class="form-control" name='uname' length="10" size="30" placeholder="Username"><br/>
-                <input type="password" class="form-control" name='pword' length="15" size="30" placeholder="Password">
+                <input type="text" class="form-control" name='uname' data-validation="required" placeholder="Username"><br/>
+                <input type="password" class="form-control" name='pword' data-validation="required" placeholder="Password">
             </div>    
             <div class="checkbox">
                 <label>
@@ -41,5 +41,12 @@ and open the template in the editor.
     </div>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="<?php echo site_url('../resources/js/bootstrap.min.js')?>"></script>
+    <script src="<?php echo site_url('../resources/js/form-validator/jquery.form-validator.min.js') ?>"></script>
+    <script>
+    /* important to locate this script AFTER the closing form element, so form object is loaded in DOM before setup is called */
+        $.validate({
+            modules : 'date, security'
+        });
+    </script>
     </body>
 </html>
