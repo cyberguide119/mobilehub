@@ -48,10 +48,11 @@
             // remember login
             if($rememberLogin == false){
                 // User does not want to remember his session
-                //$this->session->sess_expiration = 7200;
+                $this->session->sess_expiration = 7200;
                 $this->session->sess_expire_on_close = TRUE;
             }
             $session_id = $this->session->userdata('session_id');
+            $this->session->set_userdata(array('session_id' => $session_id)); 
             // remember current login
             $row = $res->row_array();
             $this->db->insert('logins',array('name' => $row['FullName'],'session_id' => $session_id));
