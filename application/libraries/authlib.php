@@ -19,7 +19,7 @@ class Authlib {
  
     public function register($name,$user,$pwd,$conf_pwd,$email,$website)
     {
-        if ($user == '' || $pwd == '' || $conf_pwd == '' || $email == '' || $website == '') {
+        if ($user == '' || $pwd == '' || $conf_pwd == '' || $email == '') {
             return 'Missing field';
         }
         if ($pwd != $conf_pwd) {

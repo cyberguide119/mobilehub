@@ -124,7 +124,7 @@ class auth extends CI_Controller{
         $user = $this->authlib->login($username,$password,$rememberLogin);
 
         if ($user != false) {
-            $this->load->view('home/HomepageView', array('name' => $user['FullName']));
+            $this->load->view('home/HomepageView', array('name' => $user['Username']));
         }
         else {
             $data['errmsg'] = 'Unable to login - please try again';
