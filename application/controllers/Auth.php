@@ -126,13 +126,9 @@ class auth extends CI_Controller{
 
         if ($user != false) {
             echo 'correct';
-            //$this->load->view('home/HomepageView', array('name' => $user['Username']));
         }
         else {
             echo 'wrong';
-            //$data['subview'] = 'login/LoginView';
-            //$data['errmsg'] = 'Unable to login - please try again';
-            //$this->load->view('common/PopupView',$data);
         }
     }
     

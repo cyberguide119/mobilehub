@@ -13,3 +13,5 @@ http://formvalidator.net/#security-validators
 
 http://zurb.com/playground/reveal-modal-plugin
 
+ -add a header without login button to auth/login
+

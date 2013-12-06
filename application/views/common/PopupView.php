@@ -24,10 +24,8 @@
                     location.reload();
                 }else{
                     $("#error").addClass('alert alert-danger');
-                    $("#error").text('Your login credentials are incorrect! Please try again');
-                    //alert(content);
+                    $("#error").text('Sorry, your login credentials are incorrect! Please try again');
                 }
-                 // $("#myModal").html(content);
                 });
             return true;
         }
