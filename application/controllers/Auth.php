@@ -53,7 +53,8 @@ class auth extends CI_Controller{
     public function login()
     {
         $data['errmsg'] = '';
-        $this->load->view('login/LoginView',$data);
+        $data['subview'] = 'login/LoginView';
+        $this->load->view('common/PopupView',$data);
     }
     
     public function forgot()
@@ -132,7 +133,8 @@ class auth extends CI_Controller{
         }
     }
     
-    public function logout(){
+    public function logout()
+    {
         // Clear the session and redirect to the homepage
         $this->session->sess_destroy();
         redirect(site_url());

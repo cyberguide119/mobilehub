@@ -1,0 +1,15 @@
+Things to remember
+==================
+
+1. sess_expiration = 7200; 2 hours
+
+	$config['sess_expiration']      = 0;
+
+	http://stackoverflow.com/questions/14550213/codeigniter-session-expiration-and-remember-me-feature
+
+2. Form validation
+
+http://formvalidator.net/#security-validators
+
+http://zurb.com/playground/reveal-modal-plugin
+

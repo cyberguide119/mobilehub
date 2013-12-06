@@ -16,11 +16,14 @@ class Homepage extends CI_Controller {
     {
         $this->load->library('authlib');
         $loggedin = $this->authlib->is_loggedin();
-//        var_dump($loggedin);
-//        if ($loggedin === false) {
-//            redirect('/auth/login');
-//        }
-        $this->load->view('home/HomepageView',array('name' => $loggedin));
+        $this->load->view('common/HeaderView',array('name' => $loggedin));
+        
+        $data['errmsg'] = '';
+        $data['subview'] = 'login/LoginView';
+        $this->load->view('common/PopupView',$data);
+        
+        //$this->load->view('home/HomepageView',array('errmsg' => NULL));
+        $this->load->view('common/FooterView');
     }
 }
 
