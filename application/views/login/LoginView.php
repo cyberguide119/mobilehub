@@ -1,5 +1,5 @@
 
-        <form action="<?php echo site_url('auth/authenticate');?>" method="POST" role="form" class="form-signin">
+        <form action="<?php echo site_url('auth/authenticate');?>" method="POST" role="form" class="form-signin" id="loginForm">
             <legend><span class="glyphicon glyphicon-lock"></span>&nbsp;Log in</legend>
             <p>Please log in using your credentials</p>
             <div class="form-group">

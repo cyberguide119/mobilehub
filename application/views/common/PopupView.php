@@ -13,8 +13,15 @@
     $.validate({
         modules : 'date, security',
         onSuccess : function() {
-            $.post("/MobileHub/index.php/auth/authenticate", function (content) {
-                  $("#myModal").html(content);
+            $loginForm = $("#loginForm");
+            $serializedData = $loginForm.serialize();
+            $.post("/MobileHub/index.php/auth/authenticate", $serializedData, function (content) {
+                if(content === "correct"){
+                    location.reload();
+                }else{
+                    alert(content);
+                }
+                 // $("#myModal").html(content);
                 });
             //alert('The form is valid!');
             return true;
