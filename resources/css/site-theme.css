@@ -50,4 +50,53 @@ span.form-error.help-block {
 .error-actions {margin-top:15px;margin-bottom:15px;}
 .error-actions .btn { margin-right:10px; }
 
+.vote-box{
+    background: #e7f7ff;
+    border: 1px solid #c5d6df;
+    float: left;
+    width: 60px;
+    height: 60px;
+    margin-right: 5px;
+    padding: 0;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.vote-count{
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+    display: block;
+    margin-top: 10px;
+    overflow: hidden;
+
+}
+
+.vote-label{
+    font-size: 11px;
+}
+
+.ans-count-box{
+    background: #eafff4;
+    border: 1px solid #c1daa6;
+    float: left;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    margin-right: 5px;
+    padding: 0;
+    border-radius: 3px;
+}
+
+.ans-count{
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+    display: block;
+    margin-top: 10px;
+}
+
+.ans-label{
+    font-size: 11px;
+
 
