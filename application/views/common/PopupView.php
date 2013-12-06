@@ -18,9 +18,13 @@
             $serializedData = $loginForm.serialize();
             $.post("/MobileHub/index.php/auth/authenticate", $serializedData, function (content) {
                 if(content === "correct"){
+                    $("#error").removeClass('alert alert-danger');
+                    $("#error").addClass('alert alert-success');
+                    $("#error").text('Login successful!');
                     location.reload();
                 }else{
-                     $("#error").text('Your login credentials are incorrect! Please try again');
+                    $("#error").addClass('alert alert-danger');
+                    $("#error").text('Your login credentials are incorrect! Please try again');
                     //alert(content);
                 }
                  // $("#myModal").html(content);

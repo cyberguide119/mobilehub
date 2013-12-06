@@ -21,5 +21,5 @@
                 <button class="btn btn-large btn-primary" type="submit" id="btnSubmit">Log in</button>
                 <button type="reset" class="btn btn-large btn-default">Reset</button>
             </div>
-            <div id="error" class="alert alert-danger"></div>
+            <div id="error"></div>
         </form>
