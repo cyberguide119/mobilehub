@@ -21,20 +21,11 @@ and open the template in the editor.
                     modules : 'date, security',
                     onSuccess : function() {
                         $.post("/MobileHub/index.php/auth/authenticate", function (content) {
-                              $("#myModal").html(content);
+                              //$("#myModal").html(content);
                             });
-                        //alert('The form is valid!');
                         return false;
                     }
                 });
-              // set an on click on the button
-//              $("#btnSubmit").click(function () {
-//                // get the time if clicked via an ajax get queury
-//                // see the code in the controller time.php
-//                $.post("/MobileHub/index.php/auth/authenticate", function (content) {
-//                  $("#myModal").html(content);
-//                });
-//              });
             });
         </script>
     </head>
@@ -92,5 +83,8 @@ and open the template in the editor.
                      <!-- /.navbar-collapse -->
                   </nav>
                </div>
+            </div>
+            <div id="myModal" class="reveal-modal">
+                <?php echo $this->load->view('login/LoginView'); ?>
             </div>
          </div>

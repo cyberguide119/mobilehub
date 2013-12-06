@@ -21,9 +21,5 @@
                 <button class="btn btn-large btn-primary" type="submit" id="btnSubmit">Log in</button>
                 <button type="reset" class="btn btn-large btn-default">Reset</button>
             </div>
-            <?php 
-                if ($errmsg != NULL){
-                    echo '<div class="alert alert-danger">' . $errmsg . '</div>';
-                }
-            ?>
+            <div id="error" class="alert alert-danger"></div>
         </form>

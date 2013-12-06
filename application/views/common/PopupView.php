@@ -1,6 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="<?php echo site_url('../resources/css/bootstrap.min.css') ?>" rel="stylesheet">
 <link href="<?php echo site_url('../resources/css/site-theme.css') ?>" rel="stylesheet">
+
 <div id="myModal" class="reveal-modal">
     <?php $this->load->view($subview); // Subview is set in controller ?>
 </div>
@@ -19,11 +20,11 @@
                 if(content === "correct"){
                     location.reload();
                 }else{
-                    alert(content);
+                     $("#error").text('Your login credentials are incorrect! Please try again');
+                    //alert(content);
                 }
                  // $("#myModal").html(content);
                 });
-            //alert('The form is valid!');
             return true;
         }
     });
