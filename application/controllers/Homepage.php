@@ -35,13 +35,15 @@ class Homepage extends CI_Controller {
         $questionsList = $this->Question->get();
         foreach ($questionsList as $question) {
             $user = new User();
-            $user->load($question->questionId);            
+            $user->load($question->questionId);
             // Creating the array which is to be pased on to the HomepageView
             $questions[] = array(
                 "questionTitle" => $question->questionTitle,
                 "questionDescription" => $question->questionDescription,
                 "askedOn" => $question->askedOn,
                 "askerName" => $user->username,
+                "answerCount" => $question->answerCount,
+                "votes" => $question->netVotes,
             );
         }
 //        $this->load->view('home/HomepageView',$questions);
