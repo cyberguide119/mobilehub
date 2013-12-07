@@ -35,9 +35,9 @@ class Homepage extends CI_Controller {
         $questionsList = $this->Question->get();
         foreach ($questionsList as $question) {
             $questions[] = array(
-                $question->questionTitle,
-                $question->questionDescription,
-                $question->askedOn,
+                "questionTitle" => $question->questionTitle,
+                "questionDescription" => $question->questionDescription,
+                "askedOn" => $question->askedOn,
             );
         }
 //        $this->load->view('home/HomepageView',$questions);
