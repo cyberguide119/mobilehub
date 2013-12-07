@@ -28,14 +28,24 @@ class Homepage extends CI_Controller {
     }
     
     private function loadQuestions(){
-         //$this->load->view('bootstrap/header');
         $this->load->library('table');
         $questions = array();
-        $this->load->model(array('Question', 'User'));
+        $this->load->model(array('Question', 'User', 'QuestionsTags', 'Tag'));
         $questionsList = $this->Question->get();
+        
+        
         foreach ($questionsList as $question) {
             $user = new User();
             $user->load($question->questionId);
+            $tagsArr = array();
+            
+            $questionsTags = $this->QuestionsTags->getTagIDsForQuestion($question->questionId);
+            foreach ($questionsTags as $questTagRow){
+                $tag = new Tag();
+                $tag->load($questTagRow->tagId);
+                $tagsArr[] = $tag->tagName;
+            }
+          
             // Creating the array which is to be pased on to the HomepageView
             $questions[] = array(
                 "questionTitle" => $question->questionTitle,
@@ -44,9 +54,10 @@ class Homepage extends CI_Controller {
                 "askerName" => $user->username,
                 "answerCount" => $question->answerCount,
                 "votes" => $question->netVotes,
+                "tags" => $tagsArr,
             );
         }
-//        $this->load->view('home/HomepageView',$questions);
+        
         $this->load->view('home/HomepageView', array(
             'questions' => $questions,
         ));

@@ -20,7 +20,6 @@ class Question extends MY_Model{
     public $askedUserId;
     public $answerCount;
     public $askedOn;
-    public $TagIds; //Not sure about this
     public $netVotes;
     public $upVotes;
     public $downVotes;

@@ -5,7 +5,7 @@
             <li class="list-group-item" style="margin-bottom: 5px;">
                 <div class="row">
                     <div class="col-xs-2 col-md-1">
-                        <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" />
+                        <img src="http://placehold.it/80x80" class="img-circle img-responsive" alt="" />
                     </div>
                     <div class="col-xs-10 col-md-9">
                     <div>
@@ -19,15 +19,11 @@
                         <?php echo $question["questionDescription"] ?>
                     </div>
                     <div class="action">
+                        <?php foreach($question['tags'] as $tagName):?>
                         <button type="button" class="btn btn-success btn-xs" title="Approved" text="Category">
-                            How to
+                            <?php echo $tagName; ?>
                         </button>
-                        <button type="button" class="btn btn-success btn-xs" title="Approved" text="Category">
-                            Android
-                        </button>
-                        <button type="button" class="btn btn-success btn-xs" title="Approved" text="Category">
-                            PDF
-                        </button>
+                        <?php endforeach;?>
                     </div>
                 </div>
                 <div class="col-md-2">
