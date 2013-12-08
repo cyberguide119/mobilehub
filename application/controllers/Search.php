@@ -6,21 +6,12 @@
  */
 
 /**
- * Description of Question
+ * Description of Search
  *
  * @author DRX
  */
-class Question extends CI_Controller{
-    function __construct()
-    {
-        parent::__construct();
-    }
-    
-    public function ask()
-    {
-        
-    }
-    
+class Search extends CI_Controller{
+    //put your code here
 }
 
 ?>

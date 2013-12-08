@@ -52,9 +52,13 @@ class auth extends CI_Controller{
     
     public function login()
     {
-        $data['errmsg'] = '';
-        $data['subview'] = 'login/LoginView';
-        $this->load->view('common/PopupView',$data);
+//        $data['errmsg'] = '';
+//        $data['subview'] = 'login/LoginView';
+//        $loggedin = $this->authlib->is_loggedin();
+//        $this->load->view('common/HeaderView',array('name' => $loggedin));
+//
+//        $this->load->view('common/PopupView',$data);
+//        $this->load->view('common/FooterView');
     }
     
     public function forgot()

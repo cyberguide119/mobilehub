@@ -28,11 +28,9 @@ class Homepage extends CI_Controller {
     }
     
     private function loadQuestions(){
-        $this->load->library('table');
         $questions = array();
         $this->load->model(array('Question', 'User', 'QuestionsTags', 'Tag'));
         $questionsList = $this->Question->get();
-        
         
         foreach ($questionsList as $question) {
             $user = new User();
@@ -61,7 +59,6 @@ class Homepage extends CI_Controller {
         $this->load->view('home/HomepageView', array(
             'questions' => $questions,
         ));
-        //$this->load->view('bootstrap/footer');
     }
 }
 
