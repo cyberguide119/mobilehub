@@ -1,0 +1,6 @@
+API Spec
+========
+
+Login (POST)
+	index.php/auth/login
+	index.php/auth/create

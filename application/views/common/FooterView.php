@@ -4,9 +4,12 @@
             modules : 'date, security',
             onSuccess : function() {
                 $loginForm = $("#loginForm");
-                $serializedData = $loginForm.serialize();
+                $serializedData = $loginForm.serializeArray();
                 $.post("/MobileHub/index.php/auth/authenticate", $serializedData, function (content) {
-                    if(content === "correct"){
+                    // Deserialise the JSON
+                    content = jQuery.parseJSON(content);
+                    
+                    if(content.message === "correct"){
                         $("#error").removeClass('alert alert-danger');
                         $("#error").addClass('alert alert-success');
                         $("#error").text('Login successful!');

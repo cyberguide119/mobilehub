@@ -21,9 +21,9 @@ and open the template in the editor.
                 $.validate({
                     modules : 'date, security',
                     onSuccess : function() {
-                        $.post("/MobileHub/index.php/auth/authenticate", function (content) {
+                       // $.post("/MobileHub/index.php/auth/authenticate", function (content) {
                               //$("#myModal").html(content);
-                            });
+                         //   });
                         return false;
                     }
                 });
@@ -71,11 +71,11 @@ and open the template in the editor.
                         <ul class="nav navbar-nav navbar-right">
                             <?php
                                 if($name == NULL){
-                                    echo '<li><a href="' . site_url('Auth/register') . '">Register</a></li>';
+                                    echo '<li><a href="' . site_url('auth/register') . '">Register</a></li>';
                                     echo '<li><a href="#" data-reveal-id="myModal" data-animation="fade">Login</a></li>';
                                 }else{
                                     echo '<li><a href="' . site_url('') . '">' . $name . ' (100 points)</a></li>';
-                                    echo '<li><a href="' . site_url('Auth/logout') . '">Logout</a></li>';
+                                    echo '<li><a href="' . site_url('auth/logout') . '">Logout</a></li>';
                                 }
                             ?>
                            </li>

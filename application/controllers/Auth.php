@@ -22,6 +22,60 @@ class auth extends CI_Controller{
         $this->ci->load->model('user');
     }
     
+    public function _remap()
+    {
+        $request_method = $this->input->server('REQUEST_METHOD');
+        switch (strtolower($request_method)) 
+        {
+            case 'post'  : $this->post();
+                break;
+            case 'get' : $this->get();
+            default:
+                show_error('Unsupported method',404); // CI function for 404 errors
+                break;
+        }
+    }
+    
+    private function get()
+    {
+        $args = $this->uri->uri_to_assoc(1);
+        var_dump($args);
+        switch (strtolower($args['auth'])) {
+            case 'logout' :
+                $this->logout();
+                // assume we get back an array of data - now echo it as JSON
+                //echo json_encode($res);
+                break;
+            case 'register':
+                $this->register();
+                break;
+            case 'forgot':
+                $this->forgot();
+                break;
+            default:
+                show_error('Unsupported resource',404);
+                break;
+        }
+    }
+    
+    private function post()
+    {
+        $args = $this->uri->uri_to_assoc(1);
+
+        switch ($args['auth']) {
+            case 'authenticate' :
+                $res = $this->authenticate();
+                // assume we get back an array of data - now echo it as JSON
+                echo json_encode($res);
+                break;
+            case 'create':
+                break;
+            default:
+                show_error('Unsupported resource',404);
+                break;
+        }
+    }
+
     public function index()
     {
         redirect('/auth/login'); // url helper function
@@ -127,13 +181,14 @@ class auth extends CI_Controller{
         $password = $this->input->post('pword');
         $rememberLogin = $this->input->post('remember');
         $user = $this->authlib->login($username,$password,$rememberLogin);
-
+        $response['message'] = array();
         if ($user != false) {
-            echo 'correct';
+            $response['message'] = 'correct';
         }
         else {
-            echo 'wrong';
+            $response['message'] = 'wrong';
         }
+        return $response;
     }
     
     public function logout()
