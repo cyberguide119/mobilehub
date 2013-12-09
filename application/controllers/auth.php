@@ -144,32 +144,11 @@ class auth extends CI_Controller{
     public function authenticate()
     {
         $credentials = $_POST;
-//        $curl_handle = curl_init();
-//        curl_setopt($curl_handle, CURLOPT_URL, 'http://localhost/MobileHub/index.php/api/authenticate');
-//        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-//        curl_setopt($curl_handle, CURLOPT_POST, 1);
-//        curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $credentials);
-        //$this->curl->option(CURLOPT_COOKIEFILE,'saved_cookies.txt');
-        //$this->curl->options(array(CURLOPT_COOKIEJAR => realpath('tmp/saved_cookies.txt') ) );
-        //$response = $this->curl->simple_post('api/authenticate', $credentials);
-        
-        ile_get_contents(site_url());
-//        
-//        $cookie = (isset($_COOKIE['ci'])) ? 'ci='.urlencode($_COOKIE['ci']):'';
-//        $httpua = (isset($_SERVER['HTTP_USER_AGENT']))? $_SERVER['HTTP_USER_AGENT'] : '';
-//        $ch = curl_init();
-//        curl_setopt($ch, CURLOPT_URL, 'http://localhost/MobileHub/index.php/api/authenticate');
-//        curl_setopt($ch, CURLOPT_COOKIE, $cookie); 
-//        curl_setopt($ch, CURLOPT_HEADER, TRUE); 
-//        curl_setopt($ch, CURLOPT_USERAGENT, $httpua); 
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-//        curl_setopt($ch, CURLOPT_POST, 1);
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, $credentials);
-        
-        //$buffer = curl_exec($ch);
-        //curl_close($ch);
-        //echo $buffer;
-        
+        $session_id = $this->session->userdata('session_id');
+
+        $response = $this->curl->simple_post('api/authenticate', $credentials);
+        //$this->session->unset_userdata('session_id');
+        $this->session->set_userdata('session_id',$session_id);
         echo $response;
     }
     
