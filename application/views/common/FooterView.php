@@ -3,12 +3,15 @@
         $.validate({
             modules : 'date, security',
             onSuccess : function() {
+                $dataToSend = new Array();
                 $loginForm = $("#loginForm");
                 $serializedData = $loginForm.serializeArray();
-                $.post("/MobileHub/index.php/auth/authenticate", $serializedData, function (content) {
+                $.post("/MobileHub/index.php/auth/authenticate", $serializedData, function (content){
+                    //content = content.substring(1,content.length-1);
                     // Deserialise the JSON
-                    content = jQuery.parseJSON(content);
-                    
+                    //$str = content.toString();
+                    //content = jQuery.parseJSON(content);
+                    console.log(content);
                     if(content.message === "correct"){
                         $("#error").removeClass('alert alert-danger');
                         $("#error").addClass('alert alert-success');
@@ -18,7 +21,7 @@
                         $("#error").addClass('alert alert-danger');
                         $("#error").text('Sorry, your login credentials are incorrect! Please try again');
                     }
-                    });
+                    }), "json";
                 return true;
             }
         });

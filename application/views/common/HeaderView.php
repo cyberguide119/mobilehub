@@ -10,8 +10,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="<?php echo site_url('../resources/css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?php echo site_url('../resources/css/site-theme.css') ?>" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+        <script src="<?php echo site_url('../resources/js/jquery-1.7.min.js') ?>" type="text/javascript"></script>
         <link rel="stylesheet" href="<?php echo site_url('../resources/css/reveal.css'); ?>">
         <script src="<?php echo site_url('../resources/js/jquery.reveal.js') ?>" type="text/javascript"></script>
         <script src="<?php echo site_url('../resources/js/form-validator/jquery.form-validator.min.js') ?>"></script>
@@ -21,9 +20,6 @@ and open the template in the editor.
                 $.validate({
                     modules : 'date, security',
                     onSuccess : function() {
-                       // $.post("/MobileHub/index.php/auth/authenticate", function (content) {
-                              //$("#myModal").html(content);
-                         //   });
                         return false;
                     }
                 });
