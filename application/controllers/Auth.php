@@ -30,6 +30,7 @@ class auth extends CI_Controller{
             case 'post'  : $this->post();
                 break;
             case 'get' : $this->get();
+                break;
             default:
                 show_error('Unsupported method',404); // CI function for 404 errors
                 break;
@@ -39,12 +40,9 @@ class auth extends CI_Controller{
     private function get()
     {
         $args = $this->uri->uri_to_assoc(1);
-        var_dump($args);
         switch (strtolower($args['auth'])) {
             case 'logout' :
                 $this->logout();
-                // assume we get back an array of data - now echo it as JSON
-                //echo json_encode($res);
                 break;
             case 'register':
                 $this->register();
@@ -66,7 +64,7 @@ class auth extends CI_Controller{
             case 'authenticate' :
                 $res = $this->authenticate();
                 // assume we get back an array of data - now echo it as JSON
-                echo json_encode($res);
+                echo(json_encode($res));
                 break;
             case 'create':
                 break;
@@ -96,7 +94,7 @@ class auth extends CI_Controller{
         $website = $this->input->post('website');
 
         if (!($errmsg = $this->authlib->register($name,$username,$password,$conf_password,$email,$website))) {
-            redirect('/auth/login');
+            redirect('/homepage/');
         }
         else {
             $data['errmsg'] = $errmsg;

@@ -99,3 +99,9 @@ span.form-error.help-block {
 .ans-label{
     font-size: 11px;
 }
+
+.askBtnStyle{
+    margin-top: -8%;
+    margin-bottom: -7%;
+    margin-left: 13%;
+}

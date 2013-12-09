@@ -20,7 +20,7 @@
                     </div>
                     <div class="action">
                         <?php foreach($question['tags'] as $tagName):?>
-                        <button type="button" class="btn btn-success btn-xs" title="Approved" text="Category">
+                        <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
                             <?php echo $tagName; ?>
                         </button>
                         <?php endforeach;?>
