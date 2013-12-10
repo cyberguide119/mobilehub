@@ -5,7 +5,7 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-file">
-                            </span>POST NEW ARTICLE</a>
+                            </span>ASK A NEW QUESTION</a>
                     </h4>
                 </div>
                 <div class="panel-body">

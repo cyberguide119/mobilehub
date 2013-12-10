@@ -7,10 +7,9 @@
                 $loginForm = $("#loginForm");
                 $serializedData = $loginForm.serializeArray();
                 $.post("/MobileHub/index.php/auth/authenticate", $serializedData, function (content){
-                    //content = content.substring(1,content.length-1);
+                    
                     // Deserialise the JSON
-                    //$str = content.toString();
-                    //content = jQuery.parseJSON(content);
+                    content = jQuery.parseJSON(content);
                     console.log(content);
                     if(content.message === "correct"){
                         $("#error").removeClass('alert alert-danger');
