@@ -25,11 +25,6 @@
                 return true;
             }
         });
-        
-         $('#configreset').click(function(){
-         console.log('f uuuu');
-            //$('#configform')[0].reset();
-        });
     </script>
     <hr>
     <footer>

@@ -23,8 +23,7 @@ and open the template in the editor.
                         return false;
                     }
                 });
-            });
-            
+            });            
         </script>
     </head>
     <body>        
@@ -44,19 +43,20 @@ and open the template in the editor.
            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                  <li class="active"><a href="<?php echo site_url(); ?>">Home</a></li>
-                 <li><a href="<?php echo site_url(); ?>">About Us</a></li>
+                 <li><a href="<?php echo site_url(); ?>">Tutorials</a></li>
                  <li class="dropdown">
-                    <a href="<?php echo site_url(); ?>" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
+                    <a href="<?php echo site_url(); ?>" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                       <li><a href="<?php echo site_url(); ?>">Action</a></li>
-                       <li><a href="<?php echo site_url(); ?>">Another action</a></li>
-                       <li><a href="<?php echo site_url(); ?>">Something else here</a></li>
+                       <li><a href="<?php echo site_url(); ?>">Android</a></li>
                        <li class="divider"></li>
-                       <li><a href="<?php echo site_url(); ?>">Separated link</a></li>
+                       <li><a href="<?php echo site_url(); ?>">iOS</a></li>
                        <li class="divider"></li>
-                       <li><a href="<?php echo site_url(); ?>">One more separated link</a></li>
+                       <li><a href="<?php echo site_url(); ?>">Windows Phone</a></li>
+                       <li class="divider"></li>
+                       <li><a href="<?php echo site_url(); ?>">General</a></li>
                     </ul>
                  </li>
+                 <li><a href="<?php echo site_url(); ?>">About Us</a></li>
               </ul>
               <form class="navbar-form navbar-left" role="search">
                  <div class="form-group">

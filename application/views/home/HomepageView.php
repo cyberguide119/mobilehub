@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="comment-text">
-                        <?php echo $question["questionDescription"] ?>
+                        <br><?php echo $question["questionDescription"] ?>
                     </div>
                     <div class="action">
                         <?php foreach($question['tags'] as $tagName):?>
