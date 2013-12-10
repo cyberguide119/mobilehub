@@ -16,68 +16,73 @@ and open the template in the editor.
         <script src="<?php echo site_url('../resources/js/form-validator/jquery.form-validator.min.js') ?>"></script>
         <script type="text/javascript">
             // using JQUERY's ready method to know when all dom elements are rendered
-            $( document ).ready(function () {
+            $(document).ready(function() {
                 $.validate({
-                    modules : 'date, security',
-                    onSuccess : function() {
+                    modules: 'date, security',
+                    onSuccess: function() {
                         return false;
                     }
                 });
-            });            
+            });
         </script>
     </head>
     <body>        
-        <nav class="navbar navbar-default" role="navigation">
-           <!-- Brand and toggle get grouped for better mobile display -->
-           <div class="container">
-           <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="<?php echo site_url(); ?>">MobileHub</a>
-           </div>
-           <!-- Collect the nav links, forms, and other content for toggling -->
-           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                 <li class="active"><a href="<?php echo site_url(); ?>">Home</a></li>
-                 <li><a href="<?php echo site_url(); ?>">Tutorials</a></li>
-                 <li class="dropdown">
-                    <a href="<?php echo site_url(); ?>" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                       <li><a href="<?php echo site_url(); ?>">Android</a></li>
-                       <li class="divider"></li>
-                       <li><a href="<?php echo site_url(); ?>">iOS</a></li>
-                       <li class="divider"></li>
-                       <li><a href="<?php echo site_url(); ?>">Windows Phone</a></li>
-                       <li class="divider"></li>
-                       <li><a href="<?php echo site_url(); ?>">General</a></li>
+        <nav class="navbar navbar-default" role="navigation" style="padding: 5px;">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="<?php echo site_url(); ?>">MobileHub</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="<?php echo site_url(); ?>">Home</a></li>
+                        <li><a href="<?php echo site_url(); ?>">Tutorials</a></li>
+                        <li class="dropdown">
+                            <a href="<?php echo site_url(); ?>" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo site_url(); ?>">Android</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<?php echo site_url(); ?>">iOS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<?php echo site_url(); ?>">Windows Phone</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<?php echo site_url(); ?>">General</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="<?php echo site_url('homepage/about'); ?>">About Us</a></li>
                     </ul>
-                 </li>
-                 <li><a href="<?php echo site_url('homepage/about'); ?>">About Us</a></li>
-              </ul>
-              <form class="navbar-form navbar-left" role="search">
-                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                 </div>
-              </form>
-              <ul class="nav navbar-nav navbar-right">
-                  <?php
-                      if($name == NULL){
-                          echo '<li><a href="' . site_url('#') . '"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
-                          echo '<li><a href="#" data-reveal-id="myModal" data-animation="fade">Login</a></li>';
-                      }else{
-                          echo '<li><a href="' . site_url('') . '">' . $name . ' (100 points)</a></li>';
-                          echo '<li><a href="' . site_url('auth/logout') . '">Logout</a></li>';
-                      }
-                  ?>
-                 </li>
-              </ul>
-           </div>
-           <!-- /.navbar-collapse -->
-           </div>
+                    <div class="col-sm-3 col-md-3 pull-left">
+                        <form action="/search" class="navbar-form" method="get" role="search">
+                            <div class="input-group">
+                                <input class="form-control" id="srch-term" name="q" placeholder="Search" type="text">
+                                <div class="input-group-btn">
+                                    <button style="height: 43px;" class="btn btn-warning" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <?php
+                        if ($name == NULL) {
+                            echo '<li><a href="' . site_url('homepage/ask') . '"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
+                            echo '<li><a href="#" data-reveal-id="myModal" data-animation="fade">Login</a></li>';
+                        } else {
+                            echo '<li><a href="' . site_url('') . '">' . $name . ' (100 points)</a></li>';
+                            echo '<li><a href="' . site_url('auth/logout') . '">Logout</a></li>';
+                        }
+                        ?>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
         </nav>
         <div class="container">
             <div id="myModal" class="reveal-modal">

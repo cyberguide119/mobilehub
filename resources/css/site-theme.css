@@ -11,9 +11,6 @@
     padding: 19px 29px 29px;
     background-color: #fff;
     border: 1px solid #e5e5e5;
-/*    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;*/
     -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
     -box-shadow: 0 0 10px rgba(0,0,0,.4);
@@ -25,9 +22,9 @@
     margin: 5% auto 20px;
     background-color: #fff;
     border: 1px solid #e5e5e5;
-/*    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;*/
+    /*    -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;*/
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
     box-shadow: 0 1px 2px rgba(0,0,0,.05);
@@ -101,4 +98,16 @@ span.form-error.help-block {
     margin-top: -9%;
     margin-bottom: -7%;
     margin-left: 13%;
+}
+
+.form-inline .form-group { margin-right:10px; }
+.well-primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(66, 139, 202);
+    border-color: rgb(53, 126, 189);
+}
+.glyphicon { margin-right:5px; }
+
+.askForm{
+    max-width: 500px;
 }

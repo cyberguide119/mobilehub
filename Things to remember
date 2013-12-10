@@ -24,3 +24,6 @@ http://zurb.com/playground/reveal-modal-plugin
 3. Added CI CURL library
 
 https://github.com/philsturgeon/codeigniter-curl
+
+4. Add the mic control
+<input class="form-control" id="srch-term" name="q" placeholder="Search" type="text" x-webkit-speech="true">
