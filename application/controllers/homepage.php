@@ -12,24 +12,40 @@
 class Homepage extends CI_Controller {
     //put your code here
     
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->library('authlib');
+        
+        $this->ci = &get_instance();
+        $this->load->model(array('Question', 'User', 'QuestionsTags', 'Tag'));
+    }
+    
     public function index()
     {
-        $this->load->library('authlib');
+        $this->loadHeaderData();
+        $this->loadQuestions();
+        $this->loadFooterData();
+    }
+    
+    private function loadHeaderData()
+    {
         $loggedin = $this->authlib->is_loggedin();
         $this->load->view('common/HeaderView',array('name' => $loggedin));
         
         $data['errmsg'] = '';
         $data['subview'] = 'login/LoginView';
         $this->load->view('common/PopupView',$data);
-        $this->loadQuestions();
-        
-        //$this->load->view('home/HomepageView',array('errmsg' => NULL));
+    }
+    
+    private function loadFooterData()
+    {
         $this->load->view('common/FooterView');
     }
     
     private function loadQuestions(){
         $questions = array();
-        $this->load->model(array('Question', 'User', 'QuestionsTags', 'Tag'));
+        
         $questionsList = $this->Question->get();
         
         foreach ($questionsList as $question) {
@@ -59,6 +75,13 @@ class Homepage extends CI_Controller {
         $this->load->view('home/HomepageView', array(
             'questions' => $questions,
         ));
+    }
+    
+    public function about()
+    {
+        $this->loadHeaderData();
+        $this->load->view('home/AboutView');
+        $this->loadFooterData();
     }
 }
 

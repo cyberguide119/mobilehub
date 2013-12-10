@@ -56,7 +56,7 @@ and open the template in the editor.
                        <li><a href="<?php echo site_url(); ?>">General</a></li>
                     </ul>
                  </li>
-                 <li><a href="<?php echo site_url(); ?>">About Us</a></li>
+                 <li><a href="<?php echo site_url('homepage/about'); ?>">About Us</a></li>
               </ul>
               <form class="navbar-form navbar-left" role="search">
                  <div class="form-group">
