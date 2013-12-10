@@ -50,7 +50,10 @@ class auth extends CI_Controller {
     }
 
     public function register() {
-        $this->load->view('login/RegisterView', array('errmsg' => ''));
+        $this->loadHeaderData();
+        $data['errmsg'] = '';
+        $this->load->view('login/RegisterView', $data);
+        $this->loadFooterData();
     }
 
     public function createaccount() {

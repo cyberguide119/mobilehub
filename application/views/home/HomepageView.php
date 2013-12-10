@@ -5,7 +5,7 @@
             <li class="list-group-item" style="margin-bottom: 5px;">
                 <div class="row" style="margin-right: -40px;">
                     <div class="col-xs-2 col-md-1">
-                        <img src="http://placehold.it/80x80" class="img-circle img-responsive" alt="" />
+                        <img src="http://placekitten.com/80/80" class="img-circle img-responsive" alt="" />
                     </div>
                     <div class="col-xs-10 col-md-9">
                     <div>

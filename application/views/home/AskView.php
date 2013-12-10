@@ -4,8 +4,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-file">
-                            </span>ASK A NEW QUESTION</a>
+                        <span class="glyphicon glyphicon-file">
+                            </span>ASK A NEW QUESTION
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -20,6 +20,13 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="tags">
+                                    Tags</label>
+                                <input type="text" class="form-control" id="tags" placeholder="Eg: android,phonegap,tutorial" />
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="category">
@@ -31,19 +38,12 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="tags">
-                                    Tags</label>
-                                <input type="text" class="form-control" id="tags" placeholder="Tags" />
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <form class="form form-inline " role="form">
                                 <div class="form-group">
-                                    <a href="http://www.jquery2dotnet.com" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-floppy-disk">
+                                    <a href="http://www.jquery2dotnet.com" class="btn btn-success btn-mg"><span class="glyphicon glyphicon-floppy-disk">
                                         </span>Save</a>
                                 </div>
                             </form>

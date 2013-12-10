@@ -17,9 +17,9 @@
 }
 
 .form-signup{
-    max-width: 550px;
+    max-width: 590px;
     padding: 19px 29px 29px;
-    margin: 5% auto 20px;
+    margin: 0px auto 0px;
     background-color: #fff;
     border: 1px solid #e5e5e5;
     /*    -webkit-border-radius: 5px;
@@ -97,7 +97,6 @@ span.form-error.help-block {
 .askBtnStyle{
     margin-top: -9%;
     margin-bottom: -7%;
-    margin-left: 13%;
 }
 
 .form-inline .form-group { margin-right:10px; }
