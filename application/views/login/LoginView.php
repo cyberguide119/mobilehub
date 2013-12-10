@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 <button class="btn btn-large btn-primary" type="submit" id="btnSubmit">Log in</button>
-                <button type="reset" class="btn btn-large btn-default">Reset</button>
+                <button type="reset" class="btn btn-large btn-default" id="configreset">Reset</button>
             </div>
             <div id="error"></div>
         </form>
