@@ -90,7 +90,6 @@
     {
         $session_id = $this->session->userdata('session_id');
         $res = $this->db->get_where('logins',array('session_id' => $session_id));
-        var_dump($session_id);
         if ($res->num_rows() == 1) {
             $row = $res->row_array();
             return $row['name'];
