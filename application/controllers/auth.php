@@ -37,22 +37,6 @@ class auth extends MY_Controller {
         $this->loadFooterData();
     }
 
-    public function createaccount() {
-        $name = $this->input->post('name');
-        $username = $this->input->post('uname');
-        $password = $this->input->post('pword_confirmation');
-        $conf_password = $this->input->post('pword');
-        $email = $this->input->post('email');
-        $website = $this->input->post('website');
-
-        if (!($errmsg = $this->authlib->register($name, $username, $password, $conf_password, $email, $website))) {
-            redirect('/homepage/');
-        } else {
-            $data['errmsg'] = $errmsg;
-            $this->load->view('login/RegisterView', $data);
-        }
-    }
-
     public function login() {
         $this->loadHeaderData();
         $this->load->view('login/LoginPageView');
@@ -118,12 +102,34 @@ class auth extends MY_Controller {
 
     public function authenticate() {
         $credentials = $_POST;
-        $session_id = $this->session->userdata('session_id');
-
-        $response = $this->curl->simple_post('api/authenticate', $credentials);
-        //$this->session->unset_userdata('session_id');
-        $this->session->set_userdata('session_id', $session_id);
-        echo $response;
+//        $session_id = $this->session->userdata('session_id');
+//
+//        $response = $this->curl->simple_post('api/authenticate', $credentials);
+//        //$this->session->unset_userdata('session_id');
+//        $this->session->set_userdata('session_id', $session_id);
+//        echo $response;
+        
+//            $ch =  curl_init();
+//
+//            $useragent = isset($z['useragent']) ? $z['useragent'] : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20100101 Firefox/10.0.2';
+//
+//            curl_setopt( $ch, CURLOPT_URL, 'http://localhost/MobileHub/index.php/api/authenticate' );
+//            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+//            curl_setopt( $ch, CURLOPT_AUTOREFERER, true );
+//            curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
+//            curl_setopt( $ch, CURLOPT_POST, $credentials);
+//
+//            //if( isset($z['post']) )         curl_setopt( $ch, CURLOPT_POSTFIELDS, $z['post'] );
+//            //if( isset($z['refer']) )        curl_setopt( $ch, CURLOPT_REFERER, $z['refer'] );
+//
+//            curl_setopt( $ch, CURLOPT_USERAGENT, $useragent );
+//            //curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, ( isset($z['timeout']) ? $z['timeout'] : 5 ) );
+//            curl_setopt( $ch, CURLOPT_COOKIEJAR,  dirname(__FILE__)."/cookie.txt");
+//            curl_setopt($ch, CURLOPT_COOKIEFILE, dirname(__FILE__)."/cookie.txt");
+//
+//            $result = curl_exec( $ch );
+//            curl_close( $ch );
+//            echo $result;
     }
 
     public function logout() {

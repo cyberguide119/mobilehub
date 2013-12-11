@@ -1,6 +1,38 @@
 API Spec
 ========
 
+*we need to authenticate the user before doing these
+
 Login (POST)
-	index.php/auth/login
-	index.php/auth/create
+	index.php/api/auth/login
+	index.php/api/auth/create
+	index.php/api/auth/test
+
+Question (GET/POST)
+	index.php/api/question/post
+	index.php/api/question/details
+	index.php/api/question/delete
+	index.php/api/question/update
+
+Answer
+	index.php/api/answer/post/
+	index.php/api/answer/details
+	index.php/api/answer/delete
+	index.php/api/answer/update
+
+Vote
+	index.php/api/vote/voteup/question/id
+	index.php/api/vote/votedown/question/id
+
+Tags
+	index.php/api/tag/post/question/id
+	index.php/api/tag/delete/question/id
+	index.php/api/tag/update/question/id
+	index.php/api/tag/get/question/id
+
+Search
+	index.php/api/search/get/query/
+
+	index.php/api/search/get/query/
+
+
