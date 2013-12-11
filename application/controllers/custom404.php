@@ -10,7 +10,7 @@
  *
  * @author DRX
  */
-class Custom404 extends CI_Controller 
+class Custom404 extends MY_Controller 
 {
     public function __construct()   {
             parent::__construct();  

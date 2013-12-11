@@ -12,7 +12,7 @@ if (!defined('BASEPATH'))
  *
  * @author DRX
  */
-class Homepage extends CI_Controller {
+class Homepage extends MY_Controller {
 
     //put your code here
 
@@ -28,19 +28,6 @@ class Homepage extends CI_Controller {
         $this->loadHeaderData();
         $this->loadQuestions();
         $this->loadFooterData();
-    }
-
-    private function loadHeaderData() {
-        $loggedin = $this->authlib->is_loggedin();
-        $this->load->view('common/HeaderView', array('name' => $loggedin));
-
-        $data['errmsg'] = '';
-        $data['subview'] = 'login/LoginView';
-        $this->load->view('common/PopupView', $data);
-    }
-
-    private function loadFooterData() {
-        $this->load->view('common/FooterView');
     }
 
     private function loadQuestions() {
@@ -80,12 +67,6 @@ class Homepage extends CI_Controller {
     public function about() {
         $this->loadHeaderData();
         $this->load->view('home/AboutView');
-        $this->loadFooterData();
-    }
-
-    public function ask() {
-        $this->loadHeaderData();
-        $this->load->view('home/AskView');
         $this->loadFooterData();
     }
 

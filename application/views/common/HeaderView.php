@@ -71,10 +71,10 @@ and open the template in the editor.
                     <ul class="nav navbar-nav navbar-right">
                         <?php
                         if ($name == NULL) {
-                            echo '<li><a href="' . site_url('homepage/ask') . '"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
+                            echo '<li><a href="' . site_url('#') . '" data-reveal-id="myError" data-animation="fade"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
                             echo '<li><a href="#" data-reveal-id="myModal" data-animation="fade">Login</a></li>';
                         } else {
-                            echo '<li><a href="' . site_url('') . '">' . $name . ' (100 points)</a></li>';
+                            echo '<li><a href="' . site_url('') . '">' . $name . ' (100 points)<button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
                             echo '<li><a href="' . site_url('auth/logout') . '">Logout</a></li>';
                         }
                         ?>
@@ -87,5 +87,8 @@ and open the template in the editor.
         <div class="container">
             <div id="myModal" class="reveal-modal">
                 <?php echo $this->load->view('login/LoginView'); ?>
+            </div>
+            <div id="myError" class="reveal-modal" style="left: 45%">
+                <?php echo $this->load->view('errors/ErrorNotLoggedIn'); ?>
             </div>
         </div>

@@ -14,7 +14,7 @@ if (!defined('BASEPATH'))
  *
  * @author DRX
  */
-class auth extends CI_Controller {
+class auth extends MY_Controller {
 
     //put your code here
 
@@ -25,25 +25,6 @@ class auth extends CI_Controller {
         $this->ci = &get_instance();
         $this->ci->load->model('user');
     }
-
-//    private function get()
-//    {
-//        $args = $this->uri->uri_to_assoc(1);
-//        switch (strtolower($args['auth'])) {
-//            case 'logout' :
-//                $this->logout();
-//                break;
-//            case 'register':
-//                $this->register();
-//                break;
-//            case 'forgot':
-//                $this->forgot();
-//                break;
-//            default:
-//                show_error('Unsupported resource',404);
-//                break;
-//        }
-//    }
 
     public function index() {
         redirect('/auth/login'); // url helper function
@@ -73,13 +54,9 @@ class auth extends CI_Controller {
     }
 
     public function login() {
-//        $data['errmsg'] = '';
-//        $data['subview'] = 'login/LoginView';
-//        $loggedin = $this->authlib->is_loggedin();
-//        $this->load->view('common/HeaderView',array('name' => $loggedin));
-//
-//        $this->load->view('common/PopupView',$data);
-//        $this->load->view('common/FooterView');
+        $this->loadHeaderData();
+        $this->load->view('login/LoginPageView');
+        $this->loadFooterData();
     }
 
     public function forgot() {
@@ -87,19 +64,6 @@ class auth extends CI_Controller {
         $data['errmsg'] = '';
         $this->load->view('login/ForgotPasswordView', $data);
         $this->loadFooterData();
-    }
-
-    private function loadHeaderData() {
-        $loggedin = $this->authlib->is_loggedin();
-        $this->load->view('common/HeaderView', array('name' => $loggedin));
-
-        $data['errmsg'] = '';
-        $data['subview'] = 'login/LoginView';
-        $this->load->view('common/PopupView', $data);
-    }
-
-    private function loadFooterData() {
-        $this->load->view('common/FooterView');
     }
 
     public function sendResetLink() {

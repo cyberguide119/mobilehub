@@ -10,15 +10,20 @@
  *
  * @author DRX
  */
-class Question extends CI_Controller{
+class Question extends MY_Controller{
     function __construct()
     {
         parent::__construct();
     }
-    
-    public function ask()
-    {
-        
+
+    public function ask() {
+        if ($this->authlib->is_loggedin()) {
+            $this->loadHeaderData();
+            $this->load->view('question/AskView');
+            $this->loadFooterData();
+        } else {
+
+        }
     }
     
 }

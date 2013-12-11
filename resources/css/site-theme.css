@@ -7,6 +7,7 @@
 */
 
 .form-signin {
+    margin:auto;
     max-width: 302px;
     padding: 19px 29px 29px;
     background-color: #fff;
@@ -109,4 +110,8 @@ span.form-error.help-block {
 
 .askForm{
     max-width: 500px;
+}
+
+.notLoggedIn{
+    left: 45%;
 }
