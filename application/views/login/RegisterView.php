@@ -1,5 +1,5 @@
 <div class="container">
-    <form action="<?php echo site_url('api/auth/createaccount') ?>" method="POST" class="form-horizontal form-signup">
+    <form action="<?php echo site_url('api/auth/createaccount') ?>" method="POST" class="form-horizontal form-signup" id="registerForm">
         <legend>Create Account</legend><br>
         <div class="form-group">
             <label class="control-label col-sm-4">Username</label>
@@ -44,11 +44,7 @@
                 <button type="reset" class="btn btn-large btn-default">Reset</button>
             </div>
         </div>
-        <?php
-        if ($errmsg != NULL) {
-            echo '<div class="alert alert-danger">' . $errmsg . '</div>';
-        }
-        ?>
+        <div id="reg-error"></div>
     </form>
 </div>
 <script>
@@ -66,6 +62,28 @@
             };
 
             $('input[name="pword_confirmation"]').displayPasswordStrength(optionalConfig);
-        }
+        },
+        
+         onSuccess : function() {
+                $dataToSend = new Array();
+                $loginForm = $("#registerForm");
+                $serializedData = $loginForm.serializeArray();
+                $.post("/MobileHub/index.php/api/auth/create", $serializedData, function (content){
+                    
+                    // Deserialise the JSON
+                    content = jQuery.parseJSON(content);
+                    console.log(content);
+                    if(content.message === "success"){
+                        $("#registerForm reg-error").removeClass('alert alert-danger');
+                        $("#registerForm reg-error").addClass('alert alert-success');
+                        $("#registerForm reg-error").text('Account created successful!');
+                        location.reload();
+                    }else{
+                        $("#registerForm div[id=reg-error]").addClass('alert alert-danger');
+                        $("#registerForm div[id=reg-error]").text(content.message);
+                    }
+                    }), "json";
+                return true;
+            }
     });
 </script>

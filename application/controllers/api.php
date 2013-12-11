@@ -107,7 +107,7 @@ class api extends CI_Controller {
         $website = $this->input->post('website');
 
         if (!($errmsg = $this->authlib->register($name, $username, $password, $conf_password, $email, $website))) {
-            $response['message'] = 'account created';
+            $response['message'] = 'success';
         } else {
             $response['message'] = $errmsg;
         }
