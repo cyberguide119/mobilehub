@@ -22,7 +22,9 @@ class Question extends MY_Controller{
             $this->load->view('question/AskView');
             $this->loadFooterData();
         } else {
-
+            $this->loadHeaderData();
+            $this->load->view('errors/ErrorNotLoggedIn');
+            $this->loadFooterData();
         }
     }
     

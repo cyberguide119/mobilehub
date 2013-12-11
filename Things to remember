@@ -27,3 +27,6 @@ https://github.com/philsturgeon/codeigniter-curl
 
 4. Add the mic control
 <input class="form-control" id="srch-term" name="q" placeholder="Search" type="text" x-webkit-speech="true">
+
+5. Answer box
+http://bootsnipp.com/snippets/featured/message-box-with-counter

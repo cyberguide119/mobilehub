@@ -1,5 +1,5 @@
 <div class="container">
-    <form action="<?php echo site_url('/auth/createaccount') ?>" method="POST" class="form-horizontal form-signup">
+    <form action="<?php echo site_url('api/auth/createaccount') ?>" method="POST" class="form-horizontal form-signup">
         <legend>Create Account</legend><br>
         <div class="form-group">
             <label class="control-label col-sm-4">Username</label>

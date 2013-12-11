@@ -74,8 +74,14 @@ and open the template in the editor.
                             echo '<li><a href="' . site_url('#') . '" data-reveal-id="myError" data-animation="fade"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
                             echo '<li><a href="#" data-reveal-id="myModal" data-animation="fade">Login</a></li>';
                         } else {
-                            echo '<li><a href="' . site_url('') . '">' . $name . ' (100 points)<button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
-                            echo '<li><a href="' . site_url('auth/logout') . '">Logout</a></li>';
+                            echo '<li><a href="'. site_url('question/ask') . '"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
+                            echo '<div class="pull-right"><ul class="nav pull-right"><li class="dropdown">';
+                            echo '<a href="' . site_url('') . '" class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 4%; color: white;">' . $name . '<b class="caret"></b></a>';
+                            echo '<ul class="dropdown-menu"><li><a href="/user/preferences"><i class="glyphicon glyphicon-user"></i> My Profile</a></li>';
+                            echo '<li><a href="/help/support"><i class="glyphicon glyphicon-envelope"></i> Contact Support</a></li>';
+                            echo '<li class="divider"></li>';
+                            echo '<li><a href="' . site_url('auth/logout') . '"><i class="glyphicon glyphicon-off"></i> Logout</a></li>';
+                            echo '</ul></li></ul></div>';
                         }
                         ?>
                         </li>

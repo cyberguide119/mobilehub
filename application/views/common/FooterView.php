@@ -6,7 +6,7 @@
                 $dataToSend = new Array();
                 $loginForm = $("#loginForm");
                 $serializedData = $loginForm.serializeArray();
-                $.post("/MobileHub/index.php/auth/authenticate", $serializedData, function (content){
+                $.post("/MobileHub/index.php/api/auth/login", $serializedData, function (content){
                     
                     // Deserialise the JSON
                     content = jQuery.parseJSON(content);
