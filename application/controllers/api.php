@@ -17,7 +17,7 @@ class api extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib', 'curl'));
+        $this->load->library(array('authlib'));
 
         $this->ci = &get_instance();
         $this->ci->load->model('user');

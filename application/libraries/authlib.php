@@ -13,7 +13,6 @@ class Authlib {
         // access models etc. (because we don't extend a core
         // CI class)
         $this->ci = &get_instance();
- 
         $this->ci->load->model('user');
     }
  

@@ -1,5 +1,5 @@
 <div class="container">
-    <form action="<?php echo site_url('api/auth/createaccount') ?>" method="POST" class="form-horizontal form-signup" id="registerForm">
+    <form action="<?php echo site_url('api/auth/create') ?>" method="POST" class="form-horizontal form-signup" id="registerForm">
         <legend>Create Account</legend><br>
         <div class="form-group">
             <label class="control-label col-sm-4">Username</label>
@@ -66,18 +66,17 @@
         
          onSuccess : function() {
                 $dataToSend = new Array();
-                $loginForm = $("#registerForm");
-                $serializedData = $loginForm.serializeArray();
+                $registerForm = $("#registerForm");
+                $serializedData = $registerForm.serializeArray();
                 $.post("/MobileHub/index.php/api/auth/create", $serializedData, function (content){
                     
                     // Deserialise the JSON
                     content = jQuery.parseJSON(content);
                     console.log(content);
                     if(content.message === "success"){
-                        $("#registerForm reg-error").removeClass('alert alert-danger');
-                        $("#registerForm reg-error").addClass('alert alert-success');
-                        $("#registerForm reg-error").text('Account created successful!');
-                        location.reload();
+                        $("#registerForm div[id=reg-error]").removeClass('alert alert-danger');
+                        $("#registerForm div[id=reg-error]").addClass('alert alert-success');
+                        $("#registerForm div[id=reg-error]").text('Account created successful!');
                     }else{
                         $("#registerForm div[id=reg-error]").addClass('alert alert-danger');
                         $("#registerForm div[id=reg-error]").text(content.message);
