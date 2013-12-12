@@ -33,6 +33,7 @@ class Question extends MY_Model{
     function basicSearch($query)
     {
         $this->db->like(array('questionTitle' => $query));
+        //$this->db->select('title, content, date');
         $res = $this->db->get('questions');
         return $res->result();
     }        

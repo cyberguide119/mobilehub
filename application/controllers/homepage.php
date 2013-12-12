@@ -18,7 +18,7 @@ class Homepage extends MY_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library('authlib');
+        $this->load->library(array('authlib','searchlib'));
 
         $this->ci = &get_instance();
         $this->load->model(array('Question', 'User', 'QuestionsTags', 'Tag'));
@@ -38,14 +38,9 @@ class Homepage extends MY_Controller {
         foreach ($questionsList as $question) {
             $user = new User();
             $user->load($question->questionId);
-            $tagsArr = array();
+            //$tagsArr = array();
 
-            $questionsTags = $this->QuestionsTags->getTagIDsForQuestion($question->questionId);
-            foreach ($questionsTags as $questTagRow) {
-                $tag = new Tag();
-                $tag->load($questTagRow->tagId);
-                $tagsArr[] = $tag->tagName;
-            }
+            $tagsArr = $this->searchlib->getTagsArrayForQuestionId($question->questionId);
 
             // Creating the array which is to be pased on to the HomepageView
             $questions[] = array(

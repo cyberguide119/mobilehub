@@ -125,7 +125,6 @@ class api extends CI_Controller {
      */
     private function searchQuestions() {
         $query = $this->input->get('query');
-        $query = $this->searchlib->convertQueryToString($query);
         $results = $this->searchlib->search($query);
 
         if (count($results) > 0) {
