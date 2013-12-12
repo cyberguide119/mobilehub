@@ -59,7 +59,7 @@
         if ($res->num_rows() != 1) { // should be only ONE matching row!!
             return false;
         }
-
+        
         // remember login
         if($rememberLogin == false){
             // User does not want to remember his session

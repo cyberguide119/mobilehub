@@ -15,8 +15,8 @@
                         $("#error").removeClass('alert alert-danger');
                         $("#error").addClass('alert alert-success');
                         $("#error").text('Login successful!');
-                        location.reload();
-                    }else{
+                        location.reload(); 
+                   }else{
                         $("#error").addClass('alert alert-danger');
                         $("#error").text('Sorry, your login credentials are incorrect! Please try again');
                     }
