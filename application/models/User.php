@@ -47,6 +47,7 @@ class User extends MY_Model {
         if ($emailExists->num_rows() > 0) {
             return "Email already exists";
         }
+        
         $hashpwd = sha1($pwd);
         $this->load->helper('date');
         $datestring = "%Y-%m-%d %h-%i-%a";

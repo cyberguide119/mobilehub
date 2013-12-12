@@ -29,8 +29,13 @@ class Question extends MY_Model{
         parent::__construct();
         $this->load->database();
     }
-
-        
+    
+    function basicSearch($query)
+    {
+        $this->db->like(array('questionTitle' => $query));
+        $res = $this->db->get('questions');
+        return $res->result();
+    }        
 }
 
 ?>

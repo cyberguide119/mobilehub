@@ -31,8 +31,10 @@ Tags
 	index.php/api/tag/get/question/id
 
 Search
-	index.php/api/search/get/query/
+	index.php/api/search/questions/Q+
 
-	index.php/api/search/get/query/
+	index.php/api/search/users/Q+
+
+	index.php/api/search/tags/Q+
 
 

@@ -10,8 +10,12 @@
  *
  * @author DRX
  */
-class Search extends CI_Controller{
-    //put your code here
+class Search extends MY_Controller{
+    function __construct() {
+        parent::__construct();
+    }
+    
+    // do the advanced search pagge..that's all
 }
 
 ?>

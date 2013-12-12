@@ -17,7 +17,7 @@ class api extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib'));
+        $this->load->library(array('authlib', 'searchlib'));
 
         $this->ci = &get_instance();
         $this->ci->load->model('user');
@@ -38,12 +38,12 @@ class api extends CI_Controller {
 
     private function get() {
         $args = $this->uri->uri_to_assoc(1);
-        switch (strtolower($args['auth'])) {
+        switch (strtolower($args['api'])) {
             case 'logout' :
                 $this->logout();
                 break;
-            case 'register':
-                $this->register();
+            case 'search':
+                $this->loadSearchLogic($args);
                 break;
             case 'forgot':
                 $this->forgot();
@@ -81,9 +81,14 @@ class api extends CI_Controller {
     }
 
     private function loadSearchLogic($args) {
-        
+        if (array_key_exists('questions', $args)) {
+            $this->searchQuestions();
+        } // Check the spec
     }
 
+    /**
+     * All the methods related to index.php/api/auth
+     */
     private function authenticate() {
         $username = $this->input->post('uname');
         $password = $this->input->post('pword');
@@ -110,6 +115,23 @@ class api extends CI_Controller {
             $response['message'] = 'success';
         } else {
             $response['message'] = $errmsg;
+        }
+
+        echo json_encode($response);
+    }
+
+    /**
+     * All the methods related to index.php/api/search
+     */
+    private function searchQuestions() {
+        $query = $this->input->get('query');
+        $query = $this->searchlib->convertQueryToString($query);
+        $results = $this->searchlib->search($query);
+
+        if (count($results) > 0) {
+            $response['results'] = $results;
+        } else {
+            $response['results'] = "No results found";
         }
 
         echo json_encode($response);
