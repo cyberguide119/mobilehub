@@ -2,7 +2,8 @@
     /* important to locate this script AFTER the closing form element, so form object is loaded in DOM before setup is called */
     function search() {
         var searchQuery = $("#search-term").val();
-        window.window.location.href = 'index.php/search?query='+searchQuery;
+        searchQuery = searchQuery.replace(/ /g, '+');
+        window.window.location.href = '/MobileHub/index.php/search?query='+searchQuery;
 //        $("#searchForm").submit();
 //        $.get("/MobileHub/index.php/api/search/questions?query=" + searchQuery.toString(), function(resultsData) {
 //            //$(".result").html(data);
