@@ -15,8 +15,6 @@ if (!defined('BASEPATH'))
  */
 class MY_Controller extends CI_Controller {
     
-    public $search_data;
-
     function __construct() {
         parent::__construct();
         $this->load->library(array('authlib'));

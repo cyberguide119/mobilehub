@@ -23,7 +23,8 @@ class Search extends MY_Controller{
     
     private function results($results){
         $this->loadHeaderData();
-        $this->load->view('search/SearchResultsView',$results);
+        $data["results"] = $results;
+        $this->load->view('search/SearchResultsView',$data);
         $this->loadFooterData();        
     }
     

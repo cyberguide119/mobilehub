@@ -13,7 +13,7 @@ if (!defined('BASEPATH'))
  *
  * @author DRX
  */
-class api extends CI_Controller {
+class Api extends CI_Controller {
 
     function __construct() {
         parent::__construct();
