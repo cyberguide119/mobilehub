@@ -19,16 +19,33 @@ class searchlib {
         // access models etc. (because we don't extend a core
         // CI class)
         $this->ci = &get_instance();
-        $this->ci->load->model(array('Question','Tag','QuestionsTags'));
+        $this->ci->load->model(array('Question', 'Tag', 'QuestionsTags', 'User'));
         $this->ci->load->helper('utility');
     }
 
     public function search($query) {
+        $questions = array();
         $query = convertQueryToString($query);
         $res = $this->ci->Question->basicSearch($query);
-        return $res;
+
+        foreach ($res as $question) {
+            $tagsArr = $this->getTagsArrayForQuestionId($question->questionId);
+            $user = new User();
+            $user->load($question->questionId);
+            $questions[] = array(
+                "questionTitle" => $question->questionTitle,
+                "questionDescription" => $question->questionDescription,
+                "askedOn" => $question->askedOn,
+                "askerName" => $user->username,
+                "answerCount" => $question->answerCount,
+                "votes" => $question->netVotes,
+                "tags" => $tagsArr,
+            );
+        }
+
+        return $questions;
     }
-    
+
     public function getTagsArrayForQuestionId($questionId) {
         $tagsArr = array();
         $questionsTags = $this->ci->QuestionsTags->getTagIDsForQuestion($questionId);

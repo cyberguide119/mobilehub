@@ -126,7 +126,6 @@ class Api extends CI_Controller {
     private function searchQuestions() {
         $query = $this->input->get('query');
         $results = $this->searchlib->search($query);
-
         if (count($results) > 0) {
             $response['results'] = $results;
         } else {
