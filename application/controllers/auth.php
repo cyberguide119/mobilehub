@@ -109,27 +109,7 @@ class auth extends MY_Controller {
 //        $this->session->set_userdata('session_id', $session_id);
 //        echo $response;
         
-//            $ch =  curl_init();
-//
-//            $useragent = isset($z['useragent']) ? $z['useragent'] : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20100101 Firefox/10.0.2';
-//
-//            curl_setopt( $ch, CURLOPT_URL, 'http://localhost/MobileHub/index.php/api/authenticate' );
-//            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-//            curl_setopt( $ch, CURLOPT_AUTOREFERER, true );
-//            curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
-//            curl_setopt( $ch, CURLOPT_POST, $credentials);
-//
-//            //if( isset($z['post']) )         curl_setopt( $ch, CURLOPT_POSTFIELDS, $z['post'] );
-//            //if( isset($z['refer']) )        curl_setopt( $ch, CURLOPT_REFERER, $z['refer'] );
-//
-//            curl_setopt( $ch, CURLOPT_USERAGENT, $useragent );
-//            //curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, ( isset($z['timeout']) ? $z['timeout'] : 5 ) );
-//            curl_setopt( $ch, CURLOPT_COOKIEJAR,  dirname(__FILE__)."/cookie.txt");
-//            curl_setopt($ch, CURLOPT_COOKIEFILE, dirname(__FILE__)."/cookie.txt");
-//
-//            $result = curl_exec( $ch );
-//            curl_close( $ch );
-//            echo $result;
+
     }
 
     public function logout() {

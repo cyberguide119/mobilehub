@@ -1,4 +1,4 @@
-<form action="<?php echo site_url('api/auth/login'); ?>" method="POST" role="form" class="form-signin" id="loginForm">
+<form action="" method="POST" role="form" class="form-signin" id="loginForm">
     <legend><span class="glyphicon glyphicon-lock"></span>&nbsp;Log in</legend>
     <p>Please log in using your credentials</p>
     <div class="form-group">
@@ -18,7 +18,7 @@
     </div>
     <div class="form-group">
         <button class="btn btn-large btn-primary" type="submit" id="btnSubmit">Log in</button>
-        <button type="reset" class="btn btn-large btn-default">Reset</button>
+        <button type="reset" class="btn btn-large btn-default" onclick="resetForm();">Reset</button>
     </div>
     <div id="error"></div>
 </form>

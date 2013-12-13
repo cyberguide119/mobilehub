@@ -25,7 +25,7 @@ class searchlib {
 
     public function search($query) {
         $query = convertQueryToString($query);
-        $res = $this->ci->question->basicSearch($query);
+        $res = $this->ci->Question->basicSearch($query);
         return $res;
     }
     

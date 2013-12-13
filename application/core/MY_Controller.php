@@ -14,6 +14,8 @@ if (!defined('BASEPATH'))
  * @author DRX
  */
 class MY_Controller extends CI_Controller {
+    
+    public $search_data;
 
     function __construct() {
         parent::__construct();

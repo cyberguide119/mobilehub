@@ -59,11 +59,11 @@ and open the template in the editor.
                         <li><a href="<?php echo site_url('homepage/about'); ?>">About Us</a></li>
                     </ul>
                     <div class="col-sm-3 col-md-3 pull-left">
-                        <form action="/search" class="navbar-form" method="get" role="search">
+                        <form action="/MobileHub/index.php/question/search" class="navbar-form" method="get" role="search" id="searchForm" name="searchForm">
                             <div class="input-group">
-                                <input class="form-control" id="srch-term" name="q" placeholder="Search" type="text">
+                                <input class="form-control" id="search-term" name="q" placeholder="Search" type="text">
                                 <div class="input-group-btn">
-                                    <button style="height: 43px;" class="btn btn-warning" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                    <button style="height: 43px;" class="btn btn-warning" type="submit" onclick="search();"><i class="glyphicon glyphicon-search"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -74,7 +74,7 @@ and open the template in the editor.
                             echo '<li><a href="' . site_url('#') . '" data-reveal-id="myError" data-animation="fade"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
                             echo '<li><a href="#" data-reveal-id="myModal" data-animation="fade">Login</a></li>';
                         } else {
-                            echo '<li><a href="'. site_url('question/ask') . '"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
+                            echo '<li><a href="' . site_url('question/ask') . '"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
                             echo '<div class="pull-right"><ul class="nav pull-right"><li class="dropdown">';
                             echo '<a href="' . site_url('') . '" class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 4%; color: white;">' . $name . '<b class="caret"></b></a>';
                             echo '<ul class="dropdown-menu"><li><a href="/user/preferences"><i class="glyphicon glyphicon-user"></i> My Profile</a></li>';

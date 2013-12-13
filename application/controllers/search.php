@@ -15,6 +15,18 @@ class Search extends MY_Controller{
         parent::__construct();
     }
     
+    public function index(){
+        $results = $this->input->get('query');
+        $this->results($results);
+        //var_dump($results);
+    }
+    
+    private function results($results){
+        $this->loadHeaderData();
+        $this->load->view('search/SearchResultsView',$results);
+        $this->loadFooterData();        
+    }
+    
     // do the advanced search pagge..that's all
 }
 
