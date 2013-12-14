@@ -62,7 +62,7 @@
         $qCategory = (($("#qCategory")[0]).selectedIndex)+1;
         $qAskerName = "<?php echo $name ?>";
 
-        $jsonObj = {"Title": $qTitle, "Desciption": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName};
+        $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName};
 
         if (!($qTitle === '' || $qDesc === '' || $qTags === '' || $qCategory === '')) {
             $.post("/MobileHub/index.php/api/question/post", $jsonObj, function(content) {
@@ -70,11 +70,11 @@
                 // Deserialise the JSON
                 content = jQuery.parseJSON(content);
                 console.log(content);
-                if (content.message === "correct") {
+                if (content.message === "Success") {
                     $("#qError").removeClass('alert alert-danger');
                     $("#qError").addClass('alert alert-success');
                     $("#qError").text('Question posted!');
-                    //location.reload();
+                    window.location.href= "/MobileHub/index.php/";
                 } else {
                     $("#qError").addClass('alert alert-danger');
                     $("#qError").text('Sorry, something went wrong when posting the question! Please try again');

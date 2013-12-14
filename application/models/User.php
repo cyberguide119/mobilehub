@@ -109,6 +109,13 @@ class User extends MY_Model {
         $res = $this->db->get('user')->row();
         return $res->username;
     }
+    
+    function getUserIdByName($username){
+        $this->db->select('userId');
+        $this->db->where('username',$username);
+        $res = $this->db->get('user')->row();
+        return $res->userId;
+    }
 
 }
 

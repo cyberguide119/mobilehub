@@ -156,7 +156,13 @@ class Api extends CI_Controller {
         $qCategory = $this->input->post('Category');
         $qAskerName = $this->input->post('AskerName');
         
-        $this->questionslib->postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName);
+        if($this->questionslib->postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName)){
+            $response["message"] = "Success";
+        }else{
+            $response["message"] = "Error";
+        }
+        
+        echo json_encode($response);
     }
 
 }

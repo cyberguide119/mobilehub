@@ -3,27 +3,7 @@
     function search() {
         var searchQuery = $("#search-term").val();
         searchQuery = searchQuery.replace(/ /g, '+');
-        window.window.location.href = '/MobileHub/index.php/search?query='+searchQuery;
-//        $("#searchForm").submit();
-//        $.get("/MobileHub/index.php/api/search/questions?query=" + searchQuery.toString(), function(resultsData) {
-//            //$(".result").html(data);
-//            resultsData = jQuery.parseJSON(resultsData);
-//             $.post("/MobileHub/index.php/search/results", resultsData, function(content) {
-//                     console.log(resultsData);
-//                     window.location.replace('/MobileHub/index.php/search/results');
-//                }), "json";
-//                return true;
-//        });
-
-//        $.get("/MobileHub/index.php/api/search/questions?query=" + searchQuery.toString(), function(resultsData) {
-//            //$(".result").html(data);
-//            resultsData = jQuery.parseJSON(resultsData);
-//             $.post("/MobileHub/index.php/search/results", resultsData, function(content) {
-//                     console.log(resultsData);
-//                     window.location.replace('/MobileHub/index.php/search/results');
-//                }), "json";
-//                return true;
-//        });
+        window.location.href = '/MobileHub/index.php/search?query='+searchQuery;
     }
 
     $.validate({

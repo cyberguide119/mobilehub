@@ -17,7 +17,7 @@ class Question extends MY_Model{
     public $questionId;
     public $questionTitle;
     public $questionDescription;
-    public $askedUserId;
+    public $askerUserId;
     public $answerCount;
     public $askedOn;
     public $netVotes;

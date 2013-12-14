@@ -25,18 +25,27 @@ class questionslib {
     public function postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName){
         $question = new Question();
         $user = new User();
+        $questionsTag = new QuestionsTags();
         
-        $this->load->helper('date');
+        $this->ci->load->helper('date');
         $datestring = "%Y-%m-%d %h-%i-%a";
         $time = time();
         $formattedDate = mdate($datestring, $time);
         
-        $user->
+        $userId = $user->getUserIdByName($qAskerName);
         
         $question->questionTitle = $qTitle;
         $question->questionDescription = $qDesc;
         $question->categoryId = $qCategory;
         $question->askedOn = $formattedDate;
+        $question->askerUserId = $userId;
+        $question->answerCount = 0;
+        $question->netVotes = 0;
+        $question->downVotes = 0;
+        $question->upVotes = 0;
+        
+        $question->save();
+        return true;
     }
     
 }
