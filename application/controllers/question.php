@@ -17,12 +17,15 @@ class Question extends MY_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->load->model('Category');
     }
 
     public function ask() {
         if ($this->authlib->is_loggedin()) {
             $this->loadHeaderData();
-            $this->load->view('question/AskView');
+            $cat = new Category();
+            $categories = $cat->get();
+            $this->load->view('question/AskView',array("categories"=>$categories));
             $this->loadFooterData();
         } else {
             $this->loadHeaderData();

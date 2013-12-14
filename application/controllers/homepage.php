@@ -37,7 +37,7 @@ class Homepage extends MY_Controller {
 
         foreach ($questionsList as $question) {
             $user = new User();
-            $user->load($question->questionId);
+            $username = $user->getUserById($question->askerUserId);
             //$tagsArr = array();
 
             $tagsArr = $this->searchlib->getTagsArrayForQuestionId($question->questionId);
@@ -47,7 +47,7 @@ class Homepage extends MY_Controller {
                 "questionTitle" => $question->questionTitle,
                 "questionDescription" => $question->questionDescription,
                 "askedOn" => $question->askedOn,
-                "askerName" => $user->username,
+                "askerName" => $username,
                 "answerCount" => $question->answerCount,
                 "votes" => $question->netVotes,
                 "tags" => $tagsArr,

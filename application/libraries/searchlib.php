@@ -31,12 +31,12 @@ class searchlib {
         foreach ($res as $question) {
             $tagsArr = $this->getTagsArrayForQuestionId($question->questionId);
             $user = new User();
-            $user->load($question->questionId);
+            $username = $user->getUserById($question->askerUserId);
             $questions[] = array(
                 "questionTitle" => $question->questionTitle,
                 "questionDescription" => $question->questionDescription,
                 "askedOn" => $question->askedOn,
-                "askerName" => $user->username,
+                "askerName" => $username,
                 "answerCount" => $question->answerCount,
                 "votes" => $question->netVotes,
                 "tags" => $tagsArr,

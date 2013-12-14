@@ -17,7 +17,7 @@ class Api extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib', 'searchlib'));
+        $this->load->library(array('authlib', 'searchlib', 'questionslib'));
 
         $this->ci = &get_instance();
         $this->ci->load->model('user');
@@ -64,6 +64,9 @@ class Api extends CI_Controller {
             case 'search':
                 $this->loadSearchLogic($args);
                 break;
+            case 'question':
+                $this->loadQuestionLogic($args);
+                break;
             default:
                 show_error('Unsupported resource', 404);
                 break;
@@ -83,6 +86,12 @@ class Api extends CI_Controller {
     private function loadSearchLogic($args) {
         if (array_key_exists('questions', $args)) {
             $this->searchQuestions();
+        } // Check the spec
+    }
+    
+    private function loadQuestionLogic($args) {
+        if (array_key_exists('post', $args)) {
+            $this->postQuestion();
         } // Check the spec
     }
 
@@ -133,6 +142,21 @@ class Api extends CI_Controller {
         }
 
         echo json_encode($response);
+    }
+    
+    /**
+     * All the methods related to asking a question
+     */
+    
+    private function postQuestion()
+    {
+        $qTitle = $this->input->post('Title');
+        $qDesc = $this->input->post('Description');
+        $qTags = $this->input->post('Tags');
+        $qCategory = $this->input->post('Category');
+        $qAskerName = $this->input->post('AskerName');
+        
+        $this->questionslib->postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName);
     }
 
 }

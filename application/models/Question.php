@@ -23,6 +23,7 @@ class Question extends MY_Model{
     public $netVotes;
     public $upVotes;
     public $downVotes;
+    public $categoryId;
     
     function __construct()
     {
