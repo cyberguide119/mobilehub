@@ -23,6 +23,10 @@ class QuestionsTags extends CI_Model{
         $this->load->database();
     }
     
+    function save($questionId, $tagId){
+        $this->db->insert('questions_tags',array('questionId' => $questionId, 'tagId' => $tagId));
+    }
+    
     function getTagIDsForQuestion($questionId)
     {
         $this->db->select('tagId');

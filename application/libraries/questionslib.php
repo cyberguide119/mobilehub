@@ -25,7 +25,6 @@ class questionslib {
     public function postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName){
         $question = new Question();
         $user = new User();
-        $questionsTag = new QuestionsTags();
         
         $this->ci->load->helper('date');
         $datestring = "%Y-%m-%d %h-%i-%a";
@@ -45,9 +44,26 @@ class questionslib {
         $question->upVotes = 0;
         
         $question->save();
+        $this->saveTags($qTags, $qTitle);
         return true;
     }
     
+    private function saveTags($tags, $qTitle){
+        $splittedTags = explode(",", $tags);
+        for($i = 0; $i<count($splittedTags); $i++)
+        {
+            $tmpTrim = trim($splittedTags[$i]);
+            $splittedTags[$i] = strtolower($tmpTrim);
+            
+            $tagToSave = new Tag();
+            $tagId = $tagToSave->getTagIdToSave($splittedTags[$i]);
+            
+            $qTemp = new Question();
+            $qTemp->getQuestionWithTitle($qTitle);
+            
+            $this->ci->QuestionsTags->save($qTemp->getQuestionWithTitle($qTitle),$tagId);
+        }
+    }
 }
 
 ?>

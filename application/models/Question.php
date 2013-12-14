@@ -1,4 +1,7 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 /*
  * To change this template, choose Tools | Templates
@@ -10,10 +13,11 @@
  *
  * @author DRX
  */
-class Question extends MY_Model{
+class Question extends MY_Model {
+
     const DB_TABLE = 'questions';
     const DB_TABLE_PK = 'questionId';
-    
+
     public $questionId;
     public $questionTitle;
     public $questionDescription;
@@ -24,20 +28,24 @@ class Question extends MY_Model{
     public $upVotes;
     public $downVotes;
     public $categoryId;
-    
-    function __construct()
-    {
+
+    function __construct() {
         parent::__construct();
         $this->load->database();
     }
-    
-    function basicSearch($query)
-    {
+
+    function basicSearch($query) {
         $this->db->like(array('questionTitle' => $query));
-        //$this->db->select('title, content, date');
         $res = $this->db->get('questions');
         return $res->result();
-    }        
+    }
+
+    function getQuestionWithTitle($qTitle) {
+        $question = $this->db->get_where('questions', array('questionTitle' => $qTitle));
+        $res = $question->result();
+        return $res[0]->questionId;
+    }
+
 }
 
 ?>
