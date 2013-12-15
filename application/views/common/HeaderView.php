@@ -71,7 +71,7 @@ and open the template in the editor.
                     <ul class="nav navbar-nav navbar-right">
                         <?php
                         if ($name == NULL) {
-                            echo '<li><a href="' . site_url('#') . '" data-reveal-id="myError" data-animation="fade"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
+                            echo '<li><a href="' . site_url('#') . '" data-reveal-id="myError" data-animation="fade" style="padding: 0; margin-right: 10px; margin-top: 14px"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
                             echo '<li><a href="#" data-reveal-id="myModal" data-animation="fade">Login</a></li>';
                         } else {
                             echo '<li><a href="' . site_url('question/ask') . '" style="padding: 0; margin-right: 10px; margin-top: 14px"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
