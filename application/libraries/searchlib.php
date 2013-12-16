@@ -48,10 +48,14 @@ class searchlib {
 
     public function advSearch($advWords, $advPhrase, $advTags, $advCategory) {
         $questions = array();
-        //$query = convertQueryToString($query);
-        $questionsArr = $this->ci->Question->basicSearch($advWords, $advPhrase);
+        $questionsArr = $this->ci->Question->advancedSearch($this->splitWords($advWords), $advPhrase);
         $tagsArr = $this->splitTags($advTags);
-        $res = $this->filterQuestionsByTag($questionsArr, $tagsArr);
+        
+        if($advTags !== ''){
+            $res = $this->filterQuestionsByTag($questionsArr, $tagsArr);
+        }else{
+            $res = $questionsArr;
+        }
 
         foreach ($res as $question) {
             $tagsArr = $this->getTagsArrayForQuestionId($question->questionId);
@@ -67,7 +71,6 @@ class searchlib {
                 "tags" => $tagsArr,
             );
         }
-
         return $questions;
     }
 
@@ -83,7 +86,6 @@ class searchlib {
     }
 
     private function filterQuestionsByTag($questionsArr, $tagsArr) {
-        $filteredArr = array();
         foreach ($questionsArr as $question) {
             $tagsNameArr = $this->getTagsArrayForQuestionId($question->questionId);
             foreach ($tagsArr as $tagName) {
@@ -100,7 +102,7 @@ class searchlib {
     private function splitWords($wordsStr) {
         $splittedWords = explode(" ", $wordsStr);
         for ($i = 0; $i < count($splittedWords); $i++) {
-            $splittedWords[i] = trim($splittedWords[i]);
+            $splittedWords[$i] = trim($splittedWords[$i]);
         }
         return $splittedWords;
     }
@@ -113,7 +115,6 @@ class searchlib {
         }
         return $splittedTags;
     }
-
 }
 
 ?>

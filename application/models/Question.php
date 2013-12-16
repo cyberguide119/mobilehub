@@ -45,12 +45,13 @@ class Question extends MY_Model {
         $this->db->like(array('questionTitle' => $advPhrase));
         $this->db->or_like(array('questionDescription' => $advPhrase));
 
-        foreach ($advWords as $term) {
-            $this->db->or_like('questionTitle', $term);
-            $this->db->or_like('questionDescription', $term);
+        if ($advWords === '') {
+            foreach ($advWords as $term) {
+                $this->db->or_like('questionTitle', $term);
+                $this->db->or_like('questionDescription', $term);
+            }
         }
 
-        //$this->db->where(array('questionDescription' => $advPhrase));
         $res = $this->db->get('questions');
         return $res->result();
     }
