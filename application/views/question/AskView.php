@@ -23,7 +23,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="tags">
-                                    Tags</label>
+                                    Tags</label> 
+                                <a href="#" id="helpText" data-toggle="popover" title="" data-content="You can create tags either by pressing enter after each tag or by using commas to separate the tags. Eg : android, java, help" role="button" data-original-title="Quick Tip">(Help)</a>
                                 <br>
                                 <input type="text" data-role="tagsinput" class="form-control" id="qTags" />
                             </div>
@@ -54,6 +55,9 @@
 </div>
 
 <script type="text/javascript">
+                                $(function() {
+                                    $('#helpText').popover();
+                                });
                                 function postQuestion()
                                 {
                                     $qTitle = $("#qTitle").val();
