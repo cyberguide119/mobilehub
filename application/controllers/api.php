@@ -154,6 +154,7 @@ class Api extends CI_Controller {
 
         $results = $this->searchlib->advSearch($advWords, $advPhrase, $advTags, $advCategory);
         if (count($results) > 0) {
+            $response['message'] = "Success";
             $response['results'] = $results;
         } else {
             $response['results'] = "No results found";

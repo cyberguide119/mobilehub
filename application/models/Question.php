@@ -44,8 +44,8 @@ class Question extends MY_Model {
     function advancedSearch($advWords, $advPhrase) {
         $this->db->like(array('questionTitle' => $advPhrase));
         $this->db->or_like(array('questionDescription' => $advPhrase));
-
-        if ($advWords === '') {
+        
+        if (!($advWords === '')) {
             foreach ($advWords as $term) {
                 $this->db->or_like('questionTitle', $term);
                 $this->db->or_like('questionDescription', $term);
