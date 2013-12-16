@@ -12,10 +12,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Title" required id="qTitle" />
+                                <input type="text" class="form-control" placeholder="Title" required id="qTitle" maxlength="100"/>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" placeholder="Describe your problem here" rows="5" required id="qDesc"></textarea>
+                                <textarea class="form-control" placeholder="Describe your problem here" rows="5" required id="qDesc" maxlength="600"></textarea>
                             </div>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="tags">
-                                    Tags</label> 
+                                    Tags</label>
                                 <a href="#" id="helpText" data-toggle="popover" title="" data-content="You can create tags either by pressing enter after each tag or by using commas to separate the tags. Eg : android, java, help" role="button" data-original-title="Quick Tip">(Help)</a>
                                 <br>
                                 <input type="text" data-role="tagsinput" class="form-control" id="qTags" />
@@ -58,6 +58,14 @@
                                 $(function() {
                                     $('#helpText').popover();
                                 });
+
+                                $('#qDesc').maxlength({
+                                    alwaysShow: true
+                                });
+
+                                $('#qTitle').maxlength({
+                                    alwaysShow: true
+                                });
                                 function postQuestion()
                                 {
                                     $qTitle = $("#qTitle").val();
@@ -66,9 +74,11 @@
                                     $qCategory = (($("#qCategory")[0]).selectedIndex) + 1;
                                     $qAskerName = "<?php echo $name ?>";
 
+                                    console.log($qTags);
+
                                     $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName};
 
-                                    if (!($qTitle === '' || $qDesc === '' || $qTags === '' || $qCategory === '')) {
+                                    if (valdateForm($qTitle, $qDesc, $qTags, $qCategory)) {
                                         $.post("/MobileHub/index.php/api/question/post", $jsonObj, function(content) {
 
                                             // Deserialise the JSON
@@ -88,14 +98,33 @@
                                             $("#qError").text('Sorry, something went wrong when posting the question! Please try again');
 
                                         }), "json";
-
-
-
                                         return true;
                                     }
 
                                     function checkTags($tags) {
                                         return $tags;
+                                    }
+
+                                    function valdateForm($qTitle, $qDesc, $qTags, $qCategory) {
+                                        var errors = new Array();
+                                        var errorStr = "";
+                                        if ($qTitle === '' || $qDesc === '' || $qTags === '' || $qCategory === '') {
+                                            errors.push("You need to fill all the sections");
+                                        }
+
+                                        if (($qTags.split(',')).length > 4) {
+                                            errors.push("You can have only a maximum of 4 tags");
+                                        }
+
+                                        if (errors.length > 0) {
+                                            for (x in errors) {
+                                                errorStr += errors[x] + "\n\n";
+                                            }
+                                            $("#qError").addClass('alert alert-danger');
+                                            $("#qError").text(errorStr);
+                                            return false;
+                                        }
+                                        return true;
                                     }
                                 }
 </script>
