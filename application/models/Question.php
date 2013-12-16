@@ -36,6 +36,21 @@ class Question extends MY_Model {
 
     function basicSearch($query) {
         $this->db->like(array('questionTitle' => $query));
+        $this->db->or_like(array('questionDescription' => $query));
+        $res = $this->db->get('questions');
+        return $res->result();
+    }
+
+    function advancedSearch($advWords, $advPhrase) {
+        $this->db->like(array('questionTitle' => $advPhrase));
+        $this->db->or_like(array('questionDescription' => $advPhrase));
+
+        foreach ($advWords as $term) {
+            $this->db->or_like('questionTitle', $term);
+            $this->db->or_like('questionDescription', $term);
+        }
+
+        //$this->db->where(array('questionDescription' => $advPhrase));
         $res = $this->db->get('questions');
         return $res->result();
     }

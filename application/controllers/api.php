@@ -84,11 +84,13 @@ class Api extends CI_Controller {
     }
 
     private function loadSearchLogic($args) {
-        if (array_key_exists('questions', $args)) {
-            $this->searchQuestions();
-        } // Check the spec
+        if (in_array('advanced', $args)) {
+            $this->advSearchQuestions();
+        } else if (array_key_exists('questions', $args)) {
+            $this->searchQuestions(); //Won't be needing this
+        }// Check the spec
     }
-    
+
     private function loadQuestionLogic($args) {
         if (array_key_exists('post', $args)) {
             $this->postQuestion();
@@ -143,25 +145,39 @@ class Api extends CI_Controller {
 
         echo json_encode($response);
     }
-    
+
+    private function advSearchQuestions() {
+        $advWords = $this->input->post('Words');
+        $advPhrase = $this->input->post('Phrase');
+        $advTags = $this->input->post('Tags');
+        $advCategory = $this->input->post('Category');
+
+        $results = $this->searchlib->advSearch($advWords, $advPhrase, $advTags, $advCategory);
+        if (count($results) > 0) {
+            $response['results'] = $results;
+        } else {
+            $response['results'] = "No results found";
+        }
+
+        echo json_encode($response);
+    }
+
     /**
      * All the methods related to asking a question
      */
-    
-    private function postQuestion()
-    {
+    private function postQuestion() {
         $qTitle = $this->input->post('Title');
         $qDesc = $this->input->post('Description');
         $qTags = $this->input->post('Tags');
         $qCategory = $this->input->post('Category');
         $qAskerName = $this->input->post('AskerName');
-        
-        if($this->questionslib->postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName)){
+
+        if ($this->questionslib->postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName)) {
             $response["message"] = "Success";
-        }else{
+        } else {
             $response["message"] = "Error";
         }
-        
+
         echo json_encode($response);
     }
 

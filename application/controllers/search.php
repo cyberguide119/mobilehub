@@ -13,6 +13,7 @@
 class Search extends MY_Controller{
     function __construct() {
         parent::__construct();
+        $this->load->model('Category');
     }
     
     public function index(){
@@ -24,6 +25,9 @@ class Search extends MY_Controller{
     private function results($results){
         $this->loadHeaderData();
         $data["results"] = $results;
+        $cat = new Category();
+        $categories = $cat->get();
+        $data["categories"] = $categories;
         $this->load->view('search/SearchResultsView',$data);
         $this->loadFooterData();        
     }

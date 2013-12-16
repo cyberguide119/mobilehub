@@ -33,7 +33,6 @@
                                     Category</label>
                                 <select class="form-control" id="qCategory">
                                     <?php foreach ($categories as $cate): ?>
-                                        <?php var_dump($cate); ?>
                                         <option><?php echo $cate->categoryName ?></option>
                                     <?php endforeach; ?>
                                 </select>
@@ -54,44 +53,44 @@
 </div>
 
 <script type="text/javascript">
-    function postQuestion()
-    {
-        $qTitle = $("#qTitle").val();
-        $qDesc = $("#qDesc").val();
-        $qTags = checkTags($("#qTags").val());
-        $qCategory = (($("#qCategory")[0]).selectedIndex)+1;
-        $qAskerName = "<?php echo $name ?>";
+                                function postQuestion()
+                                {
+                                    $qTitle = $("#qTitle").val();
+                                    $qDesc = $("#qDesc").val();
+                                    $qTags = checkTags($("#qTags").val());
+                                    $qCategory = (($("#qCategory")[0]).selectedIndex) + 1;
+                                    $qAskerName = "<?php echo $name ?>";
 
-        $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName};
+                                    $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName};
 
-        if (!($qTitle === '' || $qDesc === '' || $qTags === '' || $qCategory === '')) {
-            $.post("/MobileHub/index.php/api/question/post", $jsonObj, function(content) {
+                                    if (!($qTitle === '' || $qDesc === '' || $qTags === '' || $qCategory === '')) {
+                                        $.post("/MobileHub/index.php/api/question/post", $jsonObj, function(content) {
 
-                // Deserialise the JSON
-                content = jQuery.parseJSON(content);
-                console.log(content);
-                if (content.message === "Success") {
-                    $("#qError").removeClass('alert alert-danger');
-                    $("#qError").addClass('alert alert-success');
-                    $("#qError").text('Question posted!');
-                    window.location.href= "/MobileHub/index.php/";
-                } else {
-                    $("#qError").addClass('alert alert-danger');
-                    $("#qError").text('Sorry, something went wrong when posting the question! Please try again');
-                }
-            }).fail(function() {
-                $("#qError").addClass('alert alert-danger');
-                $("#qError").text('Sorry, something went wrong when posting the question! Please try again');
+                                            // Deserialise the JSON
+                                            content = jQuery.parseJSON(content);
+                                            console.log(content);
+                                            if (content.message === "Success") {
+                                                $("#qError").removeClass('alert alert-danger');
+                                                $("#qError").addClass('alert alert-success');
+                                                $("#qError").text('Question posted!');
+                                                window.location.href = "/MobileHub/index.php/";
+                                            } else {
+                                                $("#qError").addClass('alert alert-danger');
+                                                $("#qError").text('Sorry, something went wrong when posting the question! Please try again');
+                                            }
+                                        }).fail(function() {
+                                            $("#qError").addClass('alert alert-danger');
+                                            $("#qError").text('Sorry, something went wrong when posting the question! Please try again');
 
-            }), "json";
+                                        }), "json";
 
 
 
-            return true;
-        }
+                                        return true;
+                                    }
 
-        function checkTags($tags) {
-            return $tags;
-        }
-    }
+                                    function checkTags($tags) {
+                                        return $tags;
+                                    }
+                                }
 </script>
