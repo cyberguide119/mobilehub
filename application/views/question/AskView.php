@@ -24,7 +24,8 @@
                             <div class="form-group">
                                 <label for="tags">
                                     Tags</label>
-                                <input type="text" class="form-control" id="qTags" placeholder="Eg: android,phonegap,tutorial" />
+                                <br>
+                                <input type="text" data-role="tagsinput" class="form-control" id="qTags" />
                             </div>
                         </div>
                         <div class="col-md-6">
