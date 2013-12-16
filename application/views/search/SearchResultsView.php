@@ -34,28 +34,34 @@
     }
 </script>
 <div class="container">
-    <div class="panel-body">
+    <div class="panel-body" id="accordion">
         <div class="panel panel-info">
-            <div class="panel-heading">Advanced Search</div>
-            <div class="panel-body">
-                <div class="col-xs-6">
-                    <input type="text" class="form-control" placeholder="Containing any of the words" id="advWords">
-                    <br>
-                    <input type="text" class="form-control" placeholder="Containing the tags" id="advTags">
-                </div>
-                <div class="col-xs-6">
-                    <input type="text" class="form-control" placeholder="Containing the phrase" id="advPhrase">
-                    <br>
-                    <div class="col-xs-9" style="margin-left: -14px;">
-                        <select class="form-control" id="advCategory">
-                            <?php foreach ($categories as $cate): ?>
-                                <option><?php echo $cate->categoryName ?></option>
-                            <?php endforeach; ?>
-                        </select>
+            <div class="panel-heading">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="color: white; text-decoration: none;">
+                    Click here for Advanced Search <b class="caret"></b>
+                </a>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="col-xs-6">
+                        <input type="text" class="form-control" placeholder="Containing any of the words" id="advWords">
+                        <br>
+                        <input type="text" class="form-control" placeholder="Containing the tags" id="advTags">
                     </div>
-                    <div class="col-xs-3">
-                        <button class="btn btn-success btn-mg" id="btnSearch" onclick="advSearch();"><span class="glyphicon glyphicon-search">
-                            </span>Search</button>
+                    <div class="col-xs-6">
+                        <input type="text" class="form-control" placeholder="Containing the phrase" id="advPhrase">
+                        <br>
+                        <div class="col-xs-9" style="margin-left: -14px;">
+                            <select class="form-control" id="advCategory">
+                                <?php foreach ($categories as $cate): ?>
+                                    <option><?php echo $cate->categoryName ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-xs-3">
+                            <button class="btn btn-success btn-mg" id="btnSearch" onclick="advSearch();"><span class="glyphicon glyphicon-search">
+                                </span>Search</button>
+                        </div>
                     </div>
                 </div>
             </div>

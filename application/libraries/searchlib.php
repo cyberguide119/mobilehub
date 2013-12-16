@@ -100,6 +100,8 @@ class searchlib {
     }
 
     private function splitWords($wordsStr) {
+        if($wordsStr === '')
+            return $wordsStr;
         $splittedWords = explode(" ", $wordsStr);
         for ($i = 0; $i < count($splittedWords); $i++) {
             $splittedWords[$i] = trim($splittedWords[$i]);
