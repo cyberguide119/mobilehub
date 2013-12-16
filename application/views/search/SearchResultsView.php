@@ -44,12 +44,12 @@
             <div id="collapseOne" class="panel-collapse collapse">
                 <div class="panel-body">
                     <div class="col-xs-6">
-                        <input type="text" class="form-control" placeholder="Containing any of the words" id="advWords">
+                        <input type="text" class="form-control" placeholder="Containing the phrase" id="advPhrase">
                         <br>
                         <input type="text" class="form-control" placeholder="Containing the tags" id="advTags">
                     </div>
                     <div class="col-xs-6">
-                        <input type="text" class="form-control" placeholder="Containing the phrase" id="advPhrase">
+                        <input type="text" class="form-control" placeholder="Containing any of the words" id="advWords">
                         <br>
                         <div class="col-xs-9" style="margin-left: -14px;">
                             <select class="form-control" id="advCategory">
