@@ -18,7 +18,7 @@ class Homepage extends MY_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib','searchlib'));
+        $this->load->library(array('authlib','searchlib', 'questionslib'));
 
         $this->ci = &get_instance();
         $this->load->model(array('Question', 'User', 'QuestionsTags', 'Tag'));
@@ -31,29 +31,7 @@ class Homepage extends MY_Controller {
     }
 
     private function loadQuestions() {
-        $questions = array();
-
-        $questionsList = $this->Question->get();
-
-        foreach ($questionsList as $question) {
-            $user = new User();
-            $username = $user->getUserById($question->askerUserId);
-            //$tagsArr = array();
-
-            $tagsArr = $this->searchlib->getTagsArrayForQuestionId($question->questionId);
-
-            // Creating the array which is to be pased on to the HomepageView
-            $questions[] = array(
-                "questionTitle" => $question->questionTitle,
-                "questionDescription" => $question->questionDescription,
-                "askedOn" => $question->askedOn,
-                "askerName" => $username,
-                "answerCount" => $question->answerCount,
-                "votes" => $question->netVotes,
-                "tags" => $tagsArr,
-            );
-        }
-
+        $questions = $this->ci->questionslib->getRecentQuestions();
         $this->load->view('home/HomepageView', array(
             'questions' => $questions,
         ));

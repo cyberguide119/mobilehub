@@ -61,6 +61,13 @@ class Question extends MY_Model {
         $res = $question->result();
         return $res[0]->questionId;
     }
+    
+    function getRecentQuestions(){
+        $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->order_by("askedOn", "desc");
+        $questions = $this->db->get("questions");
+        return $questions->result();
+    }
 
 }
 

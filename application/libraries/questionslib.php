@@ -20,6 +20,7 @@ class questionslib {
         // CI class)
         $this->ci = &get_instance();
         $this->ci->load->model(array('Question','User','Tag','QuestionsTags','Category'));
+        $this->ci->load->library('searchlib');
     }
     
     public function postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName){
@@ -63,6 +64,28 @@ class questionslib {
             
             $this->ci->QuestionsTags->save($qTemp->getQuestionWithTitle($qTitle),$tagId);
         }
+    }
+    
+    public function getRecentQuestions(){
+        $questions = array();
+        $questionsList = $this->ci->Question->getRecentQuestions();
+        foreach ($questionsList as $question) {
+            //$user = new User();
+            $username = $this->ci->User->getUserById($question->askerUserId);
+            //$tagsArr = array();
+            $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($question->questionId);
+            // Creating the array which is to be pased on to the HomepageView
+            $questions[] = array(
+                "questionTitle" => $question->questionTitle,
+                "questionDescription" => $question->questionDescription,
+                "askedOn" => $question->askedOn,
+                "askerName" => $username,
+                "answerCount" => $question->answerCount,
+                "votes" => $question->netVotes,
+                "tags" => $tagsArr,
+            );
+        }
+        return $questions;
     }
 }
 
