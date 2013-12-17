@@ -21,10 +21,6 @@ http://zurb.com/playground/reveal-modal-plugin
 
  http://html.toserblog.net/nowknow/
 
-3. Added CI CURL library
-
-https://github.com/philsturgeon/codeigniter-curl
-
 4. Add the mic control
 <input class="form-control" id="srch-term" name="q" placeholder="Search" type="text" x-webkit-speech="true">
 
@@ -43,9 +39,9 @@ http://www.onextrapixel.com/category/tutorials/page/4/
 http://www.onextrapixel.com/examples/awesome-airbnb-ios7-menu-animation/index.html
 
 
-Reverse the order of the homepage questions
+Need to add category wise search
 
-Need to add category wise
+Add that questionListItem class if you need
 
 6. Tags input plugin
 http://timschlechter.github.io/bootstrap-tagsinput/examples/

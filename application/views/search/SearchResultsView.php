@@ -1,12 +1,12 @@
 <script type="text/javascript">
-    function getTagsString($tags)
-    {
-        var str = "";
-        for (var i = 0; i < $tags.length; i++) {
-            str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
-        }
-        return str;
-    }
+//    function getTagsString($tags)
+//    {
+//        var str = "";
+//        for (var i = 0; i < $tags.length; i++) {
+//            str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
+//        }
+//        return str;
+//    }
 
     function advSearch() {
         $advWords = $("#advWords").val();
@@ -27,9 +27,6 @@
             $("#qError").text('Sorry, something went wrong when posting the question! Please try again');
 
         }), "json";
-
-
-
         return true;
     }
 </script>
@@ -68,7 +65,6 @@
         </div>
         <h4>Search Results</h4>
         <ul class="list-group">
-
         </ul>
     </div>
 
