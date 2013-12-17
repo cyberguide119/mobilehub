@@ -22,6 +22,7 @@
                 'I never said I didn't!' interrupted Alice.
                 'You did,' said the Mock Turtle.</p>
             <div>
+                <img src="http://placekitten.com/80/80" height="30" width="30" class="img-responsive img-responsive" alt="" style="float: left;"> &nbsp;
                 <span class="badge badge-success">Posted 2012-08-02 20:47:04</span>
                 <div class="pull-right">
                     <div class="action">
