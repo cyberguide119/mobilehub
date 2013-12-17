@@ -1,25 +1,42 @@
 <div class="container">
-    <div class="col-md-12">
-        <h1>Alice in Wonderland, part dos</h1>
-        <p>'You ought to be ashamed of yourself for asking such a simple question,' added the Gryphon; and then they both sat silent and looked at poor Alice, who felt ready to sink into the earth. At last the Gryphon said to the Mock Turtle, 'Drive on, old fellow! Don't be all day about it!' and he went on in these words:
-            'Yes, we went to school in the sea, though you mayn't believe it—'
-            'I never said I didn't!' interrupted Alice.
-            'You did,' said the Mock Turtle.</p>
-        <div>
-            <span class="badge badge-success">Posted 2012-08-02 20:47:04</span>
-            <div class="pull-right">
-                <div class="action">
-                    <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
-                        android                        </button>
-                    <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
-                        blacklist                        </button>
-                    <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
-                        help                        </button>
-                </div>
+    <div class="row">
+        <div class="col-md-1" style="margin-top: 26px;">
+            <div class="vote-box" title="Votes">
+                <span class="vote-count">0</span>
+                <span class="vote-label">votes</span>
             </div>
-        </div> 
-        <hr>
+            <div class="action">
+
+                <button type="button" class="btn btn-success btn-xs" title="Edit">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                </button>
+                <button type="button" class="btn btn-danger btn-xs" title="Approved">
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-11">
+            <h2>Alice in Wonderland, part dos</h2>
+            <p>'You ought to be ashamed of yourself for asking such a simple question,' added the Gryphon; and then they both sat silent and looked at poor Alice, who felt ready to sink into the earth. At last the Gryphon said to the Mock Turtle, 'Drive on, old fellow! Don't be all day about it!' and he went on in these words:
+                'Yes, we went to school in the sea, though you mayn't believe it—'
+                'I never said I didn't!' interrupted Alice.
+                'You did,' said the Mock Turtle.</p>
+            <div>
+                <span class="badge badge-success">Posted 2012-08-02 20:47:04</span>
+                <div class="pull-right">
+                    <div class="action">
+                        <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
+                            android                        </button>
+                        <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
+                            blacklist                        </button>
+                        <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
+                            help                        </button>
+                    </div>
+                </div>
+            </div> 
+        </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
