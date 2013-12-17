@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Title" required id="qTitle" maxlength="100"/>
+                                <input type="text" class="form-control" placeholder="Title" required id="qTitle" maxlength="100" data-provide="typeahead"/>
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control" placeholder="Describe your problem here" rows="5" required id="qDesc" maxlength="600"></textarea>
@@ -26,7 +26,7 @@
                                     Tags</label>
                                 <a href="#" id="helpText" data-toggle="popover" title="" data-content="You can create tags either by pressing enter after each tag or by using commas to separate the tags. Eg : android, java, help" role="button" data-original-title="Quick Tip">(Help)</a>
                                 <br>
-                                <input type="text" data-role="tagsinput" class="form-control" id="qTags" />
+                                <input type="text" data-role="tagsinput" class="form-control" id="qTags" data-provide="typeahead" />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -56,6 +56,27 @@
 
 <script type="text/javascript">
                                 $(function() {
+                                    jsonTags = new Array();
+
+                                    $.get("/MobileHub/index.php/api/tags/all", function(resultsData) {
+                                        resultsData = jQuery.parseJSON(resultsData);
+                                        jsonTags = resultsData;
+                                        var newArr = new Array();
+
+                                        for (x in jsonTags) {
+                                            newArr.push(jsonTags[x].tagName);
+                                        }
+                                        console.log(newArr);
+                                        $('.bootstrap-tagsinput input[type=text]').attr("placeholder", " ");
+                                        $('.bootstrap-tagsinput input[type=text]').attr("data-provide", "typeahead");
+                                        $('.bootstrap-tagsinput input[type=text]').typeahead({source: newArr});
+                                        return true;
+                                    });
+
+
+                                });
+
+                                $(function() {
                                     $('#helpText').popover();
                                 });
 
@@ -66,6 +87,7 @@
                                 $('#qTitle').maxlength({
                                     alwaysShow: true
                                 });
+
                                 function postQuestion()
                                 {
                                     $qTitle = $("#qTitle").val();

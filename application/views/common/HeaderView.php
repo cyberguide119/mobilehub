@@ -17,6 +17,8 @@ and open the template in the editor.
         <script src="<?php echo site_url('../resources/js/jquery.reveal.js') ?>" type="text/javascript"></script>
         <script src="<?php echo site_url('../resources/js/bootstrap-maxlength.min.js') ?>" type="text/javascript"></script>
         <script src="<?php echo site_url('../resources/js/form-validator/jquery.form-validator.min.js') ?>"></script>
+        <script src="<?php echo site_url('../resources/js/bootstrap3-typeahead.min.js') ?>"></script>
+        
         <script type="text/javascript">
             // using JQUERY's ready method to know when all dom elements are rendered
             $(document).ready(function() {

@@ -30,6 +30,8 @@ Tags
 	index.php/api/tag/update/question/id
 	index.php/api/tag/get/question/id
 
+	index.php/api/tags/all
+
 Search
 	index.php/api/search/questions/Q+
 	index.php/api/search/questions/advanced/Q+

@@ -27,7 +27,7 @@ class auth extends MY_Controller {
     }
 
     public function index() {
-        redirect('/auth/login'); // url helper function
+        redirect('/Custom404/');
     }
 
     public function register() {

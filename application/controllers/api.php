@@ -48,6 +48,9 @@ class Api extends CI_Controller {
             case 'forgot':
                 $this->forgot();
                 break;
+            case 'tags':
+                $this->loadTagsLogic($args);
+                break;
             default:
                 show_error('Unsupported resource', 404);
                 break;
@@ -95,6 +98,12 @@ class Api extends CI_Controller {
         if (array_key_exists('post', $args)) {
             $this->postQuestion();
         } // Check the spec
+    }
+    
+    private function loadTagsLogic($args){
+        if (array_key_exists('all', $args)) {
+            $this->getAllTags();
+        }
     }
 
     /**
@@ -180,6 +189,15 @@ class Api extends CI_Controller {
         }
 
         echo json_encode($response);
+    }
+    
+    /**
+     * All methods related to tags
+     */
+    
+    private function getAllTags(){
+        $allTags = $this->Tag->get();
+        echo json_encode($allTags);
     }
 
 }
