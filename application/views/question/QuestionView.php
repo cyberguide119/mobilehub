@@ -6,11 +6,10 @@
                 <span class="vote-label">votes</span>
             </div>
             <div class="action">
-
-                <button type="button" class="btn btn-success btn-xs" title="Edit">
+                <button type="button" class="btn btn-success btn-xs" title="Vote Up">
                     <span class="glyphicon glyphicon-thumbs-up"></span>
                 </button>
-                <button type="button" class="btn btn-danger btn-xs" title="Approved">
+                <button type="button" class="btn btn-danger btn-xs" title="Vote Down">
                     <span class="glyphicon glyphicon-thumbs-down"></span>
                 </button>
             </div>
@@ -22,8 +21,7 @@
                 'I never said I didn't!' interrupted Alice.
                 'You did,' said the Mock Turtle.</p>
             <div>
-                <img src="http://placekitten.com/80/80" height="30" width="30" class="img-responsive img-responsive" alt="" style="float: left;"> &nbsp;
-                <span class="badge badge-success">Posted 2012-08-02 20:47:04</span>
+                <span class="badge badge-success">Posted on 2012-08-02 20:47:04</span>
                 <div class="pull-right">
                     <div class="action">
                         <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
@@ -46,8 +44,23 @@
                 </div>
                 <div class="panel-body">
                     <ul class="chat">
-                        <li class="left clearfix"><span class="chat-img pull-left">
-                                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                        <li class="left clearfix">
+                            <span class="chat-img pull-left">
+                                <div class="">
+                                    <div class="vote-box" title="Votes">
+                                        <span class="vote-count">0</span>
+                                        <span class="vote-label">votes</span>
+                                    </div>
+                                    <div class="action">
+
+                                        <button type="button" class="btn btn-success btn-xs" title="Edit">
+                                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-xs" title="Approved">
+                                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                                        </button>
+                                    </div>
+                                </div>
                             </span>
                             <div class="chat-body clearfix">
                                 <div class="header">
