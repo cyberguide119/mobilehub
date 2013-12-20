@@ -63,6 +63,7 @@ class searchlib {
             $user = new User();
             $username = $user->getUserById($question->askerUserId);
             $questions[] = array(
+                "questionId" => $question->questionId,
                 "questionTitle" => $question->questionTitle,
                 "questionDescription" => $question->questionDescription,
                 "askedOn" => $question->askedOn,
