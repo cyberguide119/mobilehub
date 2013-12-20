@@ -1,4 +1,7 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 /*
  * To change this template, choose Tools | Templates
@@ -10,29 +13,28 @@
  *
  * @author DRX
  */
-class Search extends MY_Controller{
+class Search extends MY_Controller {
+
     function __construct() {
         parent::__construct();
         $this->load->model('Category');
     }
-    
-    public function index(){
+
+    public function index() {
         $results = $this->input->get('query');
         $this->results($results);
-        //var_dump($results);
     }
-    
-    private function results($results){
+
+    private function results($results) {
         $this->loadHeaderData();
         $data["results"] = $results;
         $cat = new Category();
         $categories = $cat->get();
         $data["categories"] = $categories;
-        $this->load->view('search/SearchResultsView',$data);
-        $this->loadFooterData();        
+        $this->load->view('search/SearchResultsView', $data);
+        $this->loadFooterData();
     }
-    
-    // do the advanced search pagge..that's all
+
 }
 
 ?>

@@ -35,8 +35,10 @@ class Question extends MY_Controller {
     }
 
     public function show() {
+        $qId = $this->input->get('id');
+        $data['questionId'] = $qId;
         $this->loadHeaderData();
-        $this->load->view('question/QuestionView');
+        $this->load->view('question/QuestionView', $data);
         $this->loadFooterData();
     }
 

@@ -91,13 +91,12 @@ class questionslib {
     public function getQuestionDetails($qId) {
         $question = new Question();
         $question->load($qId);
-        
-        if($question == NULL){
+        if($question->questionId == NULL){
             return NULL;
         }
         
         $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($qId);
-        $username = $this->ci->User->getUserById($qId);
+        $username = $this->ci->User->getUserById($question->askerUserId);
         $ansArray = $this->ci->Answer->getAnswersForQuestionId($qId);
 
         $questionResult = array(

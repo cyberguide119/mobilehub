@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-1" style="margin-top: 26px;">
             <div class="vote-box" title="Votes">
-                <span class="vote-count">0</span>
+                <span class="vote-count" id="qVotes">0</span>
                 <span class="vote-label">votes</span>
             </div>
             <div class="action">
@@ -15,13 +15,10 @@
             </div>
         </div>
         <div class="col-md-11">
-            <h2>Alice in Wonderland, part dos</h2>
-            <p>'You ought to be ashamed of yourself for asking such a simple question,' added the Gryphon; and then they both sat silent and looked at poor Alice, who felt ready to sink into the earth. At last the Gryphon said to the Mock Turtle, 'Drive on, old fellow! Don't be all day about it!' and he went on in these words:
-                'Yes, we went to school in the sea, though you mayn't believe it—'
-                'I never said I didn't!' interrupted Alice.
-                'You did,' said the Mock Turtle.</p>
+            <div id="qTitle"></div>
+            <div id="qDesc"></div>
             <div>
-                <span class="badge badge-success">Posted on 2012-08-02 20:47:04</span>
+                <span class="badge badge-success" id="qAskedOn"></span>
                 <div class="pull-right">
                     <div class="action">
                         <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
@@ -111,4 +108,26 @@
     $('#ansDesc').maxlength({
         alwaysShow: true
     });
+
+    $(document).ready(function() {
+        $.get("/MobileHub/index.php/api/question/details/" + "<?php echo $questionId ?>", function(resultsData) {
+            resultsData = jQuery.parseJSON(resultsData);
+            loadUI(resultsData);
+            return true;
+        });
+    });
+
+    function loadUI(resultsData) {
+        if (resultsData.message === "Error") {
+            window.location = "/MobileHub/index.php/custom404/";
+            return false;
+        } else {
+            $("#qVotes")
+                    .html(resultsData.questionDetails.votes);
+            $("#qTitle").html("<h2>"+resultsData.questionDetails.questionTitle+"</h2>");
+            $("#qDesc").html("<p>"+resultsData.questionDetails.questionDescription+"</p>");
+            $("#qAskedOn").html("Posted On "+resultsData.questionDetails.askedOn);
+        }
+    }
+
 </script>
