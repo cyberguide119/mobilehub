@@ -22,8 +22,8 @@ class Answer extends MY_Model {
     public $answeredUserId;
     public $answeredOn;
     public $description;
-
-    function __construct() {
+    public $votes;
+                function __construct() {
         parent::__construct();
         $this->load->database();
     }
@@ -34,7 +34,7 @@ class Answer extends MY_Model {
         if(count($res) == 0){
             return NULL;
         }
-        return $res[0]->questionId;
+        return $res;
     }
 }
 

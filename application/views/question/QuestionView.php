@@ -1,3 +1,4 @@
+<script src="<?php echo site_url('../resources/js/moment.min.js') ?>"></script>
 <div class="container">
     <div class="row">
         <div class="col-md-1" style="margin-top: 26px;">
@@ -20,70 +21,20 @@
             <div>
                 <span class="badge badge-success" id="qAskedOn"></span>
                 <div class="pull-right">
-                    <div class="action">
-                        <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
-                            android                        </button>
-                        <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
-                            blacklist                        </button>
-                        <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">
-                            help                        </button>
-                    </div>
+                    <div class="action" id="qTags"></div>
                 </div>
             </div> 
         </div>
     </div>
-    <hr>
+    <br>
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
+            <div class="panel panel-primary" style=" -webkit-box-shadow: none; box-shadow: none; border:0;">
+                <div class="panel-heading" style="color: black; background: none">
                     <span class="glyphicon glyphicon-comment"></span> Answers
                 </div>
                 <div class="panel-body">
-                    <ul class="chat">
-                        <li class="left clearfix">
-                            <span class="chat-img pull-left">
-                                <div class="">
-                                    <div class="vote-box" title="Votes">
-                                        <span class="vote-count">0</span>
-                                        <span class="vote-label">votes</span>
-                                    </div>
-                                    <div class="action">
-
-                                        <button type="button" class="btn btn-success btn-xs" title="Edit">
-                                            <span class="glyphicon glyphicon-thumbs-up"></span>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-xs" title="Approved">
-                                            <span class="glyphicon glyphicon-thumbs-down"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </span>
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                    dolor, quis ullamcorper ligula sodales.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="left clearfix"><span class="chat-img pull-left">
-                                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                            </span>
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                    dolor, quis ullamcorper ligula sodales.
-                                </p>
-                            </div>
-                        </li>
+                    <ul class="chat" id="answersList">
                     </ul>
                 </div>
             </div>
@@ -124,10 +75,40 @@
         } else {
             $("#qVotes")
                     .html(resultsData.questionDetails.votes);
-            $("#qTitle").html("<h2>"+resultsData.questionDetails.questionTitle+"</h2>");
-            $("#qDesc").html("<p>"+resultsData.questionDetails.questionDescription+"</p>");
-            $("#qAskedOn").html("Posted On "+resultsData.questionDetails.askedOn);
+            $("#qTitle").html("<h2>" + resultsData.questionDetails.questionTitle + "</h2>");
+            $("#qDesc").html("<p>" + resultsData.questionDetails.questionDescription + "</p>");
+            $("#qAskedOn").html("Posted On " + resultsData.questionDetails.askedOn);
+
+            $("#qTags").html(getTagsString(resultsData.questionDetails.tags));
+
+            if (resultsData.questionDetails.answers === null || resultsData.questionDetails.answers.length === 0) {
+                $("#answersList").html("<h4>No answers for this question yet!</h4>");
+            } else {
+                for (var i = 0; i < resultsData.questionDetails.answers.length; i++) {
+                    var result = resultsData.questionDetails.answers[i];
+                    var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
+                            + "<span class='vote-count'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
+                            + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
+                            + "<button type='button' class='btn btn-danger btn-xs' title='Vote down'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
+                            + "<div class='chat-body clearfix'><div class='header'>"
+                            + "<strong class='primary-font'><a href='#'>" + result.answerdUsername + "</a></strong><small class='pull-right text-muted'>"
+                            + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn , "YYYY-MM-DD").fromNow()+ "</small></div>"
+                            + "<p>"+result.description+"</p></div></li></ul>";
+                    $("#answersList")
+                        .append(answersList);
+                }
+                
+            }
         }
+    }
+
+    function getTagsString($tags)
+    {
+        var str = "";
+        for (var i = 0; i < $tags.length; i++) {
+            str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
+        }
+        return str;
     }
 
 </script>

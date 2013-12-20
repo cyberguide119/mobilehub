@@ -89,15 +89,29 @@ class questionslib {
     }
 
     public function getQuestionDetails($qId) {
+        $answers = Array();
         $question = new Question();
         $question->load($qId);
-        if($question->questionId == NULL){
+        if ($question->questionId == NULL) {
             return NULL;
         }
-        
+
         $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($qId);
         $username = $this->ci->User->getUserById($question->askerUserId);
         $ansArray = $this->ci->Answer->getAnswersForQuestionId($qId);
+
+        if ($ansArray != NULL) {
+            foreach ($ansArray as $ans) {
+                $answeredBy = $this->ci->User->getUserById($ans->answeredUserId);
+
+                $answers[] = array(
+                    "description" => $ans->description,
+                    "answerdUsername" => $answeredBy,
+                    "votes" => $ans->netVotes,
+                    "answeredOn" => $ans->answeredOn
+                );
+            }
+        }
 
         $questionResult = array(
             "questionTitle" => $question->questionTitle,
@@ -107,10 +121,11 @@ class questionslib {
             "answerCount" => $question->answerCount,
             "votes" => $question->netVotes,
             "tags" => $tagsArr,
-            "answers" => $ansArray
+            "answers" => $answers
         );
         return $questionResult;
     }
+
 }
 
 ?>

@@ -217,7 +217,6 @@ class Api extends CI_Controller {
         $allTags = $this->Tag->get();
         echo json_encode($allTags);
     }
-
 }
 
 ?>
