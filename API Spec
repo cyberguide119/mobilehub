@@ -10,19 +10,19 @@ Login (POST)
 
 Question (GET/POST)
 	index.php/api/question/post
-	index.php/api/question/details
-	index.php/api/question/delete
-	index.php/api/question/update
+	index.php/api/question/details/{id}
+	index.php/api/question/delete/{id}
+	index.php/api/question/update/{id}
 
 Answer
 	index.php/api/answer/post/
-	index.php/api/answer/details
-	index.php/api/answer/delete
-	index.php/api/answer/update
+	index.php/api/answer/details/{id}/
+	index.php/api/answer/delete/{id}/
+	index.php/api/answer/update/{id}/
 
 Vote
-	index.php/api/vote/voteup/question/id
-	index.php/api/vote/votedown/question/id
+	index.php/api/vote/voteup/question/{id}
+	index.php/api/vote/votedown/question/{id}
 
 Tags
 	index.php/api/tag/post/question/id

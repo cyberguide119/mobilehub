@@ -19,21 +19,21 @@ class questionslib {
         // access models etc. (because we don't extend a core
         // CI class)
         $this->ci = &get_instance();
-        $this->ci->load->model(array('Question','User','Tag','QuestionsTags','Category'));
+        $this->ci->load->model(array('Question', 'User', 'Tag', 'QuestionsTags', 'Category', 'Answer'));
         $this->ci->load->library('searchlib');
     }
-    
-    public function postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName){
+
+    public function postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName) {
         $question = new Question();
         $user = new User();
-        
+
         $this->ci->load->helper('date');
         $datestring = "%Y-%m-%d %h-%i-%a";
         $time = time();
         $formattedDate = mdate($datestring, $time);
-        
+
         $userId = $user->getUserIdByName($qAskerName);
-        
+
         $question->questionTitle = $qTitle;
         $question->questionDescription = $qDesc;
         $question->categoryId = $qCategory;
@@ -43,30 +43,29 @@ class questionslib {
         $question->netVotes = 0;
         $question->downVotes = 0;
         $question->upVotes = 0;
-        
+
         $question->save();
         $this->saveTags($qTags, $qTitle);
         return true;
     }
-    
-    private function saveTags($tags, $qTitle){
+
+    private function saveTags($tags, $qTitle) {
         $splittedTags = explode(",", $tags);
-        for($i = 0; $i<count($splittedTags); $i++)
-        {
+        for ($i = 0; $i < count($splittedTags); $i++) {
             $tmpTrim = trim($splittedTags[$i]);
             $splittedTags[$i] = strtolower($tmpTrim);
-            
+
             $tagToSave = new Tag();
             $tagId = $tagToSave->getTagIdToSave($splittedTags[$i]);
-            
+
             $qTemp = new Question();
             $qTemp->getQuestionWithTitle($qTitle);
-            
-            $this->ci->QuestionsTags->save($qTemp->getQuestionWithTitle($qTitle),$tagId);
+
+            $this->ci->QuestionsTags->save($qTemp->getQuestionWithTitle($qTitle), $tagId);
         }
     }
-    
-    public function getRecentQuestions(){
+
+    public function getRecentQuestions() {
         $questions = array();
         $questionsList = $this->ci->Question->getRecentQuestions();
         foreach ($questionsList as $question) {
@@ -76,6 +75,7 @@ class questionslib {
             $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($question->questionId);
             // Creating the array which is to be pased on to the HomepageView
             $questions[] = array(
+                "questionId" => $question->questionId,
                 "questionTitle" => $question->questionTitle,
                 "questionDescription" => $question->questionDescription,
                 "askedOn" => $question->askedOn,
@@ -86,6 +86,31 @@ class questionslib {
             );
         }
         return $questions;
+    }
+
+    public function getQuestionDetails($qId) {
+        $question = new Question();
+        $question->load($qId);
+        
+        if($question == NULL){
+            return NULL;
+        }
+        
+        $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($qId);
+        $username = $this->ci->User->getUserById($qId);
+        $ansArray = $this->ci->Answer->getAnswersForQuestionId($qId);
+
+        $questionResult = array(
+            "questionTitle" => $question->questionTitle,
+            "questionDescription" => $question->questionDescription,
+            "askedOn" => $question->askedOn,
+            "askerName" => $username,
+            "answerCount" => $question->answerCount,
+            "votes" => $question->netVotes,
+            "tags" => $tagsArr,
+            "answers" => $ansArray
+        );
+        return $questionResult;
     }
 }
 

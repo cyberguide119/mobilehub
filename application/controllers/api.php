@@ -51,6 +51,9 @@ class Api extends CI_Controller {
             case 'tags':
                 $this->loadTagsLogic($args);
                 break;
+            case 'question':
+                $this->loadQuestionLogic($args);
+                break;
             default:
                 show_error('Unsupported resource', 404);
                 break;
@@ -97,10 +100,12 @@ class Api extends CI_Controller {
     private function loadQuestionLogic($args) {
         if (array_key_exists('post', $args)) {
             $this->postQuestion();
-        } // Check the spec
+        } else if (array_key_exists('details', $args)) {
+            $this->getDetails($args);
+        }
     }
-    
-    private function loadTagsLogic($args){
+
+    private function loadTagsLogic($args) {
         if (array_key_exists('all', $args)) {
             $this->getAllTags();
         }
@@ -190,12 +195,25 @@ class Api extends CI_Controller {
 
         echo json_encode($response);
     }
-    
+
+    private function getDetails($args) {
+        $questionId = $args['details'];
+        $questionDetails = $this->questionslib->getQuestionDetails($questionId);
+        
+        if ($questionDetails != NULL) {
+            $response["message"] = "Success";
+            $response['questionDetails'] = $questionDetails;
+        } else {
+            $response["message"] = "Error";
+        }
+        
+        echo json_encode($response);
+    }
+
     /**
      * All methods related to tags
      */
-    
-    private function getAllTags(){
+    private function getAllTags() {
         $allTags = $this->Tag->get();
         echo json_encode($allTags);
     }
