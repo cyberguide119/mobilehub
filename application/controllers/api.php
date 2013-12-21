@@ -98,7 +98,7 @@ class Api extends CI_Controller {
             $this->authenticate();
         } else if (array_key_exists('create', $args)) {
             $this->createaccount();
-        } else if (array_key_exists('test', $args)) {
+        } else if (array_key_exists('logout', $args)) {
             // not sure yet
         }
     }
@@ -166,7 +166,6 @@ class Api extends CI_Controller {
         } else {
             $response['message'] = $errmsg;
         }
-
         echo json_encode($response);
     }
 
@@ -248,7 +247,7 @@ class Api extends CI_Controller {
      */
     private function voteUp($arg) {
         if (strtolower($arg) === "question") {
-            
+            var_dump('hola');
         } else if (strtolower($arg) === "answer") {
             
         } else {

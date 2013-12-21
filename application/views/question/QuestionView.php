@@ -7,7 +7,7 @@
                 <span class="vote-label">votes</span>
             </div>
             <div class="action">
-                <button type="button" class="btn btn-success btn-xs" title="Vote Up">
+                <button type="button" class="btn btn-success btn-xs" title="Vote Up" onclick="questionUpvote();">
                     <span class="glyphicon glyphicon-thumbs-up"></span>
                 </button>
                 <button type="button" class="btn btn-danger btn-xs" title="Vote Down">
@@ -109,6 +109,23 @@
             str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
         }
         return str;
+    }
+    
+    function questionUpvote(){
+        var URL = "/MobileHub/index.php/api/vote/voteup/question";
+
+        var dataObject = { 'questionId': <?php echo $questionId; ?> };
+
+        $.ajax({
+            url: URL,
+            type: 'PUT',    
+            data: dataObject,
+            contentType: 'json',
+            //dataType: 'json',
+            success: function(result) {
+                console.log(result);
+            }
+        });
     }
 
 </script>
