@@ -23,6 +23,8 @@ Answer
 Vote
 	index.php/api/vote/voteup/question/{id}
 	index.php/api/vote/votedown/question/{id}
+	index.php/api/vote/voteup/answer/{id}
+	index.php/api/vote/votedown/answer/{id}
 
 Tags
 	index.php/api/tag/post/question/id

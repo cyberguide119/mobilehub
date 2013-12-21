@@ -116,7 +116,13 @@ class User extends MY_Model {
         $res = $this->db->get('user')->row();
         return $res->userId;
     }
-
+    
+    function getUserRoleByName($username){
+        $this->db->select('roleId');
+        $this->db->where('username' , $username);
+        $res = $this->db->get('user')->row();
+        return $res->roleId;
+    }
 }
 
 ?>
