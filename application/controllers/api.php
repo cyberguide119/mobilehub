@@ -30,6 +30,8 @@ class Api extends CI_Controller {
                 break;
             case 'get' : $this->get();
                 break;
+            case 'put' : $this->put();
+                break;
             default:
                 show_error('Unsupported method', 404); // CI function for 404 errors
                 break;
@@ -79,6 +81,18 @@ class Api extends CI_Controller {
         }
     }
 
+    private function put() {
+        $args = $this->uri->uri_to_assoc(1);
+        switch ($args['api']) {
+            case 'vote':
+                $this->loadVoteLogic($args);
+                break;
+            default:
+                show_error('Unsupported resource', 404);
+                break;
+        }
+    }
+
     private function loadAuthLogic($args) {
         if (array_key_exists('login', $args)) {
             $this->authenticate();
@@ -108,6 +122,17 @@ class Api extends CI_Controller {
     private function loadTagsLogic($args) {
         if (array_key_exists('all', $args)) {
             $this->getAllTags();
+        }
+    }
+
+    private function loadVoteLogic($args) {
+        if (array_key_exists('voteup', $args)) {
+            $this->voteUp($args['voteup']);
+        } else if (array_key_exists('votedown', $args)) {
+            $this->voteDown($args['votedown']);
+        } else {
+            $response['message'] = 'Error';
+            return $response;
         }
     }
 
@@ -199,14 +224,14 @@ class Api extends CI_Controller {
     private function getDetails($args) {
         $questionId = $args['details'];
         $questionDetails = $this->questionslib->getQuestionDetails($questionId);
-        
+
         if ($questionDetails != NULL) {
             $response["message"] = "Success";
             $response['questionDetails'] = $questionDetails;
         } else {
             $response["message"] = "Error";
         }
-        
+
         echo json_encode($response);
     }
 
@@ -217,6 +242,32 @@ class Api extends CI_Controller {
         $allTags = $this->Tag->get();
         echo json_encode($allTags);
     }
+
+    /**
+     * All methods related to voting
+     */
+    private function voteUp($arg) {
+        if (strtolower($arg) === "question") {
+            
+        } else if (strtolower($arg) === "answer") {
+            
+        } else {
+            $response['message'] = 'Error';
+            return $response;
+        }
+    }
+
+    private function voteDown($arg) {
+        if (strtolower($arg) === "question") {
+            
+        } else if (strtolower($arg) === "answer") {
+            
+        } else {
+            $response['message'] = 'Error';
+            return $response;
+        }
+    }
+
 }
 
 ?>
