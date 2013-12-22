@@ -44,7 +44,7 @@ class Question extends MY_Model {
     function advancedSearch($advWords, $advPhrase) {
         $this->db->like(array('questionTitle' => $advPhrase));
         $this->db->or_like(array('questionDescription' => $advPhrase));
-        
+
         if (!($advWords === '')) {
             foreach ($advWords as $term) {
                 $this->db->or_like('questionTitle', $term);
@@ -61,14 +61,29 @@ class Question extends MY_Model {
         $res = $question->result();
         return $res[0]->questionId;
     }
-    
-    function getRecentQuestions(){
+
+    function getRecentQuestions() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("askedOn", "desc");
         $questions = $this->db->get("questions");
         return $questions->result();
     }
 
+    function getAskerUserId($qId) {
+        $this->db->select("askerUserId");
+        $this->db->where("questionId", $qId);
+        $question = $this->db->get("questions")->row();
+        return $question->askerUserId;
+    }
+    
+    function updateVote($qId){
+        $question = $this->db->get_where('questions', array('questionId' => $qId))->row();
+        $newVal = $question->netVotes + 1;
+        $newVal2 = $question->upVotes + 1;
+        $data = array('netVotes' => $newVal, 'upVotes' => $newVal2);
+        $this->db->where('questionId', $qId);
+        $this->db->update('questions', $data);
+    }
 }
 
 ?>

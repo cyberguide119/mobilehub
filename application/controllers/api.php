@@ -30,8 +30,6 @@ class Api extends CI_Controller {
                 break;
             case 'get' : $this->get();
                 break;
-            case 'put' : $this->put();
-                break;
             default:
                 show_error('Unsupported method', 404); // CI function for 404 errors
                 break;

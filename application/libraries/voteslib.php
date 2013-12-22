@@ -11,7 +11,7 @@
  * @author DRX
  */
 class voteslib {
-    
+
     function __construct() {
         // get a reference to the CI super-object, so we can
         // access models etc. (because we don't extend a core
@@ -19,25 +19,42 @@ class voteslib {
         $this->ci = &get_instance();
         $this->ci->load->model(array('Question', 'User', 'AnswerVotes', 'QuestionVotes'));
     }
-    
-    public function voteUp($isQuestion, $pId, $username){
+
+    public function voteUp($isQuestion, $pId, $username) {
         $userId = $this->ci->User->getUserIdByName($username);
-        
-        if($isQuestion){
-            $output = $this->ci->QuestionVotes->checkUserVote($userId, $pId);
-            return $output;
-        }else{
+
+        if ($isQuestion) {
+            if (!($this->ci->QuestionVotes->hasUserVoted($userId, $pId))) {
+
+                // Put the vote to the question and add rep to the respective user
+                //$askerUserId = $this->ci->Question->getAskerUserId($pId);
+                //$this->ci->QuestionVotes->addVote($userId, $askerUserId, $pId);
+                //$this->ci->Question->voteUp($pId);
+                $questionToVote = new Question();
+                
+                $question = $this->ci->Question->updateVote($pId);
+                
+//                $questionToVote->load($pId);
+//                $questionToVote->netVotes = $questionToVote->netVotes + 1;
+//                $questionToVote->upVotes = $questionToVote->upVotes + 1;
+//                $questionToVote->save();
+                
+                var_dump($questionToVote);
+            }
+            //return $output;
+        } else {
             
         }
     }
-    
-    public function voteDown($isQuestion, $id, $userId){
-        if($isQuestion){
+
+    public function voteDown($isQuestion, $id, $userId) {
+        if ($isQuestion) {
             
-        }else{
+        } else {
             
         }
     }
+
 }
 
 ?>
