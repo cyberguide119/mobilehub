@@ -7,10 +7,10 @@
                 <span class="vote-label">votes</span>
             </div>
             <div class="action">
-                <button type="button" class="btn btn-success btn-xs" title="Vote Up" onclick="questionUpvote();">
+                <button type="button" class="btn btn-success btn-xs" title="Vote Up" onclick="voteQuestion(true);">
                     <span class="glyphicon glyphicon-thumbs-up"></span>
                 </button>
-                <button type="button" class="btn btn-danger btn-xs" title="Vote Down">
+                <button type="button" class="btn btn-danger btn-xs" title="Vote Down" onclick="voteQuestion(false);">
                     <span class="glyphicon glyphicon-thumbs-down"></span>
                 </button>
             </div>
@@ -127,10 +127,16 @@
                         return str;
                     }
 
-                    function questionUpvote() {
+                    function voteQuestion(isUpVote) {
                         var $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>"};
+                        
+                        if(isUpVote){
+                            $url = "/MobileHub/index.php/api/vote/voteup/question";
+                        }else{
+                            $url = "/MobileHub/index.php/api/vote/votedown/question";
+                        }
 
-                        $.post("/MobileHub/index.php/api/vote/voteup/question", $jsonObj, function(content) {
+                        $.post($url, $jsonObj, function(content) {
 
                             // Deserialise the JSON
                             content = jQuery.parseJSON(content);
