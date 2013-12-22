@@ -75,15 +75,6 @@ class Api extends CI_Controller {
             case 'question':
                 $this->loadQuestionLogic($args);
                 break;
-            default:
-                show_error('Unsupported resource', 404);
-                break;
-        }
-    }
-
-    private function put() {
-        $args = $this->uri->uri_to_assoc(1);
-        switch ($args['api']) {
             case 'vote':
                 $this->loadVoteLogic($args);
                 break;
@@ -92,6 +83,18 @@ class Api extends CI_Controller {
                 break;
         }
     }
+
+//    private function put() {
+//        $args = $this->uri->uri_to_assoc(1);
+//        switch ($args['api']) {
+//            case 'vote':
+//                $this->loadVoteLogic($args);
+//                break;
+//            default:
+//                show_error('Unsupported resource', 404);
+//                break;
+//        }
+//    }
 
     private function loadAuthLogic($args) {
         if (array_key_exists('login', $args)) {
@@ -245,14 +248,20 @@ class Api extends CI_Controller {
     /**
      * All methods related to voting
      */
+    var $put;
+
     private function voteUp($arg) {
         if (strtolower($arg) === "question") {
-            var_dump('hola');
-        } else if (strtolower($arg) === "answer") {
+            $qId = $this->input->post('questionId');
             
+            $response['message'] = 'Succcess';
+            echo json_encode($response);
+        } else if (strtolower($arg) === "answer") {
+            $response['message'] = 'Succcess';
+            echo json_encode($response);
         } else {
             $response['message'] = 'Error';
-            return $response;
+            echo json_encode($response);
         }
     }
 

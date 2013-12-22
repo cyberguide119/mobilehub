@@ -56,76 +56,92 @@
 </div>
 
 <script type="text/javascript">
-    $('#ansDesc').maxlength({
-        alwaysShow: true
-    });
+                    $('#ansDesc').maxlength({
+                        alwaysShow: true
+                    });
 
-    $(document).ready(function() {
-        $.get("/MobileHub/index.php/api/question/details/" + "<?php echo $questionId ?>", function(resultsData) {
-            resultsData = jQuery.parseJSON(resultsData);
-            loadUI(resultsData);
-            return true;
-        });
-    });
+                    $(document).ready(function() {
+                        $.get("/MobileHub/index.php/api/question/details/" + "<?php echo $questionId ?>", function(resultsData) {
+                            resultsData = jQuery.parseJSON(resultsData);
+                            loadUI(resultsData);
+                            return true;
+                        });
+                    });
 
-    function loadUI(resultsData) {
-        if (resultsData.message === "Error") {
-            window.location = "/MobileHub/index.php/custom404/";
-            return false;
-        } else {
-            $("#qVotes")
-                    .html(resultsData.questionDetails.votes);
-            $("#qTitle").html("<h2>" + resultsData.questionDetails.questionTitle + "</h2>");
-            $("#qDesc").html("<p>" + resultsData.questionDetails.questionDescription + "</p>");
-            $("#qAskedOn").html("Posted On " + resultsData.questionDetails.askedOn);
+                    function loadUI(resultsData) {
+                        if (resultsData.message === "Error") {
+                            window.location = "/MobileHub/index.php/custom404/";
+                            return false;
+                        } else {
+                            $("#qVotes")
+                                    .html(resultsData.questionDetails.votes);
+                            $("#qTitle").html("<h2>" + resultsData.questionDetails.questionTitle + "</h2>");
+                            $("#qDesc").html("<p>" + resultsData.questionDetails.questionDescription + "</p>");
+                            $("#qAskedOn").html("Posted On " + resultsData.questionDetails.askedOn);
 
-            $("#qTags").html(getTagsString(resultsData.questionDetails.tags));
+                            $("#qTags").html(getTagsString(resultsData.questionDetails.tags));
 
-            if (resultsData.questionDetails.answers === null || resultsData.questionDetails.answers.length === 0) {
-                $("#answersList").html("<h4>No answers for this question yet!</h4>");
-            } else {
-                for (var i = 0; i < resultsData.questionDetails.answers.length; i++) {
-                    var result = resultsData.questionDetails.answers[i];
-                    var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
-                            + "<span class='vote-count'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
-                            + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
-                            + "<button type='button' class='btn btn-danger btn-xs' title='Vote down'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
-                            + "<div class='chat-body clearfix'><div class='header'>"
-                            + "<strong class='primary-font'><a href='#'>" + result.answerdUsername + "</a></strong><small class='pull-right text-muted'>"
-                            + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn , "YYYY-MM-DD").fromNow()+ "</small></div>"
-                            + "<p>"+result.description+"</p></div></li></ul>";
-                    $("#answersList")
-                        .append(answersList);
-                }
-                
-            }
-        }
-    }
+                            if (resultsData.questionDetails.answers === null || resultsData.questionDetails.answers.length === 0) {
+                                $("#answersList").html("<h4>No answers for this question yet!</h4>");
+                            } else {
+                                for (var i = 0; i < resultsData.questionDetails.answers.length; i++) {
+                                    var result = resultsData.questionDetails.answers[i];
+                                    var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
+                                            + "<span class='vote-count'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
+                                            + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
+                                            + "<button type='button' class='btn btn-danger btn-xs' title='Vote down'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
+                                            + "<div class='chat-body clearfix'><div class='header'>"
+                                            + "<strong class='primary-font'><a href='#'>" + result.answerdUsername + "</a></strong><small class='pull-right text-muted'>"
+                                            + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD").fromNow() + "</small></div>"
+                                            + "<p>" + result.description + "</p></div></li></ul>";
+                                    $("#answersList")
+                                            .append(answersList);
+                                }
 
-    function getTagsString($tags)
-    {
-        var str = "";
-        for (var i = 0; i < $tags.length; i++) {
-            str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
-        }
-        return str;
-    }
-    
-    function questionUpvote(){
-        var URL = "/MobileHub/index.php/api/vote/voteup/question";
+                            }
+                        }
+                    }
 
-        var dataObject = { 'questionId': <?php echo $questionId; ?> };
+                    function getTagsString($tags)
+                    {
+                        var str = "";
+                        for (var i = 0; i < $tags.length; i++) {
+                            str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
+                        }
+                        return str;
+                    }
 
-        $.ajax({
-            url: URL,
-            type: 'PUT',    
-            data: dataObject,
-            contentType: 'json',
-            //dataType: 'json',
-            success: function(result) {
-                console.log(result);
-            }
-        });
-    }
+                    function questionUpvote() {
+//        var URL = "/MobileHub/index.php/api/vote/voteup/question";
+//
+//        var dataObject = { 'questionId': <?php echo $questionId; ?> };
+//
+//        $.ajax({
+//            url: URL,
+//            type: 'PUT',    
+//            data: dataObject,
+//            contentType: 'json',
+//            //dataType: 'json',
+//            success: function(result) {
+//                console.log(result);
+//            }
+//        });
+                        var $jsonObj = {'questionId': <?php echo $questionId; ?>};
+
+                        $.post("/MobileHub/index.php/api/vote/voteup/question", $jsonObj, function(content) {
+
+                            // Deserialise the JSON
+                            content = jQuery.parseJSON(content);
+                            console.log(content);
+                            if (content.message === "Success") {
+
+                            } else {
+                                
+                            }
+                        }).fail(function() {
+
+                        }), "json";
+                        return true;
+                    }
 
 </script>
