@@ -19,8 +19,11 @@ class RolePermissions extends CI_Model{
     }
     
     function checkPermission($roleId, $permId){
-        $res = $this->db->get_where('role_permissions',array('roleId' => $roleId, 'permId' => $permId));
-        return $res;
+        $res = $this->db->get_where('role_permissions',array('roleId' => $roleId, 'permId' => $permId))->row();
+        if(count($res) > 0){
+            return true;
+        }
+        return false;
     }
 }
 

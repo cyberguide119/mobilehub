@@ -10,12 +10,19 @@
  *
  * @author DRX
  */
-class Permissions extends MY_Model{
+class Permissions extends MY_Model {
+
     const DB_TABLE = 'permissions';
     const DB_TABLE_PK = 'permId';
-    
+
     public $permId;
     public $permKey;
+
+    function getPermIdByKey($key) {
+        $res = $this->db->get_where('permissions', array('permKey' => $key))->row();
+        return $res->permId;
+    }
+
 }
 
 ?>
