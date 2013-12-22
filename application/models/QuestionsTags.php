@@ -10,10 +10,7 @@
  *
  * @author DRX
  */
-class QuestionsTags extends CI_Model{
-//    const DB_TABLE = 'questions_tags';
-//    const DB_TABLE_PK = '$questionId';//put your code here
-//    
+class QuestionsTags extends CI_Model{ 
     public $questionId;
     public $tagId;
     

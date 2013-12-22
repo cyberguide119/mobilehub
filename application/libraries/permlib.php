@@ -16,12 +16,12 @@ class permlib {
         // access models etc. (because we don't extend a core
         // CI class)
         $this->ci = &get_instance();
-        $this->ci->load->model('role_permissions','User');
+        $this->ci->load->model('RolePermissions','User');
     }
     
     public function userHasPermission($username, $key){
-        $this->ci->User->getUserRoleIdByName($username);
-        $this->ci->checkPermission($roleId, $key);
+        $roleId = $this->ci->User->getUserRoleIdByName($username);
+        return $this->ci->RolePermissions->checkPermission($roleId, $key);
     }
 }
 

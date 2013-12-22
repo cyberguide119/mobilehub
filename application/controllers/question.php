@@ -18,6 +18,7 @@ class Question extends MY_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Category');
+        $this->load->library('permlib');
     }
 
     public function ask() {
@@ -37,6 +38,14 @@ class Question extends MY_Controller {
     public function show() {
         $qId = $this->input->get('id');
         $data['questionId'] = $qId;
+        
+        $username = $this->authlib->is_loggedin();
+        if($username){
+            $data['userCanAnswer'] = $this->permlib->userHasPermission($username,"ANSWER_QUESTION");
+        }else{
+            $data['userCanAnswer'] = false;
+        }
+        
         $this->loadHeaderData();
         $this->load->view('question/QuestionView', $data);
         $this->loadFooterData();
