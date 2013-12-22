@@ -40,7 +40,6 @@ class QuestionVotes extends CI_Model {
             $this->db->update('question_votes', $data);
         }
     }
-
 }
 
 ?>

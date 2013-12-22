@@ -28,7 +28,7 @@ class voteslib {
 
                 // Put the vote to the question and add rep to the respective user
                 $this->ci->QuestionVotes->addVote($userId, $pId, TRUE);
-                $this->ci->Question->updateVote($pId);
+                $this->ci->Question->updateVote($pId, TRUE);
                 return $this->ci->Question->getNetVotes($pId);
             } else {
                 return false;
@@ -38,16 +38,15 @@ class voteslib {
         }
     }
 
-     public function voteDown($isQuestion, $pId, $username) {
+    public function voteDown($isQuestion, $pId, $username) {
         $userId = $this->ci->User->getUserIdByName($username);
 
         if ($isQuestion) {
             if (!($this->ci->QuestionVotes->hasUserVoted($userId, $pId, FALSE))) {
 
-                // Put the vote to the question and add rep to the respective user
-                $askerUserId = $this->ci->Question->getAskerUserId($pId);
+                // Put the vote to the question and remove rep from the respective user
                 $this->ci->QuestionVotes->addVote($userId, $pId, FALSE);
-                $this->ci->Question->updateVote($pId);
+                $this->ci->Question->updateVote($pId, FALSE);
                 return $this->ci->Question->getNetVotes($pId);
             } else {
                 return false;

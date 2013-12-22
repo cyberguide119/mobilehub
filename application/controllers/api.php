@@ -246,7 +246,6 @@ class Api extends CI_Controller {
     /**
      * All methods related to voting
      */
-
     private function voteUp($arg) {
         if (strtolower($arg) === "question") {
             $qId = $this->input->post('questionId');
@@ -286,12 +285,38 @@ class Api extends CI_Controller {
 
     private function voteDown($arg) {
         if (strtolower($arg) === "question") {
-            
+            $qId = $this->input->post('questionId');
+            $username = $this->input->post('username');
+
+            if (!($this->authlib->is_loggedin() === $username)) {
+                $response['message'] = 'Error';
+                $response['type'] = 'You need to login before voting!';
+                echo json_encode($response);
+                return;
+            } else if ($username === $this->User->getUserById($this->Question->getAskerUserId($qId))) {
+                $response['message'] = 'Error';
+                $response['type'] = 'You cannot vote on your own question!';
+                echo json_encode($response);
+                return;
+            } else {
+                $votes = $this->voteslib->voteDown(TRUE, $qId, $username);
+                if ($votes != FALSE) {
+                    $response['message'] = 'Success';
+                    $response['votes'] = $votes;
+                    echo json_encode($response);
+                } else {
+                    $response['message'] = 'Error';
+                    $response['type'] = 'You have already voted on this question!';
+                    echo json_encode($response);
+                    return;
+                }
+            }
         } else if (strtolower($arg) === "answer") {
-            
+            $response['message'] = 'Succcess';
+            echo json_encode($response);
         } else {
             $response['message'] = 'Error';
-            return $response;
+            echo json_encode($response);
         }
     }
 

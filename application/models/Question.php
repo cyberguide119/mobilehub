@@ -75,20 +75,27 @@ class Question extends MY_Model {
         $question = $this->db->get("questions")->row();
         return $question->askerUserId;
     }
-    
-    function updateVote($qId){
+
+    function updateVote($qId, $isUpVote) {
         $question = $this->db->get_where('questions', array('questionId' => $qId))->row();
-        $newVal = $question->netVotes + 1;
-        $newVal2 = $question->upVotes + 1;
-        $data = array('netVotes' => $newVal, 'upVotes' => $newVal2);
+        if ($isUpVote) {
+            $newVal = $question->netVotes + 1;
+            $newVal2 = $question->upVotes + 1;
+            $data = array('netVotes' => $newVal, 'upVotes' => $newVal2);
+        } else {
+            $newVal = $question->netVotes - 1;
+            $newVal2 = $question->downVotes + 1;
+            $data = array('netVotes' => $newVal, 'downVotes' => $newVal2);
+        }
         $this->db->where('questionId', $qId);
         $this->db->update('questions', $data);
     }
-    
-    function getNetVotes($qId){
+
+    function getNetVotes($qId) {
         $question = $this->db->get_where('questions', array('questionId' => $qId))->row();
         return $question->netVotes;
     }
+
 }
 
 ?>
