@@ -126,7 +126,7 @@
 //                console.log(result);
 //            }
 //        });
-                        var $jsonObj = {'questionId': <?php echo $questionId; ?>};
+                        var $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>"};
 
                         $.post("/MobileHub/index.php/api/vote/voteup/question", $jsonObj, function(content) {
 

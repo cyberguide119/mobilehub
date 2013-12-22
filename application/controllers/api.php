@@ -17,7 +17,7 @@ class Api extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib', 'searchlib', 'questionslib'));
+        $this->load->library(array('authlib', 'searchlib', 'questionslib',  'voteslib'));
 
         $this->ci = &get_instance();
         $this->ci->load->model('user');
@@ -253,8 +253,12 @@ class Api extends CI_Controller {
     private function voteUp($arg) {
         if (strtolower($arg) === "question") {
             $qId = $this->input->post('questionId');
+            $username = $this->input->post('username');
             
+            $res = $this->voteslib->voteUp(TRUE, $qId, $username);
+
             $response['message'] = 'Succcess';
+            $response['response'] = $res;
             echo json_encode($response);
         } else if (strtolower($arg) === "answer") {
             $response['message'] = 'Succcess';
