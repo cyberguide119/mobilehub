@@ -24,11 +24,11 @@ class voteslib {
         $userId = $this->ci->User->getUserIdByName($username);
 
         if ($isQuestion) {
-            if (!($this->ci->QuestionVotes->hasUserVoted($userId, $pId))) {
+            if (!($this->ci->QuestionVotes->hasUserVoted($userId, $pId, TRUE))) {
 
                 // Put the vote to the question and add rep to the respective user
                 $askerUserId = $this->ci->Question->getAskerUserId($pId);
-                $this->ci->QuestionVotes->addVote($userId, $askerUserId, $pId);
+                $this->ci->QuestionVotes->addVote($userId, $pId, TRUE);
                 $this->ci->Question->updateVote($pId);
                 return $this->ci->Question->getNetVotes($pId);
             } else {

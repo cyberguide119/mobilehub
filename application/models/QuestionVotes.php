@@ -17,19 +17,19 @@ class QuestionVotes extends CI_Model {
         $this->load->database();
     }
 
-    function hasUserVoted($userId, $qId) {
+    function hasUserVoted($userId, $qId, $isUpVote) {
         //$this->db->select('votedUserId','questId');
-        $this->db->where(array('votedUserId' => $userId, 'questId' => $qId));
+        $this->db->where(array('votedUserId' => $userId, 'questId' => $qId, 'isUpVote' => $isUpVote));
         $result = $this->db->get('question_votes');
 
         if (count($result->result()) === 0) {
-           return false;
+            return false;
         }
         return true;
     }
-    
-    function addVote($votedUserId, $loyalityGainedUserId, $qId) {
-        $this->db->insert('question_votes',array('votedUserId' => $votedUserId, 'loyalityGainedUserId' => $loyalityGainedUserId, 'questId' => $qId));
+
+    function addVote($votedUserId, $qId, $isUpVote) {
+        $this->db->insert('question_votes', array('votedUserId' => $votedUserId, 'questId' => $qId, 'isUpVote' => $isUpVote));
     }
 
 }
