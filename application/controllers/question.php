@@ -38,18 +38,18 @@ class Question extends MY_Controller {
     public function show() {
         $qId = $this->input->get('id');
         $data['questionId'] = $qId;
-        
-        $username = $this->authlib->is_loggedin();
-        if($username){
-            $data['userCanAnswer'] = $this->permlib->userHasPermission($username,"ANSWER_QUESTION");
-        }else{
-            $data['userCanAnswer'] = false;
-        }
-        
+
         $this->loadHeaderData();
         $this->load->view('question/QuestionView', $data);
+        $username = $this->authlib->is_loggedin();
+        if ($username) {
+            if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
+                $this->load->view('question/AnswerSubView');
+            }
+        }
         $this->loadFooterData();
     }
+
 }
 
 ?>

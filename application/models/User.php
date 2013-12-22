@@ -47,7 +47,7 @@ class User extends MY_Model {
         if ($emailExists->num_rows() > 0) {
             return "Email already exists";
         }
-        
+
         $hashpwd = sha1($pwd);
         $this->load->helper('date');
         $datestring = "%Y-%m-%d %h-%i-%a";
@@ -102,34 +102,39 @@ class User extends MY_Model {
             return false;
         }
     }
-    
-    function getUserById($userId){
+
+    function getUserById($userId) {
         $this->db->select('username');
-        $this->db->where('userId',$userId);
+        $this->db->where('userId', $userId);
         $res = $this->db->get('user')->row();
         return $res->username;
     }
-    
-    function getUserIdByName($username){
+
+    function getUserIdByName($username) {
         $this->db->select('userId');
-        $this->db->where('username',$username);
+        $this->db->where('username', $username);
         $res = $this->db->get('user')->row();
         return $res->userId;
     }
-    
-    function getUserRoleByName($username){
+
+    function getUserRoleByName($username) {
         $this->db->select('roleId');
-        $this->db->where('username' , $username);
+        $this->db->where('username', $username);
         $res = $this->db->get('user')->row();
         return $res->roleId;
     }
-    
-    function updatePointsForQuestion($userId, $valueToAdd){
+
+    function updatePointsForQuestion($userId, $valueToAdd) {
         $user = $this->db->get_where('user', array('userId' => $userId))->row();
         $loyality = $user->loyality + $valueToAdd;
         $data = array('loyality' => $loyality);
-        $this->db->where('userId' , $userId);
-        $this->db->update('user',$data);
+        $this->db->where('userId', $userId);
+        $this->db->update('user', $data);
+    }
+
+    function getUserRoleId($username) {
+        $res = $this->db->get_where('user', array('username' => $username))->row();
+        return $res->roleId;
     }
 }
 
