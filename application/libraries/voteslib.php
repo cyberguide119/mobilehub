@@ -25,11 +25,13 @@ class voteslib {
 
         if ($isQuestion) {
             if (!($this->ci->QuestionVotes->hasUserVoted($userId, $pId))) {
-                
+
                 // Put the vote to the question and add rep to the respective user
                 $askerUserId = $this->ci->Question->getAskerUserId($pId);
                 $this->ci->QuestionVotes->addVote($userId, $askerUserId, $pId);
                 $this->ci->Question->updateVote($pId);
+            } else {
+                return false;
             }
         } else {
             // Handle answer voteup logic

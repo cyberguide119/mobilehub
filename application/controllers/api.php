@@ -264,12 +264,16 @@ class Api extends CI_Controller {
                 echo json_encode($response);
                 return;
             } else {
-                $res = $this->voteslib->voteUp(TRUE, $qId, $username);
+                if ($this->voteslib->voteUp(TRUE, $qId, $username)) {
+                    $response['message'] = 'Succcess';
+                    echo json_encode($response);
+                } else {
+                    $response['message'] = 'Error';
+                    $response['type'] = 'You have already voted on this question!';
+                    echo json_encode($response);
+                    return;
+                }
             }
-
-            $response['message'] = 'Succcess';
-            $response['response'] = $res;
-            echo json_encode($response);
         } else if (strtolower($arg) === "answer") {
             $response['message'] = 'Succcess';
             echo json_encode($response);
