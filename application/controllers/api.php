@@ -246,7 +246,6 @@ class Api extends CI_Controller {
     /**
      * All methods related to voting
      */
-    var $put;
 
     private function voteUp($arg) {
         if (strtolower($arg) === "question") {

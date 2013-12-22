@@ -29,7 +29,16 @@ class QuestionVotes extends CI_Model {
     }
 
     function addVote($votedUserId, $qId, $isUpVote) {
-        $this->db->insert('question_votes', array('votedUserId' => $votedUserId, 'questId' => $qId, 'isUpVote' => $isUpVote));
+        $this->db->where(array('votedUserId' => $votedUserId, 'questId' => $qId));
+        $result = $this->db->get('question_votes');
+        
+        if (count($result->result()) === 0) {
+           $this->db->insert('question_votes', array('votedUserId' => $votedUserId, 'questId' => $qId, 'isUpVote' => $isUpVote));
+        }else{
+            $data = array('isUpVote' => $isUpVote);
+            $this->db->where(array('votedUserId' => $votedUserId, 'questId' => $qId));
+            $this->db->update('question_votes', $data);
+        }
     }
 
 }
