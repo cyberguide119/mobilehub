@@ -129,10 +129,10 @@
 
                     function voteQuestion(isUpVote) {
                         var $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>"};
-                        
-                        if(isUpVote){
+
+                        if (isUpVote) {
                             $url = "/MobileHub/index.php/api/vote/voteup/question";
-                        }else{
+                        } else {
                             $url = "/MobileHub/index.php/api/vote/votedown/question";
                         }
 
@@ -148,7 +148,8 @@
                                 $('#errorModal').modal('show');
                             }
                         }).fail(function() {
-
+                            $('#errModalBody').html("<p><center>Oops! something went wrong! Please try again</center></p>");
+                            $('#errorModal').modal('show');
                         }), "json";
                         return true;
                     }

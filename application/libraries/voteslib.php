@@ -29,7 +29,8 @@ class voteslib {
                 // Put the vote to the question and add rep to the respective user
                 $this->ci->QuestionVotes->addVote($userId, $pId, TRUE);
                 $this->ci->Question->updateVote($pId, TRUE);
-                return $this->ci->Question->getNetVotes($pId);
+                $this->ci->User->updatePointsForQuestion($this->ci->Question->getAskerUserId($pId), 1);
+                return true;
             } else {
                 return false;
             }
@@ -47,7 +48,8 @@ class voteslib {
                 // Put the vote to the question and remove rep from the respective user
                 $this->ci->QuestionVotes->addVote($userId, $pId, FALSE);
                 $this->ci->Question->updateVote($pId, FALSE);
-                return $this->ci->Question->getNetVotes($pId);
+                $this->ci->User->updatePointsForQuestion($this->ci->Question->getAskerUserId($pId), -1);
+                return true;
             } else {
                 return false;
             }
@@ -55,7 +57,6 @@ class voteslib {
             // Handle answer voteup logic
         }
     }
-
 }
 
 ?>

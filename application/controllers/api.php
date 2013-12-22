@@ -263,9 +263,9 @@ class Api extends CI_Controller {
                 return;
             } else {
                 $votes = $this->voteslib->voteUp(TRUE, $qId, $username);
-                if ($votes != FALSE) {
+                if ($votes == TRUE) {
                     $response['message'] = 'Success';
-                    $response['votes'] = $votes;
+                    $response['votes'] = $this->ci->Question->getNetVotes($qId);
                     echo json_encode($response);
                 } else {
                     $response['message'] = 'Error';
@@ -279,6 +279,7 @@ class Api extends CI_Controller {
             echo json_encode($response);
         } else {
             $response['message'] = 'Error';
+            $response['type'] = 'Malformed URL!';
             echo json_encode($response);
         }
     }
@@ -302,7 +303,7 @@ class Api extends CI_Controller {
                 $votes = $this->voteslib->voteDown(TRUE, $qId, $username);
                 if ($votes != FALSE) {
                     $response['message'] = 'Success';
-                    $response['votes'] = $votes;
+                    $response['votes'] = $this->ci->Question->getNetVotes($qId);
                     echo json_encode($response);
                 } else {
                     $response['message'] = 'Error';
@@ -316,6 +317,7 @@ class Api extends CI_Controller {
             echo json_encode($response);
         } else {
             $response['message'] = 'Error';
+            $response['type'] = 'Malformed URL!';
             echo json_encode($response);
         }
     }

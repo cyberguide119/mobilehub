@@ -123,6 +123,14 @@ class User extends MY_Model {
         $res = $this->db->get('user')->row();
         return $res->roleId;
     }
+    
+    function updatePointsForQuestion($userId, $valueToAdd){
+        $user = $this->db->get_where('user', array('userId' => $userId))->row();
+        $loyality = $user->loyality + $valueToAdd;
+        $data = array('loyality' => $loyality);
+        $this->db->where('userId' , $userId);
+        $this->db->update('user',$data);
+    }
 }
 
 ?>
