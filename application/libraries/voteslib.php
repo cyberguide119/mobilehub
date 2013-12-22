@@ -30,13 +30,13 @@ class voteslib {
                 $askerUserId = $this->ci->Question->getAskerUserId($pId);
                 $this->ci->QuestionVotes->addVote($userId, $askerUserId, $pId);
                 $this->ci->Question->updateVote($pId);
+                return $this->ci->Question->getNetVotes($pId);
             } else {
                 return false;
             }
         } else {
             // Handle answer voteup logic
         }
-        return true;
     }
 
     public function voteDown($isQuestion, $id, $userId) {

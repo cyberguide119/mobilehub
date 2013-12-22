@@ -84,6 +84,11 @@ class Question extends MY_Model {
         $this->db->where('questionId', $qId);
         $this->db->update('questions', $data);
     }
+    
+    function getNetVotes($qId){
+        $question = $this->db->get_where('questions', array('questionId' => $qId))->row();
+        return $question->netVotes;
+    }
 }
 
 ?>

@@ -136,7 +136,7 @@
                             content = jQuery.parseJSON(content);
                             console.log(content);
                             if (content.message === "Success") {
-                                
+                                $('#qVotes').html(content.votes);
                             } else if (content.message === "Error") {
                                 $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                                 $('#errorModal').modal('show');
