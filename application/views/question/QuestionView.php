@@ -135,8 +135,8 @@
                             console.log(content);
                             if (content.message === "Success") {
 
-                            } else {
-
+                            } else if(content.message === "Error"){
+                                alert(content.type);
                             }
                         }).fail(function() {
 

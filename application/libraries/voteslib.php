@@ -25,26 +25,16 @@ class voteslib {
 
         if ($isQuestion) {
             if (!($this->ci->QuestionVotes->hasUserVoted($userId, $pId))) {
-
+                
                 // Put the vote to the question and add rep to the respective user
-                //$askerUserId = $this->ci->Question->getAskerUserId($pId);
-                //$this->ci->QuestionVotes->addVote($userId, $askerUserId, $pId);
-                //$this->ci->Question->voteUp($pId);
-                $questionToVote = new Question();
-                
-                $question = $this->ci->Question->updateVote($pId);
-                
-//                $questionToVote->load($pId);
-//                $questionToVote->netVotes = $questionToVote->netVotes + 1;
-//                $questionToVote->upVotes = $questionToVote->upVotes + 1;
-//                $questionToVote->save();
-                
-                var_dump($questionToVote);
+                $askerUserId = $this->ci->Question->getAskerUserId($pId);
+                $this->ci->QuestionVotes->addVote($userId, $askerUserId, $pId);
+                $this->ci->Question->updateVote($pId);
             }
-            //return $output;
         } else {
-            
+            // Handle answer voteup logic
         }
+        return true;
     }
 
     public function voteDown($isQuestion, $id, $userId) {

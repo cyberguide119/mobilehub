@@ -17,7 +17,7 @@ class Api extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib', 'searchlib', 'questionslib',  'voteslib'));
+        $this->load->library(array('authlib', 'searchlib', 'questionslib', 'voteslib'));
 
         $this->ci = &get_instance();
         $this->ci->load->model('user');
@@ -252,8 +252,20 @@ class Api extends CI_Controller {
         if (strtolower($arg) === "question") {
             $qId = $this->input->post('questionId');
             $username = $this->input->post('username');
-            
-            $res = $this->voteslib->voteUp(TRUE, $qId, $username);
+
+            if (!($this->authlib->is_loggedin() === $username)) {
+                $response['message'] = 'Error';
+                $response['type'] = 'You need to login before voting!';
+                echo json_encode($response);
+                return;
+            } else if ($username === $this->User->getUserById($this->Question->getAskerUserId($qId))) {
+                $response['message'] = 'Error';
+                $response['type'] = 'You cannot vote on your own question!';
+                echo json_encode($response);
+                return;
+            } else {
+                $res = $this->voteslib->voteUp(TRUE, $qId, $username);
+            }
 
             $response['message'] = 'Succcess';
             $response['response'] = $res;
