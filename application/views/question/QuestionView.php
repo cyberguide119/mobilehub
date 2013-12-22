@@ -53,6 +53,22 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Error</h4>
+                </div>
+                <div class="modal-body" id="errModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
 
 <script type="text/javascript">
@@ -112,20 +128,6 @@
                     }
 
                     function questionUpvote() {
-//        var URL = "/MobileHub/index.php/api/vote/voteup/question";
-//
-//        var dataObject = { 'questionId': <?php echo $questionId; ?> };
-//
-//        $.ajax({
-//            url: URL,
-//            type: 'PUT',    
-//            data: dataObject,
-//            contentType: 'json',
-//            //dataType: 'json',
-//            success: function(result) {
-//                console.log(result);
-//            }
-//        });
                         var $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>"};
 
                         $.post("/MobileHub/index.php/api/vote/voteup/question", $jsonObj, function(content) {
@@ -134,9 +136,10 @@
                             content = jQuery.parseJSON(content);
                             console.log(content);
                             if (content.message === "Success") {
-
-                            } else if(content.message === "Error"){
-                                alert(content.type);
+                                
+                            } else if (content.message === "Error") {
+                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#errorModal').modal('show');
                             }
                         }).fail(function() {
 
