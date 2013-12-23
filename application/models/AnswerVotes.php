@@ -10,20 +10,36 @@
  *
  * @author DRX
  */
-class AnswerVotes extends CI_Model{
-    function __construct()
-    {
+class AnswerVotes extends CI_Model {
+
+    function __construct() {
         parent::__construct();
         $this->load->database();
     }
+
+    function hasUserVoted($userId, $ansId, $isUpVote) {
+        //$this->db->select('votedUserId','questId');
+        $this->db->where(array('votedUserId' => $userId, 'ansId' => $ansId, 'isUpVote' => $isUpVote));
+        $result = $this->db->get('answer_votes');
+
+        if (count($result->result()) === 0) {
+            return false;
+        }
+        return true;
+    }
     
-//    function checkUserVote($userId, $qId){
-//        //$this->db->select('votedUserId','questId');
-//        $this->db->where(array('votedUserId' => $userId, 'questId' => $qId));
-//        $result = $this->db->get('questions_votes');
-//        
-//        return $result->result();
-//    }
+    function addVote($votedUserId, $ansId, $isUpVote) {
+        $this->db->where(array('votedUserId' => $votedUserId, 'ansId' => $ansId));
+        $result = $this->db->get('answer_votes');
+        
+        if (count($result->result()) === 0) {
+           $this->db->insert('answer_votes', array('votedUserId' => $votedUserId, 'ansId' => $ansId, 'isUpVote' => $isUpVote));
+        }else{
+            $data = array('isUpVote' => $isUpVote);
+            $this->db->where(array('votedUserId' => $votedUserId, 'ansId' => $ansId));
+            $this->db->update('answer_votes', $data);
+        }
+    }
 }
 
 ?>

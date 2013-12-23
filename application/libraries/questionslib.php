@@ -105,6 +105,7 @@ class questionslib {
                 $answeredBy = $this->ci->User->getUserById($ans->answeredUserId);
 
                 $answers[] = array(
+                    "answerId" => $ans->answerId,
                     "description" => $ans->description,
                     "answerdUsername" => $answeredBy,
                     "votes" => $ans->netVotes,

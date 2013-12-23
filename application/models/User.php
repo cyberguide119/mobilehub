@@ -132,10 +132,19 @@ class User extends MY_Model {
         $this->db->update('user', $data);
     }
 
+    function updatePointsForAnswer($userId, $valueToAdd) {
+        $user = $this->db->get_where('user', array('userId' => $userId))->row();
+        $reputation = $user->reputation + $valueToAdd;
+        $data = array('reputation' => $reputation);
+        $this->db->where('userId', $userId);
+        $this->db->update('user', $data);
+    }
+
     function getUserRoleId($username) {
         $res = $this->db->get_where('user', array('username' => $username))->row();
         return $res->roleId;
     }
+
 }
 
 ?>

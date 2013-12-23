@@ -92,8 +92,8 @@
                                     var result = resultsData.questionDetails.answers[i];
                                     var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
                                             + "<span class='vote-count'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
-                                            + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
-                                            + "<button type='button' class='btn btn-danger btn-xs' title='Vote down'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
+                                            + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up' onclick='voteAnswer("+result.answerId+",true);'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
+                                            + "<button type='button' class='btn btn-danger btn-xs' title='Vote down' onclick='voteAnswer("+result.answerId+",false);'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
                                             + "<div class='chat-body clearfix'><div class='header'>"
                                             + "<strong class='primary-font'><a href='#'>" + result.answerdUsername + "</a></strong><small class='pull-right text-muted'>"
                                             + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD").fromNow() + "</small></div>"
@@ -104,6 +104,33 @@
 
                             }
                         }
+                    }
+                    
+                    function voteAnswer(answerId, isUpVote){
+                         var $jsonObj = {'answerId': answerId, 'username': "<?php echo $name; ?>"};
+
+                        if (isUpVote) {
+                            $url = "/MobileHub/index.php/api/vote/voteup/answer";
+                        } else {
+                            $url = "/MobileHub/index.php/api/vote/votedown/answer";
+                        }
+
+                        $.post($url, $jsonObj, function(content) {
+
+                            // Deserialise the JSON
+                            content = jQuery.parseJSON(content);
+                            console.log(content);
+                            if (content.message === "Success") {
+                                $('#qVotes').html(content.votes);
+                            } else if (content.message === "Error") {
+                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#errorModal').modal('show');
+                            }
+                        }).fail(function() {
+                            $('#errModalBody').html("<p><center>Oops! something went wrong! Please try again</center></p>");
+                            $('#errorModal').modal('show');
+                        }), "json";
+                        return true;
                     }
 
                     function getTagsString($tags)

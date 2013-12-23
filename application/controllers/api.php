@@ -272,8 +272,32 @@ class Api extends CI_Controller {
                 }
             }
         } else if (strtolower($arg) === "answer") {
-            $response['message'] = 'Succcess';
-            echo json_encode($response);
+            $ansId = $this->input->post('answerId');
+            $username = $this->input->post('username');
+            
+            if (!($this->authlib->is_loggedin() === $username)) {
+                $response['message'] = 'Error';
+                $response['type'] = 'You need to login before voting!';
+                echo json_encode($response);
+                return;
+            } else if ($username === $this->User->getUserById($this->Answer->getAnsweredUserId($ansId))) {
+                $response['message'] = 'Error';
+                $response['type'] = 'You cannot vote on your own question!';
+                echo json_encode($response);
+                return;
+            } else {
+                $votes = $this->voteslib->voteUp(FALSE, $ansId, $username);
+                if ($votes == TRUE) {
+                    $response['message'] = 'Success';
+                    $response['votes'] = $this->ci->Answer->getNetVotes($ansId);
+                    echo json_encode($response);
+                } else {
+                    $response['message'] = 'Error';
+                    $response['type'] = 'You have already voted on this question!';
+                    echo json_encode($response);
+                    return;
+                }
+            }
         } else {
             $response['message'] = 'Error';
             $response['type'] = 'Malformed URL!';

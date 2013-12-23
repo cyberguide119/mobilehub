@@ -38,6 +38,33 @@ class Answer extends MY_Model {
         return $res;
     }
 
+    public function getAnsweredUserId($ansId) {
+        $this->db->select("answeredUserId");
+        $this->db->where("answerId", $ansId);
+        $answer = $this->db->get("answers")->row();
+        return $answer->answeredUserId;
+    }
+
+    public function getNetVotes($ansId) {
+        $answer = $this->db->get_where('answers', array('answerId' => $ansId))->row();
+        return $answer->netVotes;
+    }
+
+    function updateVote($qId, $isUpVote) {
+        $answer = $this->db->get_where('answers', array('answerId' => $qId))->row();
+        if ($isUpVote) {
+            $newVal = $answer->netVotes + 1;
+            $newVal2 = $answer->upVotes + 1;
+            $data = array('netVotes' => $newVal, 'upVotes' => $newVal2);
+        } else {
+            $newVal = $answer->netVotes - 1;
+            $newVal2 = $answer->downVotes + 1;
+            $data = array('netVotes' => $newVal, 'downVotes' => $newVal2);
+        }
+        $this->db->where('answerId', $qId);
+        $this->db->update('answers', $data);
+    }
+
 }
 
 ?>
