@@ -76,23 +76,14 @@ class Api extends CI_Controller {
             case 'vote':
                 $this->loadVoteLogic($args);
                 break;
+            case 'answer':
+                $this->loadAnswerLogic();
+                break;
             default:
                 show_error('Unsupported resource', 404);
                 break;
         }
     }
-
-//    private function put() {
-//        $args = $this->uri->uri_to_assoc(1);
-//        switch ($args['api']) {
-//            case 'vote':
-//                $this->loadVoteLogic($args);
-//                break;
-//            default:
-//                show_error('Unsupported resource', 404);
-//                break;
-//        }
-//    }
 
     private function loadAuthLogic($args) {
         if (array_key_exists('login', $args)) {
@@ -134,6 +125,12 @@ class Api extends CI_Controller {
         } else {
             $response['message'] = 'Error';
             return $response;
+        }
+    }
+
+    private function loadAnswerLogic($args) {
+        if (array_key_exists('post', $args)) {
+            $this->postAnswer();
         }
     }
 
@@ -320,6 +317,34 @@ class Api extends CI_Controller {
             $response['type'] = 'Malformed URL!';
             echo json_encode($response);
         }
+    }
+
+    /**
+     * All methods related to Answers
+     */
+    private function postAnswer() {
+        $quesId = $this->input->post('questionId');
+        $tutorName = $this->input->post('username');
+        $description = $this->input->post('description');
+
+        if ($tutorName) {
+            if ($this->permlib->userHasPermission($tutorName, "ANSWER_QUESTION")) {
+                if ($this->questionslib->postAnswer($quesId, $tutorName, $description)) {
+                    $response["message"] = "Success";
+                } else {
+                    $response["message"] = "Error";
+                    $response["type"] = "Oops, something went wrong!";
+                }
+            } else {
+                $response["message"] = "Error";
+                $response["type"] = "Sorry, you need to have permissions to post an answer. You may want to request for a tutor account.";
+            }
+        } else {
+            $response["message"] = "Error";
+            $response["type"] = "You need to log in before posting an answer";
+        }
+
+        echo json_encode($response);
     }
 
 }

@@ -13,3 +13,31 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function postAnswer()
+    {
+        $questionId = "<?php echo $questionId ?>";
+        $qDesc = $("#ansDesc").val();
+        $tutorName = "<?php echo $name ?>";
+        $jsonObj = {"questionId": $questionId, "description": $qDesc, "username": $tutorName};
+        $.post("/MobileHub/index.php/api/question/post", $jsonObj, function(content) {
+
+            // Deserialise the JSON
+            content = jQuery.parseJSON(content);
+            console.log(content);
+            if (content.message === "Success") {
+                $('#errModalBody').html("<p><center>" + "You question was successfully added!" + "</center></p>");
+                $('#errorModal').modal('show');
+                location.reload();
+            } else {
+                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                $('#errorModal').modal('show');
+            }
+        }).fail(function() {
+            $('#errModalBody').html("<p><center>Oops! something went wrong! Please try again</center></p>");
+            $('#errorModal').modal('show');
+        }), "json";
+        return true;
+    }
+</script>

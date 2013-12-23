@@ -125,6 +125,28 @@ class questionslib {
         );
         return $questionResult;
     }
+    
+    public function postAnswer($quesId,$tutorName, $description){
+        $answer = new Answer();
+        $user = new User();
+        
+        $userId = $user->getUserIdByName($tutorName);
+        
+        $answer->questionId = $quesId;
+        $answer->answeredUserId = $userId;
+        
+        $this->ci->load->helper('date');
+        $datestring = "%Y-%m-%d %h-%i-%a";
+        $time = time();
+        $formattedDate = mdate($datestring, $time);
+        
+        $answer->answeredOn = $formattedDate;
+        $answer->description = $description;
+        
+        $answer->save();
+        return true;
+        
+    }
 
 }
 

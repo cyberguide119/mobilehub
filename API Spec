@@ -6,7 +6,7 @@ API Spec
 Login (POST)
 	index.php/api/auth/login
 	index.php/api/auth/create
-	index.php/api/auth/test
+	index.php/api/auth/logout
 
 Question (GET/POST)
 	index.php/api/question/post

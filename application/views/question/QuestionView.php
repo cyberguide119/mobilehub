@@ -23,7 +23,7 @@
                 <div class="pull-right">
                     <div class="action" id="qTags"></div>
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
     <br>
