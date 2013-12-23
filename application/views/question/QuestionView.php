@@ -1,4 +1,5 @@
 <script src="<?php echo site_url('../resources/js/moment.min.js') ?>"></script>
+<script src="<?php echo site_url('../resources/js/syntax/jquery.syntax.min.js') ?>" type="text/javascript"></script>
 <div class="container">
     <div class="row">
         <div class="col-md-1" style="margin-top: 26px;">
@@ -60,6 +61,12 @@
 </div>
 
 <script type="text/javascript">
+
+                    jQuery(function($) {
+                        // This function highlights (by default) pre and code tags which are annotated correctly.
+                        $.syntax();
+                    });
+                    
                     $('#ansDesc').maxlength({
                         alwaysShow: true
                     });
@@ -91,9 +98,9 @@
                                 for (var i = 0; i < resultsData.questionDetails.answers.length; i++) {
                                     var result = resultsData.questionDetails.answers[i];
                                     var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
-                                            + "<span class='vote-count' id='ans"+result.answerId+"'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
-                                            + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up' onclick='voteAnswer("+result.answerId+",true);'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
-                                            + "<button type='button' class='btn btn-danger btn-xs' title='Vote down' onclick='voteAnswer("+result.answerId+",false);'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
+                                            + "<span class='vote-count' id='ans" + result.answerId + "'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
+                                            + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up' onclick='voteAnswer(" + result.answerId + ",true);'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
+                                            + "<button type='button' class='btn btn-danger btn-xs' title='Vote down' onclick='voteAnswer(" + result.answerId + ",false);'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
                                             + "<div class='chat-body clearfix'><div class='header'>"
                                             + "<strong class='primary-font'><a href='#'>" + result.answerdUsername + "</a></strong><small class='pull-right text-muted'>"
                                             + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD").fromNow() + "</small></div>"
@@ -105,9 +112,9 @@
                             }
                         }
                     }
-                    
-                    function voteAnswer(answerId, isUpVote){
-                         var $jsonObj = {'answerId': answerId, 'username': "<?php echo $name; ?>"};
+
+                    function voteAnswer(answerId, isUpVote) {
+                        var $jsonObj = {'answerId': answerId, 'username': "<?php echo $name; ?>"};
 
                         if (isUpVote) {
                             $url = "/MobileHub/index.php/api/vote/voteup/answer";
@@ -121,7 +128,7 @@
                             content = jQuery.parseJSON(content);
                             console.log(content);
                             if (content.message === "Success") {
-                                $('#ans'+answerId).html(content.votes);
+                                $('#ans' + answerId).html(content.votes);
                             } else if (content.message === "Error") {
                                 $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                                 $('#errorModal').modal('show');
