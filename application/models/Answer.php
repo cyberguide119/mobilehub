@@ -22,8 +22,9 @@ class Answer extends MY_Model {
     public $answeredUserId;
     public $answeredOn;
     public $description;
-    public $votes;
-                function __construct() {
+    public $netVotes;
+
+    function __construct() {
         parent::__construct();
         $this->load->database();
     }
@@ -31,11 +32,12 @@ class Answer extends MY_Model {
     public function getAnswersForQuestionId($qId) {
         $answer = $this->db->get_where('answers', array('questionId' => $qId));
         $res = $answer->result();
-        if(count($res) == 0){
+        if (count($res) == 0) {
             return NULL;
         }
         return $res;
     }
+
 }
 
 ?>

@@ -142,6 +142,7 @@ class questionslib {
         
         $answer->answeredOn = $formattedDate;
         $answer->description = $description;
+        $answer->netVotes = 0;
         
         $answer->save();
         return true;

@@ -17,7 +17,7 @@ class Api extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib', 'searchlib', 'questionslib', 'voteslib'));
+        $this->load->library(array('authlib', 'searchlib', 'questionslib', 'voteslib', 'permlib'));
 
         $this->ci = &get_instance();
         $this->ci->load->model('user');
@@ -77,7 +77,7 @@ class Api extends CI_Controller {
                 $this->loadVoteLogic($args);
                 break;
             case 'answer':
-                $this->loadAnswerLogic();
+                $this->loadAnswerLogic($args);
                 break;
             default:
                 show_error('Unsupported resource', 404);
