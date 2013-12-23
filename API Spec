@@ -13,6 +13,7 @@ Question (GET/POST)
 	index.php/api/question/details/{id}
 	index.php/api/question/delete/{id}
 	index.php/api/question/update/{id}
+	index.php/api/question/recent
 
 Answer
 	index.php/api/answer/post/

@@ -108,6 +108,8 @@ class Api extends CI_Controller {
             $this->postQuestion();
         } else if (array_key_exists('details', $args)) {
             $this->getDetails($args);
+        } else if (array_key_exists('recent', $args)) {
+            $this->getRecent($args);
         }
     }
 
@@ -200,7 +202,7 @@ class Api extends CI_Controller {
     }
 
     /**
-     * All the methods related to asking a question
+     * All the methods related to questions
      */
     private function postQuestion() {
         $qTitle = $this->input->post('Title');
@@ -229,6 +231,12 @@ class Api extends CI_Controller {
             $response["message"] = "Error";
         }
 
+        echo json_encode($response);
+    }
+
+    private function getRecent() {
+        $questions = $this->ci->questionslib->getRecentQuestions();
+        $response['results'] = $questions;
         echo json_encode($response);
     }
 
