@@ -64,7 +64,17 @@ class voteslib {
                 return false;
             }
         } else {
-            // Handle answer voteup logic
+            // Handle answer votedown logic
+            if (!($this->ci->AnswerVotes->hasUserVoted($userId, $pId, FALSE))) {
+
+                // Put the vote to the question and add rep to the respective user
+                $this->ci->AnswerVotes->addVote($userId, $pId, FALSE);
+                $this->ci->Answer->updateVote($pId, FALSE);
+                $this->ci->User->updatePointsForAnswer($this->ci->Answer->getAnsweredUserId($pId), -1);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
