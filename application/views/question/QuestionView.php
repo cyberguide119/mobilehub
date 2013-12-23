@@ -91,7 +91,7 @@
                                 for (var i = 0; i < resultsData.questionDetails.answers.length; i++) {
                                     var result = resultsData.questionDetails.answers[i];
                                     var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
-                                            + "<span class='vote-count'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
+                                            + "<span class='vote-count' id='ans"+result.answerId+"'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
                                             + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up' onclick='voteAnswer("+result.answerId+",true);'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
                                             + "<button type='button' class='btn btn-danger btn-xs' title='Vote down' onclick='voteAnswer("+result.answerId+",false);'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
                                             + "<div class='chat-body clearfix'><div class='header'>"
@@ -121,7 +121,7 @@
                             content = jQuery.parseJSON(content);
                             console.log(content);
                             if (content.message === "Success") {
-                                $('#qVotes').html(content.votes);
+                                $('#ans'+answerId).html(content.votes);
                             } else if (content.message === "Error") {
                                 $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                                 $('#errorModal').modal('show');
