@@ -95,6 +95,12 @@ class Question extends MY_Model {
         $question = $this->db->get_where('questions', array('questionId' => $qId))->row();
         return $question->netVotes;
     }
+    
+    function updateAnsCount($qId, $newCount){
+        $data = array('answerCount' => $newCount);
+        $this->db->where('questionId', $qId);
+        $this->db->update('questions', $data);
+    }
 
 }
 

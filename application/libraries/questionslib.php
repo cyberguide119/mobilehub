@@ -126,28 +126,32 @@ class questionslib {
         );
         return $questionResult;
     }
-    
-    public function postAnswer($quesId,$tutorName, $description){
+
+    public function postAnswer($quesId, $tutorName, $description) {
         $answer = new Answer();
         $user = new User();
-        
+        $question = new Question();
+
         $userId = $user->getUserIdByName($tutorName);
+        $question->load($quesId);
+        $ansCnt = $question->answerCount + 1;
         
+        $this->ci->Question->updateAnsCount($quesId,$ansCnt);
+
         $answer->questionId = $quesId;
         $answer->answeredUserId = $userId;
-        
+
         $this->ci->load->helper('date');
         $datestring = "%Y-%m-%d %h-%i-%a";
         $time = time();
         $formattedDate = mdate($datestring, $time);
-        
+
         $answer->answeredOn = $formattedDate;
         $answer->description = $description;
         $answer->netVotes = 0;
-        
+
         $answer->save();
         return true;
-        
     }
 
 }

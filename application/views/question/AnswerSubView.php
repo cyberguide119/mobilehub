@@ -29,8 +29,6 @@
                                         content = jQuery.parseJSON(content);
                                         console.log(content);
                                         if (content.message === "Success") {
-                                            $('#errModalBody').html("<p><center>" + "You question was successfully added!" + "</center></p>");
-                                            $('#errorModal').modal('show');
                                             location.reload();
                                         } else {
                                             $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
