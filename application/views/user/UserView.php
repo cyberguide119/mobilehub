@@ -17,27 +17,15 @@
                                  src="/Mobilehub/resources/img/default.png"
                                  alt="User Pic">
                         </div>
-                        <div class="col-xs-10 col-sm-10 hidden-md hidden-lg">
-                            <dl>
-<!--                                <dt>User level:</dt>
-                                <dd id="userLevel"></dd>
-                                <dt>Registered since:</dt>
-                                <dd id='joinedDate'></dd>
-                                <dt>Questions Asked</dt>
-                                <dd id="questAsked"></dd>
-                                <dt>Total Points</dt>
-                                <dd id="points"></dd>-->
-                            </dl>
-                        </div>
-                        <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
+                        <div class=" col-md-9 col-lg-9">
                             <table class="table table-user-information">
                                 <tbody>
                                     <tr>
-                                        <td>User level:</td>
+                                        <td>User level</td>
                                         <td id="userLevel"></td>
                                     </tr>
                                     <tr>
-                                        <td>Registered since:</td>
+                                        <td>Registered since</td>
                                         <td id='joinedDate'></td>
                                     </tr>
                                     <tr>
@@ -86,8 +74,8 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <br>
-        <div class="tab-pane active" id="questions"></div>
-        <div class="tab-pane" id="answers"></div>
+        <div class="tab-pane active" id="questions"><p>This user has not asked any questions yet!</p></div>
+        <div class="tab-pane" id="answers"><p>This user has not answered any questions yet!</p></div>
     </div>
 </div>
 
@@ -95,49 +83,49 @@
     $(document).ready(function() {
         $.get("/MobileHub/index.php/api/user/details/" + "<?php echo $user ?>", function(resultsData) {
             resultsData = jQuery.parseJSON(resultsData);
-            setupProfileDetails(resultsData.user, resultsData.questions.length);
-            loadUI(resultsData);
-            return true;
+            if (resultsData.message === "Error") {
+                window.location = "/MobileHub/index.php/custom404/";
+                return false;
+            } else {
+                setupProfileDetails(resultsData.user, resultsData.questions.length);
+                loadUI(resultsData);
+                return true;
+            }
         });
     });
 
     function setupProfileDetails(user, questAsked) {
         $("#userName").text(user.fullName);
+        $("#userLevel").text(user.userRole);
         $("#joinedDate").text(user.joinedDate);
         $("#questAsked").text(questAsked);
-        $("#lPoints").text(user.loyality);
+        $("#lPoints").text((user.loyality === null) ? "0" : user.loyality);
         $("#rPoints").text((user.reputation === null) ? "0" : user.reputation);
         $("#tPoints").text(parseInt($("#lPoints").text()) + parseInt($("#rPoints").text()));
     }
 
     function loadUI(resultsData) {
-        console.log(resultsData);
-        if (resultsData.results === "No results found") {
-            $("#questions").html("<p>User has not asked any questions yet!</p>");
-        } else {
-            //$("ul.list-group").html("<h5><b>" + resultsData.results.length + "</b> result(s) found</h5>");
-            for (var i = 0; i < resultsData.questions.length; i++) {
-                var result = resultsData.questions[i];
-                dateAsked = result.askedOn.split(' ');
-                var listItem = "<li class='list-group-item' style='margin-bottom: 5px;'>"
-                        + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
-                        + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
-                        + "<div class='col-xs-10 col-md-9'><div>"
-                        + "<a href='/MobileHub/index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
-                        + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
+        for (var i = 0; i < resultsData.questions.length; i++) {
+            var result = resultsData.questions[i];
+            dateAsked = result.askedOn.split(' ');
+            var listItem = "<li class='list-group-item' style='margin-bottom: 5px;'>"
+                    + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
+                    + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
+                    + "<div class='col-xs-10 col-md-9'><div>"
+                    + "<a href='/MobileHub/index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
+                    + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
 //                        + "<div class='comment-text'><br>"
 //                        + refineDescription(result.questionDescription) + "</div>"
-                        + "<div class='action'>"
-                        + getTagsString(result.tags)
-                        + "</div></div>" //tags
-                        + "<div class='col-md-2'><div class='vote-box' title='Votes'><span class='vote-count'>"
-                        + result.votes + "</span><span class='vote-label'>votes</span></div>"
-                        + "<div class='ans-count-box' title='Answers'><span class='ans-count'>"
-                        + result.answerCount + "</span>"
-                        + "<span class='ans-label'>answers</span></div></div></div></li>";
-                $("#questions")
-                        .append(listItem);
-            }
+                    + "<div class='action'>"
+                    + getTagsString(result.tags)
+                    + "</div></div>" //tags
+                    + "<div class='col-md-2'><div class='vote-box' title='Votes'><span class='vote-count'>"
+                    + result.votes + "</span><span class='vote-label'>votes</span></div>"
+                    + "<div class='ans-count-box' title='Answers'><span class='ans-count'>"
+                    + result.answerCount + "</span>"
+                    + "<span class='ans-label'>answers</span></div></div></div></li>";
+            $("#questions")
+                    .append(listItem);
         }
     }
 
