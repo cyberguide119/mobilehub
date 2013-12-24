@@ -148,6 +148,8 @@ class Api extends CI_Controller {
     private function loadProfileLogic($args) {
         if (array_key_exists('details', $args)) {
             $this->getUserDetails($args['details']);
+        }else if (array_key_exists('fulldetails', $args)) {
+            $this->getFullUserDetails($args['fulldetails']);
         }
     }
 
@@ -446,6 +448,20 @@ class Api extends CI_Controller {
             $res = array("message" => "Error", "type" => "User not found");
         }
         echo json_encode($res);
+    }
+    
+    private function getFullUserDetails($username) {
+        $name = $this->authlib->is_loggedin();
+        if($name === $username){
+            $res = $this->userlib->getFullUserDetails($username);
+            echo json_encode($res);
+        }
+        
+        if ($name === false) {
+            $res = array("message" => "Error", "type" => "You do not have permissions");
+             echo json_encode($res);
+        }
+       
     }
 
 }

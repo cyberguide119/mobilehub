@@ -45,5 +45,6 @@ Search
 	index.php/api/search/tags/Q+
 
 User
-	index.php/api/user/details/
+	index.php/api/user/details/{username}/
+	index.php/api/user/fulldetails/{username}/
 

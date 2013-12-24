@@ -144,9 +144,20 @@ class User extends MY_Model {
         $res = $this->db->get_where('user', array('username' => $username))->row();
         return $res->roleId;
     }
-    
-    function getUserDetails($username){
+
+    function getUserDetails($username) {
         $this->db->select(array('userId', 'username', 'fullName', 'roleId', 'joinedDate', 'website', 'linkedInUrl', 'sOUrl', 'reputation', 'loyality'));
+        $this->db->where('username', $username);
+        $res = $this->db->get('user')->row();
+        return $res;
+    }
+
+    function getFullUserDetails($username, $isTutor) {
+        if ($isTutor) {
+            $this->db->select(array('userId', 'email', 'profileImagePath' , 'fullName', 'joinedDate', 'website', 'linkedInUrl', 'sOUrl'));
+        } else {
+            $this->db->select(array('userId', 'email', 'profileImagePath' , 'fullName', 'joinedDate', 'website'));
+        }
         $this->db->where('username', $username);
         $res = $this->db->get('user')->row();
         return $res;
