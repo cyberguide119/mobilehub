@@ -69,6 +69,27 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    function getPopularQuestions() {
+        $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->order_by("netVotes", "desc");
+        $questions = $this->db->get("questions");
+        return $questions->result();
+    }
+
+    function getUnansweredQuestions() {
+        $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->where("answerCount", 0);
+        $questions = $this->db->get("questions");
+        return $questions->result();
+    }
+
+    function getAllQuestions() {
+        $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
+        //$this->db->where("answerCount", 0);
+        $questions = $this->db->get("questions");
+        return $questions->result();
+    }
+
     function getAskerUserId($qId) {
         $this->db->select("askerUserId");
         $this->db->where("questionId", $qId);
@@ -95,8 +116,8 @@ class Question extends MY_Model {
         $question = $this->db->get_where('questions', array('questionId' => $qId))->row();
         return $question->netVotes;
     }
-    
-    function updateAnsCount($qId, $newCount){
+
+    function updateAnsCount($qId, $newCount) {
         $data = array('answerCount' => $newCount);
         $this->db->where('questionId', $qId);
         $this->db->update('questions', $data);

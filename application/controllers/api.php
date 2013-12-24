@@ -110,6 +110,12 @@ class Api extends CI_Controller {
             $this->getDetails($args);
         } else if (array_key_exists('recent', $args)) {
             $this->getRecent($args);
+        } else if (array_key_exists('popular', $args)) {
+            $this->getPopular($args);
+        } else if (array_key_exists('unanswered', $args)) {
+            $this->getUnanswered($args);
+        } else if (array_key_exists('all', $args)) {
+            $this->getAll($args);
         }
     }
 
@@ -236,6 +242,24 @@ class Api extends CI_Controller {
 
     private function getRecent() {
         $questions = $this->ci->questionslib->getRecentQuestions();
+        $response['results'] = $questions;
+        echo json_encode($response);
+    }
+
+    private function getPopular() {
+        $questions = $this->ci->questionslib->getPopularQuestions();
+        $response['results'] = $questions;
+        echo json_encode($response);
+    }
+
+    private function getUnanswered() {
+        $questions = $this->ci->questionslib->getUnansweredQuestions();
+        $response['results'] = $questions;
+        echo json_encode($response);
+    }
+
+    private function getAll() {
+        $questions = $this->ci->questionslib->getAllQuestions();
         $response['results'] = $questions;
         echo json_encode($response);
     }

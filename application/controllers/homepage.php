@@ -18,7 +18,7 @@ class Homepage extends MY_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib','searchlib', 'questionslib'));
+        $this->load->library(array('authlib', 'searchlib', 'questionslib'));
 
         $this->ci = &get_instance();
         $this->load->model(array('Question', 'User', 'QuestionsTags', 'Tag'));
@@ -31,10 +31,8 @@ class Homepage extends MY_Controller {
     }
 
     private function loadQuestions() {
-        $questions = $this->ci->questionslib->getRecentQuestions();
-        $this->load->view('home/HomepageView', array(
-            'questions' => $questions,
-        ));
+        //$questions = $this->ci->questionslib->getRecentQuestions();
+        $this->load->view('home/HomepageView');
     }
 
     public function about() {
