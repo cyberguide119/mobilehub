@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4">About</label>
                         <div class="col-sm-8">
-                            <textarea type="text" id="about" class="form-control" name='website' data-validation="url" data-validation-optional="true" placeholder="About me"></textarea>
+                            <textarea type="text" id="about" class="form-control" name='name' data-validation="length" data-validation-length="max300" data-validation-optional="true" placeholder="About me"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -99,7 +99,7 @@
                             });
 
                             function postNewData() {
-                                jsonData = {"username": "<?php echo $user ?>", 'email': $("#email").val(), "fullName": $("#fName").val(), 'website': $("#website").val()};
+                                jsonData = {'email': $("#email").val(), "fullName": $("#fName").val(), 'website': $("#website").val(), 'about' : $("#about").val()};
                                 //console.log(jsonData);
 
                                 $.post("/MobileHub/index.php/api/user/post/" + "<?php echo $user ?>", jsonData, function(content) {
@@ -108,10 +108,8 @@
                                     content = jQuery.parseJSON(content);
                                     console.log(content);
                                     if (content.message === "Success") {
-                                        $("#qError").removeClass('alert alert-danger');
-                                        $("#qError").addClass('alert alert-success');
-                                        $("#qError").text('Question posted!');
-                                        window.location.href = "/MobileHub/index.php/";
+                                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                        $('#errorModal').modal('show');
                                     } else {
                                         $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                                         $('#errorModal').modal('show');

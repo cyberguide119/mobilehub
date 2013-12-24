@@ -60,10 +60,12 @@ class userlib {
         return $data;
     }
     
-    function updateUserDetails($dataArr){
-//        if(count($dataArr) === 4){
-//            
-//        }
+    function updateUserDetails($username, $dataArr){
+        $userId = $this->ci->User->getUserIdByName($username);
+        $this->ci->User->updateUserDetails($userId, $dataArr);
+        $response['message'] = 'Success';
+        $response['type'] = 'User profile updated successfully!';
+        return $response;
     }
 
 }

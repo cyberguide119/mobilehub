@@ -472,7 +472,7 @@ class Api extends CI_Controller {
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {
             $in = $this->input->post(NULL,true);
-            $res = $this->userlib->updateUserDetails($in);
+            $res = $this->userlib->updateUserDetails($username,$in);
             echo json_encode($res);
         }
 

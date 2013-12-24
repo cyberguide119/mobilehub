@@ -141,11 +141,9 @@ class User extends MY_Model {
     }
     
     function updateUserDetails($userId, $details){
-        $where = array();
-        foreach ($details as $key){
-            $where[$key] = $details[$key];
-            
-        }
+        //$data = array('reputation' => $reputation);
+        $this->db->where('userId', $userId);
+        $this->db->update('user', $details);
     }
 
     function getUserRoleId($username) {
@@ -162,9 +160,9 @@ class User extends MY_Model {
 
     function getFullUserDetails($username, $isTutor) {
         if ($isTutor) {
-            $this->db->select(array('userId', 'email', 'profileImagePath' , 'fullName', 'joinedDate', 'website', 'linkedInUrl', 'sOUrl'));
+            $this->db->select(array('userId', 'email', 'profileImagePath' , 'fullName', 'joinedDate', 'website', 'linkedInUrl', 'sOUrl', 'about'));
         } else {
-            $this->db->select(array('userId', 'email', 'profileImagePath' , 'fullName', 'joinedDate', 'website'));
+            $this->db->select(array('userId', 'email', 'profileImagePath' , 'fullName', 'joinedDate', 'website', 'about'));
         }
         $this->db->where('username', $username);
         $res = $this->db->get('user')->row();
