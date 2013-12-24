@@ -25,7 +25,8 @@ class profile extends MY_Controller{
     
     private function showProfile($profile){
         $this->loadHeaderData();
-        $this->load->view('user/UserView');
+        $data['user'] = $profile;
+        $this->load->view('user/UserView', $data);
         $this->loadFooterData();
     }
 }

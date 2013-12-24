@@ -81,3 +81,13 @@
         <div class="tab-pane" id="answers"></div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.get("/MobileHub/index.php/api/user/details/" + "<?php echo $profile?>" , function(resultsData) {
+            resultsData = jQuery.parseJSON(resultsData);
+            loadUI(resultsData);
+            return true;
+        });
+    });
+</script>

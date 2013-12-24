@@ -89,6 +89,13 @@ class Question extends MY_Model {
         $questions = $this->db->get("questions");
         return $questions->result();
     }
+    
+    function getAllQuestionForUser($userId){
+         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->where("askerUserId", $userId);
+        $questions = $this->db->get("questions");
+        return $questions->result();
+    }
 
     function getAskerUserId($qId) {
         $this->db->select("askerUserId");

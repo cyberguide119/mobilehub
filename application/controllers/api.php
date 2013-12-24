@@ -17,7 +17,7 @@ class Api extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib', 'searchlib', 'questionslib', 'voteslib', 'permlib'));
+        $this->load->library(array('authlib', 'searchlib', 'questionslib', 'voteslib', 'permlib', 'userlib'));
 
         $this->ci = &get_instance();
         $this->ci->load->model('user');
@@ -53,6 +53,9 @@ class Api extends CI_Controller {
                 break;
             case 'question':
                 $this->loadQuestionLogic($args);
+                break;
+            case 'user':
+                $this->loadProfileLogic($args);
                 break;
             default:
                 show_error('Unsupported resource', 404);
@@ -139,6 +142,12 @@ class Api extends CI_Controller {
     private function loadAnswerLogic($args) {
         if (array_key_exists('post', $args)) {
             $this->postAnswer();
+        }
+    }
+    
+    private function loadProfileLogic($args){
+        if (array_key_exists('details', $args)) {
+            $this->getUserDetails($args['details']);
         }
     }
 
@@ -425,6 +434,19 @@ class Api extends CI_Controller {
         }
 
         echo json_encode($response);
+    }
+    
+    /**
+     * All methods related to user profiles
+     */
+    
+    private function getUserDetails($username){
+        $res = $this->userlib->getUserDetails($username);
+        
+        if($res === false){
+            $res = array("message" => "Error", "type" => "User not found");
+        }
+        echo json_encode($res);
     }
 
 }
