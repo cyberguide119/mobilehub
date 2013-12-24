@@ -22,6 +22,9 @@ class profile extends MY_Controller {
 
     public function index() {
         $profile = $this->input->get('user');
+        if($profile === false){
+            redirect('custom404');
+        }
         $this->showProfile($profile);
     }
 
@@ -37,6 +40,18 @@ class profile extends MY_Controller {
         }
         $this->load->view('user/UserView', $data);
         $this->loadFooterData();
+    }
+    
+    public function edit(){
+        $profile = $this->input->get('user');
+        $name = $this->authlib->is_loggedin();
+        if ($name === $profile) {
+            $this->loadHeaderData();
+            $this->load->view('user/EditUserView');
+            $this->loadFooterData();
+        } else {
+            redirect('custom403');
+        }
     }
 
 }

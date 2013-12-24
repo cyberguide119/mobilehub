@@ -60,7 +60,7 @@
                                 <span class='icon-cog icon-white'></span><span class='caret'></span>
                             </a>
                             <ul class='dropdown-menu'>
-                                <li><a href='#'><span class='glyphicon glyphicon-wrench'></span> Modify</a></li>
+                                <li><a href='/MobileHub/index.php/profile/edit/?user=".$user."'><span class='glyphicon glyphicon-wrench'></span> Modify</a></li>
                                 <li><a href='#'><span class='glyphicon glyphicon-trash'></span> Delete</a></li>
                             </ul>
                         </div>
@@ -159,13 +159,6 @@
             }
 
         }
-    }
-
-    function refineDescription(desc) {
-        if (desc.length > 150) {
-            desc = desc.substring(0, 150) + " ...";
-        }
-        return desc;
     }
 
     function getTagsString($tags)
