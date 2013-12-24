@@ -54,8 +54,8 @@
                                 + "<div class='col-xs-10 col-md-9'><div>"
                                 + "<a href='index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
                                 + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
-                                + "<div class='comment-text'><br>"
-                                + result.questionDescription + "</div>"
+//                                + "<div class='comment-text'><br>"
+//                                + result.questionDescription + "</div>"
                                 + "<div class='action'>"
                                 + getTagsString(result.tags)
                                 + "</div></div>" //tags

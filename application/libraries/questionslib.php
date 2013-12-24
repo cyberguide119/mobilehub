@@ -76,7 +76,7 @@ class questionslib {
             $questions[] = array(
                 "questionId" => $question->questionId,
                 "questionTitle" => $question->questionTitle,
-                "questionDescription" => $question->questionDescription,
+                //"questionDescription" => $question->questionDescription,
                 "askedOn" => $question->askedOn,
                 "askerName" => $username,
                 "answerCount" => $question->answerCount,
@@ -98,7 +98,7 @@ class questionslib {
             $questions[] = array(
                 "questionId" => $question->questionId,
                 "questionTitle" => $question->questionTitle,
-                "questionDescription" => $question->questionDescription,
+                //"questionDescription" => $question->questionDescription,
                 "askedOn" => $question->askedOn,
                 "askerName" => $username,
                 "answerCount" => $question->answerCount,
@@ -120,7 +120,7 @@ class questionslib {
             $questions[] = array(
                 "questionId" => $question->questionId,
                 "questionTitle" => $question->questionTitle,
-                "questionDescription" => $question->questionDescription,
+                //"questionDescription" => $question->questionDescription,
                 "askedOn" => $question->askedOn,
                 "askerName" => $username,
                 "answerCount" => $question->answerCount,
@@ -142,7 +142,7 @@ class questionslib {
             $questions[] = array(
                 "questionId" => $question->questionId,
                 "questionTitle" => $question->questionTitle,
-                "questionDescription" => $question->questionDescription,
+                //"questionDescription" => $question->questionDescription,
                 "askedOn" => $question->askedOn,
                 "askerName" => $username,
                 "answerCount" => $question->answerCount,
