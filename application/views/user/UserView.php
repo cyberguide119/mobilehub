@@ -50,20 +50,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-footer">
-                    <div class="span2">
-                        <div class="btn-group">
-                            <a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+                <?php
+                if ($isOwner) {
+                    echo "<div class='panel-footer'>
+                    <div class='span2'>
+                        <div class='btn-group'>
+                            <a class='btn dropdown-toggle btn-info' data-toggle='dropdown' href='#'>
                                 Action 
-                                <span class="icon-cog icon-white"></span><span class="caret"></span>
+                                <span class='icon-cog icon-white'></span><span class='caret'></span>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Modify</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
+                            <ul class='dropdown-menu'>
+                                <li><a href='#'><span class='glyphicon glyphicon-wrench'></span> Modify</a></li>
+                                <li><a href='#'><span class='glyphicon glyphicon-trash'></span> Delete</a></li>
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div>";
+                }
+                ?>
+
             </div>
         </div>
     </div>
@@ -108,7 +113,7 @@
 
     function loadUI(resultsData) {
         if (resultsData.questions.length < 1) {
-            $("#questions").html("<h4>No answers for this question yet!</h4>");
+            $("#questions").html("<h4>This user has not asked any questions yet!</h4>");
         } else {
             $("#questions").html(" ");
             for (var i = 0; i < resultsData.questions.length; i++) {
