@@ -82,6 +82,9 @@ class Api extends CI_Controller {
             case 'answer':
                 $this->loadAnswerLogic($args);
                 break;
+            case 'user':
+                $this->loadProfileLogic($args);
+                break;
             default:
                 show_error('Unsupported resource', 404);
                 break;
@@ -148,8 +151,10 @@ class Api extends CI_Controller {
     private function loadProfileLogic($args) {
         if (array_key_exists('details', $args)) {
             $this->getUserDetails($args['details']);
-        }else if (array_key_exists('fulldetails', $args)) {
+        } else if (array_key_exists('fulldetails', $args)) {
             $this->getFullUserDetails($args['fulldetails']);
+        } else if (array_key_exists('post', $args)) {
+            $this->updateUserDetails($args['post']);
         }
     }
 
@@ -449,19 +454,32 @@ class Api extends CI_Controller {
         }
         echo json_encode($res);
     }
-    
+
     private function getFullUserDetails($username) {
         $name = $this->authlib->is_loggedin();
-        if($name === $username){
+        if ($name === $username) {
             $res = $this->userlib->getFullUserDetails($username);
             echo json_encode($res);
         }
-        
+
         if ($name === false) {
             $res = array("message" => "Error", "type" => "You do not have permissions");
-             echo json_encode($res);
+            echo json_encode($res);
         }
-       
+    }
+    
+    private function updateUserDetails($username) {
+        $name = $this->authlib->is_loggedin();
+        if ($name === $username) {
+            $in = $this->input->post(NULL,true);
+            $res = $this->userlib->updateUserDetails($in);
+            echo json_encode($res);
+        }
+
+        if ($name === false) {
+            $res = array("message" => "Error", "type" => "You do not have permissions");
+            echo json_encode($res);
+        }
     }
 
 }

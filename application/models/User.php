@@ -139,6 +139,14 @@ class User extends MY_Model {
         $this->db->where('userId', $userId);
         $this->db->update('user', $data);
     }
+    
+    function updateUserDetails($userId, $details){
+        $where = array();
+        foreach ($details as $key){
+            $where[$key] = $details[$key];
+            
+        }
+    }
 
     function getUserRoleId($username) {
         $res = $this->db->get_where('user', array('username' => $username))->row();

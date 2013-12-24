@@ -93,9 +93,6 @@
                                         $("#website").val(resultsData.user.website);
                                         $("#about").val(resultsData.user.about);
                                         $("#email").val(resultsData.user.email);
-                                        //setupProfileDetails(resultsData.user, resultsData.questions.length);
-                                        //loadUI(resultsData);
-                                        //loadAnswersUI(resultsData.answers);
                                         return true;
                                     }
                                 });
@@ -105,7 +102,7 @@
                                 jsonData = {"username": "<?php echo $user ?>", 'email': $("#email").val(), "fullName": $("#fName").val(), 'website': $("#website").val()};
                                 //console.log(jsonData);
 
-                                $.post("/MobileHub/index.php/api/user/post" + "<?php echo $user ?>", $jsonObj, function(content) {
+                                $.post("/MobileHub/index.php/api/user/post/" + "<?php echo $user ?>", jsonData, function(content) {
 
                                     // Deserialise the JSON
                                     content = jQuery.parseJSON(content);

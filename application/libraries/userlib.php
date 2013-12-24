@@ -59,6 +59,12 @@ class userlib {
         $data['answers'] = $answersList;
         return $data;
     }
+    
+    function updateUserDetails($dataArr){
+//        if(count($dataArr) === 4){
+//            
+//        }
+    }
 
 }
 
