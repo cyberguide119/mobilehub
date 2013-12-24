@@ -48,3 +48,6 @@ User
 	index.php/api/user/details/{username}/
 	index.php/api/user/fulldetails/{username}/
 
+	post
+	index.php/api/user/post/{username}
+

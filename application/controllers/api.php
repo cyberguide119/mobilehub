@@ -325,7 +325,7 @@ class Api extends CI_Controller {
                 return;
             } else if ($username === $this->User->getUserById($this->Answer->getAnsweredUserId($ansId))) {
                 $response['message'] = 'Error';
-                $response['type'] = 'You cannot vote on your own question!';
+                $response['type'] = 'You cannot vote on your own answer!';
                 echo json_encode($response);
                 return;
             } else {
@@ -387,7 +387,7 @@ class Api extends CI_Controller {
                 return;
             } else if ($username === $this->User->getUserById($this->Answer->getAnsweredUserId($ansId))) {
                 $response['message'] = 'Error';
-                $response['type'] = 'You cannot vote on your own question!';
+                $response['type'] = 'You cannot vote on your own answer!';
                 echo json_encode($response);
                 return;
             } else {
