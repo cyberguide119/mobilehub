@@ -144,8 +144,8 @@ class Api extends CI_Controller {
             $this->postAnswer();
         }
     }
-    
-    private function loadProfileLogic($args){
+
+    private function loadProfileLogic($args) {
         if (array_key_exists('details', $args)) {
             $this->getUserDetails($args['details']);
         }
@@ -435,15 +435,14 @@ class Api extends CI_Controller {
 
         echo json_encode($response);
     }
-    
+
     /**
      * All methods related to user profiles
      */
-    
-    private function getUserDetails($username){
+    private function getUserDetails($username) {
         $res = $this->userlib->getUserDetails($username);
-        
-        if($res === false){
+
+        if ($res === false) {
             $res = array("message" => "Error", "type" => "User not found");
         }
         echo json_encode($res);

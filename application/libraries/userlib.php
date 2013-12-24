@@ -17,6 +17,7 @@ class userlib {
         // CI class)
         $this->ci = &get_instance();
         $this->ci->load->model(array('Question', 'Tag', 'QuestionsTags', 'User'));
+        $this->ci->load->library('questionslib');
         $this->ci->load->helper('utility');
     }
     
@@ -26,7 +27,7 @@ class userlib {
         if(count($userDetails) < 1){
             return false;
         }
-        $questionsList = $this->ci->Question->getAllQuestionForUser($userDetails->userId);
+        $questionsList = $this->ci->questionslib->getAllQuestionsForUser($userDetails->userId);
         $data['user'] = $userDetails;
         $data['questions'] = $questionsList;
         return $data;

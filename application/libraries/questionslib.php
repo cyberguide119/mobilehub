@@ -159,7 +159,6 @@ class questionslib {
         foreach ($questionsList as $question) {
             $username = $this->ci->User->getUserById($question->askerUserId);
             $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($question->questionId);
-
             // Creating the array which is to be pased on to the HomepageView
             $questions[] = array(
                 "questionId" => $question->questionId,
