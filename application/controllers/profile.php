@@ -47,7 +47,8 @@ class profile extends MY_Controller {
         $name = $this->authlib->is_loggedin();
         if ($name === $profile) {
             $this->loadHeaderData();
-            $this->load->view('user/EditUserView');
+            $data['user'] = $profile;
+            $this->load->view('user/EditUserView', $data);
             $this->loadFooterData();
         } else {
             redirect('custom403');
