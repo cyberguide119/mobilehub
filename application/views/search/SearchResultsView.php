@@ -95,7 +95,7 @@
                         + "<a href='question/show/?id="+result.questionId+"'>" + result.questionTitle + "</a>"
                         + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
                         + "<div class='comment-text'><br>"
-                        + result.questionDescription + "</div>"
+                        + refineDescription(result.questionDescription) + "</div>"
                         + "<div class='action'>"
                         + getTagsString(result.tags)
                         + "</div></div>" //tags
@@ -108,5 +108,12 @@
                         .append(listItem);
             }
         }
+    }
+    
+    function refineDescription(desc){
+        if(desc.length > 150){
+            desc = desc.substring(0,150) + " ...";
+        }
+        return desc;
     }
 </script>
