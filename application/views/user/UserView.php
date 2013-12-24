@@ -19,14 +19,14 @@
                         </div>
                         <div class="col-xs-10 col-sm-10 hidden-md hidden-lg">
                             <dl>
-                                <dt>User level:</dt>
-                                <dd>Administrator</dd>
+<!--                                <dt>User level:</dt>
+                                <dd id="userLevel"></dd>
                                 <dt>Registered since:</dt>
-                                <dd>11/12/2013</dd>
+                                <dd id='joinedDate'></dd>
                                 <dt>Questions Asked</dt>
-                                <dd>15</dd>
+                                <dd id="questAsked"></dd>
                                 <dt>Total Points</dt>
-                                <dd>0</dd>
+                                <dd id="points"></dd>-->
                             </dl>
                         </div>
                         <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
@@ -34,7 +34,7 @@
                                 <tbody>
                                     <tr>
                                         <td>User level:</td>
-                                        <td id="userLevel">Administrator</td>
+                                        <td id="userLevel"></td>
                                     </tr>
                                     <tr>
                                         <td>Registered since:</td>
@@ -45,8 +45,16 @@
                                         <td id="questAsked"></td>
                                     </tr>
                                     <tr>
+                                        <td>Loyality Points</td>
+                                        <td id="lPoints"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reputation Points</td>
+                                        <td id="rPoints"></td>
+                                    </tr>
+                                    <tr>
                                         <td>Total Points</td>
-                                        <td id="points"></td>
+                                        <td id="tPoints"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -85,14 +93,22 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        //console.log("hello");
         $.get("/MobileHub/index.php/api/user/details/" + "<?php echo $user ?>", function(resultsData) {
             resultsData = jQuery.parseJSON(resultsData);
-            
+            setupProfileDetails(resultsData.user, resultsData.questions.length);
             loadUI(resultsData);
             return true;
         });
     });
+
+    function setupProfileDetails(user, questAsked) {
+        $("#userName").text(user.fullName);
+        $("#joinedDate").text(user.joinedDate);
+        $("#questAsked").text(questAsked);
+        $("#lPoints").text(user.loyality);
+        $("#rPoints").text((user.reputation === null) ? "0" : user.reputation);
+        $("#tPoints").text(parseInt($("#lPoints").text()) + parseInt($("#rPoints").text()));
+    }
 
     function loadUI(resultsData) {
         console.log(resultsData);
