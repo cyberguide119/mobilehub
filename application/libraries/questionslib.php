@@ -133,7 +133,7 @@ class questionslib {
 
     public function getAllQuestions() {
         $questions = array();
-        $questionsList = $this->ci->Question->getAllPopularQuestions();
+        $questionsList = $this->ci->Question->getAllQuestions();
         foreach ($questionsList as $question) {
             $username = $this->ci->User->getUserById($question->askerUserId);
             $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($question->questionId);
