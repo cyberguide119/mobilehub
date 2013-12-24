@@ -173,6 +173,11 @@ class questionslib {
         }
         return $questions;
     }
+    
+        public function getAllAnswersForUser($userId) {
+        $answers = $this->ci->Answer->getAllAnswersForUser($userId);
+        return $answers;
+    }
 
     public function getQuestionDetails($qId) {
         $answers = Array();

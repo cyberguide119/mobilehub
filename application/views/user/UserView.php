@@ -1,3 +1,4 @@
+<script src="<?php echo site_url('../resources/js/moment.min.js') ?>"></script>
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
@@ -75,7 +76,7 @@
     <div class="tab-content">
         <br>
         <div class="tab-pane active" id="questions"><p>This user has not asked any questions yet!</p></div>
-        <div class="tab-pane" id="answers"><p>This user has not answered any questions yet!</p></div>
+        <div class="tab-pane" id="answers"><ul class="chat" id="answersList"></ul></div>
     </div>
 </div>
 
@@ -89,6 +90,7 @@
             } else {
                 setupProfileDetails(resultsData.user, resultsData.questions.length);
                 loadUI(resultsData);
+                loadAnswersUI(resultsData.answers);
                 return true;
             }
         });
@@ -105,27 +107,52 @@
     }
 
     function loadUI(resultsData) {
-        for (var i = 0; i < resultsData.questions.length; i++) {
-            var result = resultsData.questions[i];
-            dateAsked = result.askedOn.split(' ');
-            var listItem = "<li class='list-group-item' style='margin-bottom: 5px;'>"
-                    + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
-                    + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
-                    + "<div class='col-xs-10 col-md-9'><div>"
-                    + "<a href='/MobileHub/index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
-                    + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
-//                        + "<div class='comment-text'><br>"
-//                        + refineDescription(result.questionDescription) + "</div>"
-                    + "<div class='action'>"
-                    + getTagsString(result.tags)
-                    + "</div></div>" //tags
-                    + "<div class='col-md-2'><div class='vote-box' title='Votes'><span class='vote-count'>"
-                    + result.votes + "</span><span class='vote-label'>votes</span></div>"
-                    + "<div class='ans-count-box' title='Answers'><span class='ans-count'>"
-                    + result.answerCount + "</span>"
-                    + "<span class='ans-label'>answers</span></div></div></div></li>";
-            $("#questions")
-                    .append(listItem);
+        if (resultsData.questions.length < 1) {
+            $("#questions").html("<h4>No answers for this question yet!</h4>");
+        } else {
+            $("#questions").html(" ");
+            for (var i = 0; i < resultsData.questions.length; i++) {
+                var result = resultsData.questions[i];
+                dateAsked = result.askedOn.split(' ');
+                var listItem = "<li class='list-group-item' style='margin-bottom: 5px;'>"
+                        + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
+                        + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
+                        + "<div class='col-xs-10 col-md-9'><div>"
+                        + "<a href='/MobileHub/index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
+                        + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
+                        + "<div class='action'>"
+                        + getTagsString(result.tags)
+                        + "</div></div>" //tags
+                        + "<div class='col-md-2'><div class='vote-box' title='Votes'><span class='vote-count'>"
+                        + result.votes + "</span><span class='vote-label'>votes</span></div>"
+                        + "<div class='ans-count-box' title='Answers'><span class='ans-count'>"
+                        + result.answerCount + "</span>"
+                        + "<span class='ans-label'>answers</span></div></div></div></li>";
+                $("#questions")
+                        .append(listItem);
+            }
+        }
+    }
+
+    function loadAnswersUI(answers) {
+
+        if (answers === null || answers.length === 0) {
+            $("#answers").html("<h4>No answers for this question yet!</h4>");
+        } else {
+            $("#answersList").html(" ");
+            for (var i = 0; i < answers.length; i++) {
+                var result = answers[i];
+                var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
+                        + "<span class='vote-count' id='ans" + result.answerId + "'>" + result.netVotes + "</span><span class='vote-label'>votes</span></div>"
+                        + "</div></span>"
+                        + "<div class='chat-body clearfix'><div class='header'>"
+                        + "<small class='pull-right text-muted'>"
+                        + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD").fromNow() + "</small></div>"
+                        + "<a href=/MobileHub/index.php/question/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div></li></ul>";
+                $("#answersList")
+                        .append(answersList);
+            }
+
         }
     }
 

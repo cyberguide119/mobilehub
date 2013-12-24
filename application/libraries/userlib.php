@@ -16,7 +16,7 @@ class userlib {
         // access models etc. (because we don't extend a core
         // CI class)
         $this->ci = &get_instance();
-        $this->ci->load->model(array('Question', 'Tag', 'QuestionsTags', 'User', 'UserRole'));
+        $this->ci->load->model(array('Question', 'User', 'UserRole', 'Answer'));
         $this->ci->load->library('questionslib');
         $this->ci->load->helper('utility');
     }
@@ -27,12 +27,17 @@ class userlib {
         if(count($userDetails) < 1){
             return false;
         }
+        
         $role = new UserRole();
         $role->load($userDetails->roleId);
         $userDetails->userRole = $role->roleName;
+        
         $questionsList = $this->ci->questionslib->getAllQuestionsForUser($userDetails->userId);
+        $answersList = $this->ci->questionslib->getAllAnswersForUser($userDetails->userId);
+        
         $data['user'] = $userDetails;
         $data['questions'] = $questionsList;
+        $data['answers'] = $answersList;
         return $data;
     }
 

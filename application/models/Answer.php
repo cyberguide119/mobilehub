@@ -65,6 +65,12 @@ class Answer extends MY_Model {
         $this->db->update('answers', $data);
     }
 
+    function getAllAnswersForUser($userId) {
+        $this->db->select(array('questionId', 'answeredOn', 'description', 'netVotes'));
+        $answers = $this->db->get_where('answers', array('answeredUserId' => $userId));
+        return $answers->result();
+    }
+
 }
 
 ?>
