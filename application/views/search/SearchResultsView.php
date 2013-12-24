@@ -93,7 +93,7 @@
                         + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
                         + "<div class='col-xs-10 col-md-9'><div>"
                         + "<a href='question/show/?id="+result.questionId+"'>" + result.questionTitle + "</a>"
-                        + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
+                        + "<div class='mic-info'> Asked by <a href='/MobileHub/index.php/profile/?user="+result.askerName+"'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
                         + "<div class='comment-text'><br>"
                         + refineDescription(result.questionDescription) + "</div>"
                         + "<div class='action'>"
