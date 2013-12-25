@@ -65,6 +65,37 @@
                 </form>
             </div>
             <div class="tab-pane fade" id="questions">
+                <li class="list-group-item" style="margin-bottom: 5px;">
+                    <div class="row" style="margin-right: -40px;">
+                        <div class="col-xs-2 col-md-2">
+                            <div class="vote-box" title="Votes">
+                                <span class="vote-count">-1</span>
+                                <span class="vote-label">votes</span>
+                            </div>
+                            <div class="ans-count-box" title="Answers">
+                                <span class="ans-count">1</span>
+                                <span class="ans-label">answers</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10 col-md-9">
+                            <div>
+                                <a href="/MobileHub/index.php/question/show/?id=1">Fractions by HTML code in Mobile browser using phone gap</a>
+                                <div class="mic-info"> Asked by <a href="#">sahan91</a> on 2013-12-14</div>
+                            </div>
+                            <div class="action">
+                                <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">android</button>&nbsp;<button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">phonegap</button>&nbsp;<button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">mobile</button>&nbsp;
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="javascript:;" class="btn btn-sm btn-primary" title="Edit Question">
+                                <i class="btn-icon-only glyphicon glyphicon-edit"></i>									
+                            </a>
+                            <a href="javascript:;" class="btn btn-sm btn-danger" title="Delete Question">
+                                <i class="btn-icon-only glyphicon glyphicon-remove" ></i>										
+                            </a>
+                        </div>
+                    </div>
+                </li>
             </div>
             <div class="tab-pane fade" id="answers">
                 <ul class="chat" id="answersList"></ul>
@@ -145,19 +176,20 @@
                                         var result = resultsData.questions[i];
                                         dateAsked = result.askedOn.split(' ');
                                         var listItem = "<li class='list-group-item' style='margin-bottom: 5px;'>"
-                                                + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
-                                                + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
+                                                + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-2'>"
+                                                + "<div class='vote-box' title='Votes'><span class='vote-count'>"
+                                                + result.votes + "</span><span class='vote-label'>votes</span></div>"
+                                                + "<div class='ans-count-box' title='Answers'><span class='ans-count'>"
+                                                + result.answerCount + "</span>"
+                                                + "<span class='ans-label'>answers</span></div></div>"
                                                 + "<div class='col-xs-10 col-md-9'><div>"
                                                 + "<a href='/MobileHub/index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
                                                 + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
                                                 + "<div class='action'>"
                                                 + getTagsString(result.tags)
                                                 + "</div></div>" //tags
-                                                + "<div class='col-md-2'><div class='vote-box' title='Votes'><span class='vote-count'>"
-                                                + result.votes + "</span><span class='vote-label'>votes</span></div>"
-                                                + "<div class='ans-count-box' title='Answers'><span class='ans-count'>"
-                                                + result.answerCount + "</span>"
-                                                + "<span class='ans-label'>answers</span></div></div></div></li>";
+                                                + "<div class='col-md-1'><a href='javascript:;' class='btn btn-sm btn-primary' title='Edit Question'>"
+                                                + "<i class='btn-icon-only glyphicon glyphicon-edit'></i></a><a href='javascript:;' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a></div></div></li>";
                                         $("#questions")
                                                 .append(listItem);
                                     }
