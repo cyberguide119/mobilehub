@@ -1,11 +1,14 @@
+<script src="<?php echo site_url('../resources/js/moment.min.js') ?>"></script>
 <div class="container">
-    <div class="well">
+    <div class="well" style="background-color: white">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#home" data-toggle="tab">Profile</a></li>
-            <li><a href="#profile" data-toggle="tab">Password</a></li>
+            <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
+            <li><a href="#password" data-toggle="tab">Password</a></li>
+            <li><a href="#questions" data-toggle="tab">Questions</a></li>
+            <li><a href="#answers" data-toggle="tab">Answers</a></li>
         </ul>
         <div id="myTabContent" class="tab-content">
-            <div class="tab-pane active in" id="home">
+            <div class="tab-pane active in" id="profile">
                 <form id="tab">
                     <div class="form-group">
                         <label class="control-label col-sm-4">Full Name</label>
@@ -36,12 +39,12 @@
                     </div>
                 </form>
             </div>
-            <div class="tab-pane fade" id="profile">
+            <div class="tab-pane fade" id="password">
                 <form id="tab2">
                     <div class="form-group">
                         <label class="control-label col-sm-4">Old Password</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" name="pword_confirmation" data-validation="length" data-validation-length="min8" placeholder="Account Password (Min. 8 characters)">
+                            <input type="password" class="form-control" name="pwordold_confirmation" data-validation="length" data-validation-length="min8" placeholder="Account Password (Min. 8 characters)">
                         </div>
                     </div>
                     <div class="form-group">
@@ -61,6 +64,11 @@
                     </div>
                 </form>
             </div>
+            <div class="tab-pane fade" id="questions">
+            </div>
+            <div class="tab-pane fade" id="answers">
+                <ul class="chat" id="answersList"></ul>
+            </div>
         </div>
     </div>
     <!-- Modal -->
@@ -79,8 +87,8 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <script>
-                            var user;
+</div>
+<script>
                             $(document).ready(function() {
                                 $.get("/MobileHub/index.php/api/user/fulldetails/" + "<?php echo $user ?>", function(resultsData) {
                                     resultsData = jQuery.parseJSON(resultsData);
@@ -88,18 +96,23 @@
                                         window.location = "/MobileHub/index.php/custom403/";
                                         return false;
                                     } else {
-                                        user = resultsData;
-                                        $("#fName").val(resultsData.user.fullName);
-                                        $("#website").val(resultsData.user.website);
-                                        $("#about").val(resultsData.user.about);
-                                        $("#email").val(resultsData.user.email);
+                                        setEditableFields(resultsData);
+                                        loadQuestionsUI(resultsData);
+                                        loadAnswersUI(resultsData.answers);
                                         return true;
                                     }
                                 });
                             });
 
+                            function setEditableFields(resultsData) {
+                                $("#fName").val(resultsData.user.fullName);
+                                $("#website").val(resultsData.user.website);
+                                $("#about").val(resultsData.user.about);
+                                $("#email").val(resultsData.user.email);
+                            }
+
                             function postNewData() {
-                                jsonData = {'email': $("#email").val(), "fullName": $("#fName").val(), 'website': $("#website").val(), 'about' : $("#about").val()};
+                                jsonData = {'email': $("#email").val(), "fullName": $("#fName").val(), 'website': $("#website").val(), 'about': $("#about").val()};
                                 //console.log(jsonData);
 
                                 $.post("/MobileHub/index.php/api/user/post/" + "<?php echo $user ?>", jsonData, function(content) {
@@ -120,4 +133,67 @@
                                 }), "json";
                                 return true;
                             }
-    </script>
+
+                            function loadQuestionsUI(resultsData) {
+                                if (resultsData.questions.length < 1) {
+                                    $("#questions").html("<h4>This user has not asked any questions yet!</h4>");
+                                } else {
+                                    $("#questions").html(" ");
+                                    $("#questions")
+                                            .append("<br>");
+                                    for (var i = 0; i < resultsData.questions.length; i++) {
+                                        var result = resultsData.questions[i];
+                                        dateAsked = result.askedOn.split(' ');
+                                        var listItem = "<li class='list-group-item' style='margin-bottom: 5px;'>"
+                                                + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
+                                                + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
+                                                + "<div class='col-xs-10 col-md-9'><div>"
+                                                + "<a href='/MobileHub/index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
+                                                + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
+                                                + "<div class='action'>"
+                                                + getTagsString(result.tags)
+                                                + "</div></div>" //tags
+                                                + "<div class='col-md-2'><div class='vote-box' title='Votes'><span class='vote-count'>"
+                                                + result.votes + "</span><span class='vote-label'>votes</span></div>"
+                                                + "<div class='ans-count-box' title='Answers'><span class='ans-count'>"
+                                                + result.answerCount + "</span>"
+                                                + "<span class='ans-label'>answers</span></div></div></div></li>";
+                                        $("#questions")
+                                                .append(listItem);
+                                    }
+                                }
+                            }
+
+                            function loadAnswersUI(answers) {
+
+                                if (answers === null || answers.length === 0) {
+                                    $("#answers").html("<h4>No answers for this question yet!</h4>");
+                                } else {
+                                    $("#answersList").html(" ");
+                                    $("#answersList")
+                                            .append("<br>");
+                                    for (var i = 0; i < answers.length; i++) {
+                                        var result = answers[i];
+                                        var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
+                                                + "<span class='vote-count' id='ans" + result.answerId + "'>" + result.netVotes + "</span><span class='vote-label'>votes</span></div>"
+                                                + "</div></span>"
+                                                + "<div class='chat-body clearfix'><div class='header'>"
+                                                + "<small class='pull-right text-muted'>"
+                                                + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD").fromNow() + "</small></div>"
+                                                + "<a href=/MobileHub/index.php/question/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div></li></ul>";
+                                        $("#answersList")
+                                                .append(answersList);
+                                    }
+
+                                }
+                            }
+
+                            function getTagsString($tags)
+                            {
+                                var str = "";
+                                for (var i = 0; i < $tags.length; i++) {
+                                    str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
+                                }
+                                return str;
+                            }
+</script>
