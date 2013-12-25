@@ -1,4 +1,5 @@
 <script src="<?php echo site_url('../resources/js/moment.min.js') ?>"></script>
+<script src="<?php echo site_url('../resources/js/bootstrap-dialog.js') ?>"></script>
 <div class="container">
     <div class="well" style="background-color: white">
         <ul class="nav nav-tabs">
@@ -230,29 +231,48 @@
                             }
 
                             function deleteQuestion(qId) {
-                                jsonData = {'username': "<?php echo $name;?>", "questionId": qId};
-                                //console.log(jsonData);
 
-                                $.post("/MobileHub/index.php/api/question/delete/", jsonData, function(content) {
+                                BootstrapDialog.confirm('Are you sure you want to delete this question?', function(result) {
+                                    if (result) {
+                                        jsonData = {'username': "<?php echo $name; ?>", "questionId": qId};
+                                        //console.log(jsonData);
 
-                                    // Deserialise the JSON
-                                    content = jQuery.parseJSON(content);
-                                    console.log(content);
-                                    if (content.message === "Success") {
-                                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                                        $('#errorModal').modal('show');
+                                        $.post("/MobileHub/index.php/api/question/delete/", jsonData, function(content) {
+
+                                            // Deserialise the JSON
+                                            content = jQuery.parseJSON(content);
+                                            console.log(content);
+                                            if (content.message === "Success") {
+//                                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+//                                                $('#errorModal').modal('show');
+                                                $.get("/MobileHub/index.php/api/user/fulldetails/" + "<?php echo $user ?>", function(resultsData) {
+                                                    resultsData = jQuery.parseJSON(resultsData);
+                                                    if (resultsData.message === "Error") {
+                                                        window.location = "/MobileHub/index.php/custom403/";
+                                                        return false;
+                                                    } else {
+                                                        //setEditableFields(resultsData);
+                                                        loadQuestionsUI(resultsData);
+                                                        //loadAnswersUI(resultsData.answers);
+                                                        return true;
+                                                    }
+                                                });
+                                            } else {
+                                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                                $('#errorModal').modal('show');
+                                            }
+                                        }).fail(function() {
+                                            $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                                            $('#errorModal').modal('show');
+                                        }), "json";
+                                        return true;
                                     } else {
-                                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                                        $('#errorModal').modal('show');
+                                        // Do nothing
                                     }
-                                }).fail(function() {
-                                    $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
-                                    $('#errorModal').modal('show');
-                                }), "json";
-                                return true;
+                                });
+
                             }
 
                             function editQuestion(qId) {
-
                             }
 </script>
