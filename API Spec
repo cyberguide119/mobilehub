@@ -11,10 +11,13 @@ Login (POST)
 Question (GET/POST)
 	index.php/api/question/post
 	index.php/api/question/details/{id}
-	index.php/api/question/delete/{id}
+	index.php/api/question/delete/
 	index.php/api/question/update/{id}
 
 	index.php/api/question/recent
+	index.php/api/question/popular
+	index.php/api/question/unanswered
+	index.php/api/question/all
 
 Answer
 	index.php/api/answer/post/

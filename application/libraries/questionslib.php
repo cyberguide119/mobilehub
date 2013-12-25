@@ -19,7 +19,7 @@ class questionslib {
         // access models etc. (because we don't extend a core
         // CI class)
         $this->ci = &get_instance();
-        $this->ci->load->model(array('Question', 'User', 'Tag', 'QuestionsTags', 'Category', 'Answer'));
+        $this->ci->load->model(array('Question', 'User', 'Tag', 'QuestionsTags', 'QuestionVotes', 'Category', 'Answer'));
         $this->ci->load->library('searchlib');
     }
 
@@ -47,6 +47,17 @@ class questionslib {
         $question->save();
         $this->saveTags($qTags, $qTitle);
         return true;
+    }
+
+    public function deleteQuestion($username, $qId) {
+        //$tables = array('questions_tags', 'questions');
+        $this->ci->db->delete('questions_tags', array('questionId' => $qId)); 
+        $this->ci->db->delete('question_votes', array('questId' => $qId));
+        $this->ci->db->delete('answers', array('questionId' => $qId)); 
+        $this->ci->db->delete('questions', array('questionId' => $qId)); 
+        return true;
+       // $this->ci->db->where('questionId', $qId);
+       // $this->ci->db->delete($tables);
     }
 
     private function saveTags($tags, $qTitle) {
@@ -152,8 +163,8 @@ class questionslib {
         }
         return $questions;
     }
-    
-        public function getAllQuestionsForUser($userId) {
+
+    public function getAllQuestionsForUser($userId) {
         $questions = array();
         $questionsList = $this->ci->Question->getAllQuestionsForUser($userId);
         foreach ($questionsList as $question) {
@@ -173,8 +184,8 @@ class questionslib {
         }
         return $questions;
     }
-    
-        public function getAllAnswersForUser($userId) {
+
+    public function getAllAnswersForUser($userId) {
         $answers = $this->ci->Answer->getAllAnswersForUser($userId);
         return $answers;
     }

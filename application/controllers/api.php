@@ -122,6 +122,8 @@ class Api extends CI_Controller {
             $this->getUnanswered($args);
         } else if (array_key_exists('all', $args)) {
             $this->getAll($args);
+        } else if (array_key_exists('delete', $args)) {
+            $this->deleteQuestion($args);
         }
     }
 
@@ -278,6 +280,22 @@ class Api extends CI_Controller {
         $questions = $this->ci->questionslib->getAllQuestions();
         $response['results'] = $questions;
         echo json_encode($response);
+    }
+
+    private function deleteQuestion() {
+        $username = $this->input->post('username');
+        $qId = $this->input->post('questionId');
+
+        $name = $this->authlib->is_loggedin();
+        if ($name === $username) {
+            $res = $this->questionslib->deleteQuestion($username, $qId);
+            echo json_encode($res);
+        }
+
+        if ($name === false) {
+            $res = array("message" => "Error", "type" => "You do not have permissions to delete the question");
+            echo json_encode($res);
+        }
     }
 
     /**
@@ -467,12 +485,12 @@ class Api extends CI_Controller {
             echo json_encode($res);
         }
     }
-    
+
     private function updateUserDetails($username) {
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {
-            $in = $this->input->post(NULL,true);
-            $res = $this->userlib->updateUserDetails($username,$in);
+            $in = $this->input->post(NULL, true);
+            $res = $this->userlib->updateUserDetails($username, $in);
             echo json_encode($res);
         }
 
