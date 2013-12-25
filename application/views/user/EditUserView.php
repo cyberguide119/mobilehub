@@ -188,8 +188,8 @@
                                                 + "<div class='action'>"
                                                 + getTagsString(result.tags)
                                                 + "</div></div>" //tags
-                                                + "<div class='col-md-1'><a href='javascript:;' class='btn btn-sm btn-primary' title='Edit Question'>"
-                                                + "<i class='btn-icon-only glyphicon glyphicon-edit'></i></a><a href='javascript:;' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a></div></div></li>";
+                                                + "<div class='col-md-1'><a href='javascript:editQuestion(" + result.questionId + ");' class='btn btn-sm btn-primary' title='Edit Question'>"
+                                                + "<i class='btn-icon-only glyphicon glyphicon-edit'></i></a><a href='javascript:deleteQuestion(" + result.questionId + ");' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a></div></div></li>";
                                         $("#questions")
                                                 .append(listItem);
                                     }
@@ -227,5 +227,32 @@
                                     str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
                                 }
                                 return str;
+                            }
+
+                            function deleteQuestion(qId) {
+                                jsonData = {'username': "<?php echo $name;?>", "questionId": qId};
+                                //console.log(jsonData);
+
+                                $.post("/MobileHub/index.php/api/question/delete/", jsonData, function(content) {
+
+                                    // Deserialise the JSON
+                                    content = jQuery.parseJSON(content);
+                                    console.log(content);
+                                    if (content.message === "Success") {
+                                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                        $('#errorModal').modal('show');
+                                    } else {
+                                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                        $('#errorModal').modal('show');
+                                    }
+                                }).fail(function() {
+                                    $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                                    $('#errorModal').modal('show');
+                                }), "json";
+                                return true;
+                            }
+
+                            function editQuestion(qId) {
+
                             }
 </script>

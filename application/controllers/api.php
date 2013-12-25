@@ -288,7 +288,8 @@ class Api extends CI_Controller {
 
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {
-            $res = $this->questionslib->deleteQuestion($username, $qId);
+            $this->questionslib->deleteQuestion($username, $qId);
+            $res = array("message" => "Success", "type" => "Question was deleted successfully!");
             echo json_encode($res);
         }
 

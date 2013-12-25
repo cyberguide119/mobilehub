@@ -50,14 +50,11 @@ class questionslib {
     }
 
     public function deleteQuestion($username, $qId) {
-        //$tables = array('questions_tags', 'questions');
         $this->ci->db->delete('questions_tags', array('questionId' => $qId)); 
         $this->ci->db->delete('question_votes', array('questId' => $qId));
         $this->ci->db->delete('answers', array('questionId' => $qId)); 
         $this->ci->db->delete('questions', array('questionId' => $qId)); 
         return true;
-       // $this->ci->db->where('questionId', $qId);
-       // $this->ci->db->delete($tables);
     }
 
     private function saveTags($tags, $qTitle) {
