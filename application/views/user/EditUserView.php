@@ -181,7 +181,7 @@
                                                 + "</div></span>"
                                                 + "<div class='chat-body clearfix'><div class='header'>"
                                                 + "<small class='pull-right text-muted'>"
-                                                + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD").fromNow() + "</small></div>"
+                                                + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD HH:mm Z").fromNow() + "</small></div>"
                                                 + "<a href=/MobileHub/index.php/question/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div></li></ul>";
                                         $("#answersList")
                                                 .append(answersList);
