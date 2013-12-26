@@ -130,6 +130,11 @@ class Question extends MY_Model {
         $this->db->update('questions', $data);
     }
 
+    function getAnsCount($qId) {
+        $question = $this->db->get_where('questions', array('questionId' => $qId))->row();
+        return $question->answerCount;
+    }
+
     function updateQuestion($qId, $qData) {
         $this->db->where('questionId', $qId);
         $this->db->update('questions', $qData);

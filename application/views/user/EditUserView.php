@@ -68,7 +68,39 @@
             <div class="tab-pane fade" id="questions">
             </div>
             <div class="tab-pane fade" id="answers">
-                <ul class="chat" id="answersList"></ul>
+                <ul class="chat" id="answersList">
+                    <li class="left clearfix">
+                        <span class="chat-img pull-left">
+                            <div class="">
+                                <div class="vote-box" title="Votes">
+                                    <span class="vote-count" id="ansundefined">1</span>
+                                    <span class="vote-label">votes</span>
+                                </div>
+                            </div>
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <small class="pull-right text-muted">
+                                    <span class="glyphicon glyphicon-time">
+                                    </span>3 days ago
+                                </small>
+                            </div>
+                            <a href="/MobileHub/index.php/question/show/?id=1">
+                                <p>This is a test description</p>
+                            </a>
+                        </div>
+                        <span class="pull-right">
+                            <span class="pull-right">
+                                <a href="javascript:;" class="btn btn-sm btn-primary" title="Edit Question">
+                                    <i class="btn-icon-only glyphicon glyphicon-edit"></i>									
+                                </a>
+                                <a href="javascript:;" class="btn btn-sm btn-danger" title="Delete Question">
+                                    <i class="btn-icon-only glyphicon glyphicon-remove" ></i>										
+                                </a>
+                            </span>
+                        </span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -159,7 +191,7 @@
                                                 + getTagsString(result.tags)
                                                 + "</div></div>" //tags
                                                 + "<div class='col-md-1'><a href='javascript:editQuestion(" + result.questionId + "," + result.votes + "," + result.answerCount + ");' class='btn btn-sm btn-primary' title='Edit Question'>"
-                                                + "<i class='btn-icon-only glyphicon glyphicon-edit'></i></a><a href='javascript:deleteQuestion(" + result.questionId + ");' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a></div></div></li>";
+                                                + "<i class='btn-icon-only glyphicon glyphicon-edit'></i></a><a href='javascript:deleteQuestion(" + result.questionId + "," + result.votes + "," + result.answerCount + ");' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a></div></div></li>";
                                         $("#questions")
                                                 .append(listItem);
                                     }
@@ -171,6 +203,7 @@
                                 if (answers === null || answers.length === 0) {
                                     $("#answers").html("<h4>No answers for this question yet!</h4>");
                                 } else {
+                                    console.log(answers);
                                     $("#answersList").html(" ");
                                     $("#answersList")
                                             .append("<br>");
@@ -182,7 +215,12 @@
                                                 + "<div class='chat-body clearfix'><div class='header'>"
                                                 + "<small class='pull-right text-muted'>"
                                                 + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD HH:mm Z").fromNow() + "</small></div>"
-                                                + "<a href=/MobileHub/index.php/question/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div></li></ul>";
+                                                + "<a href=/MobileHub/index.php/question/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div>"
+                                                + "<span class='pull-right'><span class='pull-right'>"
+                                                + "<a href='javascript:;' class='btn btn-sm btn-primary' title='Edit Answer'><i class='btn-icon-only glyphicon glyphicon-edit'></i></a>"
+                                                + "<a href='javascript:;' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a>"
+                                                + "</span></span>"
+                                                + "</li></ul>";
                                         $("#answersList")
                                                 .append(answersList);
                                     }
@@ -199,21 +237,62 @@
                                 return str;
                             }
 
-                            function deleteQuestion(qId) {
+                            function deleteQuestion(qId, votes, answers) {
+                                if (votes < 1 || answers < 1) {
 
-                                BootstrapDialog.confirm('Are you sure you want to delete this question?', function(result) {
+
+                                    BootstrapDialog.confirm('Are you sure you want to delete this question?', function(result) {
+                                        if (result) {
+                                            jsonData = {'username': "<?php echo $name; ?>", "questionId": qId};
+
+                                            $.post("/MobileHub/index.php/api/question/delete/", jsonData, function(content) {
+
+                                                // Deserialise the JSON
+                                                content = jQuery.parseJSON(content);
+                                                if (content.message === "Success") {
+//                                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+//                                                $('#errorModal').modal('show');
+                                                    $.get("/MobileHub/index.php/api/user/fulldetails/" + "<?php echo $user ?>", function(resultsData) {
+                                                        resultsData = jQuery.parseJSON(resultsData);
+                                                        if (resultsData.message === "Error") {
+                                                            window.location = "/MobileHub/index.php/custom403/";
+                                                            return false;
+                                                        } else {
+                                                            //setEditableFields(resultsData);
+                                                            loadQuestionsUI(resultsData);
+                                                            //loadAnswersUI(resultsData.answers);
+                                                            return true;
+                                                        }
+                                                    });
+                                                } else {
+                                                    $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                                    $('#errorModal').modal('show');
+                                                }
+                                            }).fail(function() {
+                                                $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                                                $('#errorModal').modal('show');
+                                            }), "json";
+                                            return true;
+                                        } else {
+                                            // Do nothing
+                                        }
+                                    });
+                                }else{
+                                    $('#errModalBody').html("<p><center>" + "Sorry, you cannot delete this question as it has votes or answers" + "</center></p>");
+                                    $('#errorModal').modal('show');
+                                }
+                            }
+                            function deleteAnswer(ansId, votes) {
+
+                                BootstrapDialog.confirm('Are you sure you want to delete this answer?', function(result) {
                                     if (result) {
-                                        jsonData = {'username': "<?php echo $name; ?>", "questionId": qId};
-                                        //console.log(jsonData);
+                                        jsonData = {'username': "<?php echo $name; ?>", "answerId": ansId};
 
-                                        $.post("/MobileHub/index.php/api/question/delete/", jsonData, function(content) {
+                                        $.post("/MobileHub/index.php/api/answer/delete/", jsonData, function(content) {
 
                                             // Deserialise the JSON
                                             content = jQuery.parseJSON(content);
-                                            console.log(content);
                                             if (content.message === "Success") {
-//                                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-//                                                $('#errorModal').modal('show');
                                                 $.get("/MobileHub/index.php/api/user/fulldetails/" + "<?php echo $user ?>", function(resultsData) {
                                                     resultsData = jQuery.parseJSON(resultsData);
                                                     if (resultsData.message === "Error") {
@@ -249,7 +328,18 @@
                                     $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this question as it has votes or answers" + "</center></p>");
                                     $('#errorModal').modal('show');
                                 } else {
-                                    window.location = "/MobileHub/index.php/question/edit/?id="+qId;
+                                    window.location = "/MobileHub/index.php/question/edit/?id=" + qId;
+                                }
+                            }
+
+                            function editAnswer(ansId, votes) {
+                                //Do the validation here and redirect the user
+                                if (votes > 0 || answers > 0) {
+                                    //Show error that the user cannot edit this question when it has votes or answers
+                                    $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this question as it has votes or answers" + "</center></p>");
+                                    $('#errorModal').modal('show');
+                                } else {
+                                    //window.location = "/MobileHub/index.php/question/edit/?id=" + qId;
                                 }
                             }
 </script>

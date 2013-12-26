@@ -148,6 +148,8 @@ class Api extends CI_Controller {
     private function loadAnswerLogic($args) {
         if (array_key_exists('post', $args)) {
             $this->postAnswer();
+        } else if (array_key_exists('delete', $args)) {
+            $this->deleteAnswer();
         }
     }
 
@@ -289,16 +291,25 @@ class Api extends CI_Controller {
 
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {
-            $this->questionslib->deleteQuestion($username, $qId);
-            $res = array("message" => "Success", "type" => "Question was deleted successfully!");
+            $status = $this->questionslib->deleteQuestion($username, $qId);
+            if ($status) {
+                $res = array("message" => "Success", "type" => "Question was deleted successfully!");
+                echo json_encode($res);
+            } else {
+                $res = array("message" => "Error", "type" => "You do not have permissions to delete this question");
+                echo json_encode($res);
+            }
+        } else {
+            $res = array("message" => "Error", "type" => "You do not have permissions to delete this question");
             echo json_encode($res);
         }
 
         if ($name === false) {
-            $res = array("message" => "Error", "type" => "You do not have permissions to delete the question");
+            $res = array("message" => "Error", "type" => "You do not have permissions to delete this question");
             echo json_encode($res);
         }
     }
+
     private function updateQuestion() {
         $qTitle = $this->input->post('Title');
         $qDesc = $this->input->post('Description');
@@ -481,6 +492,35 @@ class Api extends CI_Controller {
         }
 
         echo json_encode($response);
+    }
+
+    private function deleteAnswer() {
+        $username = $this->input->post('username');
+        $ansId = $this->input->post('answerId');
+
+        $name = $this->authlib->is_loggedin();
+        if ($name === $username) {
+            $status = $this->questionslib->deleteAnswer($username, $ansId);
+            if ($status) {
+                $res = array("message" => "Success", "type" => "Answer was deleted successfully!");
+                echo json_encode($res);
+                return;
+            } else {
+                $res = array("message" => "Error", "type" => "You do not have permissions to delete this answer");
+                echo json_encode($res);
+                return;
+            }
+        } else {
+            $res = array("message" => "Error", "type" => "You do not have permissions to delete this answer");
+            echo json_encode($res);
+            return;
+        }
+
+        if ($name === false) {
+            $res = array("message" => "Error", "type" => "You do not have permissions to delete this answer");
+            echo json_encode($res);
+            return;
+        }
     }
 
     /**

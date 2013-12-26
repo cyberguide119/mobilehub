@@ -26,7 +26,7 @@ class questionslib {
     public function postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName) {
         $question = new Question();
         $user = new User();
-        
+
         $time = time();
         $formattedDate = date("Y-m-d H:i:s", $time);
 
@@ -46,7 +46,7 @@ class questionslib {
         $this->saveTags($qTags, $qTitle);
         return true;
     }
-    
+
     public function updateQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName, $qId) {
         $question = new Question();
         $question->load($qId);
@@ -65,17 +65,43 @@ class questionslib {
         $question->askedOn = $formattedDate;
         $question->askerUserId = $userId;
 
-        $question->updateQuestion($qId,$question);
+        $question->updateQuestion($qId, $question);
         $this->saveTags($qTags, $qTitle);
         return true;
     }
 
     public function deleteQuestion($username, $qId) {
-        $this->ci->db->delete('questions_tags', array('questionId' => $qId)); 
-        $this->ci->db->delete('question_votes', array('questId' => $qId));
-        $this->ci->db->delete('answers', array('questionId' => $qId)); 
-        $this->ci->db->delete('questions', array('questionId' => $qId)); 
-        return true;
+        $userId = $this->ci->Question->getAskerUserId($qId);
+        $user = new User();
+        $user->load($userId);
+
+        if ($user->username === $username) {
+            $this->ci->db->delete('questions_tags', array('questionId' => $qId));
+            $this->ci->db->delete('question_votes', array('questId' => $qId));
+            $this->ci->db->delete('answers', array('questionId' => $qId));
+            $this->ci->db->delete('questions', array('questionId' => $qId));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteAnswer($username, $ansId) {
+        $userId = $this->ci->Answer->getAnsweredUserId($ansId);
+        $user = new User();
+        $user->load($userId);
+
+        if ($user->username === $username) {
+            $qId = $this->ci->Answer->getQuestionId($ansId);
+            $ansCount = $this->ci->Question->getAnsCount($qId);
+            $this->ci->Question->updateAnsCount($qId, $ansCount - 1);
+
+            $this->ci->db->delete('answer_votes', array('ansId' => $ansId));
+            $this->ci->db->delete('answers', array('answerId' => $ansId));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private function saveTags($tags, $qTitle) {
@@ -233,7 +259,7 @@ class questionslib {
                 );
             }
         }
-        
+
         $cat = new Category();
         $cat->load($question->categoryId);
 
