@@ -6,7 +6,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Error 404</title>
+        <title>Error 403</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="<?php echo site_url('../resources/css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?php echo site_url('../resources/css/site-theme.css') ?>" rel="stylesheet">
