@@ -203,7 +203,6 @@
                                 if (answers === null || answers.length === 0) {
                                     $("#answers").html("<h4>No answers for this question yet!</h4>");
                                 } else {
-                                    console.log(answers);
                                     $("#answersList").html(" ");
                                     $("#answersList")
                                             .append("<br>");
@@ -217,8 +216,8 @@
                                                 + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD HH:mm Z").fromNow() + "</small></div>"
                                                 + "<a href=/MobileHub/index.php/question/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div>"
                                                 + "<span class='pull-right'><span class='pull-right'>"
-                                                + "<a href='javascript:;' class='btn btn-sm btn-primary' title='Edit Answer'><i class='btn-icon-only glyphicon glyphicon-edit'></i></a>"
-                                                + "<a href='javascript:;' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a>"
+                                                + "<a href='javascript:' class='btn btn-sm btn-primary' title='Edit Answer'><i class='btn-icon-only glyphicon glyphicon-edit'></i></a>"
+                                                + "<a href='javascript:deleteAnswer(" + result.answerId + "," + result.netVotes + ");' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a>"
                                                 + "</span></span>"
                                                 + "</li></ul>";
                                         $("#answersList")
@@ -277,48 +276,53 @@
                                             // Do nothing
                                         }
                                     });
-                                }else{
+                                } else {
                                     $('#errModalBody').html("<p><center>" + "Sorry, you cannot delete this question as it has votes or answers" + "</center></p>");
                                     $('#errorModal').modal('show');
                                 }
                             }
                             function deleteAnswer(ansId, votes) {
 
-                                BootstrapDialog.confirm('Are you sure you want to delete this answer?', function(result) {
-                                    if (result) {
-                                        jsonData = {'username': "<?php echo $name; ?>", "answerId": ansId};
+                                if (votes < 1) {
 
-                                        $.post("/MobileHub/index.php/api/answer/delete/", jsonData, function(content) {
+                                    BootstrapDialog.confirm('Are you sure you want to delete this answer?', function(result) {
+                                        if (result) {
+                                            jsonData = {'username': "<?php echo $name; ?>", "answerId": ansId};
 
-                                            // Deserialise the JSON
-                                            content = jQuery.parseJSON(content);
-                                            if (content.message === "Success") {
-                                                $.get("/MobileHub/index.php/api/user/fulldetails/" + "<?php echo $user ?>", function(resultsData) {
-                                                    resultsData = jQuery.parseJSON(resultsData);
-                                                    if (resultsData.message === "Error") {
-                                                        window.location = "/MobileHub/index.php/custom403/";
-                                                        return false;
-                                                    } else {
-                                                        //setEditableFields(resultsData);
-                                                        loadQuestionsUI(resultsData);
-                                                        //loadAnswersUI(resultsData.answers);
-                                                        return true;
-                                                    }
-                                                });
-                                            } else {
-                                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                            $.post("/MobileHub/index.php/api/answer/delete/", jsonData, function(content) {
+
+                                                // Deserialise the JSON
+                                                content = jQuery.parseJSON(content);
+                                                if (content.message === "Success") {
+                                                    $.get("/MobileHub/index.php/api/user/fulldetails/" + "<?php echo $user ?>", function(resultsData) {
+                                                        resultsData = jQuery.parseJSON(resultsData);
+                                                        if (resultsData.message === "Error") {
+                                                            window.location = "/MobileHub/index.php/custom403/";
+                                                            return false;
+                                                        } else {
+                                                            //setEditableFields(resultsData);
+                                                            //loadQuestionsUI(resultsData);
+                                                            loadAnswersUI(resultsData.answers);
+                                                            return true;
+                                                        }
+                                                    });
+                                                } else {
+                                                    $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                                    $('#errorModal').modal('show');
+                                                }
+                                            }).fail(function() {
+                                                $('#errModalBody').html("<p><center>" + "Something went wrong when deleting. Please try again later" + "</center></p>");
                                                 $('#errorModal').modal('show');
-                                            }
-                                        }).fail(function() {
-                                            $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
-                                            $('#errorModal').modal('show');
-                                        }), "json";
-                                        return true;
-                                    } else {
-                                        // Do nothing
-                                    }
-                                });
-
+                                            }), "json";
+                                            return true;
+                                        } else {
+                                            // Do nothing
+                                        }
+                                    });
+                                } else {
+                                    $('#errModalBody').html("<p><center>" + "Sorry, you cannot delete this answer as it has votes or answers" + "</center></p>");
+                                    $('#errorModal').modal('show');
+                                }
                             }
 
                             function editQuestion(qId, votes, answers) {
