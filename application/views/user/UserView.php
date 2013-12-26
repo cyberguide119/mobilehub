@@ -72,6 +72,7 @@
             </div>
         </div>
     </div>
+    <h4>Summary</h4>
     <ul class="nav nav-tabs">
         <li class="active"><a href="#questions" data-toggle="tab">Questions</a></li>
         <li><a href="#answers" data-toggle="tab">Answers</a></li>

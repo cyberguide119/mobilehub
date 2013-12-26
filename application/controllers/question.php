@@ -49,6 +49,25 @@ class Question extends MY_Controller {
         }
         $this->loadFooterData();
     }
+    
+    public function edit() {
+        if ($this->authlib->is_loggedin()) {
+            $this->loadHeaderData();
+            $cat = new Category();
+            $categories = $cat->get();
+            
+            $qId = $this->input->get('id');
+            
+            $data['questionId'] = $qId;
+            $data['categories'] = $categories;
+            $this->load->view('question/EditQuestionView', $data);
+            $this->loadFooterData();
+        } else {
+            $this->loadHeaderData();
+            $this->load->view('errors/ErrorNotLoggedIn');
+            $this->loadFooterData();
+        }
+    }
 
 }
 

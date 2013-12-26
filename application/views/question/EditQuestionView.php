@@ -5,7 +5,7 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <span class="glyphicon glyphicon-file">
-                        </span>ASK A NEW QUESTION
+                        </span>EDIT QUESTION
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -66,7 +66,6 @@
                                         for (x in jsonTags) {
                                             newArr.push(jsonTags[x].tagName);
                                         }
-                                        console.log(newArr);
                                         $('.bootstrap-tagsinput input[type=text]').attr("placeholder", " ");
                                         $('.bootstrap-tagsinput input[type=text]').attr("data-provide", "typeahead");
                                         $('.bootstrap-tagsinput input[type=text]').typeahead({source: newArr});
@@ -103,6 +102,7 @@
 
                                             // Deserialise the JSON
                                             content = jQuery.parseJSON(content);
+                                            console.log(content);
                                             if (content.message === "Success") {
                                                 $("#qError").removeClass('alert alert-danger');
                                                 $("#qError").addClass('alert alert-success');

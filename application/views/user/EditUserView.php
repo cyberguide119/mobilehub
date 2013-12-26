@@ -66,37 +66,6 @@
                 </form>
             </div>
             <div class="tab-pane fade" id="questions">
-                <li class="list-group-item" style="margin-bottom: 5px;">
-                    <div class="row" style="margin-right: -40px;">
-                        <div class="col-xs-2 col-md-2">
-                            <div class="vote-box" title="Votes">
-                                <span class="vote-count">-1</span>
-                                <span class="vote-label">votes</span>
-                            </div>
-                            <div class="ans-count-box" title="Answers">
-                                <span class="ans-count">1</span>
-                                <span class="ans-label">answers</span>
-                            </div>
-                        </div>
-                        <div class="col-xs-10 col-md-9">
-                            <div>
-                                <a href="/MobileHub/index.php/question/show/?id=1">Fractions by HTML code in Mobile browser using phone gap</a>
-                                <div class="mic-info"> Asked by <a href="#">sahan91</a> on 2013-12-14</div>
-                            </div>
-                            <div class="action">
-                                <button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">android</button>&nbsp;<button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">phonegap</button>&nbsp;<button type="button" class="btn btn-info btn-xs" title="Approved" text="Category">mobile</button>&nbsp;
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <a href="javascript:;" class="btn btn-sm btn-primary" title="Edit Question">
-                                <i class="btn-icon-only glyphicon glyphicon-edit"></i>									
-                            </a>
-                            <a href="javascript:;" class="btn btn-sm btn-danger" title="Delete Question">
-                                <i class="btn-icon-only glyphicon glyphicon-remove" ></i>										
-                            </a>
-                        </div>
-                    </div>
-                </li>
             </div>
             <div class="tab-pane fade" id="answers">
                 <ul class="chat" id="answersList"></ul>
@@ -189,7 +158,7 @@
                                                 + "<div class='action'>"
                                                 + getTagsString(result.tags)
                                                 + "</div></div>" //tags
-                                                + "<div class='col-md-1'><a href='javascript:editQuestion(" + result.questionId + ");' class='btn btn-sm btn-primary' title='Edit Question'>"
+                                                + "<div class='col-md-1'><a href='javascript:editQuestion(" + result.questionId + "," + result.votes + "," + result.answerCount + ");' class='btn btn-sm btn-primary' title='Edit Question'>"
                                                 + "<i class='btn-icon-only glyphicon glyphicon-edit'></i></a><a href='javascript:deleteQuestion(" + result.questionId + ");' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a></div></div></li>";
                                         $("#questions")
                                                 .append(listItem);
@@ -273,6 +242,14 @@
 
                             }
 
-                            function editQuestion(qId) {
+                            function editQuestion(qId, votes, answers) {
+                                //Do the validation here and redirect the user
+                                if (votes > 0 || answers > 0) {
+                                    //Show error that the user cannot edit this question when it has votes or answers
+                                    $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this question as it has votes or answers" + "</center></p>");
+                                    $('#errorModal').modal('show');
+                                } else {
+                                    window.location = "/MobileHub/index.php/question/edit";
+                                }
                             }
 </script>
