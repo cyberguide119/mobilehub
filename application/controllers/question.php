@@ -17,7 +17,8 @@ class Question extends MY_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('Category');
+        $this->ci = &get_instance();
+        $this->ci->load->model(array('Category', 'User', 'Answer'));
         $this->load->library('permlib');
     }
 
@@ -49,15 +50,15 @@ class Question extends MY_Controller {
         }
         $this->loadFooterData();
     }
-    
+
     public function edit() {
         if ($this->authlib->is_loggedin()) {
             $this->loadHeaderData();
             $cat = new Category();
             $categories = $cat->get();
-            
+
             $qId = $this->input->get('id');
-            
+
             $data['questionId'] = $qId;
             $data['categories'] = $categories;
             $this->load->view('question/EditQuestionView', $data);
@@ -66,6 +67,33 @@ class Question extends MY_Controller {
             $this->loadHeaderData();
             $this->load->view('errors/ErrorNotLoggedIn');
             $this->loadFooterData();
+        }
+    }
+
+    public function editanswer() {
+
+        $username = $this->authlib->is_loggedin();
+        $qId = $this->input->get('id');
+        $ansId = $this->input->get('ans');
+        $userId = $this->ci->User->getUserIdByName($username);
+        $answeredUser = $this->ci->Answer->getAnsweredUserId($ansId);
+        $votes = $this->ci->Answer->getNetVotes($ansId);
+        
+        if ($username && $userId === $answeredUser && $votes < 1) {
+
+            $data['questionId'] = $qId;
+            $data['answerId'] = $ansId;
+
+            $this->loadHeaderData();
+            $this->load->view('question/EditAnswerView', $data);
+            if ($this->permlib->userHasPermission($username, "EDIT_ANSWER")) {
+                $this->load->view('question/AnswerEditSubView');
+                $this->loadFooterData();
+            } else {
+                $this->load->view('errors/Error403');
+            }
+        } else {
+            $this->load->view('errors/Error403');
         }
     }
 

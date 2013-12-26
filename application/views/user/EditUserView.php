@@ -336,11 +336,11 @@
                                 }
                             }
 
-                            function editAnswer(ansId, votes) {
+                            function editAnswer(ansId, votes, qId) {
                                 //Do the validation here and redirect the user
-                                if (votes > 0 || answers > 0) {
+                                if (votes > 0) {
                                     //Show error that the user cannot edit this question when it has votes or answers
-                                    $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this question as it has votes or answers" + "</center></p>");
+                                    $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this answer as it has votes or answers" + "</center></p>");
                                     $('#errorModal').modal('show');
                                 } else {
                                     //window.location = "/MobileHub/index.php/question/edit/?id=" + qId;
