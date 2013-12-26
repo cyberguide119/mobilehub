@@ -26,11 +26,9 @@ class questionslib {
     public function postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName) {
         $question = new Question();
         $user = new User();
-
-        $this->ci->load->helper('date');
-        $datestring = "%Y-%m-%d %h-%i-%a";
+        
         $time = time();
-        $formattedDate = mdate($datestring, $time);
+        $formattedDate = date("Y-m-d H:i:s", $time);
 
         $userId = $user->getUserIdByName($qAskerName);
 
@@ -267,11 +265,8 @@ class questionslib {
         $answer->questionId = $quesId;
         $answer->answeredUserId = $userId;
 
-        $this->ci->load->helper('date');
-        $datestring = "%Y-%m-%d %h-%i-%a";
         $time = time();
-        $formattedDate = mdate($datestring, $time);
-
+        $formattedDate = date("Y-m-d H:i:s", $time);
         $answer->answeredOn = $formattedDate;
         $answer->description = $description;
         $answer->netVotes = 0;

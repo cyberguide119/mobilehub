@@ -103,7 +103,7 @@
                                             + "<button type='button' class='btn btn-danger btn-xs' title='Vote down' onclick='voteAnswer(" + result.answerId + ",false);'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
                                             + "<div class='chat-body clearfix'><div class='header'>"
                                             + "<strong class='primary-font'><a href='/MobileHub/index.php/profile/?user=" + result.answerdUsername + "'>" + result.answerdUsername + "</a></strong><small class='pull-right text-muted'>"
-                                            + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD HH:mm Z").fromNow() + "</small></div>"
+                                            + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD hh:mm Z").fromNow() + "</small></div>"
                                             + "<p>" + result.description + "</p></div></li></ul>";
                                     $("#answersList")
                                             .append(answersList);

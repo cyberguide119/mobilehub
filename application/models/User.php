@@ -49,11 +49,9 @@ class User extends MY_Model {
         }
 
         $hashpwd = sha1($pwd);
-        $this->load->helper('date');
-        $datestring = "%Y-%m-%d %h-%i-%a";
         $time = time();
 
-        $formattedDate = mdate($datestring, $time);
+        $formattedDate = date("Y-m-d H:i:s", $time);
         $data = array('fullName' => $name, 'username' => $username,
             'password' => $hashpwd, 'email' => $email, 'website' => $website, 'joinedDate' => $formattedDate);
         $this->db->insert('user', $data);
