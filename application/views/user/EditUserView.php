@@ -69,37 +69,6 @@
             </div>
             <div class="tab-pane fade" id="answers">
                 <ul class="chat" id="answersList">
-                    <li class="left clearfix">
-                        <span class="chat-img pull-left">
-                            <div class="">
-                                <div class="vote-box" title="Votes">
-                                    <span class="vote-count" id="ansundefined">1</span>
-                                    <span class="vote-label">votes</span>
-                                </div>
-                            </div>
-                        </span>
-                        <div class="chat-body clearfix">
-                            <div class="header">
-                                <small class="pull-right text-muted">
-                                    <span class="glyphicon glyphicon-time">
-                                    </span>3 days ago
-                                </small>
-                            </div>
-                            <a href="/MobileHub/index.php/question/show/?id=1">
-                                <p>This is a test description</p>
-                            </a>
-                        </div>
-                        <span class="pull-right">
-                            <span class="pull-right">
-                                <a href="javascript:;" class="btn btn-sm btn-primary" title="Edit Question">
-                                    <i class="btn-icon-only glyphicon glyphicon-edit"></i>									
-                                </a>
-                                <a href="javascript:;" class="btn btn-sm btn-danger" title="Delete Question">
-                                    <i class="btn-icon-only glyphicon glyphicon-remove" ></i>										
-                                </a>
-                            </span>
-                        </span>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -216,8 +185,8 @@
                                                 + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD HH:mm Z").fromNow() + "</small></div>"
                                                 + "<a href=/MobileHub/index.php/question/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div>"
                                                 + "<span class='pull-right'><span class='pull-right'>"
-                                                + "<a href='javascript:' class='btn btn-sm btn-primary' title='Edit Answer'><i class='btn-icon-only glyphicon glyphicon-edit'></i></a>"
-                                                + "<a href='javascript:deleteAnswer(" + result.answerId + "," + result.netVotes + ");' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a>"
+                                                + "<a href='javascript: editAnswer(" + result.answerId + "," + result.netVotes + "," + result.questionId + ");' class='btn btn-sm btn-primary' title='Edit Answer'><i class='btn-icon-only glyphicon glyphicon-edit'></i></a>"
+                                                + "<a href='javascript: deleteAnswer(" + result.answerId + "," + result.netVotes + ");' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a>"
                                                 + "</span></span>"
                                                 + "</li></ul>";
                                         $("#answersList")
@@ -343,7 +312,7 @@
                                     $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this answer as it has votes or answers" + "</center></p>");
                                     $('#errorModal').modal('show');
                                 } else {
-                                    //window.location = "/MobileHub/index.php/question/edit/?id=" + qId;
+                                    window.location = "/MobileHub/index.php/question/editanswer/?id=" + qId + "&ans=" + ansId;
                                 }
                             }
 </script>
