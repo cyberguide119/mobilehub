@@ -63,7 +63,7 @@
                                             return false;
                                         } else {
                                             var userViewing = "<?php echo $name ?>";
-                                            if (userViewing === resultsData.askerName) {
+                                            if (userViewing === resultsData.questionDetails.askerName) {
                                                 loadUI(resultsData.questionDetails);
                                                 return true;
                                             } else {
