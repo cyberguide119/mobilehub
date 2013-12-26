@@ -35,7 +35,7 @@ class questionslib {
         $userId = $user->getUserIdByName($qAskerName);
 
         $question->questionTitle = $qTitle;
-        $question->questionDescription = $qDesc;
+        $question->questionDescription = nl2br($qDesc);
         $question->categoryId = $qCategory;
         $question->askedOn = $formattedDate;
         $question->askerUserId = $userId;
@@ -62,17 +62,13 @@ class questionslib {
         $userId = $user->getUserIdByName($qAskerName);
 
         $question->questionTitle = $qTitle;
-        $question->questionDescription = $qDesc;
+        $question->questionDescription = nl2br($qDesc);
         $question->categoryId = $qCategory;
         $question->askedOn = $formattedDate;
         $question->askerUserId = $userId;
-//        $question->answerCount = 0;
-//        $question->netVotes = 0;
-//        $question->downVotes = 0;
-//        $question->upVotes = 0;
 
         $question->updateQuestion($qId,$question);
-        //$this->saveTags($qTags, $qTitle);
+        $this->saveTags($qTags, $qTitle);
         return true;
     }
 

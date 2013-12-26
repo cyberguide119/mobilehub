@@ -21,7 +21,10 @@ class QuestionsTags extends CI_Model{
     }
     
     function save($questionId, $tagId){
-        $this->db->insert('questions_tags',array('questionId' => $questionId, 'tagId' => $tagId));
+        $tagExists = $this->db->get_where('questions_tags', array('questionId' => $questionId, 'tagId' => $tagId));
+        if ($tagExists->num_rows() === 0) {
+            $this->db->insert('questions_tags',array('questionId' => $questionId, 'tagId' => $tagId));
+        }
     }
     
     function getTagIDsForQuestion($questionId)

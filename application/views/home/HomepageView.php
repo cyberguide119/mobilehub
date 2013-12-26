@@ -52,10 +52,8 @@
                                 + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
                                 + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
                                 + "<div class='col-xs-10 col-md-9'><div>"
-                                + "<a style='font-size: 18px;' href='index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
+                                + "<a style='font-size: 18px;' href='/MobileHub/index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
                                 + "<div class='mic-info' style='font-size: 13px;'> Asked by <a href='/MobileHub/index.php/profile/?user="+result.askerName+"'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
-//                                + "<div class='comment-text'><br>"
-//                                + result.questionDescription + "</div>"
                                 + "<div class='action'>"
                                 + getTagsString(result.tags)
                                 + "</div></div>" //tags
