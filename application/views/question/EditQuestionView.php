@@ -102,7 +102,7 @@
 
                                 function loadUI(resultsData) {
                                     $("#qTitle").val(resultsData.questionTitle);
-                                    $("#qDesc").val(resultsData.questionDescription);
+                                    $("#qDesc").val(resultsData.questionDescription.replace(/\<br \/>/g, ''));
                                     setTags(resultsData.tags);
                                     $("#qCategory").val(resultsData.category);
                                 }
