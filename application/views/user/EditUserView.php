@@ -145,7 +145,7 @@
                                     for (var i = 0; i < resultsData.questions.length; i++) {
                                         var result = resultsData.questions[i];
                                         dateAsked = result.askedOn.split(' ');
-                                        var listItem = "<li class='list-group-item' style='margin-bottom: 5px;'>"
+                                        var listItem = "<li class='list-group-item' style='margin-bottom: 5px; border: none; border-bottom: 1px solid #ddd;'>"
                                                 + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-2'>"
                                                 + "<div class='vote-box' title='Votes'><span class='vote-count'>"
                                                 + result.votes + "</span><span class='vote-label'>votes</span></div>"

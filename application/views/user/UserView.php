@@ -120,7 +120,7 @@
             for (var i = 0; i < resultsData.questions.length; i++) {
                 var result = resultsData.questions[i];
                 dateAsked = result.askedOn.split(' ');
-                var listItem = "<li class='list-group-item' style='margin-bottom: 5px;'>"
+                var listItem = "<li class='list-group-item' style='margin-bottom: 5px; border: none; border-bottom: 1px solid #ddd;'>"
                         + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
                         + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
                         + "<div class='col-xs-10 col-md-9'><div>"
