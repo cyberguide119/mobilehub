@@ -212,6 +212,9 @@ class questionslib {
                 );
             }
         }
+        
+        $cat = new Category();
+        $cat->load($question->categoryId);
 
         $questionResult = array(
             "questionTitle" => $question->questionTitle,
@@ -221,7 +224,8 @@ class questionslib {
             "answerCount" => $question->answerCount,
             "votes" => $question->netVotes,
             "tags" => $tagsArr,
-            "answers" => $answers
+            "answers" => $answers,
+            "category" => $cat->categoryName
         );
         return $questionResult;
     }

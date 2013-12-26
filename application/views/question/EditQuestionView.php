@@ -43,7 +43,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <button onclick="postQuestion();" class="btn btn-success btn-mg"><span class="glyphicon glyphicon-floppy-disk">
+                            <button onclick="updateQuestion();" class="btn btn-success btn-mg"><span class="glyphicon glyphicon-floppy-disk">
                                 </span>Save</button>
                         </div>
                     </div>
@@ -87,7 +87,46 @@
                                     alwaysShow: true
                                 });
 
-                                function postQuestion()
+                                $(document).ready(function() {
+                                    $.get("/MobileHub/index.php/api/question/details/" + "<?php echo $questionId ?>", function(resultsData) {
+                                        resultsData = jQuery.parseJSON(resultsData);
+                                        if (resultsData.message === "Error") {
+                                            window.location = "/MobileHub/index.php/custom404/";
+                                            return false;
+                                        } else {
+                                            loadUI(resultsData.questionDetails);
+                                            return true;
+                                        }
+                                    });
+                                });
+
+                                function loadUI(resultsData) {
+                                    $("#qTitle").val(resultsData.questionTitle);
+                                    $("#qDesc").val(resultsData.questionDescription);
+                                    setTags(resultsData.tags);
+                                    $("#qCategory").val(resultsData.category);
+                                }
+
+                                function setTags(tags) {
+                                    var lastElement = 0;
+                                    var tagStr = "";
+                                    for (var i = 0; i < tags.length; i++) {
+                                        if (lastElement === tags.length - 1) {
+                                            tagStr += tags[i];
+                                            //break;
+                                        } else {
+                                            tagStr += tags[i] + ",";
+                                        }
+                                        lastElement++;
+                                    }
+                                    $('.bootstrap-tagsinput input[type=text]').val(tagStr);
+                                    var e = jQuery.Event("keydown");
+                                    e.which = 13; //choose the one you want
+                                    e.keyCode = 13;
+                                    $('.bootstrap-tagsinput input[type=text]').trigger(e);
+                                }
+
+                                function updateQuestion()
                                 {
                                     $qTitle = $("#qTitle").val();
                                     $qDesc = $("#qDesc").val();
@@ -98,7 +137,7 @@
                                     $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName};
 
                                     if (valdateForm($qTitle, $qDesc, $qTags, $qCategory)) {
-                                        $.post("/MobileHub/index.php/api/question/post", $jsonObj, function(content) {
+                                        $.post("/MobileHub/index.php/api/question/update", $jsonObj, function(content) {
 
                                             // Deserialise the JSON
                                             content = jQuery.parseJSON(content);
@@ -106,8 +145,8 @@
                                             if (content.message === "Success") {
                                                 $("#qError").removeClass('alert alert-danger');
                                                 $("#qError").addClass('alert alert-success');
-                                                $("#qError").text('Question posted!');
-                                                window.location.href = "/MobileHub/index.php/";
+                                                $("#qError").text('Question updated!');
+                                                //window.location.href = "/MobileHub/index.php/";
                                             } else {
                                                 $("#qError").addClass('alert alert-danger');
                                                 $("#qError").text('Sorry, something went wrong when posting the question! Please try again');

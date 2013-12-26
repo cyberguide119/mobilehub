@@ -249,7 +249,7 @@
                                     $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this question as it has votes or answers" + "</center></p>");
                                     $('#errorModal').modal('show');
                                 } else {
-                                    window.location = "/MobileHub/index.php/question/edit";
+                                    window.location = "/MobileHub/index.php/question/edit/?id="+qId;
                                 }
                             }
 </script>

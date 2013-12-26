@@ -68,7 +68,6 @@ class Api extends CI_Controller {
         switch ($args['api']) {
             case 'auth' :
                 $this->loadAuthLogic($args);
-                // assume we get back an array of data - now echo it as JSON
                 break;
             case 'search':
                 $this->loadSearchLogic($args);
