@@ -55,6 +55,25 @@
 </div>
 
 <script type="text/javascript">
+                                $(document).ready(function() {
+                                    $.get("/MobileHub/index.php/api/question/details/" + "<?php echo $questionId ?>", function(resultsData) {
+                                        resultsData = jQuery.parseJSON(resultsData);
+                                        if (resultsData.message === "Error") {
+                                            window.location = "/MobileHub/index.php/custom404/";
+                                            return false;
+                                        } else {
+                                            var userViewing = "<?php echo $name ?>";
+                                            if (userViewing === resultsData.askerName) {
+                                                loadUI(resultsData.questionDetails);
+                                                return true;
+                                            } else {
+                                                window.location = "/MobileHub/index.php/custom403/";
+                                                return false;
+                                            }
+                                        }
+                                    });
+                                });
+
                                 $(function() {
                                     jsonTags = new Array();
 
@@ -71,8 +90,6 @@
                                         $('.bootstrap-tagsinput input[type=text]').typeahead({source: newArr});
                                         return true;
                                     });
-
-
                                 });
 
                                 $(function() {
@@ -85,19 +102,6 @@
 
                                 $('#qTitle').maxlength({
                                     alwaysShow: true
-                                });
-
-                                $(document).ready(function() {
-                                    $.get("/MobileHub/index.php/api/question/details/" + "<?php echo $questionId ?>", function(resultsData) {
-                                        resultsData = jQuery.parseJSON(resultsData);
-                                        if (resultsData.message === "Error") {
-                                            window.location = "/MobileHub/index.php/custom404/";
-                                            return false;
-                                        } else {
-                                            loadUI(resultsData.questionDetails);
-                                            return true;
-                                        }
-                                    });
                                 });
 
                                 function loadUI(resultsData) {
@@ -134,7 +138,7 @@
                                     $qCategory = (($("#qCategory")[0]).selectedIndex) + 1;
                                     $qAskerName = "<?php echo $name ?>";
 
-                                    $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName, "questionId" : "<?php echo $questionId?>"};
+                                    $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName, "questionId": "<?php echo $questionId ?>"};
 
                                     if (valdateForm($qTitle, $qDesc, $qTags, $qCategory)) {
                                         $.post("/MobileHub/index.php/api/question/update", $jsonObj, function(content) {
