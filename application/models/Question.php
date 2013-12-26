@@ -89,9 +89,9 @@ class Question extends MY_Model {
         $questions = $this->db->get("questions");
         return $questions->result();
     }
-    
-    function getAllQuestionsForUser($userId){
-         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
+
+    function getAllQuestionsForUser($userId) {
+        $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where("askerUserId", $userId);
         $questions = $this->db->get("questions");
         return $questions->result();
@@ -128,6 +128,11 @@ class Question extends MY_Model {
         $data = array('answerCount' => $newCount);
         $this->db->where('questionId', $qId);
         $this->db->update('questions', $data);
+    }
+
+    function updateQuestion($qId, $qData) {
+        $this->db->where('questionId', $qId);
+        $this->db->update('questions', $qData);
     }
 
 }

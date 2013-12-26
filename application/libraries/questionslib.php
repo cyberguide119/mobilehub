@@ -48,6 +48,33 @@ class questionslib {
         $this->saveTags($qTags, $qTitle);
         return true;
     }
+    
+    public function updateQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName, $qId) {
+        $question = new Question();
+        $question->load($qId);
+        $user = new User();
+
+        $this->ci->load->helper('date');
+        $datestring = "%Y-%m-%d %h-%i-%a";
+        $time = time();
+        $formattedDate = mdate($datestring, $time);
+
+        $userId = $user->getUserIdByName($qAskerName);
+
+        $question->questionTitle = $qTitle;
+        $question->questionDescription = $qDesc;
+        $question->categoryId = $qCategory;
+        $question->askedOn = $formattedDate;
+        $question->askerUserId = $userId;
+//        $question->answerCount = 0;
+//        $question->netVotes = 0;
+//        $question->downVotes = 0;
+//        $question->upVotes = 0;
+
+        $question->updateQuestion($qId,$question);
+        //$this->saveTags($qTags, $qTitle);
+        return true;
+    }
 
     public function deleteQuestion($username, $qId) {
         $this->ci->db->delete('questions_tags', array('questionId' => $qId)); 

@@ -134,18 +134,17 @@
                                     $qCategory = (($("#qCategory")[0]).selectedIndex) + 1;
                                     $qAskerName = "<?php echo $name ?>";
 
-                                    $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName};
+                                    $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName, "questionId" : "<?php echo $questionId?>"};
 
                                     if (valdateForm($qTitle, $qDesc, $qTags, $qCategory)) {
                                         $.post("/MobileHub/index.php/api/question/update", $jsonObj, function(content) {
 
                                             // Deserialise the JSON
                                             content = jQuery.parseJSON(content);
-                                            console.log(content);
                                             if (content.message === "Success") {
                                                 $("#qError").removeClass('alert alert-danger');
                                                 $("#qError").addClass('alert alert-success');
-                                                $("#qError").text('Question updated!');
+                                                $("#qError").text('Question updated successfully!');
                                                 //window.location.href = "/MobileHub/index.php/";
                                             } else {
                                                 $("#qError").addClass('alert alert-danger');

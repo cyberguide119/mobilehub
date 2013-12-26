@@ -122,7 +122,9 @@ class Api extends CI_Controller {
         } else if (array_key_exists('all', $args)) {
             $this->getAll($args);
         } else if (array_key_exists('delete', $args)) {
-            $this->deleteQuestion($args);
+            $this->deleteQuestion();
+        } else if (array_key_exists('update', $args)) {
+            $this->updateQuestion($args);
         }
     }
 
@@ -294,6 +296,26 @@ class Api extends CI_Controller {
 
         if ($name === false) {
             $res = array("message" => "Error", "type" => "You do not have permissions to delete the question");
+            echo json_encode($res);
+        }
+    }
+    private function updateQuestion() {
+        $qTitle = $this->input->post('Title');
+        $qDesc = $this->input->post('Description');
+        $qTags = $this->input->post('Tags');
+        $qCategory = $this->input->post('Category');
+        $qAskerName = $this->input->post('AskerName');
+        $qId = $this->input->post('questionId');
+
+        $name = $this->authlib->is_loggedin();
+        if ($name === $qAskerName) {
+            $this->questionslib->updateQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName, $qId);
+            $res = array("message" => "Success", "type" => "Question was updated successfully!");
+            echo json_encode($res);
+        }
+
+        if ($name === false) {
+            $res = array("message" => "Error", "type" => "You do not have permissions to edit the question");
             echo json_encode($res);
         }
     }
