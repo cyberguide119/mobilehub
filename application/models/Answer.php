@@ -70,11 +70,16 @@ class Answer extends MY_Model {
         $answers = $this->db->get_where('answers', array('answeredUserId' => $userId));
         return $answers->result();
     }
-    
-    function getQuestionId($ansId){
+
+    function getQuestionId($ansId) {
         $this->db->select('questionId');
         $answers = $this->db->get_where('answers', array('answerId' => $ansId))->row();
         return $answers->questionId;
+    }
+
+    function updateAnswer($ansId, $data, $qId) {
+        $this->db->where(array('answerId' => $ansId, 'questionId'=> $qId));
+        $this->db->update('answers', $data);
     }
 
 }

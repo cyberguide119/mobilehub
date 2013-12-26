@@ -150,6 +150,8 @@ class Api extends CI_Controller {
             $this->postAnswer();
         } else if (array_key_exists('delete', $args)) {
             $this->deleteAnswer();
+        } else if (array_key_exists('update', $args)) {
+            $this->updateAnswer();
         }
     }
 
@@ -521,6 +523,33 @@ class Api extends CI_Controller {
             echo json_encode($res);
             return;
         }
+    }
+
+    private function updateAnswer() {
+        $quesId = $this->input->post('questionId');
+        $tutorName = $this->input->post('username');
+        $description = $this->input->post('description');
+        $ansId = $this->input->post('answerId');
+
+        $name = $this->authlib->is_loggedin();
+        if ($name) {
+            if ($this->permlib->userHasPermission($tutorName, "ANSWER_QUESTION")) {
+                if ($this->questionslib->updateAnswer($quesId, $tutorName, $description, $ansId)) {
+                    $response["message"] = "Success";
+                    
+                } else {
+                    $response["message"] = "Error";
+                    $response["type"] = "Oops, something went wrong!";
+                }
+            } else {
+                $response["message"] = "Error";
+                $response["type"] = "Sorry, you need to have permissions to post an answer. You may want to request for a tutor account.";
+            }
+        } else {
+            $response["message"] = "Error";
+            $response["type"] = "You need to log in before posting an answer";
+        }
+        echo json_encode($response);
     }
 
     /**

@@ -104,6 +104,19 @@ class questionslib {
         }
     }
 
+    public function updateAnswer($quesId, $tutorName, $description, $ansId) {
+        $answer = new Answer();
+        $answer->load($ansId);
+        
+        $time = time();
+        $formattedDate = date("Y-m-d H:i:s", $time);
+        $answer->answeredOn = $formattedDate;
+        $answer->description = $description;
+        
+        $answer->updateAnswer($ansId, $answer, $quesId);
+        return true;
+    }
+
     private function saveTags($tags, $qTitle) {
         $splittedTags = explode(",", $tags);
         for ($i = 0; $i < count($splittedTags); $i++) {

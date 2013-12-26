@@ -20,7 +20,7 @@
                                 $questionId = "<?php echo $questionId ?>";
                                 $qDesc = $("#ansDesc").val();
                                 $tutorName = "<?php echo $name ?>";
-                                $jsonObj = {"questionId": $questionId, "description": $qDesc, "username": $tutorName};
+                                $jsonObj = {"questionId": $questionId, "description": $qDesc, "username": $tutorName, "answerId" : "<?php echo $answerId ?>"};
 
                                 if ($qDesc !== '') {
                                     $.post("/MobileHub/index.php/api/answer/update/", $jsonObj, function(content) {
