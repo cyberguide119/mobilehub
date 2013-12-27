@@ -78,12 +78,17 @@ class Answer extends MY_Model {
     }
 
     function updateAnswer($ansId, $data, $qId) {
-        $this->db->where(array('answerId' => $ansId, 'questionId'=> $qId));
+        $this->db->where(array('answerId' => $ansId, 'questionId' => $qId));
         $this->db->update('answers', $data);
     }
-    
-    function getAllAnswerCount(){
+
+    function getAllAnswerCount() {
         return $this->db->count_all('answers');
+    }
+
+    function getAllAnswers() {
+        //$this->db->select(array('answerId', 'answeredUserId', 'answeredOn', 'description', 'netVotes'));
+        return $this->db->get('answers')->result();
     }
 
 }

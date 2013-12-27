@@ -58,7 +58,5 @@ Admin - All POST
 	index.php/api/admin/details/basic
 
 	index.php/api/admin/question/details
-	index.php/api/admin/question/delete
 
 	index.php/api/admin/answer/details
-	index.php/api/admin/answer/delete

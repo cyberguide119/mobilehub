@@ -35,11 +35,24 @@ class adminlib {
     public function getQuestions(){
         $allQuestions = $this->ci->questionslib->getAllQuestions();
         return $allQuestions;
-//        $refinedQuestions = array();
-//        foreach ($allQuestions as $quest){
-//            var_dump($quest);
-//            
-//        }
+    }
+    
+    public function getAnswers(){
+        
+        $allAns = $this->ci->Answer->getAllAnswers();
+        $resultArr = array();
+        foreach ($allAns as $ans){
+            $username = $this->ci->User->getUserById($ans->answeredUserId);
+            $resultArr[] = array(
+                "answerId" => $ans->answerId,
+                "questionId" => $ans->questionId,
+                "description" => $ans->description,
+                "answeredOn" => $ans->answeredOn,
+                "answeredUserName" => $username,
+                "votes" => $ans->netVotes,
+            );
+        }
+        return $resultArr;
     }
 
 }
