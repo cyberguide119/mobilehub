@@ -54,3 +54,6 @@ User
 	post
 	index.php/api/user/post/{username}
 
+Admin - All POST
+	index.php/api/admin/details/basic
+	

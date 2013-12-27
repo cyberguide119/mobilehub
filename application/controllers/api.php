@@ -84,6 +84,9 @@ class Api extends CI_Controller {
             case 'user':
                 $this->loadProfileLogic($args);
                 break;
+            case 'admin':
+                $this->LoadAdminLogic();
+                break;
             default:
                 show_error('Unsupported resource', 404);
                 break;
@@ -163,6 +166,12 @@ class Api extends CI_Controller {
         } else if (array_key_exists('post', $args)) {
             $this->updateUserDetails($args['post']);
         }
+    }
+    
+    private function loadAdminLogic($args){
+        if (array_key_exists('details', $args)) {
+            $this->getDashboardDetails($args['details']);
+        } 
     }
 
     /**
@@ -591,6 +600,16 @@ class Api extends CI_Controller {
         if ($name === false) {
             $res = array("message" => "Error", "type" => "You do not have permissions");
             echo json_encode($res);
+        }
+    }
+    
+    /**
+     * All methods related to admin dashboard
+     */
+    
+    private function getDashboardDetails($option){
+        if($option === 'basic'){
+            
         }
     }
 
