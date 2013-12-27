@@ -140,6 +140,10 @@ class Question extends MY_Model {
         $this->db->update('questions', $qData);
     }
 
+    function getAllQuestionsCount() {
+        return $this->db->count_all('questions');
+    }
+
 }
 
 ?>

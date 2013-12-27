@@ -81,6 +81,10 @@ class Answer extends MY_Model {
         $this->db->where(array('answerId' => $ansId, 'questionId'=> $qId));
         $this->db->update('answers', $data);
     }
+    
+    function getAllAnswerCount(){
+        return $this->db->count_all('answers');
+    }
 
 }
 

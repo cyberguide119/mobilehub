@@ -17,7 +17,7 @@ class Api extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib', 'searchlib', 'questionslib', 'voteslib', 'permlib', 'userlib'));
+        $this->load->library(array('authlib', 'searchlib', 'questionslib', 'voteslib', 'permlib', 'userlib', 'adminlib'));
 
         $this->ci = &get_instance();
         $this->ci->load->model('user');
@@ -85,7 +85,7 @@ class Api extends CI_Controller {
                 $this->loadProfileLogic($args);
                 break;
             case 'admin':
-                $this->LoadAdminLogic();
+                $this->loadAdminLogic($args);
                 break;
             default:
                 show_error('Unsupported resource', 404);
@@ -167,11 +167,11 @@ class Api extends CI_Controller {
             $this->updateUserDetails($args['post']);
         }
     }
-    
-    private function loadAdminLogic($args){
+
+    private function loadAdminLogic($args) {
         if (array_key_exists('details', $args)) {
             $this->getDashboardDetails($args['details']);
-        } 
+        }
     }
 
     /**
@@ -602,14 +602,23 @@ class Api extends CI_Controller {
             echo json_encode($res);
         }
     }
-    
+
     /**
      * All methods related to admin dashboard
      */
-    
-    private function getDashboardDetails($option){
-        if($option === 'basic'){
-            
+    private function getDashboardDetails($option) {
+        if ($option === 'basic') {
+            $name = $this->authlib->is_loggedin();
+            $username = $this->input->post('username');
+            if ($username === $name && $username === 'admin') {
+                $reponse['message'] = "Success";
+                $reponse['data'] = $this->adminlib->getBasicStats();
+                echo json_encode($reponse);
+            } else {
+                $reponse['message'] = "Error";
+                $reponse['type'] = "You are not authorized to view this content";
+                echo json_encode($reponse);
+            }
         }
     }
 

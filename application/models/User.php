@@ -137,8 +137,8 @@ class User extends MY_Model {
         $this->db->where('userId', $userId);
         $this->db->update('user', $data);
     }
-    
-    function updateUserDetails($userId, $details){
+
+    function updateUserDetails($userId, $details) {
         //$data = array('reputation' => $reputation);
         $this->db->where('userId', $userId);
         $this->db->update('user', $details);
@@ -158,13 +158,17 @@ class User extends MY_Model {
 
     function getFullUserDetails($username, $isTutor) {
         if ($isTutor) {
-            $this->db->select(array('userId', 'email', 'profileImagePath' , 'fullName', 'joinedDate', 'website', 'linkedInUrl', 'sOUrl', 'about'));
+            $this->db->select(array('userId', 'email', 'profileImagePath', 'fullName', 'joinedDate', 'website', 'linkedInUrl', 'sOUrl', 'about'));
         } else {
-            $this->db->select(array('userId', 'email', 'profileImagePath' , 'fullName', 'joinedDate', 'website', 'about'));
+            $this->db->select(array('userId', 'email', 'profileImagePath', 'fullName', 'joinedDate', 'website', 'about'));
         }
         $this->db->where('username', $username);
         $res = $this->db->get('user')->row();
         return $res;
+    }
+
+    function getAllUsersCount() {
+        return $this->db->count_all('user');
     }
 
 }
