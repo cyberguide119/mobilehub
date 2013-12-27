@@ -14,15 +14,20 @@ if (!defined('BASEPATH'))
  * @author DRX
  */
 class MY_Controller extends CI_Controller {
-    
+
     function __construct() {
         parent::__construct();
-        $this->load->library(array('authlib'));
+        $this->load->library(array('authlib', 'permlib'));
     }
 
     public function loadHeaderData() {
         $loggedin = $this->authlib->is_loggedin();
-        $this->load->view('common/HeaderView', array('name' => $loggedin));
+        if ($loggedin) {
+            $isAdmin = $this->permlib->isAdmin($loggedin);
+            $authData['isAdmin'] = $isAdmin;
+        }
+        $authData['name'] = $loggedin;
+        $this->load->view('common/HeaderView', $authData);
 
         $data['errmsg'] = '';
         $data['subview'] = 'login/LoginView';

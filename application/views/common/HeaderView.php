@@ -18,7 +18,7 @@ and open the template in the editor.
         <script src="<?php echo site_url('../resources/js/bootstrap-maxlength.min.js') ?>" type="text/javascript"></script>
         <script src="<?php echo site_url('../resources/js/form-validator/jquery.form-validator.min.js') ?>"></script>
         <script src="<?php echo site_url('../resources/js/bootstrap3-typeahead.min.js') ?>"></script>
-        
+
         <script type="text/javascript">
             // using JQUERY's ready method to know when all dom elements are rendered
             $(document).ready(function() {
@@ -81,8 +81,8 @@ and open the template in the editor.
                             echo '<li><a href="' . site_url('question/ask') . '" style="padding: 0; margin-right: 10px; margin-top: 14px"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
                             echo '<div class="pull-right"><ul class="nav pull-right"><li class="dropdown">';
                             echo '<a href="' . site_url('') . '" class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 4%; color: white;">' . $name . '<b class="caret"></b></a>';
-                            echo '<ul class="dropdown-menu"><li><a href="' . site_url('profile/?user='. $name) . '"><i class="glyphicon glyphicon-user"></i> My Profile</a></li>';
-                            echo '<li><a href="/help/support"><i class="glyphicon glyphicon-envelope"></i> Contact Support</a></li>';
+                            echo '<ul class="dropdown-menu"><li><a href="' . site_url('profile/?user=' . $name) . '"><i class="glyphicon glyphicon-user"></i> My Profile</a></li>';
+                            echo '<li><a href="' . site_url('/help/support') . '"><i class="glyphicon glyphicon-envelope"></i> Contact Support</a></li>';
                             echo '<li class="divider"></li>';
                             echo '<li><a href="' . site_url('auth/logout') . '"><i class="glyphicon glyphicon-off"></i> Logout</a></li>';
                             echo '</ul></li></ul></div>';

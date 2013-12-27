@@ -173,13 +173,17 @@ class Api extends CI_Controller {
         $password = $this->input->post('pword');
         $rememberLogin = $this->input->post('remember');
         $user = $this->authlib->login($username, $password, $rememberLogin);
+        if ($user) {
+            $isAdmin = $this->permlib->isAdmin($user['username']);
+            $response['isAdmin'] = $isAdmin;
+        }
+
         if ($user != false) {
             $response['message'] = 'correct';
         } else {
             $response['message'] = 'wrong';
         }
         echo json_encode($response);
-        //return json_encode($response);
     }
 
     private function createaccount() {
@@ -536,7 +540,6 @@ class Api extends CI_Controller {
             if ($this->permlib->userHasPermission($tutorName, "ANSWER_QUESTION")) {
                 if ($this->questionslib->updateAnswer($quesId, $tutorName, $description, $ansId)) {
                     $response["message"] = "Success";
-                    
                 } else {
                     $response["message"] = "Error";
                     $response["type"] = "Oops, something went wrong!";

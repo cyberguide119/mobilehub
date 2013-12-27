@@ -19,7 +19,6 @@
 
                     // Deserialise the JSON
                     content = jQuery.parseJSON(content);
-                    console.log(content);
                     if (content.message === "correct") {
                         $("#error").removeClass('alert alert-danger');
                         $("#error").addClass('alert alert-success');

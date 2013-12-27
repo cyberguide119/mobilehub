@@ -37,11 +37,11 @@ class auth extends MY_Controller {
         $this->loadFooterData();
     }
 
-    public function login() {
-        $this->loadHeaderData();
-        $this->load->view('login/LoginPageView');
-        $this->loadFooterData();
-    }
+//    public function login() {
+//        $this->loadHeaderData();
+//        $this->load->view('login/LoginView');
+//        $this->loadFooterData();
+//    }
 
     public function forgot() {
         $this->loadHeaderData();
