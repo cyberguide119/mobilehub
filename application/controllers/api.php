@@ -172,11 +172,11 @@ class Api extends CI_Controller {
         if (array_key_exists('details', $args)) {
             $this->getDashboardDetails($args['details']);
         } else if (array_key_exists('question', $args)) {
-            if ($args['question'] === 'details') {
-                $this->getAdminQuestions();
-            }
+            $this->getAdminQuestions();
         } else if (array_key_exists('answer', $args)) {
             $this->getAdminAnswers();
+        } else if (array_key_exists('user', $args)) {
+            $this->getAdminUsers();
         }
     }
 
@@ -641,13 +641,27 @@ class Api extends CI_Controller {
             echo json_encode($reponse);
         }
     }
-    
+
     private function getAdminAnswers() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
         if ($name) {
             $reponse['message'] = "Success";
             $reponse['aaData'] = $this->adminlib->getAnswers();
+            echo json_encode($reponse);
+        } else {
+            $reponse['message'] = "Error";
+            $reponse['type'] = "You are not authorized to view this content";
+            echo json_encode($reponse);
+        }
+    }
+    
+    private function getAdminUsers() {
+        $name = $this->authlib->is_loggedin();
+        //$username = $this->input->post('username');
+        if ($name) {
+            $reponse['message'] = "Success";
+            $reponse['aaData'] = $this->adminlib->getUsers();
             echo json_encode($reponse);
         } else {
             $reponse['message'] = "Error";

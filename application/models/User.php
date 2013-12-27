@@ -171,6 +171,15 @@ class User extends MY_Model {
         return $this->db->count_all('user');
     }
 
+    function getAllUsers() {
+        $this->db->select(array('user.userId', 'user.username', 'user.email', 'user.fullName', 'user.joinedDate', 'user_role.roleName'));
+        $this->db->from('user');
+        $this->db->where('user.username !=', 'admin');
+        $this->db->join('user_role', 'user_role.roleId = user.roleId');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }
 
 ?>

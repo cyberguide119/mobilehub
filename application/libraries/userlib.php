@@ -67,6 +67,10 @@ class userlib {
         $response['type'] = 'User profile updated successfully!';
         return $response;
     }
+    
+    function getAllUsers(){
+        return $this->ci->User->getAllUsers();
+    }
 
 }
 
