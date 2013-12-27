@@ -83,7 +83,7 @@
                             </ul>
                         </li>
                         <li class="dropdown user-dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $name?> <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $name ?> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<? echo site_url('profile/?user=' . $name); ?>"><i class="glyphicon glyphicon-user"></i> My Profile</a></li>
                                 <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
@@ -115,23 +115,11 @@
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-6 text-right">
-                                        <p class="announcement-heading" id="totalQuestions">456</p>
+                                        <p class="announcement-heading" id="totalQuestions"></p>
                                         <p class="announcement-text">Total Questions</p>
                                     </div>
                                 </div>
                             </div>
-<!--                            <a href="<? echo site_url('homepage'); ?>">
-                                <div class="panel-footer announcement-bottom">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            View Questions
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <i class="fa fa-arrow-circle-right"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>-->
                         </div>
                     </div>
                     <div class="col-lg-3">
@@ -142,23 +130,11 @@
                                         <i class="fa fa-check fa-5x green"></i>
                                     </div>
                                     <div class="col-xs-6 text-right">
-                                        <p class="announcement-heading">12</p>
+                                        <p class="announcement-heading" id="totalAnswers"></p>
                                         <p class="announcement-text">Total Answers</p>
                                     </div>
                                 </div>
                             </div>
-<!--                            <a href="#">
-                                <div class="panel-footer announcement-bottom">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            Complete Tasks
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <i class="fa fa-arrow-circle-right"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>-->
                         </div>
                     </div>
                     <div class="col-lg-3">
@@ -169,23 +145,11 @@
                                         <i class="fa fa-users fa-5x"></i>
                                     </div>
                                     <div class="col-xs-6 text-right">
-                                        <p class="announcement-heading">18</p>
+                                        <p class="announcement-heading" id="totalMembers"></p>
                                         <p class="announcement-text">Total Members</p>
                                     </div>
                                 </div>
                             </div>
-<!--                            <a href="#">
-                                <div class="panel-footer announcement-bottom">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            Fix Issues
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <i class="fa fa-arrow-circle-right"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>-->
                         </div>
                     </div>
                     <div class="col-lg-3">
@@ -196,23 +160,11 @@
                                         <i class="fa fa-tasks fa-5x"></i>
                                     </div>
                                     <div class="col-xs-6 text-right">
-                                        <p class="announcement-heading">56</p>
+                                        <p class="announcement-heading" id="totalLogins"></p>
                                         <p class="announcement-text">  Total<br> Logins</p>
                                     </div>
                                 </div>
                             </div>
-<!--                            <a href="#">
-                                <div class="panel-footer announcement-bottom">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            Complete Orders
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <i class="fa fa-arrow-circle-right"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>-->
                         </div>
                     </div>
                 </div><!-- /.row -->
@@ -367,57 +319,88 @@
                 </div><!-- /.row -->
 
             </div><!-- /#page-wrapper -->
+            <!-- Modal -->
+            <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Error</h4>
+                        </div>
+                        <div class="modal-body" id="errModalBody">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        </div>
+    </div><!-- /#wrapper -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+    <script src="<?php echo site_url('../resources/js/bootstrap.min.js') ?>"></script>
 
-        </div><!-- /#wrapper -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
-        <script src="<?php echo site_url('../resources/js/bootstrap.min.js') ?>"></script>
-        
-        <script>
-            new Morris.Area({
-                // ID of the element in which to draw the chart.
-                element: 'myfirstchart',
-                // Chart data records -- each entry in this array corresponds to a point on
-                // the chart.
-                data: [
-                    {year: '2008', value: 20},
-                    {year: '2009', value: 10},
-                    {year: '2010', value: 5},
-                    {year: '2011', value: 5},
-                    {year: '2012', value: 20}
-                ],
-                // The name of the data record attribute that contains x-values.
-                xkey: 'year',
-                // A list of names of data record attributes that contain y-values.
-                ykeys: ['value'],
-                // Labels for the ykeys -- will be displayed when you hover over the
-                // chart.
-                labels: ['Value']
-            });
+    <script>
 
-            new Morris.Donut({
-                // ID of the element in which to draw the chart.
-                element: 'myfirstchart1',
-                // Chart data records -- each entry in this array corresponds to a point on
-                // the chart.
-                data: [
-                    {label: "Download Sales", value: 12},
-                    {label: "In-Store Sales", value: 30},
-                    {label: "Mail-Order Sales", value: 20}]
-            });
-        </script>
+        $(document).ready(function() {
+            jsonObj = {"username": "<?php echo $name; ?>"};
+            $.post("/MobileHub/index.php/api/admin/details/basic", jsonObj, function(resultsData) {
+                resultsData = jQuery.parseJSON(resultsData);
+                loadUI(resultsData);
+                return true;
+            }).fail(function() {
+                $('#errModalBody').html("<p><center>Oops! something went wrong! Please try again</center></p>");
+                $('#errorModal').modal('show');
+            }), "json";
+            return true;
+        });
 
-        <!--         JavaScript 
-                <script src="js/jquery-1.10.2.js"></script>
-                <script src="js/bootstrap.js"></script>
-        
-                 Page Specific Plugins 
-                <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-                <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
-                <script src="js/morris/chart-data-morris.js"></script>
-                <script src="js/tablesorter/jquery.tablesorter.js"></script>
-                <script src="js/tablesorter/tables.js"></script>-->
+        new Morris.Area({
+            // ID of the element in which to draw the chart.
+            element: 'myfirstchart',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: [
+                {year: '2008', value: 20},
+                {year: '2009', value: 10},
+                {year: '2010', value: 5},
+                {year: '2011', value: 5},
+                {year: '2012', value: 20}
+            ],
+            // The name of the data record attribute that contains x-values.
+            xkey: 'year',
+            // A list of names of data record attributes that contain y-values.
+            ykeys: ['value'],
+            // Labels for the ykeys -- will be displayed when you hover over the
+            // chart.
+            labels: ['Value']
+        });
 
-    </body>
+        function loadUI(content) {
+            if (content.message === "Success") {
+                console.log();
+                $('#totalQuestions').text(content.data.totalQuestions);
+                $('#totalAnswers').text(content.data.totalAnswers);
+                $('#totalMembers').text(content.data.totalUsers);
+                $('#totalLogins').text(content.data.totalLogins);
+            } else if (content.message === "Error") {
+                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                $('#errorModal').modal('show');
+            }
+        }
+
+        new Morris.Donut({
+            // ID of the element in which to draw the chart.
+            element: 'myfirstchart1',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: [
+                {label: "Download Sales", value: 12},
+                {label: "In-Store Sales", value: 30},
+                {label: "Mail-Order Sales", value: 20}]
+        });
+    </script>
+</body>
 </html>
