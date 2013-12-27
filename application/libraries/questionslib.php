@@ -20,7 +20,7 @@ class questionslib {
         // CI class)
         $this->ci = &get_instance();
         $this->ci->load->model(array('Question', 'User', 'Tag', 'QuestionsTags', 'QuestionVotes', 'Category', 'Answer'));
-        $this->ci->load->library('searchlib');
+        $this->ci->load->library(array('searchlib', 'permlib'));
     }
 
     public function postQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName) {
@@ -75,9 +75,14 @@ class questionslib {
         $user = new User();
         $user->load($userId);
 
-        if ($user->username === $username) {
+        if ($user->username === $username || $this->ci->permlib->isAdmin($username)) {
             $this->ci->db->delete('questions_tags', array('questionId' => $qId));
             $this->ci->db->delete('question_votes', array('questId' => $qId));
+            
+            $ans = $this->ci->Answer->getAnswersForQuestionId($qId);
+            foreach ($ans as $a){
+                $this->ci->db->delete('answer_votes', array('ansId' => $a->answerId));
+            }
             $this->ci->db->delete('answers', array('questionId' => $qId));
             $this->ci->db->delete('questions', array('questionId' => $qId));
             return true;
