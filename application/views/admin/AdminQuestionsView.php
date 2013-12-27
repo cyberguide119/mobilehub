@@ -35,8 +35,8 @@
                 }, {
                     "mData": "questionTitle",
                     "sTitle": "Question Title",
-                    "mRender": function(url, type, full) {
-                        return  '<a href="' + url + '">' + url + '</a>';
+                    "mRender": function(url, type, row) {
+                        return  '<a href="/MobileHub/index.php/question/show/?id=' + row['questionId'] + '">' + url + '</a>';
                     }
                 }, {
                     "mData": "askedOn",
@@ -53,6 +53,13 @@
                 }, {
                     "mData": "votes",
                     "sTitle": "Votes"
+                }, {
+                    "sTitle": "Action",
+                    "bSortable": false,
+                    "sClass": "center",
+                    "mRender": function(url, type, row) {
+                        return  '<a href="javascript: deleteAnswer(' + row['questionId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-trash"></i></a>';
+                    }
                 }]
         });
     });
