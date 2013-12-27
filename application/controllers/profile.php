@@ -17,11 +17,12 @@ class profile extends MY_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('User');
-        $this->load->library('authlib');
+        $this->load->library(array('authlib', 'permlib'));
     }
 
     public function index() {
         $profile = $this->input->get('user');
+        
         if($profile === false){
             redirect('custom404');
         }
@@ -33,6 +34,13 @@ class profile extends MY_Controller {
         $data['user'] = $profile;
 
         $name = $this->authlib->is_loggedin();
+        
+        $userHasPerm = $this->permlib->userHasPermission($name, "VIEW_ADMINPROFILE");
+        if(!($profile === strtolower("Admin") && $userHasPerm)){
+             redirect('custom403');
+             return;
+        }
+        
         if ($name === $profile) {
             $data['isOwner'] = true;
         } else {
