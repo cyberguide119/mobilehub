@@ -42,7 +42,7 @@
                         <li><a href="<?php echo site_url('admin/questions/?user=' . $name); ?>"><i class="fa fa-bar-chart-o"></i> Questions</a></li>
                         <li><a href="<?php echo site_url('admin/answers/?user=' . $name); ?>"><i class="fa fa-table"></i> Answers</a></li>
                         <li><a href="<?php echo site_url('admin/users/?user=' . $name); ?>"><i class="fa fa-users"></i> Users</a></li>
-                        <li><a href="<?php echo site_url('admin/requests/?user=' . $name); ?>"><i class="fa fa-font"></i> Requests</a></li>
+                        <li><a href="<?php echo site_url('admin/requests/?user=' . $name); ?>"><i class="fa fa-flag"></i> Requests</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right navbar-user">
