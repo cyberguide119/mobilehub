@@ -171,6 +171,14 @@ class Api extends CI_Controller {
     private function loadAdminLogic($args) {
         if (array_key_exists('details', $args)) {
             $this->getDashboardDetails($args['details']);
+        } else if (array_key_exists('question', $args)) {
+            if ($args['question'] === 'details') {
+                $this->getAdminQuestions();
+            } else if ($args['question'] === 'details') {
+                $this->deleteAdminQuestions();
+            }
+        } else if (array_key_exists('answer', $args)) {
+            $this->getDashboardDetails($args['details']);
         }
     }
 
@@ -619,6 +627,20 @@ class Api extends CI_Controller {
                 $reponse['type'] = "You are not authorized to view this content";
                 echo json_encode($reponse);
             }
+        }
+    }
+
+    private function getAdminQuestions() {
+        $name = $this->authlib->is_loggedin();
+        $username = $this->input->post('username');
+        if ($username === $name && $username === 'admin') {
+            $reponse['message'] = "Success";
+            $reponse['aaData'] = $this->adminlib->getQuestions();
+            echo json_encode($reponse);
+        } else {
+            $reponse['message'] = "Error";
+            $reponse['type'] = "You are not authorized to view this content";
+            echo json_encode($reponse);
         }
     }
 

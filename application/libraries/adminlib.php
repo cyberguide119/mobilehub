@@ -20,6 +20,7 @@ class adminlib {
         // CI class)
         $this->ci = &get_instance();
         $this->ci->load->model(array('User', 'Question', 'Answer', 'Logins'));
+        $this->ci->load->library(array('questionslib'));
     }
 
     public function getBasicStats() {
@@ -29,6 +30,16 @@ class adminlib {
         $stats['totalLogins'] = $this->ci->Logins->getAllLogins();
         
         return $stats;
+    }
+    
+    public function getQuestions(){
+        $allQuestions = $this->ci->questionslib->getAllQuestions();
+        return $allQuestions;
+//        $refinedQuestions = array();
+//        foreach ($allQuestions as $quest){
+//            var_dump($quest);
+//            
+//        }
     }
 
 }
