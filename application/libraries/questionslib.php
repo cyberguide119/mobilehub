@@ -78,10 +78,12 @@ class questionslib {
         if ($user->username === $username || $this->ci->permlib->isAdmin($username)) {
             $this->ci->db->delete('questions_tags', array('questionId' => $qId));
             $this->ci->db->delete('question_votes', array('questId' => $qId));
-            
+
             $ans = $this->ci->Answer->getAnswersForQuestionId($qId);
-            foreach ($ans as $a){
-                $this->ci->db->delete('answer_votes', array('ansId' => $a->answerId));
+            if ($ans != null || count($ans) > 0) {
+                foreach ($ans as $a) {
+                    $this->ci->db->delete('answer_votes', array('ansId' => $a->answerId));
+                }
             }
             $this->ci->db->delete('answers', array('questionId' => $qId));
             $this->ci->db->delete('questions', array('questionId' => $qId));
@@ -112,12 +114,12 @@ class questionslib {
     public function updateAnswer($quesId, $tutorName, $description, $ansId) {
         $answer = new Answer();
         $answer->load($ansId);
-        
+
         $time = time();
         $formattedDate = date("Y-m-d H:i:s", $time);
         $answer->answeredOn = $formattedDate;
         $answer->description = $description;
-        
+
         $answer->updateAnswer($ansId, $answer, $quesId);
         return true;
     }

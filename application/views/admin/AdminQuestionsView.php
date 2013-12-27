@@ -93,16 +93,10 @@
                     // Deserialise the JSON
                     content = jQuery.parseJSON(content);
                     if (content.message === "Success") {
-                        $.get("/MobileHub/index.php/api/user/fulldetails/" + "<?php echo $user ?>", function(resultsData) {
-                            resultsData = jQuery.parseJSON(resultsData);
-                            if (resultsData.message === "Error") {
-                                window.location = "/MobileHub/index.php/custom403/";
-                                return false;
-                            } else {
-                                $('#qTable').dataTable()._fnReloadAjax();
-                                return true;
-                            }
-                        });
+                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                        $('#errorModal').modal('show');
+                        $('#qTable').dataTable().fnReloadAjax();
+                        return true;
                     } else {
                         $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                         $('#errorModal').modal('show');

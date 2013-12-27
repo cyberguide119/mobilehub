@@ -591,7 +591,7 @@ class Api extends CI_Controller {
             echo json_encode($res);
         }
 
-        if ($name === false) {
+        if ($name === false || $name != $username) {
             $res = array("message" => "Error", "type" => "You do not have permissions");
             echo json_encode($res);
         }
