@@ -62,3 +62,4 @@ Admin - All POST
 	index.php/api/admin/answer/details
 
 	index.php/api/admin/user/details
+	index.php/api/admin/user/delete

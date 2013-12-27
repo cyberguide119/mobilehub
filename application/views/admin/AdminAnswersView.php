@@ -11,7 +11,7 @@
             <h1>Answers <small> Overview</small></h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-dashboard"></i> Dashboard</li>
-                <li class="active"><i class="fa fa-table"></i> Questions</li>
+                <li class="active"><i class="fa fa-table"></i> Answers</li>
             </ol>
         </div>
     </div><!-- /.row -->

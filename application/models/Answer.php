@@ -93,6 +93,10 @@ class Answer extends MY_Model {
         //$this->db->select(array('answerId', 'answeredUserId', 'answeredOn', 'description', 'netVotes'));
         return $this->db->get('answers')->result();
     }
+    
+    function deleteAnswer($ansId){
+        $this->db->delete('answers', array('answerId' => $ansId)); 
+    }
 
 }
 

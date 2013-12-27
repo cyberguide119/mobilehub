@@ -176,7 +176,11 @@ class Api extends CI_Controller {
         } else if (array_key_exists('answer', $args)) {
             $this->getAdminAnswers();
         } else if (array_key_exists('user', $args)) {
-            $this->getAdminUsers();
+            if ($args['user'] === 'details') {
+                $this->getAdminUsers();
+            } else if ($args['user'] === 'delete') {
+                $this->getAdminDeleteUsers();
+            }
         }
     }
 
@@ -655,7 +659,7 @@ class Api extends CI_Controller {
             echo json_encode($reponse);
         }
     }
-    
+
     private function getAdminUsers() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -663,6 +667,27 @@ class Api extends CI_Controller {
             $reponse['message'] = "Success";
             $reponse['aaData'] = $this->adminlib->getUsers();
             echo json_encode($reponse);
+        } else {
+            $reponse['message'] = "Error";
+            $reponse['type'] = "You are not authorized to view this content";
+            echo json_encode($reponse);
+        }
+    }
+
+    private function getAdminDeleteUsers() {
+        $name = $this->authlib->is_loggedin();
+        //$username = $this->input->post('username');
+        $userId = $this->input->post('userId');
+        if ($name && $userId != null) {
+            if ($this->adminlib->deleteUser($userId)) {
+                $reponse['message'] = "Success";
+                $reponse['type'] = "User deleted successfully";
+                echo json_encode($reponse);
+            } else {
+                $reponse['message'] = "Error";
+                $reponse['type'] = "Something went wrong";
+                echo json_encode($reponse);
+            }
         } else {
             $reponse['message'] = "Error";
             $reponse['type'] = "You are not authorized to view this content";

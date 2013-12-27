@@ -59,19 +59,22 @@ class userlib {
         $data['answers'] = $answersList;
         return $data;
     }
-    
-    function updateUserDetails($username, $dataArr){
+
+    function updateUserDetails($username, $dataArr) {
         $userId = $this->ci->User->getUserIdByName($username);
         $this->ci->User->updateUserDetails($userId, $dataArr);
         $response['message'] = 'Success';
         $response['type'] = 'User profile updated successfully!';
         return $response;
     }
-    
-    function getAllUsers(){
+
+    function getAllUsers() {
         return $this->ci->User->getAllUsers();
     }
-
+    
+    function deleteUserProfile($userId){
+        return $this->ci->User->deleteUser($userId);
+    }
 }
 
 ?>

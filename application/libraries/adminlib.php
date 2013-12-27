@@ -28,20 +28,20 @@ class adminlib {
         $stats['totalAnswers'] = $this->ci->Answer->getAllAnswerCount();
         $stats['totalUsers'] = $this->ci->User->getAllUsersCount();
         $stats['totalLogins'] = $this->ci->Logins->getAllLogins();
-        
+
         return $stats;
     }
-    
-    public function getQuestions(){
+
+    public function getQuestions() {
         $allQuestions = $this->ci->questionslib->getAllQuestions();
         return $allQuestions;
     }
-    
-    public function getAnswers(){
-        
+
+    public function getAnswers() {
+
         $allAns = $this->ci->Answer->getAllAnswers();
         $resultArr = array();
-        foreach ($allAns as $ans){
+        foreach ($allAns as $ans) {
             $username = $this->ci->User->getUserById($ans->answeredUserId);
             $resultArr[] = array(
                 "answerId" => $ans->answerId,
@@ -54,10 +54,35 @@ class adminlib {
         }
         return $resultArr;
     }
-    
-    public function getUsers(){
+
+    public function getUsers() {
         $allQuestions = $this->ci->userlib->getAllUsers();
         return $allQuestions;
+    }
+
+    public function deleteUser($userId) {
+        if ($userId === null) {
+            return false;
+        }
+
+        $username = $this->ci->User->getUserById($userId);
+        $user = $this->ci->userlib->getFullUserDetails($username);
+        $adminLoggedIn = $this->ci->authlib->is_loggedin();
+
+        if (count($user['answers']) != 0) {
+            foreach ($user['answers'] as $ans) {
+                $this->ci->Answer->deleteAnswer($ans->answerId);
+            }
+        }
+
+        if (count($user['questions']) != 0) {
+            foreach ($user['questions'] as $question) {
+                $this->ci->questionslib->deleteQuestion($adminLoggedIn, $question['questionId']);
+            }
+        }
+
+        $this->ci->userlib->deleteUserProfile($user['user']->userId);
+        return true;
     }
 
 }
