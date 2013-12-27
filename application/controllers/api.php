@@ -632,8 +632,8 @@ class Api extends CI_Controller {
 
     private function getAdminQuestions() {
         $name = $this->authlib->is_loggedin();
-        $username = $this->input->post('username');
-        if ($username === $name && $username === 'admin') {
+        //$username = $this->input->post('username');
+        if ($name) {
             $reponse['message'] = "Success";
             $reponse['aaData'] = $this->adminlib->getQuestions();
             echo json_encode($reponse);

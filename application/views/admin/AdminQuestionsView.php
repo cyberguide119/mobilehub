@@ -18,7 +18,7 @@
         <div class="col-lg-12">
             <table id="example">
                 <thead>
-                    <tr><th class="site_name">Name</th><th>Url </th><th>Type</th><th>Last modified</th></tr>
+                    <tr><th>Id</th><th>Title</th><th>Asked On</th><th>Asked By</th><th>Answers</th><th>Votes</th></tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -32,31 +32,23 @@
 
     $(document).ready(function() {
         $('#example').dataTable({
-            "aaData": [
-                ["Sitepoint", "http://sitepoint.com", "Blog", "2013-10-15 10:30:00"],
-                ["Flippa", "http://flippa.com", "Marketplace", "null"],
-                ["99designs", "http://99designs.com", "Marketplace", "null"],
-                ["Learnable", "http://learnable.com", "Online courses", "null"],
-                ["Rubysource", "http://rubysource.com", "Blog", "2013-01-10 12:00:00"]
-            ],
-            "aoColumnDefs": [{
-                    "sTitle": "Site name"
-                            , "aTargets": ["site_name"]
+            "sAjaxSource": '/MobileHub/index.php/api/admin/question/details',
+            "sServerMethod": "POST",
+            "aoColumns": [{
+                    "mData": "questionId",
+                    "sTitle": "Id"
                 }, {
-                    "aTargets": [1]
-                            , "bSortable": false
-                            , "mRender": function(url, type, full) {
-                        return  '<a href="' + url + '">' + url + '</a>';
-                    }
+                    "mData": "questionTitle",
+                    "sTitle": "Title"
                 }, {
-                    "aTargets": [3]
-                            , "sType": "date"
-                            , "mRender": function(date, type, full) {
-                        return (full[2] == "Blog")
-                                ? new Date(date).toDateString()
-                                : "N/A";
-                    }
-                }]
+                    "mData": "askedOn"
+                }, {
+                    "mData": "askerName"
+                }, {
+                    "mData": "answerCount"
+                }, {
+                    "mData": "votes"
+                } ]
         });
     });
 </script>
