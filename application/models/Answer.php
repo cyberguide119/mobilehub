@@ -42,6 +42,9 @@ class Answer extends MY_Model {
         $this->db->select("answeredUserId");
         $this->db->where("answerId", $ansId);
         $answer = $this->db->get("answers")->row();
+        if($answer === null || count($answer) === 0){
+            return false;
+        }
         return $answer->answeredUserId;
     }
 

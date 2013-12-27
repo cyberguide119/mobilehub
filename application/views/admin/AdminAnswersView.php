@@ -79,7 +79,7 @@
                     "bSortable": false,
                     "sClass": "center",
                     "mRender": function(url, type, row) {
-                        return  '<a href="javascript: deleteAnswer(' + row['questionId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-trash"></i></a>';
+                        return  '<a href="javascript: deleteAnswer(' + row['answerId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-trash"></i></a>';
                     }
                 }]
         });

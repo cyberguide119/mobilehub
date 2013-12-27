@@ -98,7 +98,7 @@ class questionslib {
         $user = new User();
         $user->load($userId);
 
-        if ($user->username === $username) {
+        if ($user->username === $username || $this->ci->permlib->isAdmin($username)) {
             $qId = $this->ci->Answer->getQuestionId($ansId);
             $ansCount = $this->ci->Question->getAnsCount($qId);
             $this->ci->Question->updateAnsCount($qId, $ansCount - 1);
