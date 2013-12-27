@@ -3,7 +3,7 @@
 
 <!-- DataTables -->
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
-
+<script src="<?php echo site_url('../resources/js/bootstrap-dialog.js') ?>"></script>
 <div id="page-wrapper">   
     <div class="row">
         <div class="col-lg-12">
@@ -26,6 +26,10 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
+        initQuestTable();
+    });
+
+    function initQuestTable() {
         $('#qTable').dataTable({
             "sAjaxSource": '/MobileHub/index.php/api/admin/question/details',
             "sServerMethod": "POST",
@@ -55,6 +59,7 @@
                     "sTitle": "Votes"
                 }, {
                     "sTitle": "Action",
+                    "mData": "votes",
                     "bSortable": false,
                     "sClass": "center",
                     "mRender": function(url, type, row) {
@@ -62,5 +67,40 @@
                     }
                 }]
         });
-    });
+    }
+    function deleteAnswer(qId) {
+        BootstrapDialog.confirm('Are you sure you want to delete this question?', function(result) {
+            if (result) {
+                jsonData = {'username': "<?php echo $name; ?>", "questionId": qId};
+                $.post("/MobileHub/index.php/api/question/delete/", jsonData, function(content) {
+
+                    // Deserialise the JSON
+                    content = jQuery.parseJSON(content);
+                    if (content.message === "Success") {
+                        $.get("/MobileHub/index.php/api/user/fulldetails/" + "<?php echo $user ?>", function(resultsData) {
+                            resultsData = jQuery.parseJSON(resultsData);
+                            if (resultsData.message === "Error") {
+                                window.location = "/MobileHub/index.php/custom403/";
+                                return false;
+                            } else {
+                                initQuestTable();
+                                return true;
+                            }
+                        });
+                    } else {
+                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                        $('#errorModal').modal('show');
+                    }
+                }).fail(function() {
+                    $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                    $('#errorModal').modal('show');
+                }), "json";
+                return true;
+            } else {
+                // Do nothing
+            }
+        });
+
+
+    }
 </script>

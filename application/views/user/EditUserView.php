@@ -207,8 +207,6 @@
 
                             function deleteQuestion(qId, votes, answers) {
                                 if (votes < 1 || answers < 1) {
-
-
                                     BootstrapDialog.confirm('Are you sure you want to delete this question?', function(result) {
                                         if (result) {
                                             jsonData = {'username': "<?php echo $name; ?>", "questionId": qId};
