@@ -16,12 +16,7 @@
     </div><!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
-            <table id="example">
-                <thead>
-                    <tr><th>Id</th><th>Title</th><th>Asked On</th><th>Asked By</th><th>Answers</th><th>Votes</th></tr>
-                </thead>
-                <tbody>
-                </tbody>
+            <table id="qTable">
             </table>
         </div>
     </div>
@@ -31,7 +26,7 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-        $('#example').dataTable({
+        $('#qTable').dataTable({
             "sAjaxSource": '/MobileHub/index.php/api/admin/question/details',
             "sServerMethod": "POST",
             "aoColumns": [{
@@ -39,16 +34,26 @@
                     "sTitle": "Id"
                 }, {
                     "mData": "questionTitle",
-                    "sTitle": "Title"
+                    "sTitle": "Question Title",
+                    "mRender": function(url, type, full) {
+                        return  '<a href="' + url + '">' + url + '</a>';
+                    }
                 }, {
-                    "mData": "askedOn"
+                    "mData": "askedOn",
+                    "sTitle": "Asked On"
                 }, {
-                    "mData": "askerName"
+                    "mData": "askerName",
+                    "sTitle": "Asked By",
+                    "mRender": function(url, type, full) {
+                        return  '<a href="/MobileHub/index.php/profile/?user=' + url + '">' + url + '</a>';
+                    }
                 }, {
-                    "mData": "answerCount"
+                    "mData": "answerCount",
+                    "sTitle": "Answers"
                 }, {
-                    "mData": "votes"
-                } ]
+                    "mData": "votes",
+                    "sTitle": "Votes"
+                }]
         });
     });
 </script>

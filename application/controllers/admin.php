@@ -60,7 +60,7 @@ class Admin extends MY_Controller {
     private function checkPermissions() {
         $profile = $this->input->get('user');
 
-        if ($profile === false) {
+        if ($profile === false || $profile === null ) {
             redirect('custom404');
             return false;
         }

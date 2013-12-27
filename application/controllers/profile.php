@@ -22,8 +22,8 @@ class profile extends MY_Controller {
 
     public function index() {
         $profile = $this->input->get('user');
-        
-        if($profile === false){
+
+        if ($profile === false) {
             redirect('custom404');
         }
         $this->showProfile($profile);
@@ -34,13 +34,15 @@ class profile extends MY_Controller {
         $data['user'] = $profile;
 
         $name = $this->authlib->is_loggedin();
-        
+
         $userHasPerm = $this->permlib->userHasPermission($name, "VIEW_ADMINPROFILE");
-        if(!($profile === strtolower("Admin") && $userHasPerm)){
-             redirect('custom403');
-             return;
+        if ($profile === strtolower("Admin")) {
+            if (!$userHasPerm) {
+                redirect('custom403');
+                return;
+            }
         }
-        
+
         if ($name === $profile) {
             $data['isOwner'] = true;
         } else {
@@ -49,8 +51,8 @@ class profile extends MY_Controller {
         $this->load->view('user/UserView', $data);
         $this->loadFooterData();
     }
-    
-    public function edit(){
+
+    public function edit() {
         $profile = $this->input->get('user');
         $name = $this->authlib->is_loggedin();
         if ($name === $profile) {
