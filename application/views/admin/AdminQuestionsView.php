@@ -4,6 +4,7 @@
 <!-- DataTables -->
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script src="<?php echo site_url('../resources/js/bootstrap-dialog.js') ?>"></script>
+<script src="<?php echo site_url('../resources/js/datatable-refresh.js') ?>"></script>
 <div id="page-wrapper">   
     <div class="row">
         <div class="col-lg-12">
@@ -95,7 +96,8 @@
                     if (content.message === "Success") {
                         $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                         $('#errorModal').modal('show');
-                        $('#qTable').dataTable().fnReloadAjax();
+                        var dt = $('#qTable').dataTable();
+                        dt.fnReloadAjax();
                         return true;
                     } else {
                         $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
@@ -110,7 +112,5 @@
                 // Do nothing
             }
         });
-
-
     }
 </script>
