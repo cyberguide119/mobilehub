@@ -194,7 +194,7 @@
                     if (content.message === "Success") {
                         $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                         $('#errorModal').modal('show');
-                        var dt = $('#qTable').dataTable();
+                        var dt = $('#qTable2').dataTable();
                         dt.fnReloadAjax();
                         return true;
                     } else {

@@ -18,6 +18,11 @@ class Permissions extends MY_Model {
     public $permId;
     public $permKey;
 
+    /**
+     * 
+     * @param type $key
+     * @return type
+     */
     function getPermIdByKey($key) {
         $res = $this->db->get_where('permissions', array('permKey' => $key))->row();
         return $res->permId;

@@ -17,6 +17,13 @@ class AnswerVotes extends CI_Model {
         $this->load->database();
     }
 
+    /**
+     * 
+     * @param type $userId
+     * @param type $ansId
+     * @param type $isUpVote
+     * @return boolean
+     */
     function hasUserVoted($userId, $ansId, $isUpVote) {
         //$this->db->select('votedUserId','questId');
         $this->db->where(array('votedUserId' => $userId, 'ansId' => $ansId, 'isUpVote' => $isUpVote));
@@ -28,6 +35,12 @@ class AnswerVotes extends CI_Model {
         return true;
     }
     
+    /**
+     * 
+     * @param type $votedUserId
+     * @param type $ansId
+     * @param type $isUpVote
+     */
     function addVote($votedUserId, $ansId, $isUpVote) {
         $this->db->where(array('votedUserId' => $votedUserId, 'ansId' => $ansId));
         $result = $this->db->get('answer_votes');

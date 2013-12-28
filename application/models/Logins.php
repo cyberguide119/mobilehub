@@ -16,6 +16,9 @@ class Logins extends CI_Model{
         $this->load->database();
     }
     
+    /*
+     * 
+     */
     function getAllLogins(){
         return $this->db->count_all('logins');
     }

@@ -36,6 +36,15 @@ class User extends MY_Model {
         $this->load->database();
     }
 
+    /**
+     * 
+     * @param type $name
+     * @param type $username
+     * @param type $pwd
+     * @param type $email
+     * @param type $website
+     * @return string|null
+     */
     function register($name, $username, $pwd, $email, $website) {
         // is username unique?
         $usernameExists = $this->db->get_where('user', array('username' => $username));
@@ -59,6 +68,13 @@ class User extends MY_Model {
         return null;
     }
 
+    /**
+     * 
+     * @param type $username
+     * @param type $pwd
+     * @param type $rememberLogin
+     * @return boolean
+     */
     function login($username, $pwd, $rememberLogin) {
         $this->db->where(array('username' => $username, 'password' => sha1($pwd)));
         $res = $this->db->get('user');
@@ -80,6 +96,11 @@ class User extends MY_Model {
         return $row;
     }
 
+    /**
+     * 
+     * @param type $email
+     * @return boolean
+     */
     function emailExists($email) {
         $this->db->select('fullName');
         $this->db->where('email', $email);
@@ -91,6 +112,10 @@ class User extends MY_Model {
         return $row->fullName;
     }
 
+    /**
+     * 
+     * @return boolean
+     */
     function is_loggedin() {
         $session_id = $this->session->userdata('session_id');
         $res = $this->db->get_where('logins', array('session_id' => $session_id));
@@ -102,6 +127,11 @@ class User extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $userId
+     * @return type
+     */
     function getUserById($userId) {
         $this->db->select('username');
         $this->db->where('userId', $userId);
@@ -109,6 +139,11 @@ class User extends MY_Model {
         return $res->username;
     }
 
+    /**
+     * 
+     * @param type $username
+     * @return type
+     */
     function getUserIdByName($username) {
         $this->db->select('userId');
         $this->db->where('username', $username);
@@ -116,6 +151,11 @@ class User extends MY_Model {
         return $res->userId;
     }
 
+    /**
+     * 
+     * @param type $username
+     * @return type
+     */
     function getUserRoleByName($username) {
         $this->db->select('roleId');
         $this->db->where('username', $username);
@@ -123,6 +163,11 @@ class User extends MY_Model {
         return $res->roleId;
     }
 
+    /**
+     * 
+     * @param type $userId
+     * @param type $valueToAdd
+     */
     function updatePointsForQuestion($userId, $valueToAdd) {
         $user = $this->db->get_where('user', array('userId' => $userId))->row();
         $loyality = $user->loyality + $valueToAdd;
@@ -131,6 +176,11 @@ class User extends MY_Model {
         $this->db->update('user', $data);
     }
 
+    /**
+     * 
+     * @param type $userId
+     * @param type $valueToAdd
+     */
     function updatePointsForAnswer($userId, $valueToAdd) {
         $user = $this->db->get_where('user', array('userId' => $userId))->row();
         $reputation = $user->reputation + $valueToAdd;
@@ -139,17 +189,32 @@ class User extends MY_Model {
         $this->db->update('user', $data);
     }
 
+    /**
+     * 
+     * @param type $userId
+     * @param type $details
+     */
     function updateUserDetails($userId, $details) {
         //$data = array('reputation' => $reputation);
         $this->db->where('userId', $userId);
         $this->db->update('user', $details);
     }
 
+    /**
+     * 
+     * @param type $username
+     * @return type
+     */
     function getUserRoleId($username) {
         $res = $this->db->get_where('user', array('username' => $username))->row();
         return $res->roleId;
     }
 
+    /**
+     * 
+     * @param type $username
+     * @return type
+     */
     function getUserDetails($username) {
         $this->db->select(array('userId', 'username', 'fullName', 'roleId', 'joinedDate', 'website', 'linkedInUrl', 'sOUrl', 'reputation', 'loyality'));
         $this->db->where('username', $username);
@@ -157,6 +222,12 @@ class User extends MY_Model {
         return $res;
     }
 
+    /**
+     * 
+     * @param type $username
+     * @param type $isTutor
+     * @return type
+     */
     function getFullUserDetails($username, $isTutor) {
         if ($isTutor) {
             $this->db->select(array('userId', 'email', 'profileImagePath', 'fullName', 'joinedDate', 'website', 'linkedInUrl', 'sOUrl', 'about'));
@@ -168,10 +239,18 @@ class User extends MY_Model {
         return $res;
     }
 
+    /**
+     * 
+     * @return type
+     */
     function getAllUsersCount() {
         return $this->db->count_all('user');
     }
 
+    /**
+     * 
+     * @return type
+     */
     function getAllUsers() {
         $this->db->select(array('user.userId', 'user.username', 'user.email', 'user.fullName', 'user.joinedDate', 'user_role.roleName'));
         $this->db->from('user');
@@ -181,16 +260,30 @@ class User extends MY_Model {
         return $query->result();
     }
 
+    /**
+     * 
+     * @param type $userId
+     */
     function deleteUser($userId) {
         $this->db->delete('user', array('userId' => $userId));
     }
 
+    /**
+     * 
+     * @param type $userId
+     */
     function activateUser($userId) {
         $data = array('isActive' => true);
         $this->db->where('userId', $userId);
         $this->db->update('user', $data);
     }
     
+    /**
+     * 
+     * @param type $username
+     * @param type $pwd
+     * @return boolean
+     */
     function deactivateUser($username, $pwd){
         $this->db->where(array('username' => $username, 'password' => $pwd));
         $res = $this->db->get('user');

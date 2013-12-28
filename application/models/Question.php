@@ -34,6 +34,11 @@ class Question extends MY_Model {
         $this->load->database();
     }
 
+    /**
+     * 
+     * @param type $query
+     * @return type
+     */
     function basicSearch($query) {
         $this->db->like(array('questionTitle' => $query));
         $this->db->or_like(array('questionDescription' => $query));
@@ -41,6 +46,12 @@ class Question extends MY_Model {
         return $res->result();
     }
 
+    /**
+     * 
+     * @param type $advWords
+     * @param type $advPhrase
+     * @return type
+     */
     function advancedSearch($advWords, $advPhrase) {
         $this->db->like(array('questionTitle' => $advPhrase));
         $this->db->or_like(array('questionDescription' => $advPhrase));
@@ -56,12 +67,21 @@ class Question extends MY_Model {
         return $res->result();
     }
 
+    /**
+     * 
+     * @param type $qTitle
+     * @return type
+     */
     function getQuestionWithTitle($qTitle) {
         $question = $this->db->get_where('questions', array('questionTitle' => $qTitle));
         $res = $question->result();
         return $res[0]->questionId;
     }
 
+    /**
+     * 
+     * @return type
+     */
     function getRecentQuestions() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("askedOn", "desc");
@@ -69,6 +89,10 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * 
+     * @return type
+     */
     function getPopularQuestions() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("netVotes", "desc");
@@ -76,6 +100,10 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * 
+     * @return type
+     */
     function getUnansweredQuestions() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where("answerCount", 0);
@@ -83,6 +111,10 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * 
+     * @return type
+     */
     function getAllQuestions() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         //$this->db->where("answerCount", 0);
@@ -90,6 +122,11 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * 
+     * @param type $userId
+     * @return type
+     */
     function getAllQuestionsForUser($userId) {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where("askerUserId", $userId);
@@ -97,6 +134,11 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * 
+     * @param type $qId
+     * @return type
+     */
     function getAskerUserId($qId) {
         $this->db->select("askerUserId");
         $this->db->where("questionId", $qId);
@@ -104,6 +146,11 @@ class Question extends MY_Model {
         return $question->askerUserId;
     }
 
+    /**
+     * 
+     * @param type $qId
+     * @param type $isUpVote
+     */
     function updateVote($qId, $isUpVote) {
         $question = $this->db->get_where('questions', array('questionId' => $qId))->row();
         if ($isUpVote) {
@@ -119,6 +166,11 @@ class Question extends MY_Model {
         $this->db->update('questions', $data);
     }
 
+    /**
+     * 
+     * @param type $qId
+     * @return type
+     */
     function getNetVotes($qId) {
         $question = $this->db->get_where('questions', array('questionId' => $qId))->row();
         return $question->netVotes;
