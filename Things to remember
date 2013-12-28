@@ -128,3 +128,6 @@ http://stackoverflow.com/questions/1184624/convert-form-data-to-js-object-with-j
 intel@123
 
 36. Salt was added sha1(unquesalt.pwd)
+
+37. Captcha generator from
+http://typicalwhiner.com/190/simple-javascript-captcha-generator/

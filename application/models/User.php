@@ -150,6 +150,9 @@ class User extends MY_Model {
             return false;
         }
         $user = $res->result();
+        if(!($user[0]->isActive)){
+            return false;
+        }
         $salt = $user[0]->salt;
         if (!($this->validatePassword($salt, $user[0]->password, $pwd))) {
             return false;
