@@ -664,7 +664,15 @@ class Api extends CI_Controller {
                 $res = array("message" => "Success", "type" => "User deactivated successfully");
                 echo json_encode($res);
                 return;
+            }else{
+                $res = array("message" => "Error", "type" => "Something went wrong");
+            echo json_encode($res);
+            return;
             }
+        }else{
+            $res = array("message" => "Error", "type" => "You do not have permissions");
+            echo json_encode($res);
+            return;
         }
 
         if ($name === false) {

@@ -1,5 +1,4 @@
 <script src="<?php echo site_url('../resources/js/bootstrap-dialog.js') ?>"></script>
-<script src="<?php echo site_url('../resources/js/sha1.js') ?>"></script>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -83,10 +82,8 @@
 
                     function sendRequest() {
                         $pword = $("#pwordBox").val();
-                        var shaObj = new jsSHA($pword, "TEXT");
-                        var hash = shaObj.getHash("SHA-1", "HEX");
 
-                        jsonData = {'username': "<?php echo $user ?>", 'pword': hash};
+                        jsonData = {'username': "<?php echo $user ?>", 'pword': $pword};
 
                         $.post("/MobileHub/index.php/api/user/delete/", jsonData, function(content) {
 

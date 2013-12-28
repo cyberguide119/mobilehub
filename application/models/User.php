@@ -150,7 +150,7 @@ class User extends MY_Model {
             return false;
         }
         $user = $res->result();
-        if(!($user[0]->isActive)){
+        if (!($user[0]->isActive)) {
             return false;
         }
         $salt = $user[0]->salt;
@@ -361,12 +361,17 @@ class User extends MY_Model {
      * @return boolean
      */
     function deactivateUser($username, $pwd) {
-        $this->db->where(array('username' => $username, 'password' => $pwd));
+        $this->db->where(array('username' => $username));
         $res = $this->db->get('user');
         if ($res->num_rows() != 1) { // should be only ONE matching row!!
             return false;
         } else {
-            $this->db->where(array('username' => $username, 'password' => $pwd));
+            $user = $res->result();
+            $salt = $user[0]->salt;
+            if (!($this->validatePassword($salt, $user[0]->password, $pwd))) {
+                return false;
+            }
+            $this->db->where(array('username' => $username));
             $this->db->update('user', array("isActive" => 0));
             return true;
         }
