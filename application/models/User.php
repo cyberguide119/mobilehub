@@ -69,6 +69,17 @@ class User extends MY_Model {
         return null;
     }
 
+    /**
+     * 
+     * @param type $name
+     * @param type $username
+     * @param type $pwd
+     * @param type $email
+     * @param type $website
+     * @param type $linkedin
+     * @param type $sourl
+     * @return string|null
+     */
     function registerTutor($name, $username, $pwd, $email, $website, $linkedin, $sourl) {
         // is username unique?
         $usernameExists = $this->db->get_where('user', array('username' => $username));
