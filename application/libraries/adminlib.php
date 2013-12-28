@@ -19,7 +19,7 @@ class adminlib {
         // access models etc. (because we don't extend a core
         // CI class)
         $this->ci = &get_instance();
-        $this->ci->load->model(array('User', 'Question', 'Answer', 'Logins'));
+        $this->ci->load->model(array('User', 'Question', 'Answer', 'Logins', 'Request'));
         $this->ci->load->library(array('questionslib', 'userlib'));
     }
 
@@ -86,12 +86,14 @@ class adminlib {
     }
 
     public function getAdminTutorRequests() {
-        
+        $req = $this->ci->Request->getAllTutorRequests();
+        return $req;
     }
 
     public function getAdminDeleteRequests() {
         
     }
+
 }
 
 ?>

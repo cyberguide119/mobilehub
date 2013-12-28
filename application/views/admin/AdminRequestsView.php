@@ -54,26 +54,26 @@
             "sAjaxSource": '/MobileHub/index.php/api/admin/answer/details',
             "sServerMethod": "POST",
             "aoColumns": [{
-                    "mData": "answerId",
+                    "mData": "requestId",
                     "sTitle": "Id"
                 }, {
-                    "mData": "description",
-                    "sTitle": "Description",
+                    "mData": "username",
+                    "sTitle": "Username",
                     "mRender": function(url, type, row) {
                         return  '<a href="/MobileHub/index.php/question/show/?id=' + row['questionId'] + '">' + url + '</a>';
                     }
                 }, {
-                    "mData": "answeredOn",
+                    "mData": "rDate",
                     "sTitle": "Answered On"
                 }, {
-                    "mData": "answeredUserName",
-                    "sTitle": "Answered By",
-                    "mRender": function(url, type, full) {
-                        return  '<a href="/MobileHub/index.php/profile/?user=' + url + '">' + url + '</a>';
+                    "mData": "username",
+                    "sTitle": "Username",
+                    "mRender": function(url, type, row) {
+                        return  '<a href="/MobileHub/index.php/profile/?user=' + row['username'] + '">' + url + '</a>';
                     }
                 }, {
-                    "mData": "votes",
-                    "sTitle": "Votes"
+                    "mData": "email",
+                    "sTitle": "Email"
                 }, {
                     "sTitle": "Action",
                     "mData": "votes",

@@ -182,13 +182,12 @@ class Api extends CI_Controller {
                 $this->getAdminDeleteUsers();
             }
         } else if (array_key_exists('requests', $args)) {
-            if($args['requests'] === 'tutor'){
+            if ($args['requests'] === 'tutor') {
                 $this->getAdminTutorRequests();
-            }else if($args['requests'] === 'delete'){
+            } else if ($args['requests'] === 'delete') {
                 $this->getAdminDeleteRequests();
             }
-            
-        } 
+        }
     }
 
     /**
@@ -701,8 +700,8 @@ class Api extends CI_Controller {
             echo json_encode($reponse);
         }
     }
-    
-    private function getAdminTutorRequests(){
+
+    private function getAdminTutorRequests() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
         if ($name) {
@@ -715,13 +714,13 @@ class Api extends CI_Controller {
             echo json_encode($reponse);
         }
     }
-    
-    private function getAdminDeleteRequests(){
+
+    private function getAdminDeleteRequests() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
         if ($name) {
             $reponse['message'] = "Success";
-            $reponse['aaData'] = $this->adminlib->getAdminDeleteRequests();
+            $reponse['aaData'] = $this->adminlib->getAdminTutorRequests();
             echo json_encode($reponse);
         } else {
             $reponse['message'] = "Error";
