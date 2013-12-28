@@ -45,7 +45,7 @@ class User extends MY_Model {
      * @param type $website
      * @return string|null
      */
-    function register($name, $username, $pwd, $email, $website) {
+    function registerStudent($name, $username, $pwd, $email, $website) {
         // is username unique?
         $usernameExists = $this->db->get_where('user', array('username' => $username));
         if ($usernameExists->num_rows() > 0) {
@@ -58,14 +58,52 @@ class User extends MY_Model {
             return "Email already exists";
         }
 
-        $hashpwd = sha1($pwd);
+        $unique_salt = $this->unique_salt();
+        $hashpwd = sha1($unique_salt . $pwd);
         $time = time();
 
         $formattedDate = date("Y-m-d H:i:s", $time);
         $data = array('fullName' => $name, 'username' => $username,
-            'password' => $hashpwd, 'email' => $email, 'website' => $website, 'joinedDate' => $formattedDate);
+            'password' => $hashpwd, 'email' => $email, 'website' => $website, 'joinedDate' => $formattedDate, 'salt' => $unique_salt, 'roleId' => 3, 'isActive' => true);
         $this->db->insert('user', $data);
         return null;
+    }
+
+    function registerTutor($name, $username, $pwd, $email, $website, $linkedin, $sourl) {
+        // is username unique?
+        $usernameExists = $this->db->get_where('user', array('username' => $username));
+        if ($usernameExists->num_rows() > 0) {
+            return "Username already exists";
+        }
+        // username is unique
+
+        $emailExists = $this->db->get_where('user', array('email' => $email));
+        if ($emailExists->num_rows() > 0) {
+            return "Email already exists";
+        }
+
+        $linkedInExists = $this->db->get_where('user', array('linkedInUrl' => $linkedin));
+        if ($linkedInExists->num_rows() > 0) {
+            return "LinkedIn address already exists";
+        }
+
+        $soExists = $this->db->get_where('user', array('sOUrl' => $sourl));
+        if ($soExists->num_rows() > 0) {
+            return "Stackoverflow address already exists";
+        }
+
+        $unique_salt = $this->unique_salt();
+        $hashpwd = sha1($unique_salt . $pwd);
+        $time = time();
+        $formattedDate = date("Y-m-d H:i:s", $time);
+        $data = array('fullName' => $name, 'username' => $username,
+            'password' => $hashpwd, 'email' => $email, 'website' => $website, 'joinedDate' => $formattedDate, 'linkedInUrl' => $linkedin, 'sOUrl' => $sourl, 'roleId' => 2, 'isActive' => false, 'salt' => $unique_salt);
+        $this->db->insert('user', $data);
+        return null;
+    }
+
+    private function unique_salt(){
+        return substr(sha1(mt_rand()), 0, 22);
     }
 
     /**
@@ -277,21 +315,21 @@ class User extends MY_Model {
         $this->db->where('userId', $userId);
         $this->db->update('user', $data);
     }
-    
+
     /**
      * 
      * @param type $username
      * @param type $pwd
      * @return boolean
      */
-    function deactivateUser($username, $pwd){
+    function deactivateUser($username, $pwd) {
         $this->db->where(array('username' => $username, 'password' => $pwd));
         $res = $this->db->get('user');
         if ($res->num_rows() != 1) { // should be only ONE matching row!!
             return false;
-        }else{
+        } else {
             $this->db->where(array('username' => $username, 'password' => $pwd));
-            $this->db->update('user', array("isActive" => 0)); 
+            $this->db->update('user', array("isActive" => 0));
             return true;
         }
     }

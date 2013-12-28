@@ -26,7 +26,17 @@ class authlib {
         if ($pwd != $conf_pwd) {
             return "Passwords do not match";
         }
-        return $this->ci->user->register($name, $user, $pwd, $email, $website);
+        return $this->ci->user->registerStudent($name, $user, $pwd, $email, $website);
+    }
+
+    public function registerTutor($name, $user, $pwd, $conf_pwd, $email, $website, $linkedin, $sourl) {
+        if ($user === '' || $pwd === '' || $conf_pwd === '' || $email === '' || $linkedin === '' || $sourl === '') {
+            return 'Missing field';
+        }
+        if ($pwd != $conf_pwd) {
+            return "Passwords do not match";
+        }
+        return $this->ci->user->registerTutor($name, $user, $pwd, $email, $website, $linkedin, $sourl);
     }
 
     public function login($user, $pwd, $rememberLogin) {
@@ -39,8 +49,8 @@ class authlib {
     public function is_loggedin() {
         return $this->ci->user->is_loggedin();
     }
-    
-    public function logout(){
+
+    public function logout() {
         $this->ci->session->sess_destroy();
     }
 

@@ -229,12 +229,37 @@ class Api extends CI_Controller {
         $email = $this->input->post('email');
         $website = $this->input->post('website');
 
-        if (!($errmsg = $this->authlib->register($name, $username, $password, $conf_password, $email, $website))) {
-            $response['message'] = 'success';
+        $isTutor = $this->input->post('isTutor');
+        if ($isTutor === 'true') {
+            // Register as a tutor
+            $linkedin = $this->input->post('linkedIn');
+            $sourl = $this->input->post('sOProfile');
+            if (!($errmsg = $this->authlib->registerTutor($name, $username, $password, $conf_password, $email, $website, $linkedin, $sourl))) {
+                $req = new Request();
+                $time = time();
+                $formattedDate = date("Y-m-d H:i:s", $time);
+                $req->rDate = $formattedDate;
+                $req->rTypeId = 2;
+                $req->userId = $this->ci->User->getUserIdByName($username);
+                $req->save();
+                $response['message'] = 'Success';
+                $response['type'] = 'Your request was sent successfully. You will be emailed when accepted by our admins';
+            } else {
+                $response['message'] = 'Error';
+                $response['type'] = $errmsg;
+            }
+            echo json_encode($response);
         } else {
-            $response['message'] = $errmsg;
+            // Register as a student
+            if (!($errmsg = $this->authlib->register($name, $username, $password, $conf_password, $email, $website))) {
+                $response['message'] = 'Success';
+                $response['type'] = 'Your account was created successfully! Please log in.';
+            } else {
+                $response['message'] = 'Error';
+                $response['type'] = $errmsg;
+            }
+            echo json_encode($response);
         }
-        echo json_encode($response);
     }
 
     /**
