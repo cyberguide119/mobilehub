@@ -91,7 +91,22 @@ class adminlib {
     }
 
     public function getAdminDeleteRequests() {
-        
+        $req = $this->ci->Request->getAllDeleteRequests();
+        return $req;
+    }
+
+    public function updateRequest($isAccept, $userId, $rId) {
+        $re = new Request();
+        $re->load($rId);
+        $re->delete();
+
+        if ($isAccept) {
+            $this->ci->userlib->makeUserActive($userId);
+        } else {
+            $user = new User();
+            $user->load($userId);
+            $user->delete();
+        }
     }
 
 }

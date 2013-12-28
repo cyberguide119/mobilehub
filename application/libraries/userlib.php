@@ -72,8 +72,8 @@ class userlib {
         return $this->ci->User->getAllUsers();
     }
     
-    function deleteUserProfile($userId){
-        return $this->ci->User->deleteUser($userId);
+    function makeUserActive($userId){
+        $this->ci->User->activateUser($userId);
     }
 }
 

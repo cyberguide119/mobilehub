@@ -187,6 +187,12 @@ class Api extends CI_Controller {
             } else if ($args['requests'] === 'delete') {
                 $this->getAdminDeleteRequests();
             }
+        } else if (array_key_exists('tutor', $args)) {
+            if ($args['tutor'] === 'accept') {
+                $this->updateAdminTutorRequests(true);
+            } else if ($args['tutor'] === 'decline') {
+                $this->updateAdminTutorRequests(false);
+            }
         }
     }
 
@@ -720,12 +726,44 @@ class Api extends CI_Controller {
         //$username = $this->input->post('username');
         if ($name) {
             $reponse['message'] = "Success";
-            $reponse['aaData'] = $this->adminlib->getAdminTutorRequests();
+            $reponse['aaData'] = $this->adminlib->getAdminDeleteRequests();
             echo json_encode($reponse);
         } else {
             $reponse['message'] = "Error";
             $reponse['type'] = "You are not authorized to view this content";
             echo json_encode($reponse);
+        }
+    }
+
+    private function updateAdminTutorRequests($isAccept) {
+        $name = $this->authlib->is_loggedin();
+        $userId = $this->input->post('tutorId');
+        $rId = $this->input->post('rId');
+
+        if ($isAccept) {
+            // Accept logic
+            if ($name) {
+                $reponse['message'] = "Success";
+                $this->adminlib->updateRequest(true,$userId,$rId);
+                $reponse['type'] = "Tutor profile activated!";
+                echo json_encode($reponse);
+            } else {
+                $reponse['message'] = "Error";
+                $reponse['type'] = "You are not authorized to view this content";
+                echo json_encode($reponse);
+            }
+        } else {
+            // Decline logic
+            if ($name) {
+                $reponse['message'] = "Success";
+                $this->adminlib->updateRequest(false,$userId,$rId);
+                $reponse['type'] = "Tutor profile deleted!";
+                echo json_encode($reponse);
+            } else {
+                $reponse['message'] = "Error";
+                $reponse['type'] = "You are not authorized to view this content";
+                echo json_encode($reponse);
+            }
         }
     }
 

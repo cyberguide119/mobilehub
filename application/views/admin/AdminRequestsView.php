@@ -78,7 +78,7 @@
                     "sClass": "center",
                     "mRender": function(url, type, row) {
                         return  '<a href="javascript: acceptTutor(' + row['requestId'] + "," + row['userId'] + ');" class="btn btn-sm btn-success" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-ok"></i></a>&nbsp'
-                                + '<a href="javascript: deleteAnswer(' + row['answerId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-remove"></i></a>';
+                                + '<a href="javascript: declineTutor(' + row['requestId'] + "," + row['userId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-remove"></i></a>';
                     }
                 }]
         });
@@ -87,7 +87,36 @@
         BootstrapDialog.confirm('Are you sure you want to accept this tutor?', function(result) {
             if (result) {
                 jsonData = {'username': "<?php echo $name; ?>", "rId": qId, "tutorId": tutorId};
-                $.post("/MobileHub/index.php/api/tutor/accept/", jsonData, function(content) {
+                $.post("/MobileHub/index.php/api/admin/tutor/accept/", jsonData, function(content) {
+
+                    // Deserialise the JSON
+                    content = jQuery.parseJSON(content);
+                    if (content.message === "Success") {
+                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                        $('#errorModal').modal('show');
+                        var dt = $('#qTable').dataTable();
+                        dt.fnReloadAjax();
+                        return true;
+                    } else {
+                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                        $('#errorModal').modal('show');
+                    }
+                }).fail(function() {
+                    $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                    $('#errorModal').modal('show');
+                }), "json";
+                return true;
+            } else {
+                // Do nothing
+            }
+        });
+    }
+
+    function declineTutor(qId, tutorId) {
+        BootstrapDialog.confirm('Are you sure you want to decline this tutor request?', function(result) {
+            if (result) {
+                jsonData = {'username': "<?php echo $name; ?>", "rId": qId, "tutorId": tutorId};
+                $.post("/MobileHub/index.php/api/admin/tutor/decline/", jsonData, function(content) {
 
                     // Deserialise the JSON
                     content = jQuery.parseJSON(content);

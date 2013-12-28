@@ -13,7 +13,7 @@
 class Request extends MY_Model {
 
     const DB_TABLE = 'requests';
-    const DB_TABLE_PK = 'requestId'; //put your code here
+    const DB_TABLE_PK = 'requestId';
 
     public $requestId;
     public $rTypeId;
@@ -46,6 +46,8 @@ class Request extends MY_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    
+    //function delete
 
 }
 

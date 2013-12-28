@@ -70,7 +70,7 @@ Admin - All POST
 	index.php/api/admin/tutor/accept
 	index.php/api/admin/tutor/decline
 
-	index.php/api/admin/tutor/accept
-	index.php/api/admin/tutor/decline
+	index.php/api/admin/deletion/accept
+	index.php/api/admin/deletion/decline
 
-
+INSERT INTO `mobilehub_db`.`requests` (`requestId`, `rTypeId`, `userId`, `rDate`) VALUES (NULL, '2', '17', '2013-12-28 00:00:00');
