@@ -632,14 +632,20 @@ class Api extends CI_Controller {
     private function deleteUserProfile() {
         $name = $this->authlib->is_loggedin();
         $username = $this->input->post('username');
+        $hash = $this->input->post('pword');
         if ($name === $username) {
-            $res = $this->userlib->deactiveUserProfile($username);
-            echo json_encode($res);
+            if ($this->userlib->deactiveUserProfile($username, $hash)) {
+                $this->authlib->logout();
+                $res = array("message" => "Success", "type" => "User deactivated successfully");
+                echo json_encode($res);
+                return;
+            }
         }
 
         if ($name === false) {
             $res = array("message" => "Error", "type" => "You do not have permissions");
             echo json_encode($res);
+            return;
         }
     }
 

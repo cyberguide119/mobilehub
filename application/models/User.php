@@ -61,7 +61,7 @@ class User extends MY_Model {
 
     function login($username, $pwd, $rememberLogin) {
         $this->db->where(array('username' => $username, 'password' => sha1($pwd)));
-        $res = $this->db->get('user', array('name'));
+        $res = $this->db->get('user');
         if ($res->num_rows() != 1) { // should be only ONE matching row!!
             return false;
         }
@@ -189,6 +189,18 @@ class User extends MY_Model {
         $data = array('isActive' => true);
         $this->db->where('userId', $userId);
         $this->db->update('user', $data);
+    }
+    
+    function deactivateUser($username, $pwd){
+        $this->db->where(array('username' => $username, 'password' => $pwd));
+        $res = $this->db->get('user');
+        if ($res->num_rows() != 1) { // should be only ONE matching row!!
+            return false;
+        }else{
+            $this->db->where(array('username' => $username, 'password' => $pwd));
+            $this->db->update('user', array("isActive" => 0)); 
+            return true;
+        }
     }
 
 }

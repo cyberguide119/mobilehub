@@ -79,6 +79,13 @@ class userlib {
     function makeUserActive($userId){
         $this->ci->User->activateUser($userId);
     }
+    
+    function deactiveUserProfile($username, $hash){
+        if($this->ci->User->deactivateUser($username, $hash)){
+            return true;
+        }
+        return false;
+    }
 }
 
 ?>

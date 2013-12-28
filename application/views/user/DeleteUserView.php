@@ -55,9 +55,30 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Error</h4>
+            </div>
+            <div class="modal-body" id="succModalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="reload();">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script type="text/javascript">
                     function goBack() {
                         window.history.back();
+                    }
+
+                    function reload() {
+                        window.location = "/MobileHub/";
                     }
 
                     function sendRequest() {
@@ -72,8 +93,8 @@
                             // Deserialise the JSON
                             content = jQuery.parseJSON(content);
                             if (content.message === "Success") {
-                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                                $('#errorModal').modal('show');
+                                $('#succModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#successModal').modal('show');
                             } else {
                                 $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                                 $('#errorModal').modal('show');
@@ -87,36 +108,5 @@
 
                     function deactivate() {
                         $('#pwordModal').modal('show');
-
-
-//        bootbox.prompt("Please enter your password to proceed", function(result) {
-//            if (result === null) {
-//                alert("Prompt dismissed");
-//
-//            } else {
-//                $pword = CryptoJS.SHA1(result);
-//                console.log($pword);
-//            jsonData = {'username': "<?php echo $user ?>", 'pword' : $pword};
-//
-//                $.post("/MobileHub/index.php/api/user/delete/", jsonData, function(content) {
-//
-//                    // Deserialise the JSON
-//                    content = jQuery.parseJSON(content);
-//                    if (content.message === "Success") {
-//                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-//                        $('#errorModal').modal('show');
-//                    } else {
-//                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-//                        $('#errorModal').modal('show');
-//                    }
-//                }).fail(function() {
-//                    $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
-//                    $('#errorModal').modal('show');
-//                }), "json";
-//                return true;
-//            }
-//        });
-
-
                     }
 </script>

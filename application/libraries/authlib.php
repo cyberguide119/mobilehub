@@ -16,6 +16,7 @@ class authlib {
         // CI class)
         $this->ci = &get_instance();
         $this->ci->load->model('user');
+        $this->ci->load->library('session');
     }
 
     public function register($name, $user, $pwd, $conf_pwd, $email, $website) {
@@ -37,6 +38,10 @@ class authlib {
 
     public function is_loggedin() {
         return $this->ci->user->is_loggedin();
+    }
+    
+    public function logout(){
+        $this->ci->session->sess_destroy();
     }
 
 }

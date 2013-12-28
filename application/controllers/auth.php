@@ -131,7 +131,7 @@ class auth extends MY_Controller {
 
     public function logout() {
         // Clear the session and redirect to the homepage
-        $this->session->sess_destroy();
+        $this->authlib->logout();
         redirect(site_url());
     }
 
