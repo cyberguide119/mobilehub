@@ -65,6 +65,19 @@ class profile extends MY_Controller {
         }
     }
 
+    public function delete() {
+        $profile = $this->input->get('user');
+        $name = $this->authlib->is_loggedin();
+        if ($name === $profile) {
+            $this->loadHeaderData();
+            $data['user'] = $profile;
+            $this->load->view('user/DeleteUserView', $data);
+            $this->loadFooterData();
+        } else {
+            redirect('custom403');
+        }
+    }
+
 }
 
 ?>

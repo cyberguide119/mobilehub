@@ -61,7 +61,7 @@
                             </a>
                             <ul class='dropdown-menu'>
                                 <li><a href='/MobileHub/index.php/profile/edit/?user=".$user."'><span class='glyphicon glyphicon-wrench'></span> Modify</a></li>
-                                <li><a href='#'><span class='glyphicon glyphicon-trash'></span> Delete</a></li>
+                                <li><a href='/MobileHub/index.php/profile/delete/?user=".$user."'><span class='glyphicon glyphicon-trash'></span> Delete</a></li>
                             </ul>
                         </div>
                     </div>

@@ -165,6 +165,8 @@ class Api extends CI_Controller {
             $this->getFullUserDetails($args['fulldetails']);
         } else if (array_key_exists('post', $args)) {
             $this->updateUserDetails($args['post']);
+        } else if (array_key_exists('delete', $args)) {
+            $this->deleteUserProfile();
         }
     }
 
@@ -627,6 +629,20 @@ class Api extends CI_Controller {
         }
     }
 
+    private function deleteUserProfile() {
+        $name = $this->authlib->is_loggedin();
+        $username = $this->input->post('username');
+        if ($name === $username) {
+            $res = $this->userlib->deactiveUserProfile($username);
+            echo json_encode($res);
+        }
+
+        if ($name === false) {
+            $res = array("message" => "Error", "type" => "You do not have permissions");
+            echo json_encode($res);
+        }
+    }
+
     /**
      * All methods related to admin dashboard
      */
@@ -776,6 +792,7 @@ class Api extends CI_Controller {
         $req->delete();
         $this->getAdminDeleteUsers();
     }
+
 }
 
 ?>
