@@ -193,6 +193,8 @@ class Api extends CI_Controller {
             } else if ($args['tutor'] === 'decline') {
                 $this->updateAdminTutorRequests(false);
             }
+        } else if (array_key_exists('deletion', $args)) {
+            $this->getAdminDeleteUserOnRequest();
         }
     }
 
@@ -744,7 +746,7 @@ class Api extends CI_Controller {
             // Accept logic
             if ($name) {
                 $reponse['message'] = "Success";
-                $this->adminlib->updateRequest(true,$userId,$rId);
+                $this->adminlib->updateRequest(true, $userId, $rId);
                 $reponse['type'] = "Tutor profile activated!";
                 echo json_encode($reponse);
             } else {
@@ -756,7 +758,7 @@ class Api extends CI_Controller {
             // Decline logic
             if ($name) {
                 $reponse['message'] = "Success";
-                $this->adminlib->updateRequest(false,$userId,$rId);
+                $this->adminlib->updateRequest(false, $userId, $rId);
                 $reponse['type'] = "Tutor profile deleted!";
                 echo json_encode($reponse);
             } else {
@@ -767,6 +769,13 @@ class Api extends CI_Controller {
         }
     }
 
+    private function getAdminDeleteUserOnRequest() {
+        $rId = $this->input->post('rId');
+        $req = new Request();
+        $req->load($rId);
+        $req->delete();
+        $this->getAdminDeleteUsers();
+    }
 }
 
 ?>

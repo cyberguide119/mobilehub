@@ -16,7 +16,6 @@
         </div>
     </div><!-- /.row -->
     <div class="row">
-
         <div class="col-lg-12">
             <h4>New Tutor Registrations</h4><hr>
             <table id="qTable">
@@ -24,6 +23,13 @@
         </div>
     </div>
     <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Account Removal Requests</h4><hr>
+            <table id="qTable2">
+            </table>
+        </div>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -47,6 +53,7 @@
 
     $(document).ready(function() {
         initQuestTable();
+        initQuestTable2();
     });
 
     function initQuestTable() {
@@ -83,6 +90,41 @@
                 }]
         });
     }
+    
+    function initQuestTable2() {
+        $('#qTable2').dataTable({
+            "sAjaxSource": '/MobileHub/index.php/api/admin/requests/delete',
+            "sServerMethod": "POST",
+            "aoColumns": [{
+                    "mData": "requestId",
+                    "sTitle": "Id"
+                }, {
+                    "mData": "userId",
+                    "sTitle": "User Id"
+                }, {
+                    "mData": "rDate",
+                    "sTitle": "Registered On"
+                }, {
+                    "mData": "username",
+                    "sTitle": "Username",
+                    "mRender": function(url, type, row) {
+                        return  '<a href="/MobileHub/index.php/profile/?user=' + row['username'] + '">' + url + '</a>';
+                    }
+                }, {
+                    "mData": "email",
+                    "sTitle": "Email"
+                }, {
+                    "sTitle": "Action",
+                    "mData": "email",
+                    "bSortable": false,
+                    "sClass": "center",
+                    "mRender": function(url, type, row) {
+                        return  '<a href="javascript: removeAccount(' + row['requestId'] + "," + row['userId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-remove"></i></a>';
+                    }
+                }]
+        });
+    }
+    
     function acceptTutor(qId, tutorId) {
         BootstrapDialog.confirm('Are you sure you want to accept this tutor?', function(result) {
             if (result) {
@@ -117,6 +159,35 @@
             if (result) {
                 jsonData = {'username': "<?php echo $name; ?>", "rId": qId, "tutorId": tutorId};
                 $.post("/MobileHub/index.php/api/admin/tutor/decline/", jsonData, function(content) {
+
+                    // Deserialise the JSON
+                    content = jQuery.parseJSON(content);
+                    if (content.message === "Success") {
+                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                        $('#errorModal').modal('show');
+                        var dt = $('#qTable').dataTable();
+                        dt.fnReloadAjax();
+                        return true;
+                    } else {
+                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                        $('#errorModal').modal('show');
+                    }
+                }).fail(function() {
+                    $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                    $('#errorModal').modal('show');
+                }), "json";
+                return true;
+            } else {
+                // Do nothing
+            }
+        });
+    }
+    
+    function removeAccount(qId, tutorId) {
+        BootstrapDialog.confirm('Are you sure you want to remove this account?', function(result) {
+            if (result) {
+                jsonData = {'username': "<?php echo $name; ?>", "rId": qId, "userId": tutorId};
+                $.post("/MobileHub/index.php/api/admin/deletion/accept", jsonData, function(content) {
 
                     // Deserialise the JSON
                     content = jQuery.parseJSON(content);

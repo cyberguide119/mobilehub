@@ -181,6 +181,10 @@ class User extends MY_Model {
         return $query->result();
     }
 
+    function deleteUser($userId) {
+        $this->db->delete('user', array('userId' => $userId));
+    }
+
     function activateUser($userId) {
         $data = array('isActive' => true);
         $this->db->where('userId', $userId);
