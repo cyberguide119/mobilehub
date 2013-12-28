@@ -63,3 +63,10 @@ Admin - All POST
 
 	index.php/api/admin/user/details
 	index.php/api/admin/user/delete
+
+	index.php/api/admin/requests/tutor
+	index.php/api/admin/requests/delete
+
+	getAdminTutorRequests
+
+	getAdminDeleteRequests

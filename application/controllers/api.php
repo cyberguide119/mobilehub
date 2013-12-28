@@ -181,7 +181,14 @@ class Api extends CI_Controller {
             } else if ($args['user'] === 'delete') {
                 $this->getAdminDeleteUsers();
             }
-        }
+        } else if (array_key_exists('requests', $args)) {
+            if($args['requests'] === 'tutor'){
+                $this->getAdminTutorRequests();
+            }else if($args['requests'] === 'delete'){
+                $this->getAdminDeleteRequests();
+            }
+            
+        } 
     }
 
     /**
@@ -688,6 +695,34 @@ class Api extends CI_Controller {
                 $reponse['type'] = "Something went wrong";
                 echo json_encode($reponse);
             }
+        } else {
+            $reponse['message'] = "Error";
+            $reponse['type'] = "You are not authorized to view this content";
+            echo json_encode($reponse);
+        }
+    }
+    
+    private function getAdminTutorRequests(){
+        $name = $this->authlib->is_loggedin();
+        //$username = $this->input->post('username');
+        if ($name) {
+            $reponse['message'] = "Success";
+            $reponse['aaData'] = $this->adminlib->getAdminTutorRequests();
+            echo json_encode($reponse);
+        } else {
+            $reponse['message'] = "Error";
+            $reponse['type'] = "You are not authorized to view this content";
+            echo json_encode($reponse);
+        }
+    }
+    
+    private function getAdminDeleteRequests(){
+        $name = $this->authlib->is_loggedin();
+        //$username = $this->input->post('username');
+        if ($name) {
+            $reponse['message'] = "Success";
+            $reponse['aaData'] = $this->adminlib->getAdminDeleteRequests();
+            echo json_encode($reponse);
         } else {
             $reponse['message'] = "Error";
             $reponse['type'] = "You are not authorized to view this content";

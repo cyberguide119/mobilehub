@@ -85,6 +85,13 @@ class adminlib {
         return true;
     }
 
+    public function getAdminTutorRequests() {
+        
+    }
+
+    public function getAdminDeleteRequests() {
+        
+    }
 }
 
 ?>

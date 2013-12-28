@@ -1,6 +1,6 @@
 <!-- DataTables CSS -->
 <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
- 
+
 <!-- DataTables -->
 <script type="text/javascript" charset="utf8" src="<?php echo site_url('../resources/js/jquery.dataTables.min.js') ?>"></script>
 <script src="<?php echo site_url('../resources/js/bootstrap-dialog.js') ?>"></script>
@@ -16,8 +16,9 @@
         </div>
     </div><!-- /.row -->
     <div class="row">
-        <hr>
+
         <div class="col-lg-12">
+            <h4>New Tutor Registrations</h4><hr>
             <table id="qTable">
             </table>
         </div>
@@ -79,7 +80,8 @@
                     "bSortable": false,
                     "sClass": "center",
                     "mRender": function(url, type, row) {
-                        return  '<a href="javascript: deleteAnswer(' + row['answerId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-trash"></i></a>';
+                        return  '<a href="javascript: deleteAnswer(' + row['answerId'] + ');" class="btn btn-sm btn-success" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-ok"></i></a>&nbsp'
+                                + '<a href="javascript: deleteAnswer(' + row['answerId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-remove"></i></a>';
                     }
                 }]
         });

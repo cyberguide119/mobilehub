@@ -29,6 +29,7 @@ class User extends MY_Model {
     public $website;
     public $linkedInUrl;
     public $sOUrl;
+    public $isActive;
 
     function __construct() {
         parent::__construct();
