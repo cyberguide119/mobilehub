@@ -35,6 +35,17 @@ class Request extends MY_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    
+    function getAllDeleteRequests() {
+        $this->db->select(array('requests.requestId', 'requests.userId', 'user.username', 'user.email', 'requests.rDate', 'request_types.rName'));
+        $this->db->from('requests');
+        $this->db->where('requests.rTypeId', 1); 
+        $this->db->join('request_types', 'request_types.rTypeId = requests.rTypeId');
+        $this->db->join('user', 'user.userId = requests.userId');
+
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }
 

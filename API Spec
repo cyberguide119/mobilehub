@@ -67,6 +67,10 @@ Admin - All POST
 	index.php/api/admin/requests/tutor
 	index.php/api/admin/requests/delete
 
-	getAdminTutorRequests
+	index.php/api/admin/tutor/accept
+	index.php/api/admin/tutor/decline
 
-	getAdminDeleteRequests
+	index.php/api/admin/tutor/accept
+	index.php/api/admin/tutor/decline
+
+

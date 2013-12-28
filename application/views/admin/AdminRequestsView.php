@@ -51,20 +51,17 @@
 
     function initQuestTable() {
         $('#qTable').dataTable({
-            "sAjaxSource": '/MobileHub/index.php/api/admin/answer/details',
+            "sAjaxSource": '/MobileHub/index.php/api/admin/requests/tutor',
             "sServerMethod": "POST",
             "aoColumns": [{
                     "mData": "requestId",
                     "sTitle": "Id"
                 }, {
-                    "mData": "username",
-                    "sTitle": "Username",
-                    "mRender": function(url, type, row) {
-                        return  '<a href="/MobileHub/index.php/question/show/?id=' + row['questionId'] + '">' + url + '</a>';
-                    }
+                    "mData": "userId",
+                    "sTitle": "User Id"
                 }, {
                     "mData": "rDate",
-                    "sTitle": "Answered On"
+                    "sTitle": "Registered On"
                 }, {
                     "mData": "username",
                     "sTitle": "Username",
@@ -76,21 +73,21 @@
                     "sTitle": "Email"
                 }, {
                     "sTitle": "Action",
-                    "mData": "votes",
+                    "mData": "email",
                     "bSortable": false,
                     "sClass": "center",
                     "mRender": function(url, type, row) {
-                        return  '<a href="javascript: deleteAnswer(' + row['answerId'] + ');" class="btn btn-sm btn-success" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-ok"></i></a>&nbsp'
+                        return  '<a href="javascript: acceptTutor(' + row['requestId'] + "," + row['userId'] + ');" class="btn btn-sm btn-success" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-ok"></i></a>&nbsp'
                                 + '<a href="javascript: deleteAnswer(' + row['answerId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-remove"></i></a>';
                     }
                 }]
         });
     }
-    function deleteAnswer(qId) {
-        BootstrapDialog.confirm('Are you sure you want to delete this answer?', function(result) {
+    function acceptTutor(qId, tutorId) {
+        BootstrapDialog.confirm('Are you sure you want to accept this tutor?', function(result) {
             if (result) {
-                jsonData = {'username': "<?php echo $name; ?>", "answerId": qId};
-                $.post("/MobileHub/index.php/api/answer/delete/", jsonData, function(content) {
+                jsonData = {'username': "<?php echo $name; ?>", "rId": qId, "tutorId": tutorId};
+                $.post("/MobileHub/index.php/api/tutor/accept/", jsonData, function(content) {
 
                     // Deserialise the JSON
                     content = jQuery.parseJSON(content);
