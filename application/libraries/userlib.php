@@ -71,21 +71,29 @@ class userlib {
     function getAllUsers() {
         return $this->ci->User->getAllUsers();
     }
-    
-    function deleteUserProfile($userId){
+
+    function deleteUserProfile($userId) {
         return $this->ci->User->deleteUser($userId);
     }
-    
-    function makeUserActive($userId){
+
+    function makeUserActive($userId) {
         $this->ci->User->activateUser($userId);
     }
-    
-    function deactiveUserProfile($username, $hash){
-        if($this->ci->User->deactivateUser($username, $hash)){
+
+    function deactiveUserProfile($username, $hash) {
+        if ($this->ci->User->deactivateUser($username, $hash)) {
+            $req = new Request();
+            $time = time();
+            $formattedDate = date("Y-m-d H:i:s", $time);
+            $req->rDate = $formattedDate;
+            $req->rTypeId = 1;
+            $req->userId = $this->ci->User->getUserIdByName($username);
+            $req->save();
             return true;
         }
         return false;
     }
+
 }
 
 ?>
