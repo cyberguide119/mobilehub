@@ -124,3 +124,7 @@ http://www.datatables.net/usage/
 
 35. Used this for json encoding a form
 http://stackoverflow.com/questions/1184624/convert-form-data-to-js-object-with-jquery
+
+intel@123
+
+36. Salt was added sha1(unquesalt.pwd)

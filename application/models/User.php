@@ -102,8 +102,26 @@ class User extends MY_Model {
         return null;
     }
 
-    private function unique_salt(){
+    /**
+     * 
+     * @return string
+     */
+    private function unique_salt() {
         return substr(sha1(mt_rand()), 0, 22);
+    }
+
+    /**
+     * 
+     * @param type $salt
+     * @param type $pass
+     * @param type $userPass
+     * @return boolean
+     */
+    private function validatePassword($salt, $pass, $userPass) {
+        if ($pass === sha1($salt . $userPass)) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -114,9 +132,15 @@ class User extends MY_Model {
      * @return boolean
      */
     function login($username, $pwd, $rememberLogin) {
-        $this->db->where(array('username' => $username, 'password' => sha1($pwd)));
+
+        $this->db->where(array('username' => $username));
         $res = $this->db->get('user');
         if ($res->num_rows() != 1) { // should be only ONE matching row!!
+            return false;
+        }
+        $user = $res->result();
+        $salt = $user[0]->salt;
+        if (!($this->validatePassword($salt, $user[0]->password, $pwd))) {
             return false;
         }
 
