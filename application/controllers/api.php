@@ -278,7 +278,7 @@ class Api extends CI_Controller {
                 $response['message'] = "Success";
                 $response['results'] = $results;
             } else {
-                $response['message'] = "Success";
+                $response['message'] = "Error";
                 $response['type'] = "Sorry, your query returned no matches!";
             }
         }
