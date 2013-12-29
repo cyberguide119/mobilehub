@@ -25,49 +25,49 @@ class Admin extends MY_Controller {
     public function index() {
         $res = $this->checkPermissions();
         if ($res) {
-            $this->loadPage($res, "AdminView");
+            $this->loadPage($res, "AdminView", 'index');
         }
     }
 
     public function questions() {
         $res = $this->checkPermissions();
         if ($res) {
-            $this->loadPage($res, "AdminQuestionsView");
+            $this->loadPage($res, "AdminQuestionsView", 'questions');
         }
     }
-    
+
     public function answers() {
         $res = $this->checkPermissions();
         if ($res) {
-            $this->loadPage($res, "AdminAnswersView");
+            $this->loadPage($res, "AdminAnswersView", 'answers');
         }
     }
-    
+
     public function users() {
         $res = $this->checkPermissions();
         if ($res) {
-            $this->loadPage($res, "AdminUsersView");
+            $this->loadPage($res, "AdminUsersView", 'users');
         }
     }
-    
+
     public function requests() {
         $res = $this->checkPermissions();
         if ($res) {
-            $this->loadPage($res, "AdminRequestsView");
+            $this->loadPage($res, "AdminRequestsView", 'requests');
         }
     }
 
     private function checkPermissions() {
         $profile = $this->input->get('user');
 
-        if ($profile === false || $profile === null ) {
+        if ($profile === false || $profile === null) {
             redirect('custom404');
             return false;
         }
         return $profile;
     }
-    
-    private function loadPage($profile, $page ){
+
+    private function loadPage($profile, $page, $url) {
         $data['user'] = $profile;
 
         $name = $this->authlib->is_loggedin();
@@ -77,17 +77,26 @@ class Admin extends MY_Controller {
             return;
         } else {
             $data['name'] = $name;
-            $this->loadAdminHeader($data);
-            $this->load->view('admin/'.$page);
+            $this->loadAdminHeader($data, $url);
+            $this->load->view('admin/' . $page);
             $this->loadAdminFooter();
         }
     }
-    
-    private function loadAdminHeader($data){
+
+    private function loadAdminHeader($data, $url) {
+        $activeLink = array(
+            "index" => "#",
+            "questions" => "#",
+            "answers" => "#",
+            "users" => "#",
+            "requests" => "#",
+        );
+        $activeLink[$url] = "active";
+        $data['activeLink'] = $activeLink;
         $this->load->view('admin/AdminHeaderView', $data);
     }
-    
-    private function loadAdminFooter(){
+
+    private function loadAdminFooter() {
         $this->load->view('admin/AdminFooterView');
     }
 
