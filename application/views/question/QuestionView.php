@@ -20,15 +20,21 @@
             <div id="qTitle"></div>
             <div id="qDesc"></div>
             <div>
-                <span class="badge badge-success" id="qAskedOn"></span>
+                <span class="badge badge-success" id="qAskedOn"></span>&nbsp;
+                <div style="display: inline;" id="tutorControls">
+                    <a href ="">Edit</a> | 
+                    <a href ="">Close</a>
+                </div>
                 <div class="pull-right">
                     <div class="action" id="qTags"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-1"></div>
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-1">
+
+        </div>
         <div class="col-md-11">
             <div class="user_info pull-right">
                 Asked By
@@ -39,7 +45,6 @@
                     <h4 style="display: inline;" id="askerPoints"></h4>
                 </div>
                 <div style="float: left; line-height: .9;">
-
                 </div>
                 <div style="clear: both;"></div>
             </div>
