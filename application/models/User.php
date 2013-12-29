@@ -377,6 +377,28 @@ class User extends MY_Model {
         }
     }
 
+    function updatePassword($username, $oldPass, $newPass) {
+        $this->db->where(array('username' => $username));
+        $res = $this->db->get('user');
+        if ($res->num_rows() != 1) { // should be only ONE matching row!!
+            return "Your profile does not exist";
+        }
+        $user = $res->result();
+        if (!($user[0]->isActive)) {
+            return "Your profile is not active";
+        }
+        $salt = $user[0]->salt;
+        if (!($this->validatePassword($salt, $user[0]->password, $oldPass))) {
+            return "Your old password is wrong";
+        }
+
+        $this->db->where('username', $username);
+        $unique_salt = $this->unique_salt();
+        $hashpwd = sha1($unique_salt . $newPass);
+        $this->db->update('user', array("password" => $hashpwd));
+        return true;
+    }
+
 }
 
 ?>

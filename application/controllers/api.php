@@ -167,6 +167,8 @@ class Api extends CI_Controller {
             $this->updateUserDetails($args['post']);
         } else if (array_key_exists('delete', $args)) {
             $this->deleteUserProfile();
+        } else if (array_key_exists('changepassword', $args)) {
+            $this->changeUserPassword($args['changepassword']);
         }
     }
 
@@ -648,7 +650,7 @@ class Api extends CI_Controller {
             echo json_encode($res);
         }
 
-        if ($name === false) {
+        if ($name === false || $name !== $username) {
             $res = array("message" => "Error", "type" => "You do not have permissions");
             echo json_encode($res);
         }
@@ -664,12 +666,12 @@ class Api extends CI_Controller {
                 $res = array("message" => "Success", "type" => "User deactivated successfully");
                 echo json_encode($res);
                 return;
-            }else{
+            } else {
                 $res = array("message" => "Error", "type" => "Something went wrong");
-            echo json_encode($res);
-            return;
+                echo json_encode($res);
+                return;
             }
-        }else{
+        } else {
             $res = array("message" => "Error", "type" => "You do not have permissions");
             echo json_encode($res);
             return;
@@ -679,6 +681,27 @@ class Api extends CI_Controller {
             $res = array("message" => "Error", "type" => "You do not have permissions");
             echo json_encode($res);
             return;
+        }
+    }
+
+    private function changeUserPassword($username) {
+        $name = $this->authlib->is_loggedin();
+        if ($name === $username) {
+            $username = $this->input->post('username');
+            $oldPw = $this->input->post('oldPw');
+            $newPw = $this->input->post('newPw');
+            if (($res = $this->userlib->updatePassword($username, $oldPw, $newPw))) {
+                $res = array("message" => "Success", "type" => "Password changed successfully");
+                echo json_encode($res);
+            } else {
+                $res = array("message" => "Error", "type" => $res);
+                echo json_encode($res);
+            }
+        }
+
+        if ($name === false || $name !== $username) {
+            $res = array("message" => "Error", "type" => "You do not have permissions");
+            echo json_encode($res);
         }
     }
 

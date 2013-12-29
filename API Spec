@@ -55,6 +55,7 @@ User
 	index.php/api/user/post/{username}
 
 	index.php/api/user/delete/
+	index.php/api/user/changepassword/{username}
 
 Admin - All POST
 	index.php/api/admin/details/basic
