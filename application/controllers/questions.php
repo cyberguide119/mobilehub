@@ -59,8 +59,31 @@ class Questions extends MY_Controller {
                     $data['isQuestionClosed'] = false;
                 }
                 $data['isTutor'] = true;
+            } else {
+                $data['isTutor'] = false;
+                if ($this->questionslib->isQuestionClosed($qId)) {
+                    $question = $this->questionslib->getQuestionClosedData($qId);
+                    $data['isQuestionClosed'] = true;
+                    $data['closeReason'] = $question->closeReason;
+                    $dateClosed = explode(" ", $question->closedDate);
+                    $data['closedDate'] = $dateClosed[0];
+                    $data['closedByUserName'] = $question->username;
+                } else {
+                    $data['isQuestionClosed'] = false;
+                }
             }
         } else {
+            if ($this->questionslib->isQuestionClosed($qId)) {
+                $question = $this->questionslib->getQuestionClosedData($qId);
+                $data['isQuestionClosed'] = true;
+                $data['closeReason'] = $question->closeReason;
+                $dateClosed = explode(" ", $question->closedDate);
+                $data['closedDate'] = $dateClosed[0];
+                $data['closedByUserName'] = $question->username;
+            } else {
+                $data['isQuestionClosed'] = false;
+            }
+            $showAnswerBox = false;
             $data['isTutor'] = false;
         }
         $this->load->view('question/QuestionView', $data);

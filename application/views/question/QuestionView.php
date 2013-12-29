@@ -55,8 +55,8 @@
     <br>
     <?php
     if ($isQuestionClosed) {
-        echo '<div class="alert alert-warning" id="closeReasonAlert" style="background-color: #C26909">';
-        echo '<strong>This question has been closed by<a href="#"> ' . $closedByUserName . '</strong> </a>due to the following reason on <i>' .$closedDate . '</i>';
+        echo '<div class="alert alert-warning" id="closeReasonAlert" style="background-color: #ECA14F">';
+        echo '<strong>This question has been closed by<a href="/MobileHub/index.php/profile/?user='. $closedByUserName .'"> ' . $closedByUserName . '</strong> </a>due to the following reason on <i>' .$closedDate . '</i>';
         echo '<p>' . $closeReason . '</p>';
         echo '</div>';
     }

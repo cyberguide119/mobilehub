@@ -585,11 +585,16 @@ class Api extends CI_Controller {
 
         if ($tutorName) {
             if ($this->permlib->userHasPermission($tutorName, "ANSWER_QUESTION")) {
-                if ($this->questionslib->postAnswer($quesId, $tutorName, $description)) {
-                    $response["message"] = "Success";
-                } else {
+                if ($this->questionslib->isQuestionClosed($quesId)) {
                     $response["message"] = "Error";
-                    $response["type"] = "Oops, something went wrong!";
+                    $response["type"] = "This question is closed. Therefore you cannot post an answer.";
+                } else {
+                    if ($this->questionslib->postAnswer($quesId, $tutorName, $description)) {
+                        $response["message"] = "Success";
+                    } else {
+                        $response["message"] = "Error";
+                        $response["type"] = "Oops, something went wrong!";
+                    }
                 }
             } else {
                 $response["message"] = "Error";
