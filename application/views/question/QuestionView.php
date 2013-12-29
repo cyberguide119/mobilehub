@@ -102,6 +102,7 @@
                     <h4 class="modal-title" id="myModalLabel">Please enter your reason to close this question</h4>
                 </div>
                 <div class="modal-body">
+                    <p>Note : Members will not be able to post answers, edit question or edit answers after closing this question.</p>
                     <textarea id="closeReason" rows="4" style="width: 100%;"></textarea>
                 </div>
                 <div class="modal-footer">
