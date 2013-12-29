@@ -84,7 +84,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $name ?> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<? echo site_url('profile/?user=' . $name); ?>"><i class="glyphicon glyphicon-user"></i> My Profile</a></li>
-                                <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+                                <li><a href="/MobileHub/"><i class="fa fa-sitemap"></i> Visit Site</a></li>
                                 <li class="divider"></li>
                                 <li><a href="<? echo site_url('auth/logout'); ?>"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
                             </ul>
