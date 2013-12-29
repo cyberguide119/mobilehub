@@ -132,7 +132,7 @@
                         + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
                         + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
                         + "<div class='col-xs-10 col-md-9'><div>"
-                        + "<a href='/MobileHub/index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
+                        + "<a href='/MobileHub/index.php/questions/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
                         + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
                         + "<div class='action'>"
                         + getTagsString(result.tags)
@@ -162,7 +162,7 @@
                         + "<div class='chat-body clearfix'><div class='header'>"
                         + "<small class='pull-right text-muted'>"
                         + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD").fromNow() + "</small></div>"
-                        + "<a href=/MobileHub/index.php/question/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div></li></ul>";
+                        + "<a href=/MobileHub/index.php/questions/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div></li></ul>";
                 $("#answersList")
                         .append(answersList);
             }

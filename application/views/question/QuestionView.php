@@ -101,7 +101,7 @@
                     <textarea id="closeReason" rows="4" style="width: 100%;"></textarea>
                 </div>
                 <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="closeQuestion();">Submit</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="closeQuestion();">Submit</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -110,111 +110,118 @@
 
 <script type="text/javascript">
 
-                        jQuery(function($) {
+                    jQuery(function($) {
                         // This function highlights (by default) pre and code tags which are annotated correctly.
                         $.syntax();
                     });
 
                     $('#ansDesc').maxlength({
-                            alwaysShow: true
+                        alwaysShow: true
                     });
 
-                            $(document).ready(function() {
-                    $.get("/MobileHub/index.php/api/question/details/" + "<?php echo $questionId ?>", function(resultsData) {
-                        resultsData = jQuery.parseJSON(resultsData);
+                    $(document).ready(function() {
+                        $.get("/MobileHub/index.php/api/question/details/" + "<?php echo $questionId ?>", function(resultsData) {
+                            resultsData = jQuery.parseJSON(resultsData);
                             loadUI(resultsData);
                             return true;
-                            });
+                        });
                     });
 
-                            function loadUI(resultsData) {
-                                    if (resultsData.message === "Error") {
+                    function loadUI(resultsData) {
+                        if (resultsData.message === "Error") {
                             window.location = "/MobileHub/index.php/custom404/";
                             return false;
-                            } else {
+                        } else {
                             $("#qVotes")
-                            .html(resultsData.questionDetails.votes);
+                                    .html(resultsData.questionDetails.votes);
                             $("#qTitle").html("<h2>" + resultsData.questionDetails.questionTitle + "</h2>");
                             $("#qDesc").html("<p>" + resultsData.questionDetails.questionDescription + "</p>");
                             $("#qAskedOn").html("Posted " + moment(resultsData.questionDetails.askedOn, "YYYY-MM-DD hh:mm Z").fromNow());
                             $("#askerName").text(resultsData.questionDetails.asker.username);
                             $("#askerPoints").text(resultsData.questionDetails.asker.netVotes);
-                                $("#askerName").attr("href", "/MobileHub/index.php/profile/?user=" + resultsData.questionDetails.asker.username);
+                            $("#askerName").attr("href", "/MobileHub/index.php/profile/?user=" + resultsData.questionDetails.asker.username);
                             $("#qTags").html(getTagsString(resultsData.questionDetails.tags));
-                            
-                                    if (resultsData.questionDetails.answers === null || resultsData.questionDetails.answers.length === 0) {                                 $("#answersList").html("<h4>No answers for this question yet!</h4>");
+
+                            if (resultsData.questionDetails.answers === null || resultsData.questionDetails.answers.length === 0) {
+                                $("#answersList").html("<h4>No answers for this question yet!</h4>");
                             } else {
                                 for (var i = 0; i < resultsData.questionDetails.answers.length; i++) {
-                                            var result = resultsData.questionDetails.answers[i];
-                                            var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
+                                    var result = resultsData.questionDetails.answers[i];
+                                    var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
                                             + "<span class='vote-count' id='ans" + result.answerId + "'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
                                             + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up' onclick='voteAnswer(" + result.answerId + ",true);'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
                                             + "<button type='button' class='btn btn-danger btn-xs' title='Vote down' onclick='voteAnswer(" + result.answerId + ",false);'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
                                             + "<div class='chat-body clearfix'><div class='header'>"
                                             + "<strong class='primary-font'><a href='/MobileHub/index.php/profile/?user=" + result.answerdUsername + "'>" + result.answerdUsername + "</a></strong><small class='pull-right text-muted'>"
-                                + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD hh:mm Z").fromNow() + "</small></div>"
-                    + "<p>" + result.description + "</p></div></li></ul>";
+                                            + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD hh:mm Z").fromNow() + "</small></div>"
+                                            + "<p>" + result.description + "</p></div></li></ul>";
                                     $("#answersList")
-                        .append(answersList);
+                                            .append(answersList);
                                 }
 
-                        }
                             }
+                        }
                     }
-                        function voteAnswer(answerId, isUpVote) {
-                            var $jsonObj = {'answerId': answerId, 'username': "<?php echo $name; ?>"};
+                    function voteAnswer(answerId, isUpVote) {
+                        var $jsonObj = {'answerId': answerId, 'username': "<?php echo $name; ?>"};
 
                         if (isUpVote) {
                             $url = "/MobileHub/index.php/api/vote/voteup/answer";
-                            } else {
+                        } else {
                             $url = "/MobileHub/index.php/api/vote/votedown/answer";
                         }
 
-                                $.post($url, $jsonObj, function(content) {
+                        $.post($url, $jsonObj, function(content) {
 
-                                // Deserialise the JSON
+                            // Deserialise the JSON
                             content = jQuery.parseJSON(content);
-                                if (content.message === "Success") {
-                                $('#ans' + answerId).html(content.votes);                                 votes = parseInt($("#askerPoints").text()) + 1;
-                        } else if (content.message === "Error") {
-                            $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                            $('#errorModal').modal('show');
-                        }
+                            if (content.message === "Success") {
+                                $('#ans' + answerId).html(content.votes);
+                                votes = parseInt($("#askerPoints").text()) + 1;
+                            } else if (content.message === "Error") {
+                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#errorModal').modal('show');
+                            }
                         }).fail(function() {
-                        $('#errModalBody').html("<p><center>Oops! something went wrong! Ple ase try again</center></p>");                             $('#errorModal').modal('show');
-                            }), "json";
+                            $('#errModalBody').html("<p><center>Oops! something went wrong! Ple ase try again</center></p>");
+                            $('#errorModal').modal('show');
+                        }), "json";
                         return true;
                     }
 
-                        function getTagsString($tags){                         var str = "";
-                    for (var i = 0; i < $tags.length; i++) {
-                        str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";                         }
+                    function getTagsString($tags) {
+                        var str = "";
+                        for (var i = 0; i < $tags.length; i++) {
+                            str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
+                        }
                         return str;
                     }
 
-                            function voteQuestion(isUpVote) {
-                            var $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>"};
+                    function voteQuestion(isUpVote) {
+                        var $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>"};
                         amount = 0;
                         if (isUpVote) {
-                        $url = "/MobileHub/index.php/api/vote/voteup/question";
+                            $url = "/MobileHub/index.php/api/vote/voteup/question";
                             amount = 1;
-                            } else {
+                        } else {
                             $url = "/MobileHub/index.php/api/vote/votedown/question";
                             amount = -1;
                         }
 
-                                $.post($url, $jsonObj, function(content) {
+                        $.post($url, $jsonObj, function(content) {
 
-                                // Deserialise the JSON
+                            // Deserialise the JSON
                             content = jQuery.parseJSON(content);
-                                if (content.message === "Success") {                                 $('#qVotes').html(content.votes);
+                            if (content.message === "Success") {
+                                $('#qVotes').html(content.votes);
                                 $("#askerPoints").text(parseInt($("#askerPoints").text()) + amount);
-                        } else if (content.message === "Error") {
-                            $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                            $('#errorModal').modal('show');
-                        }
+                            } else if (content.message === "Error") {
+                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#errorModal').modal('show');
+                            }
                         }).fail(function() {
-                        $('#errModalBody').html("<p><center>Oops! something went wrong! Please try again</center></p>");                             $('#errorModal').modal('show');
+                            $('#errModalBody').html("<p><center>Oops! something went wrong! Please try again</center></p>");
+                            $('#errorModal').modal('show');
                         }), "json";
                         return true;
                     }
@@ -222,20 +229,20 @@
                     function closeQuestion() {
                         $reason = $("#closeReason").val();
                         // Add validations
-                                        $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>", "reason": $reason};
-                                            $.post("/MobileHub/index.php/api/question/close/", $jsonObj, function(content) {
+                        $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>", "reason": $reason};
+                        $.post("/MobileHub/index.php/api/question/close/", $jsonObj, function(content) {
 
                             // Deserialise the JSON
-                                            content = jQuery.parseJSON(content);
-                                            if (content.message === "Success") {
-                                            $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                                        $('#errModalBody').modal('show');
-                                    } else {
-                                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                                        $('#errorModal').modal('show');
+                            content = jQuery.parseJSON(content);
+                            if (content.message === "Success") {
+                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#errModalBody').modal('show');
+                            } else {
+                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#errorModal').modal('show');
                             }
-                                    }).fail(function() {
-                                $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                        }).fail(function() {
+                            $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
                             $('#errorModal').modal('show');
                         }), "json";
                         return true;

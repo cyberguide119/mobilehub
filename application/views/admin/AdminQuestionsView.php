@@ -59,7 +59,7 @@
                     "mData": "questionTitle",
                     "sTitle": "Question Title",
                     "mRender": function(url, type, row) {
-                        return  '<a href="/MobileHub/index.php/question/show/?id=' + row['questionId'] + '">' + url + '</a>';
+                        return  '<a href="/MobileHub/index.php/questions/show/?id=' + row['questionId'] + '">' + url + '</a>';
                     }
                 }, {
                     "mData": "askedOn",
