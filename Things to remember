@@ -133,3 +133,7 @@ intel@123
 http://typicalwhiner.com/190/simple-javascript-captcha-generator/
 
 38. Send the password hash for all the admin, tutor, student POST functions
+
+bestId, edits, close question
+
+http://localhost/MobileHub/index.php/questions/edit/?id=36

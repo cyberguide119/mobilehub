@@ -35,6 +35,7 @@ class Answer extends MY_Model {
      * @return $res|null
      */
     public function getAnswersForQuestionId($qId) {
+        $this->db->order_by("netVotes", "desc");
         $answer = $this->db->get_where('answers', array('questionId' => $qId));
         $res = $answer->result();
         if (count($res) == 0) {
@@ -52,7 +53,7 @@ class Answer extends MY_Model {
         $this->db->select("answeredUserId");
         $this->db->where("answerId", $ansId);
         $answer = $this->db->get("answers")->row();
-        if($answer === null || count($answer) === 0){
+        if ($answer === null || count($answer) === 0) {
             return false;
         }
         return $answer->answeredUserId;
@@ -137,13 +138,13 @@ class Answer extends MY_Model {
         //$this->db->select(array('answerId', 'answeredUserId', 'answeredOn', 'description', 'netVotes'));
         return $this->db->get('answers')->result();
     }
-    
+
     /**
      * 
      * @param type $ansId
      */
-    function deleteAnswer($ansId){
-        $this->db->delete('answers', array('answerId' => $ansId)); 
+    function deleteAnswer($ansId) {
+        $this->db->delete('answers', array('answerId' => $ansId));
     }
 
 }
