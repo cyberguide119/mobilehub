@@ -78,7 +78,7 @@ and open the template in the editor.
                             echo '<li><a href="' . site_url('#') . '" data-reveal-id="myError" data-animation="fade" style="padding: 0; margin-right: 10px; margin-top: 14px"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
                             echo '<li><a href="#" data-reveal-id="myModal" data-animation="fade">Login</a></li>';
                         } else {
-                            echo '<li><a href="' . site_url('question/ask') . '" style="padding: 0; margin-right: 10px; margin-top: 14px"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
+                            echo '<li><a href="' . site_url('questions/ask') . '" style="padding: 0; margin-right: 10px; margin-top: 14px"><button class="btn btn-success askBtnStyle" role="button">Ask a question</button></a></li>';
                             echo '<div class="pull-right"><ul class="nav pull-right"><li class="dropdown">';
                             echo '<a href="' . site_url('') . '" class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 4%; color: white;">' . $name . '<b class="caret"></b></a>';
                             echo '<ul class="dropdown-menu">';

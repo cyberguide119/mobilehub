@@ -63,11 +63,11 @@
                                             return false;
                                         } else {
                                             var userViewing = "<?php echo $name ?>";
-                                            if (userViewing === resultsData.questionDetails.askerName) {
+                                            if (userViewing === resultsData.questionDetails.asker.username) {
                                                 loadUI(resultsData.questionDetails);
                                                 return true;
                                             } else {
-                                                window.location = "/MobileHub/index.php/custom403/";
+                                                //window.location = "/MobileHub/index.php/custom403/";
                                                 return false;
                                             }
                                         }

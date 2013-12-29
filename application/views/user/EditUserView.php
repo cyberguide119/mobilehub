@@ -179,7 +179,7 @@
                                                 + result.answerCount + "</span>"
                                                 + "<span class='ans-label'>answers</span></div></div>"
                                                 + "<div class='col-xs-10 col-md-9'><div>"
-                                                + "<a href='/MobileHub/index.php/question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
+                                                + "<a href='/MobileHub/index.php/questions/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
                                                 + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
                                                 + "<div class='action'>"
                                                 + getTagsString(result.tags)
@@ -208,7 +208,7 @@
                                                 + "<div class='chat-body clearfix'><div class='header'>"
                                                 + "<small class='pull-right text-muted'>"
                                                 + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD HH:mm Z").fromNow() + "</small></div>"
-                                                + "<a href=/MobileHub/index.php/question/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div>"
+                                                + "<a href=/MobileHub/index.php/questions/show/?id=" + result.questionId + "><p>" + result.description + "</p></a></div>"
                                                 + "<span class='pull-right'><span class='pull-right'>"
                                                 + "<a href='javascript: editAnswer(" + result.answerId + "," + result.netVotes + "," + result.questionId + ");' class='btn btn-sm btn-primary' title='Edit Answer'><i class='btn-icon-only glyphicon glyphicon-edit'></i></a>"
                                                 + "<a href='javascript: deleteAnswer(" + result.answerId + "," + result.netVotes + ");' class='btn btn-sm btn-danger' title='Delete Question'><i class='btn-icon-only glyphicon glyphicon-remove' ></i></a>"
@@ -324,7 +324,7 @@
                                     $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this question as it has votes or answers" + "</center></p>");
                                     $('#errorModal').modal('show');
                                 } else {
-                                    window.location = "/MobileHub/index.php/question/edit/?id=" + qId;
+                                    window.location = "/MobileHub/index.php/questions/edit/?id=" + qId;
                                 }
                             }
 
@@ -335,7 +335,7 @@
                                     $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this answer as it has votes or answers" + "</center></p>");
                                     $('#errorModal').modal('show');
                                 } else {
-                                    window.location = "/MobileHub/index.php/question/editanswer/?id=" + qId + "&ans=" + ansId;
+                                    window.location = "/MobileHub/index.php/questions/editanswer/?id=" + qId + "&ans=" + ansId;
                                 }
                             }
 </script>
