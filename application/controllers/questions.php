@@ -45,13 +45,19 @@ class Questions extends MY_Controller {
         $username = $this->authlib->is_loggedin();
         if ($username) {
             if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
-                
-//                if ($this->questionslib->isQuestionClosed($qId)) {
-//                    $showAnswerBox = false;
-//                } else {
-//                    $showAnswerBox = true;
-//                }
 
+                if ($this->questionslib->isQuestionClosed($qId)) {
+                    $showAnswerBox = false;
+                    $question = $this->questionslib->getQuestionClosedData($qId);
+                    $data['isQuestionClosed'] = true;
+                    $data['closeReason'] = $question->closeReason;
+                    $dateClosed = explode(" ", $question->closedDate);
+                    $data['closedDate'] = $dateClosed[0];
+                    $data['closedByUserName'] = $question->username;
+                } else {
+                    $showAnswerBox = true;
+                    $data['isQuestionClosed'] = false;
+                }
                 $data['isTutor'] = true;
             }
         } else {

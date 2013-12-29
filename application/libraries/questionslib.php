@@ -69,6 +69,7 @@ class questionslib {
     }
 
     public function closeQuestion($username, $qId, $closeReason) {
+        var_dump($closeReason);
         $question = new Question();
         $question->load($qId);
         $user = new User();
@@ -343,6 +344,10 @@ class questionslib {
     
     public function isQuestionClosed($qId){
         return $this->ci->Question->isQuestionClosed($qId);
+    }
+    
+    public function  getQuestionClosedData($qId){
+        return $this->ci->Question->getQuestionClosedData($qId);
     }
 
 }

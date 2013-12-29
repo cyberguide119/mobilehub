@@ -28,6 +28,11 @@ class Question extends MY_Model {
     public $upVotes;
     public $downVotes;
     public $categoryId;
+    public $bestAnswerId;
+    public $isClosed;
+    public $closeReason;
+    public $closedDate;
+    public $closedByUserId;
 
     function __construct() {
         parent::__construct();
@@ -203,5 +208,15 @@ class Question extends MY_Model {
         $question = $this->db->get("questions")->row();
         return $question->isClosed;
     }
+
+    function getQuestionClosedData($qId) {
+        $this->db->select(array('questions.closeReason', 'questions.closedDate', 'questions.closedByUserId', 'user.username'));
+        $this->db->where(array("questionId" => $qId, "isClosed" => true));
+        $this->db->join('user', 'user.userId = questions.closedByUserId');
+        $question = $this->db->get("questions")->row();
+        return $question;
+    }
+
 }
+
 ?>

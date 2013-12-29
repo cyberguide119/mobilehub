@@ -22,7 +22,7 @@
             <div>
                 <span class="badge badge-success" id="qAskedOn"></span>&nbsp;
                 <?php
-                if ($isTutor) {
+                if ($isTutor && !$isQuestionClosed) {
                     echo '<div style="display: inline;" id="tutorControls">';
                     echo '<a href ="">Edit</a> | ';
                     echo '<a href ="" data-toggle="modal" data-target="#closeModal">Close</a></div>';
@@ -53,10 +53,14 @@
         </div>
     </div>
     <br>
-    <div class="alert alert-warning" id="closeReasonAlert">
-        <strong>This question has been closed by</strong><a href="#"> Sahan </a> due to the following reason
-        <p>This is the reason</p>
-    </div>
+    <?php
+    if ($isQuestionClosed) {
+        echo '<div class="alert alert-warning" id="closeReasonAlert" style="background-color: #C26909">';
+        echo '<strong>This question has been closed by<a href="#"> ' . $closedByUserName . '</strong> </a>due to the following reason on <i>' .$closedDate . '</i>';
+        echo '<p>' . $closeReason . '</p>';
+        echo '</div>';
+    }
+    ?>
     <br>
     <div class="row">
         <div class="col-md-12">
@@ -235,8 +239,9 @@
                             // Deserialise the JSON
                             content = jQuery.parseJSON(content);
                             if (content.message === "Success") {
-                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                                $('#errModalBody').modal('show');
+                                window.location = "/MobileHub/index.php/questions/show/?id="+"<? echo $questionId; ?>";
+//                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+//                                $('#errModalBody').modal('show');
                             } else {
                                 $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                                 $('#errorModal').modal('show');
