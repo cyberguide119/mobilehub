@@ -41,7 +41,7 @@ class Question extends MY_Model {
      */
     function basicSearch($query) {
         $this->db->like(array('questionTitle' => $query));
-        $this->db->or_like(array('questionDescription' => $query));
+        $this->db->order_by("netVotes", "desc");
         $res = $this->db->get('questions');
         return $res->result();
     }
@@ -53,8 +53,9 @@ class Question extends MY_Model {
      * @return type
      */
     function advancedSearch($advWords, $advPhrase) {
-        $this->db->like(array('questionTitle' => $advPhrase));
-        $this->db->or_like(array('questionDescription' => $advPhrase));
+        if ($advPhrase !== '') {
+            $this->db->like(array('questionTitle' => $advPhrase));
+        }
 
         if (!($advWords === '')) {
             foreach ($advWords as $term) {
@@ -62,7 +63,7 @@ class Question extends MY_Model {
                 $this->db->or_like('questionDescription', $term);
             }
         }
-
+        $this->db->order_by("netVotes", "desc");
         $res = $this->db->get('questions');
         return $res->result();
     }

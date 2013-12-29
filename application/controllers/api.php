@@ -291,7 +291,7 @@ class Api extends CI_Controller {
         $advTags = $this->input->post('Tags');
         $advCategory = $this->input->post('Category');
 
-        if (strlen($advPhrase) < 3) {
+        if (strlen($advPhrase) < 3 && ($advWords === '' && $advTags === '' && $advCategory === 0)) {
             $response['message'] = "Error";
             $response['type'] = "Please enter more than 3 character to search";
         } else {
@@ -304,9 +304,6 @@ class Api extends CI_Controller {
                 $response['type'] = "Sorry, your query returned no matches!";
             }
         }
-
-
-
         echo json_encode($response);
     }
 

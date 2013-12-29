@@ -2,7 +2,7 @@
 <script src="<?php echo site_url('../resources/js/syntax/jquery.syntax.min.js') ?>" type="text/javascript"></script>
 <div class="container">
     <div class="row">
-        <div class="col-md-1" style="margin-top: 26px;">
+        <div class="chat-img pull-left" style="margin-top: 26px;">
             <div class="vote-box" title="Votes">
                 <span class="vote-count" id="qVotes">0</span>
                 <span class="vote-label">votes</span>
@@ -88,7 +88,7 @@
                                     .html(resultsData.questionDetails.votes);
                             $("#qTitle").html("<h2>" + resultsData.questionDetails.questionTitle + "</h2>");
                             $("#qDesc").html("<p>" + resultsData.questionDetails.questionDescription + "</p>");
-                            $("#qAskedOn").html("Posted On " + resultsData.questionDetails.askedOn);
+                            $("#qAskedOn").html("Posted " + moment(resultsData.questionDetails.askedOn, "YYYY-MM-DD hh:mm Z").fromNow());
 
                             $("#qTags").html(getTagsString(resultsData.questionDetails.tags));
 
