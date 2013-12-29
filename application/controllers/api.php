@@ -169,6 +169,7 @@ class Api extends CI_Controller {
             $this->deleteUserProfile();
         } else if (array_key_exists('changepassword', $args)) {
             $this->changeUserPassword($args['changepassword']);
+            
         }
     }
 
@@ -687,10 +688,12 @@ class Api extends CI_Controller {
     private function changeUserPassword($username) {
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {
+            
             $username = $this->input->post('username');
             $oldPw = $this->input->post('oldPw');
             $newPw = $this->input->post('newPw');
-            if (($res = $this->userlib->updatePassword($username, $oldPw, $newPw))) {
+            $res = $this->userlib->updatePassword($username, $oldPw, $newPw);
+            if ($res === true) {
                 $res = array("message" => "Success", "type" => "Password changed successfully");
                 echo json_encode($res);
             } else {

@@ -67,11 +67,12 @@ class userlib {
         $response['type'] = 'User profile updated successfully!';
         return $response;
     }
-    
-    function updatePassword($username, $oldPw, $newPw){
-        if(($res = $this->ci->User->updatePassword($username, $oldPw, $newPw))){
+
+    function updatePassword($username, $oldPw, $newPw) {
+        $res = $this->ci->User->updatePassword($username, $oldPw, $newPw);
+        if ($res === true) {
             return true;
-        }else{
+        } else {
             return $res;
         }
     }

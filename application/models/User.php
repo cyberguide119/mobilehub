@@ -395,7 +395,7 @@ class User extends MY_Model {
         $this->db->where('username', $username);
         $unique_salt = $this->unique_salt();
         $hashpwd = sha1($unique_salt . $newPass);
-        $this->db->update('user', array("password" => $hashpwd));
+        $this->db->update('user', array("password" => $hashpwd, "salt" => $unique_salt));
         return true;
     }
 

@@ -45,23 +45,23 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4">Old Password</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" name="pwordold_confirmation" data-validation="length" data-validation-length="min8" placeholder="Account Password (Min. 8 characters)">
+                            <input type="password" class="form-control" name="pwordold_confirmation" data-validation="length" data-validation-length="min8" placeholder="Account Password (Min. 8 characters)" id="oldPw">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-4">New Password</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" name="pword_confirmation" data-validation="length" data-validation-length="min8" placeholder="Account Password (Min. 8 characters)">
+                            <input type="password" class="form-control" name="pword_confirmation" data-validation="length" data-validation-length="min8" placeholder="Account Password (Min. 8 characters)" id="newPw">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-4">New Password (Confirm)</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" name="pword" data-validation="confirmation" placeholder="Please retype password">
+                            <input type="password" class="form-control" name="pword" data-validation="confirmation" placeholder="Please retype password" id="newPwConf">
                         </div>
                     </div>
                     <div>
-                        <button class="btn btn-primary">Update</button>
+                        <button class="btn btn-primary" onclick="changePassword();">Update</button>
                     </div>
                 </form>
             </div>
@@ -122,6 +122,27 @@
                                 //console.log(jsonData);
 
                                 $.post("/MobileHub/index.php/api/user/post/" + "<?php echo $user ?>", jsonData, function(content) {
+
+                                    // Deserialise the JSON
+                                    content = jQuery.parseJSON(content);
+                                    console.log(content);
+                                    if (content.message === "Success") {
+                                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                        $('#errorModal').modal('show');
+                                    } else {
+                                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                        $('#errorModal').modal('show');
+                                    }
+                                }).fail(function() {
+                                    $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                                    $('#errorModal').modal('show');
+                                }), "json";
+                                return true;
+                            }
+
+                            function changePassword() {
+                                jsonData = {'username': "<?php echo $name ?>", "oldPw": $("#oldPw").val(), 'newPw': $("#newPw").val()};
+                                $.post("/MobileHub/index.php/api/user/changepassword/" + "<?php echo $user ?>", jsonData, function(content) {
 
                                     // Deserialise the JSON
                                     content = jQuery.parseJSON(content);
