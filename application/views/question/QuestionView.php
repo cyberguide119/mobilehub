@@ -27,6 +27,24 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+            <div class="user_info pull-right">
+                <div class="thumb_with_border">
+                    <a href="/cood/users/52af3886a67e6/Sahan"><img src="/cood/img/answerAvatar.png" width="25" height="25" alt="Sahan picture"></a>				
+                </div>
+                <div style="float: left; line-height: .9;">
+                    <div>
+                        <a href="#" id="askerName"></a> 
+                        <span style="font-size: 8pt;">•</span>
+                        <h4 style="display: inline;" id="askerPoints"></h4>
+                    </div> 
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+    </div>
     <br>
     <div class="row">
         <div class="col-md-12">
@@ -89,7 +107,9 @@
                             $("#qTitle").html("<h2>" + resultsData.questionDetails.questionTitle + "</h2>");
                             $("#qDesc").html("<p>" + resultsData.questionDetails.questionDescription + "</p>");
                             $("#qAskedOn").html("Posted " + moment(resultsData.questionDetails.askedOn, "YYYY-MM-DD hh:mm Z").fromNow());
-
+                            $("#askerName").text(resultsData.questionDetails.asker.username);
+                            $("#askerPoints").text(resultsData.questionDetails.asker.netVotes);
+                            $("#askerName").attr("href", "/MobileHub/index.php/profile/?user=" + resultsData.questionDetails.asker.username);
                             $("#qTags").html(getTagsString(resultsData.questionDetails.tags));
 
                             if (resultsData.questionDetails.answers === null || resultsData.questionDetails.answers.length === 0) {

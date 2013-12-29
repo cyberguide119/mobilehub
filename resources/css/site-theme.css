@@ -171,3 +171,11 @@ span.form-error.help-block {
 {
     margin-right: 5px;
 }
+
+.user_info {
+    display: inline;
+    padding: 5px 10px;
+    margin-top: 10px;
+    margin-right: 30px;
+    background: antiquewhite;
+}

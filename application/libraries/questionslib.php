@@ -262,7 +262,12 @@ class questionslib {
 
         $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($qId);
         $username = $this->ci->User->getUserById($question->askerUserId);
+        $user = $this->ci->User->getThumbUserDetails($username);
         $ansArray = $this->ci->Answer->getAnswersForQuestionId($qId);
+        
+        $user->loyality = ($user->loyality === null) ? 0 : $user->loyality;
+        $user->reputation = ($user->reputation === null) ? 0 : $user->reputation;
+        $user->netVotes = $user->loyality + $user->reputation;
 
         if ($ansArray != NULL) {
             foreach ($ansArray as $ans) {
@@ -285,7 +290,7 @@ class questionslib {
             "questionTitle" => $question->questionTitle,
             "questionDescription" => $question->questionDescription,
             "askedOn" => $question->askedOn,
-            "askerName" => $username,
+            "asker" => $user,
             "answerCount" => $question->answerCount,
             "votes" => $question->netVotes,
             "tags" => $tagsArr,

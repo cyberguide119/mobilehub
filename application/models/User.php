@@ -297,6 +297,13 @@ class User extends MY_Model {
         $res = $this->db->get('user')->row();
         return $res;
     }
+    
+        function getThumbUserDetails($username) {
+        $this->db->select(array('userId', 'username', 'loyality', 'reputation'));
+        $this->db->where('username', $username);
+        $res = $this->db->get('user')->row();
+        return $res;
+    }
 
     /**
      * 
