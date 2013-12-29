@@ -415,7 +415,7 @@ class Api extends CI_Controller {
     private function closeQuestion() {
         $qId = $this->input->post('questionId');
         $username = $this->input->post('username');
-        $closeReason = $this->input->post('closeReason');
+        $closeReason = $this->input->post('reason');
 
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {

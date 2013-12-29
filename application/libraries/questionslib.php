@@ -69,7 +69,6 @@ class questionslib {
     }
 
     public function closeQuestion($username, $qId, $closeReason) {
-        var_dump($closeReason);
         $question = new Question();
         $question->load($qId);
         $user = new User();
@@ -80,7 +79,7 @@ class questionslib {
         $userId = $user->getUserIdByName($username);
 
         $question->isClosed = true;
-        $question->askedOn = $formattedDate;
+        $question->closedDate = $formattedDate;
         $question->closeReason = $closeReason;
         $question->closedByUserId = $userId;
 
