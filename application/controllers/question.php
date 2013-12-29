@@ -41,13 +41,20 @@ class Question extends MY_Controller {
         $data['questionId'] = $qId;
 
         $this->loadHeaderData();
-        $this->load->view('question/QuestionView', $data);
+        $showAnswerBox = false;
         $username = $this->authlib->is_loggedin();
         if ($username) {
             if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
-                $this->load->view('question/AnswerSubView');
+                // TODO - Check for closed question validation
+                $showAnswerBox = true;
+                $data['isTutor'] = true;
             }
+        } else {
+            $data['isTutor'] = false;
         }
+        $this->load->view('question/QuestionView', $data);
+        if ($showAnswerBox)
+            $this->load->view('question/AnswerSubView');
         $this->loadFooterData();
     }
 
@@ -78,7 +85,7 @@ class Question extends MY_Controller {
         $userId = $this->ci->User->getUserIdByName($username);
         $answeredUser = $this->ci->Answer->getAnsweredUserId($ansId);
         $votes = $this->ci->Answer->getNetVotes($ansId);
-        
+
         if ($username && $userId === $answeredUser && $votes < 1) {
 
             $data['questionId'] = $qId;

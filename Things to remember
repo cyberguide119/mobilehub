@@ -116,7 +116,7 @@ http://www.datatables.net/usage/
 
 31. Comment the code.
 
-32. Captcha?
+32. Captcha? - Almost
 
 33. Modal headers - info
 
@@ -131,3 +131,5 @@ intel@123
 
 37. Captcha generator from
 http://typicalwhiner.com/190/simple-javascript-captcha-generator/
+
+38. Send the password hash for all the admin, tutor, student POST functions

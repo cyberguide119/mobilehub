@@ -21,10 +21,13 @@
             <div id="qDesc"></div>
             <div>
                 <span class="badge badge-success" id="qAskedOn"></span>&nbsp;
-                <div style="display: inline;" id="tutorControls">
-                    <a href ="">Edit</a> | 
-                    <a href ="">Close</a>
-                </div>
+                <?php
+                if ($isTutor) {
+                    echo '<div style="display: inline;" id="tutorControls">';
+                    echo '<a href ="">Edit</a> | ';
+                    echo '<a href ="" data-toggle="modal" data-target="#closeModal">Close</a></div>';
+                }
+                ?>
                 <div class="pull-right">
                     <div class="action" id="qTags"></div>
                 </div>
@@ -71,12 +74,30 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Error</h4>
+                    <h4 class="modal-title" id="myModalLabel">Info</h4>
                 </div>
                 <div class="modal-body" id="errModalBody">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="closeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Please enter your reason to close this question</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea id="closeReason" rows="4" style="width: 100%;"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="closeQuestion();">Submit</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -202,5 +223,38 @@
                         }), "json";
                         return true;
                     }
+
+                    function closeQuestion() {
+                        $reason = $("#closeReason").val();
+                        $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>", "reason": $reason};
+                        console.log($jsonObj);
+                        $.post("/MobileHub/index.php/api/question/close/", $jsonObj, function(content) {
+
+                            // Deserialise the JSON
+                            content = jQuery.parseJSON(content);
+                            if (content.message === "Success") {
+                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#errModalBody').modal('show');
+                            } else {
+                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#errorModal').modal('show');
+                            }
+                        }).fail(function() {
+                            $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                            $('#errorModal').modal('show');
+                        }), "json";
+                        return true;
+                    }
+
+//                    function editQuestion(qId, votes, answers) {
+//                        //Do the validation here and redirect the user
+//                        if (votes > 0 || answers > 0) {
+//                            //Show error that the user cannot edit this question when it has votes or answers
+//                            $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this question as it has votes or answers" + "</center></p>");
+//                            $('#errorModal').modal('show');
+//                        } else {
+//                            window.location = "/MobileHub/index.php/question/edit/?id=" + qId;
+//                        }
+//                    }
 
 </script>

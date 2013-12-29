@@ -14,10 +14,14 @@ Question (GET/POST)
 	index.php/api/question/delete/
 	index.php/api/question/update/
 
+	index.php/api/question/close
+
 	index.php/api/question/recent
 	index.php/api/question/popular
 	index.php/api/question/unanswered
 	index.php/api/question/all
+
+
 
 Answer
 	index.php/api/answer/post/
