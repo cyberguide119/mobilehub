@@ -292,7 +292,7 @@ class User extends MY_Model {
      * @return type
      */
     function getUserDetails($username) {
-        $this->db->select(array('userId', 'username', 'fullName', 'roleId', 'joinedDate', 'website', 'linkedInUrl', 'sOUrl', 'reputation', 'loyality'));
+        $this->db->select(array('userId', 'username', 'fullName', 'roleId', 'joinedDate', 'website', 'linkedInUrl', 'sOUrl', 'reputation', 'loyality', 'about'));
         $this->db->where('username', $username);
         $res = $this->db->get('user')->row();
         return $res;

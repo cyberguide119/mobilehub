@@ -1,24 +1,24 @@
 <script src="<?php echo site_url('../resources/js/moment.min.js') ?>"></script>
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title" id="userName"></h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+                        <div class="col-md-2 col-lg-2 hidden-xs hidden-sm">
                             <img class="img-circle"
                                  src="/Mobilehub/resources/img/default.png"
                                  alt="User Pic">
                         </div>
-                        <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
+                        <div class="col-xs-1 col-sm-1 hidden-md hidden-lg">
                             <img class="img-circle"
                                  src="/Mobilehub/resources/img/default.png"
                                  alt="User Pic">
                         </div>
-                        <div class=" col-md-9 col-lg-9">
+                        <div class=" col-md-6 col-lg-6">
                             <table class="table table-user-information">
                                 <tbody>
                                     <tr>
@@ -48,6 +48,13 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class=" col-md-4 col-lg-4">
+                            <center>
+                                <p>About Me</p>
+                                <textarea id="aboutMe" rows="9" cols="30" readonly>
+                                </textarea>
+                            </center>
+                        </div>
                     </div>
                 </div>
                 <?php
@@ -60,8 +67,8 @@
                                 <span class='icon-cog icon-white'></span><span class='caret'></span>
                             </a>
                             <ul class='dropdown-menu'>
-                                <li><a href='/MobileHub/index.php/profile/edit/?user=".$user."'><span class='glyphicon glyphicon-wrench'></span> Modify</a></li>
-                                <li><a href='/MobileHub/index.php/profile/delete/?user=".$user."'><span class='glyphicon glyphicon-trash'></span> Delete</a></li>
+                                <li><a href='/MobileHub/index.php/profile/edit/?user=" . $user . "'><span class='glyphicon glyphicon-wrench'></span> Modify</a></li>
+                                <li><a href='/MobileHub/index.php/profile/delete/?user=" . $user . "'><span class='glyphicon glyphicon-trash'></span> Delete</a></li>
                             </ul>
                         </div>
                     </div>
@@ -110,6 +117,7 @@
         $("#lPoints").text((user.loyality === null) ? "0" : user.loyality);
         $("#rPoints").text((user.reputation === null) ? "0" : user.reputation);
         $("#tPoints").text(parseInt($("#lPoints").text()) + parseInt($("#rPoints").text()));
+        $("#aboutMe").text(user.about);
     }
 
     function loadUI(resultsData) {

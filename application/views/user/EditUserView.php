@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4">About</label>
                         <div class="col-sm-8">
-                            <textarea type="text" id="about" class="form-control" name='name' data-validation="length" data-validation-length="max300" data-validation-optional="true" placeholder="About me"></textarea>
+                            <textarea type="text" id="about" maxlength="300" class="form-control" name='name' data-validation="length" data-validation-length="max300" data-validation-optional="true" placeholder="About me"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -91,6 +91,10 @@
     </div><!-- /.modal -->
 </div>
 <script>
+                            $('#about').maxlength({
+                                alwaysShow: true
+                            });
+
                             $(document).ready(function() {
                                 $.get("/MobileHub/index.php/api/user/fulldetails/" + "<?php echo $user ?>", function(resultsData) {
                                     resultsData = jQuery.parseJSON(resultsData);
