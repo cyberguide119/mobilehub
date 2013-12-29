@@ -65,7 +65,7 @@ and open the template in the editor.
                     <div class="col-sm-3 col-md-3 pull-left">
                         <form action="/MobileHub/index.php/question/search" class="navbar-form" method="get" role="search" id="searchForm" name="searchForm">
                             <div class="input-group">
-                                <input class="form-control" id="search-term" name="q" placeholder="Search" type="text">
+                                <input class="form-control" id="search-term" name="q" placeholder="Search" type="text" data-toggle="popover" data-placement="bottom" title="" data-content="You need to enter atleast 3 characters to search" role="button" data-original-title="Quick Tip">
                                 <div class="input-group-btn">
                                     <button style="height: 43px;" class="btn btn-warning" type="submit" onclick="search();"><i class="glyphicon glyphicon-search"></i></button>
                                 </div>

@@ -73,6 +73,7 @@
     // Move this to a separate file and load it here.
     $(document).ready(function() {
         $("#advPhrase").val("<?php echo $results ?>");
+        $("#search-term").val("<?php echo $results ?>");
         $.get("/MobileHub/index.php/api/search/questions?query=" + "<?php echo $results ?>", function(resultsData) {
             resultsData = jQuery.parseJSON(resultsData);
             loadUI(resultsData);
@@ -81,8 +82,8 @@
     });
 
     function loadUI(resultsData) {
-        if (resultsData.results === "No results found") {
-            $("ul.list-group").html("<h5><b>0</b> result(s) found</h5><p>Sorry, your query returned no matches!</p>");
+        if (resultsData.message === "Error") {
+            $("ul.list-group").html("<h5><b>0</b> result(s) found</h5><p>"+resultsData.type+"</p>");
         } else {
             $("ul.list-group").html("<h5><b>" + resultsData.results.length + "</b> result(s) found</h5>");
             for (var i = 0; i < resultsData.results.length; i++) {

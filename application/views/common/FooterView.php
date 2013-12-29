@@ -2,8 +2,12 @@
     /* important to locate this script AFTER the closing form element, so form object is loaded in DOM before setup is called */
     function search() {
         var searchQuery = $("#search-term").val();
-        searchQuery = searchQuery.replace(/ /g, '+');
-        window.location.href = '/MobileHub/index.php/search?query='+searchQuery;
+        if (searchQuery.length < 3) {
+            $('#search-term').popover('show');
+        } else {
+            searchQuery = searchQuery.replace(/ /g, '+');
+            window.location.href = '/MobileHub/index.php/search?query=' + searchQuery;
+        }
     }
 
     $.validate({
