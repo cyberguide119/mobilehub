@@ -66,7 +66,6 @@
                                         for (x in jsonTags) {
                                             newArr.push(jsonTags[x].tagName);
                                         }
-                                        console.log(newArr);
                                         $('.bootstrap-tagsinput input[type=text]').attr("placeholder", " ");
                                         $('.bootstrap-tagsinput input[type=text]').attr("data-provide", "typeahead");
                                         $('.bootstrap-tagsinput input[type=text]').typeahead({source: newArr});

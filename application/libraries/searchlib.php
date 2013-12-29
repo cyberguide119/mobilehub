@@ -57,6 +57,10 @@ class searchlib {
         }else{
             $res = $questionsArr;
         }
+        
+        if($advCategory != 0){
+            $res = $this->filterQuestionsByCategory($res, $advCategory);
+        }
 
         foreach ($res as $question) {
             $tagsArr = $this->getTagsArrayForQuestionId($question->questionId);
@@ -85,6 +89,16 @@ class searchlib {
             $tagsArr[] = $tag->tagName;
         }
         return $tagsArr;
+    }
+    
+    private function filterQuestionsByCategory($questionsArr, $categoryId){
+        $newArr = array();
+        foreach ($questionsArr as $question){
+            if($question->categoryId === $categoryId){
+                $newArr[] = $question;
+            }
+        }
+        return $newArr;
     }
 
     private function filterQuestionsByTag($questionsArr, $tagsArr) {

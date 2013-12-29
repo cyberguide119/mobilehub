@@ -12,7 +12,7 @@
         $advWords = $("#advWords").val();
         $advPhrase = $("#advPhrase").val();
         $advTags = $("#advTags").val();
-        $advCategory = (($("#advCategory")[0]).selectedIndex) + 1;
+        $advCategory = (($("#advCategory")[0]).selectedIndex);
 
         $jsonObj = {"Words": $advWords, "Phrase": $advPhrase, "Tags": $advTags, "Category": $advCategory};
 
@@ -20,7 +20,6 @@
 
             // Deserialise the JSON
             content = jQuery.parseJSON(content);
-            console.log(content);
             loadUI(content);
         }).fail(function() {
             $("#qError").addClass('alert alert-danger');
@@ -50,6 +49,7 @@
                         <br>
                         <div class="col-xs-9" style="margin-left: -14px;">
                             <select class="form-control" id="advCategory">
+                                <option>All Categories</option>
                                 <?php foreach ($categories as $cate): ?>
                                     <option><?php echo $cate->categoryName ?></option>
                                 <?php endforeach; ?>
