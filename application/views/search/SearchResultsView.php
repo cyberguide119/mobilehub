@@ -92,8 +92,8 @@
                         + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
                         + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
                         + "<div class='col-xs-10 col-md-9'><div>"
-                        + "<a href='question/show/?id="+result.questionId+"'>" + result.questionTitle + "</a>"
-                        + "<div class='mic-info'> Asked by <a href='/MobileHub/index.php/profile/?user="+result.askerName+"'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
+                        + "<a href='question/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
+                        + "<div class='mic-info'> Asked by <a href='/MobileHub/index.php/profile/?user=" + result.askerName + "'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
                         + "<div class='comment-text'><br>"
                         + refineDescription(result.questionDescription) + "</div>"
                         + "<div class='action'>"
@@ -109,11 +109,17 @@
             }
         }
     }
-    
-    function refineDescription(desc){
-        if(desc.length > 150){
-            desc = desc.substring(0,150) + " ...";
+
+    function refineDescription(desc) {
+        if (desc.length > 150) {
+            desc = desc.substring(0, 150) + " ...";
         }
         return desc;
     }
+
+    $('.form-control').keypress(function(e) {
+        if (e.which === 13) {
+            advSearch();
+        }
+    });
 </script>
