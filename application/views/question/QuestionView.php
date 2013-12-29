@@ -31,15 +31,15 @@
         <div class="col-md-1"></div>
         <div class="col-md-11">
             <div class="user_info pull-right">
+                Asked By
                 <div class="thumb_with_border">
-                    <a href="/cood/users/52af3886a67e6/Sahan"><img src="/cood/img/answerAvatar.png" width="25" height="25" alt="Sahan picture"></a>				
+                    <a href="/cood/users/52af3886a67e6/Sahan"><img src="/cood/img/answerAvatar.png" width="25" height="25" alt="Sahan picture"></a>
+                    <a href="#" id="askerName"></a> 
+                    <span style="font-size: 8pt;">•</span>
+                    <h4 style="display: inline;" id="askerPoints"></h4>
                 </div>
                 <div style="float: left; line-height: .9;">
-                    <div>
-                        <a href="#" id="askerName"></a> 
-                        <span style="font-size: 8pt;">•</span>
-                        <h4 style="display: inline;" id="askerPoints"></h4>
-                    </div> 
+
                 </div>
                 <div style="clear: both;"></div>
             </div>
@@ -146,9 +146,9 @@
 
                             // Deserialise the JSON
                             content = jQuery.parseJSON(content);
-                            console.log(content);
                             if (content.message === "Success") {
                                 $('#ans' + answerId).html(content.votes);
+                                votes = parseInt($("#askerPoints").text()) + 1;
                             } else if (content.message === "Error") {
                                 $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                                 $('#errorModal').modal('show');
@@ -171,20 +171,22 @@
 
                     function voteQuestion(isUpVote) {
                         var $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>"};
-
+                        amount = 0;
                         if (isUpVote) {
                             $url = "/MobileHub/index.php/api/vote/voteup/question";
+                            amount = 1;
                         } else {
                             $url = "/MobileHub/index.php/api/vote/votedown/question";
+                            amount = -1;
                         }
 
                         $.post($url, $jsonObj, function(content) {
 
                             // Deserialise the JSON
                             content = jQuery.parseJSON(content);
-                            console.log(content);
                             if (content.message === "Success") {
                                 $('#qVotes').html(content.votes);
+                                $("#askerPoints").text(parseInt($("#askerPoints").text()) + amount);
                             } else if (content.message === "Error") {
                                 $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                                 $('#errorModal').modal('show');
