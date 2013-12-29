@@ -297,8 +297,13 @@ class User extends MY_Model {
         $res = $this->db->get('user')->row();
         return $res;
     }
-    
-        function getThumbUserDetails($username) {
+
+    /**
+     * 
+     * @param type $username
+     * @return type
+     */
+    function getThumbUserDetails($username) {
         $this->db->select(array('userId', 'username', 'loyality', 'reputation'));
         $this->db->where('username', $username);
         $res = $this->db->get('user')->row();
@@ -384,6 +389,13 @@ class User extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $username
+     * @param type $oldPass
+     * @param type $newPass
+     * @return string|boolean
+     */
     function updatePassword($username, $oldPass, $newPass) {
         $this->db->where(array('username' => $username));
         $res = $this->db->get('user');
@@ -404,6 +416,18 @@ class User extends MY_Model {
         $hashpwd = sha1($unique_salt . $newPass);
         $this->db->update('user', array("password" => $hashpwd, "salt" => $unique_salt));
         return true;
+    }
+
+    /**
+     * 
+     * @param type $userId
+     * @return boolean
+     */
+    function isProfileActive($userId) {
+        $this->db->select("isActive");
+        $this->db->where("userId", $userId);
+        $question = $this->db->get("user")->row();
+        return $question->isActive;
     }
 
 }

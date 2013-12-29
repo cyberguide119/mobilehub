@@ -182,26 +182,50 @@ class Question extends MY_Model {
         return $question->netVotes;
     }
 
+    /**
+     * 
+     * @param type $qId
+     * @param type $newCount
+     */
     function updateAnsCount($qId, $newCount) {
         $data = array('answerCount' => $newCount);
         $this->db->where('questionId', $qId);
         $this->db->update('questions', $data);
     }
 
+    /**
+     * 
+     * @param type $qId
+     * @return int
+     */
     function getAnsCount($qId) {
         $question = $this->db->get_where('questions', array('questionId' => $qId))->row();
         return $question->answerCount;
     }
 
+    /**
+     * 
+     * @param type $qId
+     * @param type boolean
+     */
     function updateQuestion($qId, $qData) {
         $this->db->where('questionId', $qId);
         $this->db->update('questions', $qData);
     }
 
+    /**
+     * 
+     * @return array
+     */
     function getAllQuestionsCount() {
         return $this->db->count_all('questions');
     }
 
+    /**
+     * 
+     * @param type $qId
+     * @return boolean
+     */
     function isQuestionClosed($qId) {
         $this->db->select("isClosed");
         $this->db->where("questionId", $qId);
@@ -209,6 +233,11 @@ class Question extends MY_Model {
         return $question->isClosed;
     }
 
+    /**
+     * 
+     * @param type $qId
+     * @return array
+     */
     function getQuestionClosedData($qId) {
         $this->db->select(array('questions.closeReason', 'questions.closedDate', 'questions.closedByUserId', 'user.username'));
         $this->db->where(array("questionId" => $qId, "isClosed" => true));

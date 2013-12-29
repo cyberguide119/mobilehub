@@ -22,6 +22,11 @@ class userlib {
         $this->ci->load->helper('utility');
     }
 
+    /**
+     * 
+     * @param type $username
+     * @return boolean
+     */
     function getUserDetails($username) {
         $userDetails = $this->ci->User->getUserDetails($username);
 
@@ -42,6 +47,11 @@ class userlib {
         return $data;
     }
 
+    /**
+     * 
+     * @param type $username
+     * @return boolean
+     */
     function getFullUserDetails($username) {
         $role = new UserRole();
         $user = $this->ci->User->getUserDetails($username);
@@ -60,6 +70,12 @@ class userlib {
         return $data;
     }
 
+    /**
+     * 
+     * @param type $username
+     * @param type $dataArr
+     * @return string
+     */
     function updateUserDetails($username, $dataArr) {
         $userId = $this->ci->User->getUserIdByName($username);
         $this->ci->User->updateUserDetails($userId, $dataArr);
@@ -68,6 +84,13 @@ class userlib {
         return $response;
     }
 
+    /**
+     * 
+     * @param type $username
+     * @param type $oldPw
+     * @param type $newPw
+     * @return boolean
+     */
     function updatePassword($username, $oldPw, $newPw) {
         $res = $this->ci->User->updatePassword($username, $oldPw, $newPw);
         if ($res === true) {
@@ -77,18 +100,37 @@ class userlib {
         }
     }
 
+    /**
+     * 
+     * @return array
+     */
     function getAllUsers() {
         return $this->ci->User->getAllUsers();
     }
 
+    /**
+     * 
+     * @param type $userId
+     * @return type
+     */
     function deleteUserProfile($userId) {
         return $this->ci->User->deleteUser($userId);
     }
 
+    /**
+     * 
+     * @param type $userId
+     */
     function makeUserActive($userId) {
         $this->ci->User->activateUser($userId);
     }
 
+    /**
+     * 
+     * @param type $username
+     * @param type $hash
+     * @return boolean
+     */
     function deactiveUserProfile($username, $hash) {
         if ($this->ci->User->deactivateUser($username, $hash)) {
             $req = new Request();
@@ -101,6 +143,15 @@ class userlib {
             return true;
         }
         return false;
+    }
+    
+    /**
+     * 
+     * @param type $username
+     * @return boolean
+     */
+    function isProfileActive($username){
+        return $this->ci->User->isProfileActive($this->ci->User->getUserIdByName($username));
     }
 
 }

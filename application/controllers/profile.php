@@ -17,7 +17,7 @@ class profile extends MY_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('User');
-        $this->load->library(array('authlib', 'permlib'));
+        $this->load->library(array('authlib', 'permlib', 'userlib'));
     }
 
     public function index() {
@@ -34,6 +34,11 @@ class profile extends MY_Controller {
         $data['user'] = $profile;
 
         $name = $this->authlib->is_loggedin();
+
+        if (!($this->userlib->isProfileActive($name)) && $name !== 'admin') {
+            redirect('custom404');
+            return;
+        }
 
         $userHasPerm = $this->permlib->userHasPermission($name, "VIEW_ADMINPROFILE");
         if ($profile === strtolower("Admin")) {

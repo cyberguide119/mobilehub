@@ -51,8 +51,7 @@
                         <div class=" col-md-4 col-lg-4">
                             <center>
                                 <p>About Me</p>
-                                <textarea id="aboutMe" rows="9" cols="30" readonly>
-                                </textarea>
+                                <textarea id="aboutMe" rows="9" cols="30" readonly></textarea>
                             </center>
                         </div>
                     </div>
