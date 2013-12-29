@@ -72,6 +72,10 @@ class questionslib {
         $question = new Question();
         $question->load($qId);
         $user = new User();
+        
+        if($question->isClosed){
+            return "This question is already closed";
+        }
 
         $time = time();
         $formattedDate = date("Y-m-d H:i:s", $time);

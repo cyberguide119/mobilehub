@@ -420,9 +420,14 @@ class Api extends CI_Controller {
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {
             if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
-                $this->questionslib->closeQuestion($username, $qId, $closeReason);
-                $res = array("message" => "Success", "type" => "Question was closed successfully!");
-                echo json_encode($res);
+                $result = $this->questionslib->closeQuestion($username, $qId, $closeReason);
+                if ($result === true) {
+                    $res = array("message" => "Success", "type" => "Question was closed successfully!");
+                    echo json_encode($res);
+                } else {
+                    $res = array("message" => "Success", "type" => "Question was closed successfully!");
+                    echo json_encode($res);
+                }
             } else {
                 $res = array("message" => "Error", "type" => "You do not have permissions to close the question");
                 echo json_encode($res);
