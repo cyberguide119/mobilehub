@@ -197,6 +197,11 @@ class Question extends MY_Model {
         return $this->db->count_all('questions');
     }
 
+    function isQuestionClosed($qId) {
+        $this->db->select("isClosed");
+        $this->db->where("questionId", $qId);
+        $question = $this->db->get("questions")->row();
+        return $question->isClosed;
+    }
 }
-
 ?>

@@ -52,10 +52,8 @@ class questionslib {
         $question->load($qId);
         $user = new User();
 
-        $this->ci->load->helper('date');
-        $datestring = "%Y-%m-%d %h-%i-%a";
         $time = time();
-        $formattedDate = mdate($datestring, $time);
+        $formattedDate = date("Y-m-d H:i:s", $time);
 
         $userId = $user->getUserIdByName($qAskerName);
 
@@ -67,6 +65,25 @@ class questionslib {
 
         $question->updateQuestion($qId, $question);
         $this->saveTags($qTags, $qTitle);
+        return true;
+    }
+
+    public function closeQuestion($username, $qId, $closeReason) {
+        $question = new Question();
+        $question->load($qId);
+        $user = new User();
+
+        $time = time();
+        $formattedDate = date("Y-m-d H:i:s", $time);
+
+        $userId = $user->getUserIdByName($username);
+
+        $question->isClosed = true;
+        $question->askedOn = $formattedDate;
+        $question->closeReason = $closeReason;
+        $question->closedByUserId = $userId;
+
+        $question->updateQuestion($qId, $question);
         return true;
     }
 
@@ -264,7 +281,7 @@ class questionslib {
         $username = $this->ci->User->getUserById($question->askerUserId);
         $user = $this->ci->User->getThumbUserDetails($username);
         $ansArray = $this->ci->Answer->getAnswersForQuestionId($qId);
-        
+
         $user->loyality = ($user->loyality === null) ? 0 : $user->loyality;
         $user->reputation = ($user->reputation === null) ? 0 : $user->reputation;
         $user->netVotes = $user->loyality + $user->reputation;
@@ -322,6 +339,10 @@ class questionslib {
 
         $answer->save();
         return true;
+    }
+    
+    public function isQuestionClosed($qId){
+        return $this->ci->Question->isQuestionClosed($qId);
     }
 
 }

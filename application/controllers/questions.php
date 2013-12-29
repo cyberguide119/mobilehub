@@ -13,13 +13,13 @@ if (!defined('BASEPATH'))
  *
  * @author DRX
  */
-class Question extends MY_Controller {
+class Questions extends MY_Controller {
 
     function __construct() {
         parent::__construct();
         $this->ci = &get_instance();
         $this->ci->load->model(array('Category', 'User', 'Answer'));
-        $this->load->library('permlib');
+        $this->load->library(array('permlib', 'questionslib'));
     }
 
     public function ask() {
@@ -45,8 +45,13 @@ class Question extends MY_Controller {
         $username = $this->authlib->is_loggedin();
         if ($username) {
             if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
-                // TODO - Check for closed question validation
-                $showAnswerBox = true;
+                
+//                if ($this->questionslib->isQuestionClosed($qId)) {
+//                    $showAnswerBox = false;
+//                } else {
+//                    $showAnswerBox = true;
+//                }
+
                 $data['isTutor'] = true;
             }
         } else {

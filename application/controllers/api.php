@@ -292,7 +292,7 @@ class Api extends CI_Controller {
         $advPhrase = $this->input->post('Phrase');
         $advTags = $this->input->post('Tags');
         $advCategory = $this->input->post('Category');
-        
+
         if (strlen($advPhrase) < 3 && ($advWords === '' && $advTags === '' && $advCategory === '0')) {
             $response['message'] = "Error";
             $response['type'] = "Please enter more than 3 character to search";
@@ -411,24 +411,26 @@ class Api extends CI_Controller {
             echo json_encode($res);
         }
     }
-    
+
     private function closeQuestion() {
         $qId = $this->input->post('questionId');
-        $qDesc = $this->input->post('Description');
-        $qTags = $this->input->post('Tags');
-        $qCategory = $this->input->post('Category');
-        $qAskerName = $this->input->post('AskerName');
-        $qId = $this->input->post('questionId');
+        $username = $this->input->post('username');
+        $closeReason = $this->input->post('closeReason');
 
         $name = $this->authlib->is_loggedin();
-        if ($name === $qAskerName) {
-            $this->questionslib->updateQuestion($qTitle, $qDesc, $qTags, $qCategory, $qAskerName, $qId);
-            $res = array("message" => "Success", "type" => "Question was updated successfully!");
-            echo json_encode($res);
+        if ($name === $username) {
+            if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
+                $this->questionslib->closeQuestion($username, $qId, $closeReason);
+                $res = array("message" => "Success", "type" => "Question was closed successfully!");
+                echo json_encode($res);
+            } else {
+                $res = array("message" => "Error", "type" => "You do not have permissions to close the question");
+                echo json_encode($res);
+            }
         }
 
-        if ($name === false) {
-            $res = array("message" => "Error", "type" => "You do not have permissions to edit the question");
+        if ($name === false || $name !== $username) {
+            $res = array("message" => "Error", "type" => "You do not have permissions to close the question");
             echo json_encode($res);
         }
     }
