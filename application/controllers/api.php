@@ -100,6 +100,8 @@ class Api extends CI_Controller {
             $this->createaccount();
         } else if (array_key_exists('logout', $args)) {
             // not sure yet
+        } else if (array_key_exists('forgot', $args)) {
+            $this->forgotPass();
         }
     }
 
@@ -263,6 +265,42 @@ class Api extends CI_Controller {
                 $response['type'] = $errmsg;
             }
             echo json_encode($response);
+        }
+    }
+
+    private function forgotPass() {
+        $email = $this->input->post('email');
+        if (isset($email) && !empty($email)) {
+            $this->load->library('form_validation');
+            // Checking if this is a valid email or not
+            $this->form_validation->set_rules('email', 'Email Address', 'trim|required|min_length[6]|valid_email|xss_clean');
+
+            if ($this->form_validation->run() == FALSE) {
+                // Validation failed. Send the error messages back to the forgot password view
+                $response['message'] = "Error";
+                $response['type'] = "Please enter a valid email address";
+                echo json_encode($response);
+                return;
+            } else {
+                $res = $this->authlib->sendResetLink($email);
+                var_dump($res);
+                if ($res === true) {
+                    $response['message'] = "Success";
+                    $response['type'] = "A password reset link has been sent to your email";
+                    echo json_encode($response);
+                    return;
+                } else {
+                    $response['message'] = "Error";
+                    $response['type'] = $res;
+                    echo json_encode($response);
+                    return;
+                }
+            }
+        } else {
+            $response['message'] = "Error";
+            $response['type'] = "Please enter a valid email address";
+            echo json_encode($response);
+            return;
         }
     }
 
@@ -912,5 +950,4 @@ class Api extends CI_Controller {
     }
 
 }
-
 ?>

@@ -7,6 +7,7 @@ Login (POST)
 	index.php/api/auth/login
 	index.php/api/auth/create
 	index.php/api/auth/logout
+	index.php/api/auth/forgot
 
 Question (GET/POST)
 	index.php/api/question/post

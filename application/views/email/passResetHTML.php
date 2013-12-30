@@ -1,30 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head><title>Create a new password on MobileHub</title></head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <meta charset='utf-8'></meta>
+        <title>Create a new password on MobileHub</title>
+    </head>
+
     <body>
-        <div style="max-width: 800px; margin: 0; padding: 30px 0;">
-            <table width="80%" border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td width="5%"></td>
-                    <td align="left" width="95%" style="font: 13px/18px Arial, Helvetica, sans-serif;">
-                        <h2 style="font: normal 20px/23px Arial, Helvetica, sans-serif; margin: 0; padding: 0 0 18px; color: black;">Create a new password</h2>
-                        Forgot your password, huh? No big deal.<br />
-                        To create a new password, just follow this link:<br />
-                        <br />
-                        <big style="font: 16px/18px Arial, Helvetica, sans-serif;"><b><a href="<?php echo base_url() . 'index.php/auth/updateNewPassword/' . $email . '/' . $emailCode ?>" style="color: #3366cc;">Create a new password</a></b></big><br />
-                        <br />
-                        Link doesn't work? Copy the following link to your browser address bar:<br />
-                <nobr><a href="<?php echo base_url() . 'index.php/auth/updateNewPassword/' . $email . '/' . $emailCode; ?>" style="color: #3366cc;"><?php echo base_url() . 'index.php/auth/updateNewPassword/' . $email . '/' . $emailCode ?></a></nobr><br />
-                <br />
-                <br />
-                You received this email, because it was requested by a <a href="<?php echo site_url(''); ?>" style="color: #3366cc;">MobileHub</a> user. This is part of the procedure to create a new password on the system. If you DID NOT request a new password then please ignore this email and your password will remain the same.<br />
-                <br />
-                <br />
-                Thank you,<br />
-                The MobileHub Team
-                </td>
-                </tr>
-            </table>
-        </div>
+        <p>Hi <?php echo $fullName . ','; ?></p>
+        <p>Forgot your password, huh? No big deal!</p>
+        <p>Please visit the following link to reset your password</p>
+        <pre><h4>localhost/MobileHub/auth/updateNewPassword/<?php echo $email . '/' . $emailCode; ?></h4></pre>
+        <p>Thank you!</p>
+        <p>MobileHub Team</p>
     </body>
 </html>
