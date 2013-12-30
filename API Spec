@@ -21,8 +21,6 @@ Question (GET/POST)
 	index.php/api/question/unanswered
 	index.php/api/question/all
 
-
-
 Answer
 	index.php/api/answer/post/
 	index.php/api/answer/details/{id}/

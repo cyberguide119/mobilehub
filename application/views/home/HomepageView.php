@@ -1,26 +1,49 @@
+<script src="<?php echo site_url('../resources/js/jquery.bootpag.min.js') ?>"></script>
 <div class="container">
     <div>
         <ul id="myTab" class="nav nav-tabs">
-            <li class="active" onclick="changeTab('recent');"><a href="#home" data-toggle="tab">Recent</a></li>
-            <li class="" onclick="changeTab('popular');"><a href="#profile" data-toggle="tab">Popular</a></li>
-            <li class="" onclick="changeTab('unanswered');"><a href="#profile" data-toggle="tab">Unanswered</a></li>
-            <li class="" onclick="changeTab('all');"><a href="#profile" data-toggle="tab">All</a></li>
+            <li class="active" onclick="changeTab('recent', 0);"><a href="#home" data-toggle="tab">Recent</a></li>
+            <li class="" onclick="changeTab('popular', 0);"><a href="#profile" data-toggle="tab">Popular</a></li>
+            <li class="" onclick="changeTab('unanswered', 0);"><a href="#profile" data-toggle="tab">Unanswered</a></li>
+            <li class="" onclick="changeTab('all', 0);"><a href="#profile" data-toggle="tab">All</a></li>
         </ul>
         <div class="panel-body">
             <div class="tab-content">
                 <ul class="list-group">
                 </ul>
             </div>
+            <div id="page-selection"></div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
 
-                function changeTab(option) {
-                    $.get("/MobileHub/index.php/api/question/" + option, function(resultsData) {
+                function setupPagination(totalCount, option, currentPage) {
+                    console.log(currentPage);
+                    $('#page-selection').bootpag({
+                        total: totalCount,
+                        page: currentPage,
+                        maxVisible: 10
+                    }).on('page', function(event, num) {
+                        changePage(option, ((num * 5) - 5), num);
+                        return;
+                    });
+                }
+
+                function changePage(option, $offset, pageNum) {
+                    $.get("/MobileHub/index.php/api/question/" + option + "/" + $offset, function(resultsData) {
                         resultsData = jQuery.parseJSON(resultsData);
                         loadUI(resultsData);
+                        return true;
+                    });
+                }
+
+                function changeTab(option, $offset) {
+                    $.get("/MobileHub/index.php/api/question/" + option + "/" + $offset, function(resultsData) {
+                        resultsData = jQuery.parseJSON(resultsData);
+                        loadUI(resultsData);
+                        setupPagination(resultsData.totalCount, option, 1);
                         return true;
                     });
                 }
@@ -35,11 +58,13 @@
                 }
 
                 $(document).ready(function() {
-                    $.get("/MobileHub/index.php/api/question/recent", function(resultsData) {
-                        resultsData = jQuery.parseJSON(resultsData);
-                        loadUI(resultsData);
-                        return true;
-                    });
+//                    $.get("/MobileHub/index.php/api/question/recent", function(resultsData) {
+//                        resultsData = jQuery.parseJSON(resultsData);
+//                        loadUI(resultsData);
+//                        setupPagination(resultsData.totalCount, 'recent');
+//                        return true;
+//                    });
+                    changeTab('recent', 0);
                 });
 
                 function loadUI(resultsData) {

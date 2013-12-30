@@ -88,11 +88,24 @@ class Question extends MY_Model {
      * 
      * @return type
      */
-    function getRecentQuestions() {
+    function getRecentQuestions($offset) {
+
+
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("askedOn", "desc");
-        $questions = $this->db->get("questions");
-        return $questions->result();
+        //$num = $this->db->from('questions')->limit(5,$offset)->count_all_results();
+        //$questions = $this->db->get();
+        $questions = $this->db->get("questions", 5 , $offset);
+        $questionsToReturn = $questions->result();
+        //$questionsToReturn['totalCount'] = $cnt;
+        return $questionsToReturn;
+    }
+
+    function getRecentQuestionsCount() {
+        $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->order_by("askedOn", "desc");
+        $query = $this->db->get('questions');
+        return ceil($query->num_rows() / 5 );
     }
 
     /**

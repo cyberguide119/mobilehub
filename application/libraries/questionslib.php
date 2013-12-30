@@ -72,8 +72,8 @@ class questionslib {
         $question = new Question();
         $question->load($qId);
         $user = new User();
-        
-        if($question->isClosed){
+
+        if ($question->isClosed) {
             return "This question is already closed";
         }
 
@@ -161,9 +161,10 @@ class questionslib {
         }
     }
 
-    public function getRecentQuestions() {
+    public function getRecentQuestions($offset) {
         $questions = array();
-        $questionsList = $this->ci->Question->getRecentQuestions();
+        $questionsList = $this->ci->Question->getRecentQuestions($offset);
+        //var_dump($questionsList);
         foreach ($questionsList as $question) {
             $username = $this->ci->User->getUserById($question->askerUserId);
             $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($question->questionId);
@@ -179,6 +180,7 @@ class questionslib {
                 "tags" => $tagsArr,
             );
         }
+        //$questions['totalCount'] = $this->ci->Question->getRecentQuestionsCount();
         return $questions;
     }
 
@@ -344,12 +346,12 @@ class questionslib {
         $answer->save();
         return true;
     }
-    
-    public function isQuestionClosed($qId){
+
+    public function isQuestionClosed($qId) {
         return $this->ci->Question->isQuestionClosed($qId);
     }
-    
-    public function  getQuestionClosedData($qId){
+
+    public function getQuestionClosedData($qId) {
         return $this->ci->Question->getQuestionClosedData($qId);
     }
 

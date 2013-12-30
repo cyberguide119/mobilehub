@@ -117,7 +117,7 @@ class Api extends CI_Controller {
         } else if (array_key_exists('details', $args)) {
             $this->getDetails($args);
         } else if (array_key_exists('recent', $args)) {
-            $this->getRecent($args);
+            $this->getRecent($args['recent']);
         } else if (array_key_exists('popular', $args)) {
             $this->getPopular($args);
         } else if (array_key_exists('unanswered', $args)) {
@@ -342,9 +342,11 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
-    private function getRecent() {
-        $questions = $this->ci->questionslib->getRecentQuestions();
+    private function getRecent($offset) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getRecentQuestions($offset);
         $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getRecentQuestionsCount();
         echo json_encode($response);
     }
 
