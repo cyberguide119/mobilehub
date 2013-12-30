@@ -12,7 +12,7 @@
                 <ul class="list-group">
                 </ul>
             </div>
-            <div id="page-selection"></div>
+            <div id="page-selection" style="width: 20%;  margin: 0 auto;"></div>
         </div>
     </div>
 </div>
@@ -26,7 +26,7 @@
                         page: currentPage,
                         maxVisible: 10
                     }).on('page', function(event, num) {
-                        changePage(option, ((num * 5) - 5));
+                        changePage(option, ((num * 10) - 10));
                         return;
                     });
                 }

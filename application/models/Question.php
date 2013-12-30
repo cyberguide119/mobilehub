@@ -91,7 +91,7 @@ class Question extends MY_Model {
     function getRecentQuestions($offset) {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("askedOn", "desc");
-        $questions = $this->db->get("questions", 5, $offset);
+        $questions = $this->db->get("questions", 10, $offset);
         return $questions->result();
     }
 
@@ -99,7 +99,7 @@ class Question extends MY_Model {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("askedOn", "desc");
         $query = $this->db->get('questions');
-        return ceil($query->num_rows() / 5);
+        return ceil($query->num_rows() / 10);
     }
 
     /**
@@ -109,7 +109,7 @@ class Question extends MY_Model {
     function getPopularQuestions($offset) {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("netVotes", "desc");
-        $questions = $this->db->get("questions", 5, $offset);
+        $questions = $this->db->get("questions", 10, $offset);
         return $questions->result();
     }
 
@@ -117,7 +117,7 @@ class Question extends MY_Model {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("netVotes", "desc");
         $query = $this->db->get('questions');
-        return ceil($query->num_rows() / 5);
+        return ceil($query->num_rows() / 10);
     }
 
     /**
@@ -127,7 +127,7 @@ class Question extends MY_Model {
     function getUnansweredQuestions($offset) {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where("answerCount", 0);
-        $questions = $this->db->get("questions", 5, $offset);
+        $questions = $this->db->get("questions", 10, $offset);
         return $questions->result();
     }
 
@@ -135,7 +135,7 @@ class Question extends MY_Model {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where("answerCount", 0);
         $query = $this->db->get('questions');
-        return ceil($query->num_rows() / 5);
+        return ceil($query->num_rows() / 10);
     }
 
     /**
@@ -144,14 +144,14 @@ class Question extends MY_Model {
      */
     function getAllQuestions($offset) {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
-        $questions = $this->db->get("questions", 5, $offset);
+        $questions = $this->db->get("questions", 10, $offset);
         return $questions->result();
     }
 
     function getAllQuestionsCounts() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $query = $this->db->get("questions");
-        return ceil($query->num_rows() / 5);
+        return ceil($query->num_rows() / 10);
     }
 
     /**
