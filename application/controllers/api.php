@@ -119,11 +119,11 @@ class Api extends CI_Controller {
         } else if (array_key_exists('recent', $args)) {
             $this->getRecent($args['recent']);
         } else if (array_key_exists('popular', $args)) {
-            $this->getPopular($args);
+            $this->getPopular($args['popular']);
         } else if (array_key_exists('unanswered', $args)) {
-            $this->getUnanswered($args);
+            $this->getUnanswered($args['unanswered']);
         } else if (array_key_exists('all', $args)) {
-            $this->getAll($args);
+            $this->getAll($args['all']);
         } else if (array_key_exists('delete', $args)) {
             $this->deleteQuestion();
         } else if (array_key_exists('update', $args)) {
@@ -350,21 +350,27 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
-    private function getPopular() {
-        $questions = $this->ci->questionslib->getPopularQuestions();
+    private function getPopular($offset) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getPopularQuestions($offset);
         $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getPopularQuestionsCount();
         echo json_encode($response);
     }
 
-    private function getUnanswered() {
-        $questions = $this->ci->questionslib->getUnansweredQuestions();
+    private function getUnanswered($offset) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getUnansweredQuestions($offset);
         $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getUnansweredQuestionsCount();
         echo json_encode($response);
     }
 
-    private function getAll() {
-        $questions = $this->ci->questionslib->getAllQuestions();
+    private function getAll($offset) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getAllQuestions($offset);
         $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getAllQuestionsCounts();
         echo json_encode($response);
     }
 

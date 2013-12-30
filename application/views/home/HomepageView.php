@@ -20,18 +20,20 @@
 <script type="text/javascript">
 
                 function setupPagination(totalCount, option, currentPage) {
-                    console.log(currentPage);
+
                     $('#page-selection').bootpag({
                         total: totalCount,
                         page: currentPage,
                         maxVisible: 10
                     }).on('page', function(event, num) {
-                        changePage(option, ((num * 5) - 5), num);
+                        changePage(option, ((num * 5) - 5));
                         return;
                     });
                 }
 
-                function changePage(option, $offset, pageNum) {
+                function changePage(option, $offset) {
+                    console.log(option);
+
                     $.get("/MobileHub/index.php/api/question/" + option + "/" + $offset, function(resultsData) {
                         resultsData = jQuery.parseJSON(resultsData);
                         loadUI(resultsData);
@@ -43,6 +45,7 @@
                     $.get("/MobileHub/index.php/api/question/" + option + "/" + $offset, function(resultsData) {
                         resultsData = jQuery.parseJSON(resultsData);
                         loadUI(resultsData);
+                        $('#page-selection').unbind();
                         setupPagination(resultsData.totalCount, option, 1);
                         return true;
                     });
@@ -58,12 +61,6 @@
                 }
 
                 $(document).ready(function() {
-//                    $.get("/MobileHub/index.php/api/question/recent", function(resultsData) {
-//                        resultsData = jQuery.parseJSON(resultsData);
-//                        loadUI(resultsData);
-//                        setupPagination(resultsData.totalCount, 'recent');
-//                        return true;
-//                    });
                     changeTab('recent', 0);
                 });
 
