@@ -16,10 +16,10 @@ Question (GET/POST)
 
 	index.php/api/question/close
 
-	index.php/api/question/recent
-	index.php/api/question/popular
-	index.php/api/question/unanswered
-	index.php/api/question/all
+	index.php/api/question/recent/offset
+	index.php/api/question/popular/offset
+	index.php/api/question/unanswered/offset
+	index.php/api/question/all/offset
 
 Answer
 	index.php/api/answer/post/
@@ -76,5 +76,3 @@ Admin - All POST
 	index.php/api/admin/tutor/decline
 
 	index.php/api/admin/deletion/accept
-
-INSERT INTO `mobilehub_db`.`requests` (`requestId`, `rTypeId`, `userId`, `rDate`) VALUES (NULL, '2', '17', '2013-12-28 00:00:00');

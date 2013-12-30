@@ -43,7 +43,6 @@ class searchlib {
                 "tags" => $tagsArr,
             );
         }
-
         return $questions;
     }
 

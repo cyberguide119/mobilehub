@@ -127,13 +127,16 @@ http://stackoverflow.com/questions/1184624/convert-form-data-to-js-object-with-j
 
 intel@123
 
-36. Salt was added sha1(unquesalt.pwd)
+36. Salt was added sha1(unquesalt.pwd) - done
 
 37. Captcha generator from
 http://typicalwhiner.com/190/simple-javascript-captcha-generator/
 
 38. Send the password hash for all the admin, tutor, student POST functions
 
-bestId, edits, close question
+bestId, edits, close question - done, promote
 
 http://localhost/MobileHub/index.php/questions/edit/?id=36
+
+39. Pagination client plugin
+http://blog.botmonster.com/2012/10/bootpag-jquery-pagination-plugin.html

@@ -42,7 +42,7 @@ class Question extends MY_Model {
     /**
      * 
      * @param type $query
-     * @return type
+     * @return array
      */
     function basicSearch($query) {
         $this->db->like(array('questionTitle' => $query));
@@ -55,7 +55,7 @@ class Question extends MY_Model {
      * 
      * @param type $advWords
      * @param type $advPhrase
-     * @return type
+     * @return array
      */
     function advancedSearch($advWords, $advPhrase) {
         if ($advPhrase !== '') {
