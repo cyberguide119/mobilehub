@@ -430,6 +430,11 @@ class User extends MY_Model {
         return $question->isActive;
     }
 
+    function updatePassResetLink($email, $hash) {
+        $data = array('emailHash' => $hash);
+        $this->db->where("email", $email);
+        $this->db->update('user', $data);
+    }
 }
 
 ?>

@@ -50,8 +50,6 @@ class auth extends MY_Controller {
         $this->loadFooterData();
     }
 
-    
-
     public function authenticate() {
         //$credentials = $_POST;
 //        $session_id = $this->session->userdata('session_id');

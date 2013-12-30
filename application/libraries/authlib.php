@@ -75,15 +75,18 @@ class authlib {
             'smtp_pass' => '123456Sa',
             'mailtype' => 'html',
             'multipart' => false,
-            //'wordwrap' => true,
-            //'crlf' => "\r\n",
-            //'wrapchars' => 0,
-            //'charset' => 'iso-8859-1',
-            //'newline' => "\r\n"
+                //'wordwrap' => true,
+                //'crlf' => "\r\n",
+                //'wrapchars' => 0,
+                //'charset' => 'iso-8859-1',
+                //'newline' => "\r\n"
         );
         $this->ci->load->library('email', $config);
+        $this->ci->load->model('user');
+
         //$this->ci->email->set_crlf("\r\n");
         $emailCode = md5($this->ci->config->item('salt') . $fullName);
+        $this->ci->user->updatePassResetLink($email, $emailCode);
 
         //$this->email->set_mailtype('html');
         $this->ci->email->from('info.mobilehub@gmail.com', 'MobileHub');
@@ -109,11 +112,9 @@ class authlib {
 
         //$this->email->message($this->ci->load->view('email/passResetHTML', $data, TRUE));
         $this->ci->email->message($message);
-        $this->ci->email->send();
-        if (!$this->ci->email->send())
-            return "Sorry, something went wrong when sending the email";
-        else
-            return true;
+        //$this->ci->email->send();
+//        
+        return true;
     }
 
 }
