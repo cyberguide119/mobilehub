@@ -143,11 +143,11 @@ class Api extends CI_Controller {
         } else if (array_key_exists('recent', $args)) {
             $this->getRecentTags($args['recent'], str_replace("+", " ", $args['tag']));
         } else if (array_key_exists('popular', $args)) {
-            $this->getPopularTags($args['popular'], $args['tag']);
+            $this->getPopularTags($args['popular'], str_replace("+", " ", $args['tag']));
         } else if (array_key_exists('unanswered', $args)) {
-            $this->getUnansweredTags($args['unanswered'], $args['tag']);
+            $this->getUnansweredTags($args['unanswered'], str_replace("+", " ", $args['tag']));
         } else if (array_key_exists('alltags', $args)) {
-            $this->getAllTagsForTag($args['alltags'], $args['tag']);
+            $this->getAllTagsForTag($args['alltags'], str_replace("+", " ", $args['tag']));
         }
     }
 

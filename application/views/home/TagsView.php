@@ -7,7 +7,7 @@
             <li class="active" onclick="changeTab('recent', 0);"><a href="#home" data-toggle="tab">Recent</a></li>
             <li class="" onclick="changeTab('popular', 0);"><a href="#profile" data-toggle="tab">Popular</a></li>
             <li class="" onclick="changeTab('unanswered', 0);"><a href="#profile" data-toggle="tab">Unanswered</a></li>
-            <li class="" onclick="changeTab('all', 0);"><a href="#profile" data-toggle="tab">All</a></li>
+            <li class="" onclick="changeTab('alltags', 0);"><a href="#profile" data-toggle="tab">All</a></li>
         </ul>
         <div class="panel-body">
             <div class="tab-content">
@@ -36,7 +36,7 @@
                 function changePage(option, $offset) {
                     console.log(option);
 
-                    $.get("/MobileHub/index.php/api/question/" + option + "/" + $offset, function(resultsData) {
+                    $.get("/MobileHub/index.php/api/tags/" + option + "/" + $offset + "/tag/" + "<?php echo $tagname; ?>", function(resultsData) {
                         resultsData = jQuery.parseJSON(resultsData);
                         loadUI(resultsData);
                         return true;
@@ -44,7 +44,7 @@
                 }
 
                 function changeTab(option, $offset) {
-                    $.get("/MobileHub/index.php/api/question/" + option + "/" + $offset, function(resultsData) {
+                    $.get("/MobileHub/index.php/api/tags/" + option + "/" + $offset + "/tag/" + "<?php echo $tagname; ?>", function(resultsData) {
                         resultsData = jQuery.parseJSON(resultsData);
                         loadUI(resultsData);
                         $('#page-selection').unbind();
@@ -63,8 +63,14 @@
                 }
 
                 $(document).ready(function() {
+                    $tagName = "<?php echo $tagname; ?>";
+                    $("#tagName").text($tagName.replace(/\+/g, ' '));
                     changeTab('recent', 0);
                 });
+
+                function replaceAll(find, replace, str) {
+                    return str.replace(new RegExp(find, 'g'), replace);
+                }
 
                 function loadUI(resultsData) {
                     if (resultsData.results.length === 0) {

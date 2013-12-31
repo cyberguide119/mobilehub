@@ -34,7 +34,7 @@ class Tags extends MY_Controller {
         $cat = new Category();
         $categories = $cat->get();
         $data["categories"] = $categories;
-        //$data["tagname"] = str_replace("+", " ", $results);
+        $data["tagname"] = $results;
         $this->load->view('home/TagsView', $data);
         $this->loadFooterData();
     }
