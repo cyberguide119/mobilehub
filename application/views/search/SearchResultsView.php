@@ -17,7 +17,6 @@
         $jsonObj = {"Words": $advWords, "Phrase": $advPhrase, "Tags": $advTags, "Category": $advCategory};
 
         $.post("/MobileHub/index.php/api/search/questions/advanced", $jsonObj, function(content) {
-
             // Deserialise the JSON
             content = jQuery.parseJSON(content);
             loadUI(content);
@@ -96,7 +95,7 @@
                 var listItem = "<li class='list-group-item' style='margin-bottom: 5px;'>"
                         + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
                         + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
-                        + "<div class='col-xs-10 col-md-9'><div>"
+                        + "<div class='col-xs-10 col-md-9' style='width: 68%;'><div>"
                         + "<a href='questions/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
                         + "<div class='mic-info'> Asked by <a href='/MobileHub/index.php/profile/?user=" + result.askerName + "'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
                         + "<div class='comment-text'><br>"
@@ -104,7 +103,7 @@
                         + "<div class='action'>"
                         + getTagsString(result.tags)
                         + "</div></div>" //tags
-                        + "<div class='col-md-2'><div class='vote-box' title='Votes'><span class='vote-count'>"
+                        + "<div class='col-md-2' style='width: 18%;'><div class='vote-box' title='Votes'><span class='vote-count'>"
                         + result.votes + "</span><span class='vote-label'>votes</span></div>"
                         + "<div class='ans-count-box' title='Answers'><span class='ans-count'>"
                         + result.answerCount + "</span>"

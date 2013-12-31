@@ -1,8 +1,5 @@
 <script src="<?php echo site_url('../resources/js/jquery.bootpag.min.js') ?>"></script>
 <div class="container">
-    <ol class="breadcrumb">
-        <li class="active"><a href="#">Home</a></li>
-    </ol>
     <div>
         <ul id="myTab" class="nav nav-tabs">
             <li class="active" onclick="changeTab('recent', 0);"><a href="#home" data-toggle="tab">Recent</a></li>
