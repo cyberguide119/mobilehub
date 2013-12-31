@@ -172,7 +172,7 @@
             xLabels: "day"
         });
     }
-    
+
     function loadDailyRegistrations(dataArr) {
         new Morris.Line({
             // ID of the element in which to draw the chart.
@@ -190,7 +190,7 @@
             xLabels: "day"
         });
     }
-    
+
     function loadDailyAns(dataArr) {
         new Morris.Line({
             // ID of the element in which to draw the chart.
@@ -200,6 +200,24 @@
             data: dataArr.data.ansChart,
             // The name of the data record attribute that contains x-values.
             xkey: 'ansDate',
+            // A list of names of data record attributes that contain y-values.
+            ykeys: ['value'],
+            // Labels for the ykeys -- will be displayed when you hover over the
+            // chart.
+            labels: ['Value'],
+            xLabels: "day"
+        });
+    }
+
+    function loadDailyQue(dataArr) {
+        new Morris.Line({
+            // ID of the element in which to draw the chart.
+            element: 'dailyQueChart',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: dataArr.data.queChart,
+            // The name of the data record attribute that contains x-values.
+            xkey: 'queDate',
             // A list of names of data record attributes that contain y-values.
             ykeys: ['value'],
             // Labels for the ykeys -- will be displayed when you hover over the
@@ -220,6 +238,7 @@
             loadDailyLogins(content);
             loadDailyRegistrations(content);
             loadDailyAns(content);
+            loadDailyQue(content);
         } else if (content.message === "Error") {
             $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
             $('#errorModal').modal('show');
