@@ -147,6 +147,12 @@ class Question extends MY_Model {
         $questions = $this->db->get("questions", 10, $offset);
         return $questions->result();
     }
+    
+    function getAllAdminQuestions() {
+        $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $questions = $this->db->get("questions");
+        return $questions->result();
+    }
 
     function getAllQuestionsCounts() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");

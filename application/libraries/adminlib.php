@@ -33,7 +33,7 @@ class adminlib {
     }
 
     public function getQuestions() {
-        $allQuestions = $this->ci->questionslib->getAllQuestions();
+        $allQuestions = $this->ci->questionslib->getAllAdminQuestions();
         return $allQuestions;
     }
 

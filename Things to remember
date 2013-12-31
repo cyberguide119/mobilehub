@@ -140,3 +140,7 @@ http://localhost/MobileHub/index.php/questions/edit/?id=36
 
 39. Pagination client plugin
 http://blog.botmonster.com/2012/10/bootpag-jquery-pagination-plugin.html
+
+40. Close question null validation
+
+41. Block access for admin - questions, voting, answers

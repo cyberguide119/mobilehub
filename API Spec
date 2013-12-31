@@ -10,6 +10,9 @@ Login (POST)
 	index.php/api/auth/forgot
 	index.php/api/auth/reset
 
+	token eg:
+	localhost/MobileHub/index.php/auth/reset/sahan.serasinghe@gmail.com/e3afed0047b08059d0fada10f400c1e56
+
 Question (GET/POST)
 	index.php/api/question/post
 	index.php/api/question/details/{id}

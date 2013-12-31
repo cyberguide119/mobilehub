@@ -246,6 +246,27 @@ class questionslib {
         return $questions;
     }
 
+    public function getAllAdminQuestions() {
+        $questions = array();
+        $questionsList = $this->ci->Question->getAllAdminQuestions();
+        foreach ($questionsList as $question) {
+            $username = $this->ci->User->getUserById($question->askerUserId);
+            $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($question->questionId);
+
+            // Creating the array which is to be pased on to the HomepageView
+            $questions[] = array(
+                "questionId" => $question->questionId,
+                "questionTitle" => $question->questionTitle,
+                "askedOn" => $question->askedOn,
+                "askerName" => $username,
+                "answerCount" => $question->answerCount,
+                "votes" => $question->netVotes,
+                "tags" => $tagsArr,
+            );
+        }
+        return $questions;
+    }
+
     public function getAllQuestionsForUser($userId) {
         $questions = array();
         $questionsList = $this->ci->Question->getAllQuestionsForUser($userId);
