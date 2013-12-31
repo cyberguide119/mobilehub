@@ -190,6 +190,24 @@
             xLabels: "day"
         });
     }
+    
+    function loadDailyAns(dataArr) {
+        new Morris.Line({
+            // ID of the element in which to draw the chart.
+            element: 'dailyAnsChart',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: dataArr.data.ansChart,
+            // The name of the data record attribute that contains x-values.
+            xkey: 'ansDate',
+            // A list of names of data record attributes that contain y-values.
+            ykeys: ['value'],
+            // Labels for the ykeys -- will be displayed when you hover over the
+            // chart.
+            labels: ['Value'],
+            xLabels: "day"
+        });
+    }
 
     function loadUI(content) {
         if (content.message === "Success") {
@@ -201,20 +219,10 @@
 
             loadDailyLogins(content);
             loadDailyRegistrations(content);
+            loadDailyAns(content);
         } else if (content.message === "Error") {
             $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
             $('#errorModal').modal('show');
         }
     }
-
-    new Morris.Donut({
-        // ID of the element in which to draw the chart.
-        element: 'myfirstchart1',
-        // Chart data records -- each entry in this array corresponds to a point on
-        // the chart.
-        data: [
-            {label: "Download Sales", value: 12},
-            {label: "In-Store Sales", value: 30},
-            {label: "Mail-Order Sales", value: 20}]
-    });
 </script>

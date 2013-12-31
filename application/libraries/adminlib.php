@@ -31,8 +31,8 @@ class adminlib {
 
         $stats['loginsChart'] = $this->ci->Logins->getLoginChartDetails();
         $stats['regChart'] = $this->ci->User->getRegChartDetails();
-        //$stats['ansChart'] = $this->ci->Answers->getAnsChartDetails();
-        //$stats['queChart'] = $this->ci->Questions->getQueChartDetails();
+        $stats['ansChart'] = $this->ci->Answer->getAnsChartDetails();
+        $stats['queChart'] = $this->ci->Question->getQueChartDetails();
 
         return $stats;
     }

@@ -356,6 +356,25 @@ class Question extends MY_Model {
         return $question;
     }
 
+    /**
+     * 
+     * @return type array
+     */
+    function getQueChartDetails() {
+        // Get most recent 7 days
+        $time = time();
+        $formattedDate = date("Y-m-d", $time);
+
+        $date = new DateTime($formattedDate);
+        $date->sub(new DateInterval('P7D'));
+        $aWeekBack = $date->format('Y-m-d');
+
+        $query = $this->db->query("SELECT DATE(askedOn) AS queDate, count(questionId) AS value FROM questions WHERE askedOn BETWEEN '" . $aWeekBack . "'" .
+                " AND '" . $formattedDate . "' GROUP BY queDate");
+
+        return $query->result();
+    }
+
 }
 
 ?>

@@ -147,6 +147,21 @@ class Answer extends MY_Model {
         $this->db->delete('answers', array('answerId' => $ansId));
     }
 
+    function getAnsChartDetails() {
+        // Get most recent 7 days
+        $time = time();
+        $formattedDate = date("Y-m-d", $time);
+
+        $date = new DateTime($formattedDate);
+        $date->sub(new DateInterval('P7D'));
+        $aWeekBack = $date->format('Y-m-d');
+
+        $query = $this->db->query("SELECT DATE(answeredOn) AS ansDate, count(answerId) AS value FROM answers WHERE answeredOn BETWEEN '" . $aWeekBack . "'" .
+                " AND '" . $formattedDate . "' GROUP BY ansDate");
+
+        return $query->result();
+    }
+
 }
 
 ?>
