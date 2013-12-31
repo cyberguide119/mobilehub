@@ -64,6 +64,10 @@ class authlib {
             return "Your email does not exist in our database.";
         }
     }
+    
+    public function resetPass($email, $hash, $pass){
+        return $this->ci->User->updateViaHash($email, $hash, $pass);
+    }
 
     private function sendResetLinkEmail($email, $fullName) {
         // Email the reset link to the user
@@ -75,16 +79,16 @@ class authlib {
             'smtp_pass' => '123456Sa',
             'mailtype' => 'html',
             'multipart' => false,
-                //'wordwrap' => true,
-                //'crlf' => "\r\n",
-                //'wrapchars' => 0,
-                //'charset' => 'iso-8859-1',
-                //'newline' => "\r\n"
+            'wordwrap' => true,
+            'crlf' => "\r\n",
+            'wrapchars' => 0,
+            'charset' => 'iso-8859-1',
+            'newline' => "\r\n"
         );
         $this->ci->load->library('email', $config);
         $this->ci->load->model('user');
 
-        //$this->ci->email->set_crlf("\r\n");
+        $this->ci->email->set_crlf("\r\n");
         $emailCode = md5($this->ci->config->item('salt') . $fullName);
         $this->ci->user->updatePassResetLink($email, $emailCode);
 
@@ -112,9 +116,14 @@ class authlib {
 
         //$this->email->message($this->ci->load->view('email/passResetHTML', $data, TRUE));
         $this->ci->email->message($message);
+        if($this->ci->email->send()){
+            return true;
+        }else{
+            return false;
+        }
         //$this->ci->email->send();
 //        
-        return true;
+        
     }
 
 }

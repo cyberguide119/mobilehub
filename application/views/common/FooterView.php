@@ -43,13 +43,19 @@
     }
 
     function sendLink() {
-        if (checkEmail($("#txtResetEmail"))) {
-            $.get("/MobileHub/index.php/api/auth/forgot", function(resultsData) {
+        
+        $email = $("#txtResetEmail").text();
+        if (true) {
+            
+            jsonObj = {'email': $email};
+            $.post("/MobileHub/index.php/api/auth/forgot", jsonObj, function(resultsData) {
                 resultsData = jQuery.parseJSON(resultsData);
-                if(resultsData.message === "Success"){
-                    
+                if (resultsData.message === "Success") {
+                     alert("success");
                 }
                 return true;
+            }).fail(function() {
+                alert("error");
             });
         }
     }

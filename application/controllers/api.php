@@ -102,6 +102,8 @@ class Api extends CI_Controller {
             // not sure yet
         } else if (array_key_exists('forgot', $args)) {
             $this->forgotPass();
+        } else if (array_key_exists('reset', $args)) {
+            $this->resetPass();
         }
     }
 
@@ -299,6 +301,24 @@ class Api extends CI_Controller {
         } else {
             $response['message'] = "Error";
             $response['type'] = "Please enter a valid email address";
+            echo json_encode($response);
+            return;
+        }
+    }
+
+    private function resetPass() {
+        $email = $this->input->post('email');
+        $hash = $this->input->post('hash');
+        $pass = $this->input->post('pass');
+        $res = $this->authlib->resetPass($email, $hash, $pass);
+        if ($res === true) {
+            $response['message'] = "Success";
+            $response['type'] = "A password is updated successfully";
+            echo json_encode($response);
+            return;
+        } else {
+            $response['message'] = "Error";
+            $response['type'] = "Something went wrong";
             echo json_encode($response);
             return;
         }

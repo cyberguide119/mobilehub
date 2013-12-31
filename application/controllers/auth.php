@@ -60,6 +60,24 @@ class auth extends MY_Controller {
 //        echo $response;
     }
 
+    public function reset() {
+        $email = $this->uri->segment(3);
+        $hash = $this->uri->segment(4);
+
+        $fullName = $this->ci->user->emailExists($email);
+        if ($fullName) {
+            // Get the first name and send the email to the user
+            $this->loadHeaderData();
+            $data['errmsg'] = '';
+            $this->load->view('login/ResetPasswordView', $data);
+            $this->loadFooterData();
+            //return $this->sendResetLinkEmail($email, $fullName);
+        } else {
+            redirect('custom404');
+           // return "Your email does not exist in our database.";
+        }
+    }
+
     public function logout() {
         // Clear the session and redirect to the homepage
         $this->authlib->logout();

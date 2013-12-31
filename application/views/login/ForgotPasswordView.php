@@ -1,5 +1,5 @@
 <div class="container">
-    <form method="POST" action="<?php echo site_url('auth/sendResetLink') ?>" role="form" class="form-signup">
+    <form method="POST" action="#" role="form" class="form-signup">
         <legend>Reset Password</legend>
         <p>If you are unable to access your account, we will send you a password reset link to your recovery email.</p>
         <br>

@@ -418,6 +418,24 @@ class User extends MY_Model {
         return true;
     }
 
+    function updateViaHash($email, $hash, $pass) {
+        $this->db->where(array('email' => $email, 'hash' => $hash));
+        $res = $this->db->get('user');
+        if ($res->num_rows() != 1) { // should be only ONE matching row!!
+            return "Your profile does not exist";
+        }
+
+        $user = $res->result();
+        if (!($user[0]->isActive)) {
+            return "Your profile is not active";
+        }
+
+        $unique_salt = $this->unique_salt();
+        $hashpwd = sha1($unique_salt . $pass);
+        $this->db->update('user', array("password" => $hashpwd, "salt" => $unique_salt));
+        return true;
+    }
+
     /**
      * 
      * @param type $userId
@@ -430,11 +448,17 @@ class User extends MY_Model {
         return $question->isActive;
     }
 
+    /**
+     * 
+     * @param type $email
+     * @param type $hash
+     */
     function updatePassResetLink($email, $hash) {
         $data = array('emailHash' => $hash);
         $this->db->where("email", $email);
         $this->db->update('user', $data);
     }
+
 }
 
 ?>
