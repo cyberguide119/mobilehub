@@ -56,7 +56,7 @@
     <?php
     if ($isQuestionClosed) {
         echo '<div class="alert alert-warning" id="closeReasonAlert" style="background-color: #ECA14F">';
-        echo '<strong>This question has been closed by<a href="/MobileHub/index.php/profile/?user='. $closedByUserName .'"> ' . $closedByUserName . '</strong> </a>due to the following reason on <i>' .$closedDate . '</i>';
+        echo '<strong>This question has been closed by<a href="/MobileHub/index.php/profile/?user=' . $closedByUserName . '"> ' . $closedByUserName . '</strong> </a>due to the following reason on <i>' . $closedDate . '</i>';
         echo '<p>' . $closeReason . '</p>';
         echo '</div>';
     }
@@ -103,7 +103,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Note : Members will not be able to post answers, edit question or edit answers after closing this question.</p>
-                    <textarea id="closeReason" rows="4" style="width: 100%;"></textarea>
+                    <textarea id="closeReason" rows="4" style="width: 100%;" maxlength="100"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="closeQuestion();">Submit</button>
@@ -121,6 +121,10 @@
                     });
 
                     $('#ansDesc').maxlength({
+                        alwaysShow: true
+                    });
+
+                    $('#closeReason').maxlength({
                         alwaysShow: true
                     });
 
@@ -240,7 +244,7 @@
                             // Deserialise the JSON
                             content = jQuery.parseJSON(content);
                             if (content.message === "Success") {
-                                window.location = "/MobileHub/index.php/questions/show/?id="+"<? echo $questionId; ?>";
+                                window.location = "/MobileHub/index.php/questions/show/?id=" + "<? echo $questionId; ?>";
 //                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
 //                                $('#errModalBody').modal('show');
                             } else {

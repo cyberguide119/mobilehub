@@ -482,6 +482,12 @@ class Api extends CI_Controller {
         $username = $this->input->post('username');
         $closeReason = $this->input->post('reason');
 
+        if ($closeReason === '') {
+            $res = array("message" => "Error", "type" => "Please enter a reason to close this question");
+            echo json_encode($res);
+            return;
+        }
+
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {
             if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
