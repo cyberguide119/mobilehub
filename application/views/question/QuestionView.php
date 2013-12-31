@@ -1,6 +1,10 @@
 <script src="<?php echo site_url('../resources/js/moment.min.js') ?>"></script>
 <script src="<?php echo site_url('../resources/js/syntax/jquery.syntax.min.js') ?>" type="text/javascript"></script>
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/MobileHub/index.php">Home</a></li>
+        <li class="active">Question Details</li>
+    </ol>
     <div class="row">
         <div class="chat-img pull-left" style="margin-top: 26px;">
             <div class="vote-box" title="Votes">
@@ -201,7 +205,7 @@
                     function getTagsString($tags) {
                         var str = "";
                         for (var i = 0; i < $tags.length; i++) {
-                            str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
+                            str += "<a href='/MobileHub/index.php/tags/show/" + $tags[i].replace(/ /g, '+') + "'><button type='button' class='btn btn-info btn-xs' title='tag' text='Category'>" + $tags[i] + "</button></a>&nbsp";
                         }
                         return str;
                     }

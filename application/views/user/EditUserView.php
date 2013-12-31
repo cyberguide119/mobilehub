@@ -1,6 +1,11 @@
 <script src="<?php echo site_url('../resources/js/moment.min.js') ?>"></script>
 <script src="<?php echo site_url('../resources/js/bootstrap-dialog.js') ?>"></script>
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/MobileHub/index.php">Home</a></li>
+        <li class="active"><a href="/MobileHub/index.php/profile/?user=<?php echo $name;?>">User Profile</a></li>
+        <li class="active">Edit Profile</li>
+    </ol>
     <div class="well" style="background-color: white">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>

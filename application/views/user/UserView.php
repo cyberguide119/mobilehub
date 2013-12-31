@@ -1,5 +1,9 @@
 <script src="<?php echo site_url('../resources/js/moment.min.js') ?>"></script>
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/MobileHub/index.php">Home</a></li>
+        <li class="active">User Profile</li>
+    </ol>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-primary">
@@ -173,7 +177,7 @@
     {
         var str = "";
         for (var i = 0; i < $tags.length; i++) {
-            str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
+            str += "<a href='/MobileHub/index.php/tags/show/" + $tags[i].replace(/ /g, '+') + "'><button type='button' class='btn btn-info btn-xs' title='tag' text='Category'>" + $tags[i] + "</button></a>&nbsp";
         }
         return str;
     }

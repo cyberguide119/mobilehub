@@ -3,7 +3,7 @@
     {
         var str = "";
         for (var i = 0; i < $tags.length; i++) {
-            str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
+            str += "<a href='/MobileHub/index.php/tags/show/" + $tags[i].replace(/ /g, '+') + "'><button type='button' class='btn btn-info btn-xs' title='tag' text='Category'>" + $tags[i] + "</button></a>&nbsp";
         }
         return str;
     }
@@ -30,6 +30,10 @@
     }
 </script>
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/MobileHub/index.php">Home</a></li>
+        <li class="active">Search Results</li>
+    </ol>
     <div class="panel-body" id="accordion">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -83,7 +87,7 @@
 
     function loadUI(resultsData) {
         if (resultsData.message === "Error") {
-            $("ul.list-group").html("<h5><b>0</b> result(s) found</h5><p>"+resultsData.type+"</p>");
+            $("ul.list-group").html("<h5><b>0</b> result(s) found</h5><p>" + resultsData.type + "</p>");
         } else {
             $("ul.list-group").html("<h5><b>" + resultsData.results.length + "</b> result(s) found</h5>");
             for (var i = 0; i < resultsData.results.length; i++) {

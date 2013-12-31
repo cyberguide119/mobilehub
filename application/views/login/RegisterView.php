@@ -1,4 +1,8 @@
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/MobileHub/index.php">Home</a></li>
+        <li class="active">Register</li>
+    </ol>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs form-signup" style="padding: 0px; border: 0px;" id="regTabs">
         <li class ="active"><a href="#student" data-toggle="tab">Student</a></li>

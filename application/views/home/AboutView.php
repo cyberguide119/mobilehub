@@ -1,4 +1,8 @@
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/MobileHub/index.php">Home</a></li>
+        <li class="active">About</li>
+    </ol>
     <div class="row" style="margin-bottom:20px;">
         <div class="col-sm-12">
             <h1>About MobileHub</h1>
