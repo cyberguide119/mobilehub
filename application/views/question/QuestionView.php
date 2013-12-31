@@ -5,7 +5,7 @@
         <li><a href="/MobileHub/index.php">Home</a></li>
         <li class="active">Question Details</li>
     </ol>
-    <div class="row">
+    <div class="row" style="margin-left: 0px;margin-right: 0px;">
         <div class="chat-img pull-left" style="margin-top: 26px;">
             <div class="vote-box" title="Votes">
                 <span class="vote-count" id="qVotes">0</span>
