@@ -85,13 +85,13 @@
                         var listItem = "<li class='list-group-item' style='margin-bottom: 5px; border: none; border-bottom: 1px solid #ddd;'>"
                                 + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-1'>"
                                 + "<img src='/MobileHub/resources/img/default.png' class='img-circle img-responsive' alt='' /></div>"
-                                + "<div class='col-xs-10 col-md-9'><div>"
+                                + "<div class='col-xs-10 col-md-9' style='width: 68%;'><div>"
                                 + "<a style='font-size: 18px;' href='/MobileHub/index.php/questions/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
                                 + "<div class='mic-info' style='font-size: 13px;'> Asked by <a href='/MobileHub/index.php/profile/?user=" + result.askerName + "'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
                                 + "<div class='action'>"
                                 + getTagsString(result.tags)
                                 + "</div></div>" //tags
-                                + "<div class='col-md-2'><div class='vote-box' title='Votes'><span class='vote-count'>"
+                                + "<div class='col-md-2' style='width: 17.666667%;'><div class='vote-box' title='Votes'><span class='vote-count'>"
                                 + result.votes + "</span><span class='vote-label'>votes</span></div>"
                                 + "<div class='ans-count-box' title='Answers'><span class='ans-count'>"
                                 + result.answerCount + "</span>"
