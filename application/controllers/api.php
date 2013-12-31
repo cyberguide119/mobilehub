@@ -200,6 +200,8 @@ class Api extends CI_Controller {
                 $this->getAdminDeleteUsers();
             } else if ($args['user'] === 'students') {
                 $this->getAdminStudents();
+            } else if ($args['user'] === 'promote') {
+                $this->getAdminStudentsPromote();
             }
         } else if (array_key_exists('requests', $args)) {
             if ($args['requests'] === 'tutor') {
@@ -1023,6 +1025,27 @@ class Api extends CI_Controller {
             $reponse['message'] = "Success";
             $reponse['aaData'] = $this->adminlib->getAdminStudents();
             echo json_encode($reponse);
+        } else {
+            $reponse['message'] = "Error";
+            $reponse['type'] = "You are not authorized to view this content";
+            echo json_encode($reponse);
+        }
+    }
+    
+    private function getAdminStudentsPromote() {
+        $name = $this->authlib->is_loggedin();
+        //$username = $this->input->post('username');
+        $userId = $this->input->post('userId');
+        if ($name && $userId != null) {
+            if ($this->adminlib->promoteUser($userId)) {
+                $reponse['message'] = "Success";
+                $reponse['type'] = "Student promoted successfully";
+                echo json_encode($reponse);
+            } else {
+                $reponse['message'] = "Error";
+                $reponse['type'] = "Something went wrong";
+                echo json_encode($reponse);
+            }
         } else {
             $reponse['message'] = "Error";
             $reponse['type'] = "You are not authorized to view this content";

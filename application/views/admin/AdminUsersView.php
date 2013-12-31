@@ -132,8 +132,9 @@
                 }]
         });
     }
+
     function deleteUser(qId) {
-        BootstrapDialog.confirm('Are you sure you want to delete this answer?', function(result) {
+        BootstrapDialog.confirm('Are you sure you want to delete this user?', function(result) {
             if (result) {
                 jsonData = {'username': "<?php echo $name; ?>", "userId": qId};
                 $.post("/MobileHub/index.php/api/admin/user/delete/", jsonData, function(content) {
@@ -144,6 +145,35 @@
                         $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                         $('#errorModal').modal('show');
                         var dt = $('#qTable').dataTable();
+                        dt.fnReloadAjax();
+                        return true;
+                    } else {
+                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                        $('#errorModal').modal('show');
+                    }
+                }).fail(function() {
+                    $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                    $('#errorModal').modal('show');
+                }), "json";
+                return true;
+            } else {
+                // Do nothing
+            }
+        });
+    }
+
+    function promoteUser(qId) {
+        BootstrapDialog.confirm('Are you sure you want to promote this user?', function(result) {
+            if (result) {
+                jsonData = {'username': "<?php echo $name; ?>", "userId": qId};
+                $.post("/MobileHub/index.php/api/admin/user/promote/", jsonData, function(content) {
+
+                    // Deserialise the JSON
+                    content = jQuery.parseJSON(content);
+                    if (content.message === "Success") {
+                        $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                        $('#errorModal').modal('show');
+                        var dt = $('#qTable2').dataTable();
                         dt.fnReloadAjax();
                         return true;
                     } else {

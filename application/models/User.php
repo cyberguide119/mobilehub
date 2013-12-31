@@ -64,7 +64,7 @@ class User extends MY_Model {
 
         $formattedDate = date("Y-m-d H:i:s", $time);
         $data = array('fullName' => $name, 'username' => $username,
-            'password' => $hashpwd, 'email' => $email, 'website' => $website, 'joinedDate' => $formattedDate, 'salt' => $unique_salt, 'roleId' => 3, 'isActive' => true);
+            'password' => $hashpwd, 'email' => $email, 'website' => $website, 'joinedDate' => $formattedDate, 'salt' => $unique_salt, 'roleId' => 3, 'isActive' => true, 'reputation' => 0, 'loyality' => 0);
         $this->db->insert('user', $data);
         return null;
     }
@@ -495,6 +495,12 @@ class User extends MY_Model {
         $this->db->where('roleId', 3);
         $query = $this->db->get();
         return $query->result();
+    }
+
+    function promoteUser($userId) {
+        $this->db->where('userId', $userId);
+        $this->db->update('user', array("roleId" => 2));
+        return true;
     }
 
 }

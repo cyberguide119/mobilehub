@@ -113,10 +113,24 @@ class adminlib {
             $user->delete();
         }
     }
-    
-    public function getAdminStudents(){
+
+    public function getAdminStudents() {
         $req = $this->ci->User->getAllStudents();
         return $req;
+    }
+
+    public function promoteUser($userId) {
+        if ($userId === null) {
+            return false;
+        }
+        $adminLoggedIn = $this->ci->authlib->is_loggedin();
+
+        if ($adminLoggedIn) {
+            $this->ci->User->promoteUser($userId);
+            return true;
+        }
+        return false;
+        
     }
 
 }
