@@ -473,6 +473,21 @@ class User extends MY_Model {
         }
         return true;
     }
+    
+    function getRegChartDetails() {
+        // Get most recent 7 days
+        $time = time();
+        $formattedDate = date("Y-m-d", $time);
+
+        $date = new DateTime($formattedDate);
+        $date->sub(new DateInterval('P7D'));
+        $aWeekBack = $date->format('Y-m-d');
+
+        $query = $this->db->query("SELECT DATE(joinedDate) AS regDate, count(username) AS value FROM user WHERE joinedDate BETWEEN '" . $aWeekBack . "'" .
+                " AND '" . $formattedDate . "' GROUP BY regDate");
+
+        return $query->result();
+    } 
 
 }
 

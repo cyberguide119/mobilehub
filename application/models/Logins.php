@@ -38,8 +38,6 @@ class Logins extends CI_Model {
                 " AND '" . $formattedDate . "' GROUP BY loginDate");
 
         return $query->result();
-        //return $this->db->get('logins')->result();
-        //var_dump($formattedDate, $aWeekBack);
     }
 
 }

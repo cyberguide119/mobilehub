@@ -28,8 +28,11 @@ class adminlib {
         $stats['totalAnswers'] = $this->ci->Answer->getAllAnswerCount();
         $stats['totalUsers'] = $this->ci->User->getAllUsersCount();
         $stats['totalLogins'] = $this->ci->Logins->getAllLogins();
-        
+
         $stats['loginsChart'] = $this->ci->Logins->getLoginChartDetails();
+        $stats['regChart'] = $this->ci->User->getRegChartDetails();
+        //$stats['ansChart'] = $this->ci->Answers->getAnsChartDetails();
+        //$stats['queChart'] = $this->ci->Questions->getQueChartDetails();
 
         return $stats;
     }
