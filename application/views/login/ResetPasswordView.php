@@ -49,6 +49,10 @@
                             if (resultsData.message === "Success") {
                                 $('#errorModal').html("<p><center>" + content.type + "</center></p>");
                                 $('#errorModal').modal('show');
+                            } else {
+                                $('#errorModal').html("<p><center>" + content.type + "</center></p>");
+                                $('#errorModal').modal('show');
+
                             }
                         }).fail(function() {
                             $('#errorModal').html("<p><center>" + content.type + "</center></p>");

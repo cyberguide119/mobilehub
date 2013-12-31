@@ -459,6 +459,16 @@ class User extends MY_Model {
         $this->db->update('user', $data);
     }
 
+    function hashExists($email, $hash) {
+        $this->db->where(array("email" => $email, "emailHash" => $hash));
+
+        $res = $this->db->get('user');
+        if ($res->num_rows() < 1) { // should be only ONE matching row!!
+            return false;
+        }
+        return true;
+    }
+
 }
 
 ?>

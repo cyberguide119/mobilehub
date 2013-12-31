@@ -44,8 +44,8 @@
 
     function sendLink() {
         
-        $email = $("#txtResetEmail").text();
-        if (true) {
+        $email = $("#txtResetEmail").val();
+        if (checkEmail($email)) {
             
             jsonObj = {'email': $email};
             $.post("/MobileHub/index.php/api/auth/forgot", jsonObj, function(resultsData) {

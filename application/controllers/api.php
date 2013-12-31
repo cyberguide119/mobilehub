@@ -285,7 +285,6 @@ class Api extends CI_Controller {
                 return;
             } else {
                 $res = $this->authlib->sendResetLink($email);
-                var_dump($res);
                 if ($res === true) {
                     $response['message'] = "Success";
                     $response['type'] = "A password reset link has been sent to your email";
@@ -313,7 +312,7 @@ class Api extends CI_Controller {
         $res = $this->authlib->resetPass($email, $hash, $pass);
         if ($res === true) {
             $response['message'] = "Success";
-            $response['type'] = "A password is updated successfully";
+            $response['type'] = "Your password is updated successfully";
             echo json_encode($response);
             return;
         } else {

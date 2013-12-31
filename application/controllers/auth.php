@@ -65,7 +65,8 @@ class auth extends MY_Controller {
         $hash = $this->uri->segment(4);
 
         $fullName = $this->ci->user->emailExists($email);
-        if ($fullName) {
+        $hashExists = $this->ci->user->hashExists($email, $hash);
+        if ($fullName && $hashExists) {
             // Get the first name and send the email to the user
             $this->loadHeaderData();
             $data['errmsg'] = '';
