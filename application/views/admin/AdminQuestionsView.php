@@ -16,8 +16,9 @@
         </div>
     </div><!-- /.row -->
     <div class="row">
-        <hr>
         <div class="col-lg-12">
+            <h4>All Questions</h4>
+            <hr>
             <table id="qTable">
             </table>
         </div>

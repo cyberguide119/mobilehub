@@ -89,7 +89,7 @@
         <div class="col-lg-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Daily registrations</h3>
+                    <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Daily New Registrations</h3>
                 </div>
                 <div class="panel-body">
                     <div id="dailyRegChart" style="height: 250px;"></div>
