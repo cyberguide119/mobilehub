@@ -246,6 +246,90 @@ class questionslib {
         return $questions;
     }
 
+    public function getRecentQuestionsWithTag($offset, $tagname) {
+        $questions = array();
+        $questionsList = $this->ci->Question->getRecentQuestionsWithTag($offset, $tagname);
+        foreach ($questionsList as $question) {
+            $username = $this->ci->User->getUserById($question->askerUserId);
+            $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($question->questionId);
+            if (in_array($tagname, $tagsArr)) {
+                $questions[] = array(
+                    "questionId" => $question->questionId,
+                    "questionTitle" => $question->questionTitle,
+                    "askedOn" => $question->askedOn,
+                    "askerName" => $username,
+                    "answerCount" => $question->answerCount,
+                    "votes" => $question->netVotes,
+                    "tags" => $tagsArr,
+                );
+            }
+        }
+        return $questions;
+    }
+
+    public function getPopularQuestionsWithTag($offset, $tagname) {
+        $questions = array();
+        $questionsList = $this->ci->Question->getPopularQuestionsWithTag($offset, $tagname);
+        foreach ($questionsList as $question) {
+            $username = $this->ci->User->getUserById($question->askerUserId);
+            $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($question->questionId);
+
+            // Creating the array which is to be pased on to the HomepageView
+            $questions[] = array(
+                "questionId" => $question->questionId,
+                "questionTitle" => $question->questionTitle,
+                "askedOn" => $question->askedOn,
+                "askerName" => $username,
+                "answerCount" => $question->answerCount,
+                "votes" => $question->netVotes,
+                "tags" => $tagsArr,
+            );
+        }
+        return $questions;
+    }
+
+    public function getUnansweredQuestionsWithTag($offset, $tagname) {
+        $questions = array();
+        $questionsList = $this->ci->Question->getUnansweredQuestionsWithTag($offset, $tagname);
+        foreach ($questionsList as $question) {
+            $username = $this->ci->User->getUserById($question->askerUserId);
+            $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($question->questionId);
+
+            // Creating the array which is to be pased on to the HomepageView
+            $questions[] = array(
+                "questionId" => $question->questionId,
+                "questionTitle" => $question->questionTitle,
+                "askedOn" => $question->askedOn,
+                "askerName" => $username,
+                "answerCount" => $question->answerCount,
+                "votes" => $question->netVotes,
+                "tags" => $tagsArr,
+            );
+        }
+        return $questions;
+    }
+
+    public function getAllQuestionsWithTag($offset, $tagname) {
+        $questions = array();
+        $questionsList = $this->ci->Question->getAllQuestionsWithTag($offset, $tagname);
+        foreach ($questionsList as $question) {
+            $username = $this->ci->User->getUserById($question->askerUserId);
+            $tagsArr = $this->ci->searchlib->getTagsArrayForQuestionId($question->questionId);
+
+            // Creating the array which is to be pased on to the HomepageView
+            $questions[] = array(
+                "questionId" => $question->questionId,
+                "questionTitle" => $question->questionTitle,
+                "askedOn" => $question->askedOn,
+                "askerName" => $username,
+                "answerCount" => $question->answerCount,
+                "votes" => $question->netVotes,
+                "tags" => $tagsArr,
+            );
+        }
+        return $questions;
+    }
+
     public function getAllAdminQuestions() {
         $questions = array();
         $questionsList = $this->ci->Question->getAllAdminQuestions();

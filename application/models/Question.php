@@ -95,6 +95,26 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    function getRecentQuestionsWithTag($offset, $tagname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->order_by("questions.askedOn", "desc");
+        $this->db->where('tags.tagName', $tagname);
+        $this->db->join('questions_tags', 'questions_tags.questionId = questions.questionId');
+        $this->db->join('tags', 'tags.tagId = questions_tags.tagId');
+        $questions = $this->db->get("questions", 10, $offset);
+        return $questions->result();
+    }
+
+    function getRecentQuestionsWithTagCount($tagname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->order_by("questions.askedOn", "desc");
+        $this->db->where('tags.tagName', $tagname);
+        $this->db->join('questions_tags', 'questions_tags.questionId = questions.questionId');
+        $this->db->join('tags', 'tags.tagId = questions_tags.tagId');
+        $query = $this->db->get("questions");
+        return ceil($query->num_rows() / 10);
+    }
+
     function getRecentQuestionsCount() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("askedOn", "desc");
@@ -120,6 +140,26 @@ class Question extends MY_Model {
         return ceil($query->num_rows() / 10);
     }
 
+    function getPopularQuestionsWithTag($offset, $tagname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->order_by("questions.netVotes", "desc");
+        $this->db->where('tags.tagName', $tagname);
+        $this->db->join('questions_tags', 'questions_tags.questionId = questions.questionId');
+        $this->db->join('tags', 'tags.tagId = questions_tags.tagId');
+        $questions = $this->db->get("questions", 10, $offset);
+        return $questions->result();
+    }
+
+    function getPopularQuestionsWithTagCount($tagname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->order_by("questions.netVotes", "desc");
+        $this->db->where('tags.tagName', $tagname);
+        $this->db->join('questions_tags', 'questions_tags.questionId = questions.questionId');
+        $this->db->join('tags', 'tags.tagId = questions_tags.tagId');
+        $query = $this->db->get("questions");
+        return ceil($query->num_rows() / 10);
+    }
+
     /**
      * 
      * @return type
@@ -129,6 +169,26 @@ class Question extends MY_Model {
         $this->db->where("answerCount", 0);
         $questions = $this->db->get("questions", 10, $offset);
         return $questions->result();
+    }
+
+    function getUnansweredQuestionsWithTag($offset, $tagname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->where("questions.answerCount", 0);
+        $this->db->where('tags.tagName', $tagname);
+        $this->db->join('questions_tags', 'questions_tags.questionId = questions.questionId');
+        $this->db->join('tags', 'tags.tagId = questions_tags.tagId');
+        $questions = $this->db->get("questions", 10, $offset);
+        return $questions->result();
+    }
+
+    function getUnansweredQuestionsWithTagCount($tagname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->where("questions.answerCount", 0);
+        $this->db->where('tags.tagName', $tagname);
+        $this->db->join('questions_tags', 'questions_tags.questionId = questions.questionId');
+        $this->db->join('tags', 'tags.tagId = questions_tags.tagId');
+        $query = $this->db->get("questions");
+        return ceil($query->num_rows() / 10);
     }
 
     function getUnansweredQuestionsCount() {
@@ -147,7 +207,25 @@ class Question extends MY_Model {
         $questions = $this->db->get("questions", 10, $offset);
         return $questions->result();
     }
-    
+
+    function getAllQuestionsWithTag($offset, $tagname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->where('tags.tagName', $tagname);
+        $this->db->join('questions_tags', 'questions_tags.questionId = questions.questionId');
+        $this->db->join('tags', 'tags.tagId = questions_tags.tagId');
+        $questions = $this->db->get("questions", 10, $offset);
+        return $questions->result();
+    }
+
+    function getAllQuestionsWithTagCount($tagname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->where('tags.tagName', $tagname);
+        $this->db->join('questions_tags', 'questions_tags.questionId = questions.questionId');
+        $this->db->join('tags', 'tags.tagId = questions_tags.tagId');
+        $query = $this->db->get("questions");
+        return ceil($query->num_rows() / 10);
+    }
+
     function getAllAdminQuestions() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $questions = $this->db->get("questions");

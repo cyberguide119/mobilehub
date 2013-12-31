@@ -140,6 +140,14 @@ class Api extends CI_Controller {
     private function loadTagsLogic($args) {
         if (array_key_exists('all', $args)) {
             $this->getAllTags();
+        } else if (array_key_exists('recent', $args)) {
+            $this->getRecentTags($args['recent'], str_replace("+", " ", $args['tag']));
+        } else if (array_key_exists('popular', $args)) {
+            $this->getPopularTags($args['popular'], $args['tag']);
+        } else if (array_key_exists('unanswered', $args)) {
+            $this->getUnansweredTags($args['unanswered'], $args['tag']);
+        } else if (array_key_exists('alltags', $args)) {
+            $this->getAllTagsForTag($args['alltags'], $args['tag']);
         }
     }
 
@@ -517,6 +525,35 @@ class Api extends CI_Controller {
     private function getAllTags() {
         $allTags = $this->Tag->get();
         echo json_encode($allTags);
+    }
+
+    private function getRecentTags($offset, $tagname) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getRecentQuestionsWithTag($offset, $tagname);
+        $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getRecentQuestionsWithTagCount($tagname);
+        echo json_encode($response);
+    }
+    private function getPopularTags($offset, $tagname) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getPopularQuestionsWithTag($offset, $tagname);
+        $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getPopularQuestionsWithTagCount($tagname);
+        echo json_encode($response);
+    }
+    private function getUnansweredTags($offset, $tagname) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getUnansweredQuestionsWithTag($offset, $tagname);
+        $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getUnansweredQuestionsWithTagCount($tagname);
+        echo json_encode($response);
+    }
+    private function getAllTagsForTag($offset, $tagname) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getAllQuestionsWithTag($offset, $tagname);
+        $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getAllQuestionsWithTagCount($tagname);
+        echo json_encode($response);
     }
 
     /**
@@ -975,4 +1012,5 @@ class Api extends CI_Controller {
     }
 
 }
+
 ?>

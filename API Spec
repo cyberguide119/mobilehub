@@ -46,6 +46,11 @@ Tags
 
 	index.php/api/tags/all
 
+	index.php/api/tags/recent/offset/tag/{tagname}
+	index.php/api/tags/popular/offset/tag/{tagname}
+	index.php/api/tags/unanswered/offset/tag/{tagname}
+	index.php/api/tags/all/offset/tag/{tagname}
+
 Search
 	index.php/api/search/questions/Q+
 	index.php/api/search/questions/advanced/Q+
