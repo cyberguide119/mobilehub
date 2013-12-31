@@ -113,6 +113,11 @@ class adminlib {
             $user->delete();
         }
     }
+    
+    public function getAdminStudents(){
+        $req = $this->ci->User->getAllStudents();
+        return $req;
+    }
 
 }
 

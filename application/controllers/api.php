@@ -198,6 +198,8 @@ class Api extends CI_Controller {
                 $this->getAdminUsers();
             } else if ($args['user'] === 'delete') {
                 $this->getAdminDeleteUsers();
+            } else if ($args['user'] === 'students') {
+                $this->getAdminStudents();
             }
         } else if (array_key_exists('requests', $args)) {
             if ($args['requests'] === 'tutor') {
@@ -1012,6 +1014,20 @@ class Api extends CI_Controller {
         $req->load($rId);
         $req->delete();
         $this->getAdminDeleteUsers();
+    }
+
+    private function getAdminStudents() {
+        $name = $this->authlib->is_loggedin();
+
+        if ($name) {
+            $reponse['message'] = "Success";
+            $reponse['aaData'] = $this->adminlib->getAdminStudents();
+            echo json_encode($reponse);
+        } else {
+            $reponse['message'] = "Error";
+            $reponse['type'] = "You are not authorized to view this content";
+            echo json_encode($reponse);
+        }
     }
 
 }

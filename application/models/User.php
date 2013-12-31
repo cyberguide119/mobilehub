@@ -167,11 +167,11 @@ class User extends MY_Model {
         $session_id = $this->session->userdata('session_id');
         $this->session->set_userdata(array('session_id' => $session_id));
         // remember current login
-        
+
         $time = time();
 
         $formattedDate = date("Y-m-d H:i:s", $time);
-        
+
         $row = $res->row_array();
         $this->db->insert('logins', array('name' => $row['username'], 'session_id' => $session_id, 'loginDate' => $formattedDate));
         return $row;
@@ -473,7 +473,7 @@ class User extends MY_Model {
         }
         return true;
     }
-    
+
     function getRegChartDetails() {
         // Get most recent 7 days
         $time = time();
@@ -487,7 +487,15 @@ class User extends MY_Model {
                 " AND '" . $formattedDate . "' GROUP BY regDate");
 
         return $query->result();
-    } 
+    }
+
+    function getAllStudents() {
+        $this->db->select(array('userId', 'username', 'email', 'fullName', 'joinedDate', 'loyality'));
+        $this->db->from('user');
+        $this->db->where('roleId', 3);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }
 

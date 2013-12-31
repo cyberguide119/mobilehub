@@ -23,6 +23,15 @@
             </table>
         </div>
     </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Appoint Tutor</h4>
+            <hr>
+            <table id="qTable2">
+            </table>
+        </div>
+    </div>
     <hr>
     <!-- Modal -->
     <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -47,6 +56,7 @@
 
     $(document).ready(function() {
         initQuestTable();
+        initQuestTable2();
     });
 
     function initQuestTable() {
@@ -81,6 +91,43 @@
                     "sClass": "center",
                     "mRender": function(url, type, row) {
                         return  '<a href="javascript: deleteUser(' + row['userId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-trash"></i></a>';
+                    }
+                }]
+        });
+    }
+
+    function initQuestTable2() {
+        $('#qTable2').dataTable({
+            "sAjaxSource": '/MobileHub/index.php/api/admin/user/students',
+            "sServerMethod": "POST",
+            "aoColumns": [{
+                    "mData": "userId",
+                    "sTitle": "Id"
+                }, {
+                    "mData": "username",
+                    "sTitle": "Username",
+                    "mRender": function(url, type, row) {
+                        return  '<a href="/MobileHub/index.php/profile/?user=' + url + '">' + url + '</a>';
+                    }
+                }, {
+                    "mData": "email",
+                    "sTitle": "Email"
+                }, {
+                    "mData": "fullName",
+                    "sTitle": "Full Name"
+                }, {
+                    "mData": "joinedDate",
+                    "sTitle": "Joined Date"
+                }, {
+                    "mData": "loyality",
+                    "sTitle": "Points"
+                }, {
+                    "sTitle": "Action",
+                    "mData": "loyality",
+                    "bSortable": false,
+                    "sClass": "center",
+                    "mRender": function(url, type, row) {
+                        return  '<a href="javascript: promoteUser(' + row['userId'] + ');" class="btn btn-sm btn-info" title="Promote User"><i class="btn-icon-only glyphicon glyphicon-open"></i></a>';
                     }
                 }]
         });
