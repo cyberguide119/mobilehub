@@ -146,6 +146,8 @@
                         $('#errorModal').modal('show');
                         var dt = $('#qTable').dataTable();
                         dt.fnReloadAjax();
+                        var dt2 = $('#qTable2').dataTable();
+                        dt2.fnReloadAjax();
                         return true;
                     } else {
                         $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
@@ -175,6 +177,8 @@
                         $('#errorModal').modal('show');
                         var dt = $('#qTable2').dataTable();
                         dt.fnReloadAjax();
+                        var dt2 = $('#qTable').dataTable();
+                        dt2.fnReloadAjax();
                         return true;
                     } else {
                         $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
