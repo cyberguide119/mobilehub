@@ -167,8 +167,13 @@ class User extends MY_Model {
         $session_id = $this->session->userdata('session_id');
         $this->session->set_userdata(array('session_id' => $session_id));
         // remember current login
+        
+        $time = time();
+
+        $formattedDate = date("Y-m-d H:i:s", $time);
+        
         $row = $res->row_array();
-        $this->db->insert('logins', array('name' => $row['username'], 'session_id' => $session_id));
+        $this->db->insert('logins', array('name' => $row['username'], 'session_id' => $session_id, 'loginDate' => $formattedDate));
         return $row;
     }
 

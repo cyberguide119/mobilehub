@@ -71,6 +71,7 @@ User
 
 Admin - All POST
 	index.php/api/admin/details/basic
+	index.php/api/admin/details/logins
 
 	index.php/api/admin/question/details
 

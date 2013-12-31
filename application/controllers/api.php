@@ -534,6 +534,7 @@ class Api extends CI_Controller {
         $response['totalCount'] = $this->ci->Question->getRecentQuestionsWithTagCount($tagname);
         echo json_encode($response);
     }
+
     private function getPopularTags($offset, $tagname) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getPopularQuestionsWithTag($offset, $tagname);
@@ -541,6 +542,7 @@ class Api extends CI_Controller {
         $response['totalCount'] = $this->ci->Question->getPopularQuestionsWithTagCount($tagname);
         echo json_encode($response);
     }
+
     private function getUnansweredTags($offset, $tagname) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getUnansweredQuestionsWithTag($offset, $tagname);
@@ -548,6 +550,7 @@ class Api extends CI_Controller {
         $response['totalCount'] = $this->ci->Question->getUnansweredQuestionsWithTagCount($tagname);
         echo json_encode($response);
     }
+
     private function getAllTagsForTag($offset, $tagname) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getAllQuestionsWithTag($offset, $tagname);
