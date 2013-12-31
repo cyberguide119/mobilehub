@@ -46,16 +46,17 @@
                     if ($pw === $conf_pw) {
                         $.post("/MobileHub/index.php/api/auth/reset", jsonObj, function(resultsData) {
                             resultsData = jQuery.parseJSON(resultsData);
+                            console.log(resultsData.message);
                             if (resultsData.message === "Success") {
-                                $('#errorModal').html("<p><center>" + content.type + "</center></p>");
+                                $('#errModalBody').html("<p><center>" + resultsData.type + "</center></p>");
                                 $('#errorModal').modal('show');
                             } else {
-                                $('#errorModal').html("<p><center>" + content.type + "</center></p>");
+                                $('#errModalBody').html("<p><center>" + resultsData.type + "</center></p>");
                                 $('#errorModal').modal('show');
 
                             }
                         }).fail(function() {
-                            $('#errorModal').html("<p><center>" + content.type + "</center></p>");
+                            $('#errModalBody').html("<p><center>" + resultsData.type + "</center></p>");
                             $('#errorModal').modal('show');
                         });
 //                        $.ajax({
