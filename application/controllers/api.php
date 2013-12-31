@@ -318,7 +318,7 @@ class Api extends CI_Controller {
             return;
         } else {
             $response['message'] = "Error";
-            $response['type'] = "Something went wrong";
+            $response['type'] = $res;
             echo json_encode($response);
             return;
         }

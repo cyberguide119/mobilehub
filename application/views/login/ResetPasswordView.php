@@ -18,23 +18,54 @@
         }
         ?>
     </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Info</h4>
+                </div>
+                <div class="modal-body" id="errModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
 
 <script type="text/javascript">
                 function updatePass() {
-                    $pw = $("#newPw").text();
-                    $conf_pw = $("#newPwConf").text();
-                    jsonObj = {"email" : <?php echo $email; ?>, "hash" : <?php echo $hash?>, "pass" : $pw};
-                    if ($pw !== $conf_pw) {
+                    $pw = $("#newPw").val();
+                    $conf_pw = $("#newPwConf").val();
+                    jsonObj = {"email": "<?php echo $email; ?>", "hash": "<?php echo $hash ?>", "pass": $pw};
+
+                    if ($pw === $conf_pw) {
                         $.post("/MobileHub/index.php/api/auth/reset", jsonObj, function(resultsData) {
                             resultsData = jQuery.parseJSON(resultsData);
                             if (resultsData.message === "Success") {
-                                alert("success");
+                                $('#errorModal').html("<p><center>" + content.type + "</center></p>");
+                                $('#errorModal').modal('show');
                             }
-                            return true;
                         }).fail(function() {
-                            alert("error");
+                            $('#errorModal').html("<p><center>" + content.type + "</center></p>");
+                            $('#errorModal').modal('show');
                         });
+//                        $.ajax({
+//                            type: 'POST',
+//                            url: "/MobileHub/index.php/api/auth/reset",
+//                            data: {},
+//                            success: function(data) {
+//                                console.log(data);
+//                            },
+//                            error: function(xhr, status, errorThrown) {
+//                                console.log(xhr); //could be alert if you don't use the dev tools
+//                            },
+//                            dataType: "json"
+//                        });
                     }
                 }
 </script>

@@ -419,20 +419,20 @@ class User extends MY_Model {
     }
 
     function updateViaHash($email, $hash, $pass) {
-        $this->db->where(array('email' => $email, 'hash' => $hash));
+        $this->db->where(array('email' => $email, 'emailHash' => $hash));
         $res = $this->db->get('user');
         if ($res->num_rows() != 1) { // should be only ONE matching row!!
-            return "Your profile does not exist";
+            return "Expired session or invalid data!";
         }
 
         $user = $res->result();
         if (!($user[0]->isActive)) {
-            return "Your profile is not active";
+            return "Your profile is not active!";
         }
 
         $unique_salt = $this->unique_salt();
         $hashpwd = sha1($unique_salt . $pass);
-        $this->db->update('user', array("password" => $hashpwd, "salt" => $unique_salt));
+        $this->db->update('user', array("password" => $hashpwd, "salt" => $unique_salt, "emailHash" => ""));
         return true;
     }
 
