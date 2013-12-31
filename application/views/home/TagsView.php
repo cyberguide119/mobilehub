@@ -53,8 +53,7 @@
                     });
                 }
 
-                function getTagsString($tags)
-                {
+                function getTagsString($tags) {
                     var str = "";
                     for (var i = 0; i < $tags.length; i++) {
                         str += "<button type='button' class='btn btn-info btn-xs' title='Approved' text='Category'>" + $tags[i] + "</button>&nbsp";
@@ -67,10 +66,6 @@
                     $("#tagName").text($tagName.replace(/\+/g, ' '));
                     changeTab('recent', 0);
                 });
-
-                function replaceAll(find, replace, str) {
-                    return str.replace(new RegExp(find, 'g'), replace);
-                }
 
                 function loadUI(resultsData) {
                     if (resultsData.results.length === 0) {
