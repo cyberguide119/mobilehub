@@ -145,6 +145,22 @@ class questionslib {
         $answer->updateAnswer($ansId, $answer, $quesId);
         return true;
     }
+    
+    public function promoteAnswer($quesId, $ansId) {
+        $answer = new Answer();
+        $answer->load($ansId);
+        
+        $question = new Question();
+        $question->load($quesId);
+        
+        if($question->bestAnswerId !== NULL){
+            return false;
+        }
+
+        $answer->promoteAnswer($quesId, $ansId);
+        $question->updateQuestion($quesId, array("bestAnswerId" => $ansId));
+        return true;
+    }
 
     private function saveTags($tags, $qTitle) {
         $splittedTags = explode(",", $tags);

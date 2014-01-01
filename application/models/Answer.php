@@ -125,6 +125,11 @@ class Answer extends MY_Model {
         $this->db->where(array('answerId' => $ansId, 'questionId' => $qId));
         $this->db->update('answers', $data);
     }
+    
+    function promoteAnswer($quesId, $ansId) {
+        $this->db->where(array('answerId' => $ansId, 'questionId' => $quesId));
+        $this->db->update('answers', array("isBestAnswer" => true));
+    }
 
     /**
      * 

@@ -169,6 +169,8 @@ class Api extends CI_Controller {
             $this->deleteAnswer();
         } else if (array_key_exists('update', $args)) {
             $this->updateAnswer();
+        } else if (array_key_exists('promote', $args)) {
+            $this->promoteAnswer();
         }
     }
 
@@ -777,6 +779,32 @@ class Api extends CI_Controller {
         }
         echo json_encode($response);
     }
+    
+    private function promoteAnswer() {
+        $quesId = $this->input->post('questionId');
+        $promotersName = $this->input->post('username');
+        $ansId = $this->input->post('answerId');
+
+        $name = $this->authlib->is_loggedin();
+        if ($name) {
+            if ($promotersName === $name) {
+                if ($this->questionslib->promoteAnswer($quesId, $ansId)) {
+                    $response["message"] = "Success";
+                    $response["type"] = "Answer chosen as the best answer for this question";
+                } else {
+                    $response["message"] = "Error";
+                    $response["type"] = "Oops, something went wrong!";
+                }
+            } else {
+                $response["message"] = "Error";
+                $response["type"] = "Sorry, you need to have permissions to promote an answer. You must be the author of this question";
+            }
+        } else {
+            $response["message"] = "Error";
+            $response["type"] = "You need to log in before promoting an answer";
+        }
+        echo json_encode($response);
+    }
 
     /**
      * All methods related to user profiles
@@ -1031,7 +1059,7 @@ class Api extends CI_Controller {
             echo json_encode($reponse);
         }
     }
-    
+
     private function getAdminStudentsPromote() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
