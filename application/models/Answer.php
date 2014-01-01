@@ -165,9 +165,9 @@ class Answer extends MY_Model {
         $date->sub(new DateInterval('P7D'));
         $aWeekBack = $date->format('Y-m-d');
 
-        $query = $this->db->query("SELECT DATE(answeredOn) AS ansDate, count(answerId) AS value FROM answers WHERE answeredOn BETWEEN '" . $aWeekBack . "'" .
-                " AND '" . $formattedDate . "' GROUP BY ansDate");
-
+        $query = $this->db->query("SELECT DATE(answeredOn) AS ansDate, count(answerId) AS value FROM answers WHERE answeredOn BETWEEN '" . $aWeekBack . " 00:00:00'" .
+                " AND '" . $formattedDate . " 23:59:59' GROUP BY ansDate");
+        //var_dump($formattedDate);
         return $query->result();
     }
 

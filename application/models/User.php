@@ -483,8 +483,8 @@ class User extends MY_Model {
         $date->sub(new DateInterval('P7D'));
         $aWeekBack = $date->format('Y-m-d');
 
-        $query = $this->db->query("SELECT DATE(joinedDate) AS regDate, count(username) AS value FROM user WHERE joinedDate BETWEEN '" . $aWeekBack . "'" .
-                " AND '" . $formattedDate . "' GROUP BY regDate");
+        $query = $this->db->query("SELECT DATE(joinedDate) AS regDate, count(username) AS value FROM user WHERE joinedDate BETWEEN '" . $aWeekBack . " 00:00:00'" .
+                " AND '" . $formattedDate . " 23:59:59' GROUP BY regDate");
 
         return $query->result();
     }

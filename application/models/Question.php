@@ -392,8 +392,8 @@ class Question extends MY_Model {
         $date->sub(new DateInterval('P7D'));
         $aWeekBack = $date->format('Y-m-d');
 
-        $query = $this->db->query("SELECT DATE(askedOn) AS queDate, count(questionId) AS value FROM questions WHERE askedOn BETWEEN '" . $aWeekBack . "'" .
-                " AND '" . $formattedDate . "' GROUP BY queDate");
+        $query = $this->db->query("SELECT DATE(askedOn) AS queDate, count(questionId) AS value FROM questions WHERE askedOn BETWEEN '" . $aWeekBack . " 00:00:00'" .
+                " AND '" . $formattedDate . " 23:59:59' GROUP BY queDate");
 
         return $query->result();
     }
