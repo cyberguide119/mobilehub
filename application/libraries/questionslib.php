@@ -401,6 +401,7 @@ class questionslib {
 
                 $answers[] = array(
                     "answerId" => $ans->answerId,
+                    "isBestAnswer" => $ans->isBestAnswer,
                     "description" => $ans->description,
                     "answerdUsername" => $answeredBy,
                     "votes" => $ans->netVotes,

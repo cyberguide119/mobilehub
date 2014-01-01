@@ -23,6 +23,7 @@ class Answer extends MY_Model {
     public $answeredOn;
     public $description;
     public $netVotes;
+    public $isBestAnswer;
 
     function __construct() {
         parent::__construct();

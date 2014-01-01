@@ -199,7 +199,11 @@
                                             + "<span class='vote-count' id='ans" + result.answerId + "'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
                                             + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up' onclick='voteAnswer(" + result.answerId + ",true);'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
                                             + "<button type='button' class='btn btn-danger btn-xs' title='Vote down' onclick='voteAnswer(" + result.answerId + ",false);'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
-                                            + "<div class='chat-body clearfix'><div class='header'>"
+                                            + "<div class='chat-body clearfix'>";
+
+                                    answersList += (result.isBestAnswer !== "null" && result.isBestAnswer !== "0") ? '<span class="label label-success">Best Answer</span>' : "";
+
+                                    answersList += "<div class='header'>"
                                             + "<strong class='primary-font'><a href='/MobileHub/index.php/profile/?user=" + result.answerdUsername + "'>" + result.answerdUsername + "</a></strong><small class='pull-right text-muted'>"
                                             + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD hh:mm Z").fromNow() + "</small></div>"
                                             + "<p>" + result.description + "</p></div></li></ul>";
