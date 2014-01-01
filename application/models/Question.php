@@ -33,6 +33,9 @@ class Question extends MY_Model {
     public $closeReason;
     public $closedDate;
     public $closedByUserId;
+    public $isEdited;
+    public $editedDate;
+    public $editedByUserId;
 
     function __construct() {
         parent::__construct();

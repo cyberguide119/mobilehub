@@ -60,8 +60,9 @@ class questionslib {
         $question->questionTitle = $qTitle;
         $question->questionDescription = nl2br($qDesc);
         $question->categoryId = $qCategory;
-        $question->askedOn = $formattedDate;
-        $question->askerUserId = $userId;
+        $question->isEdited = true;
+        $question->editedDate = $formattedDate;
+        $question->editedByUserId = $userId;
 
         $question->updateQuestion($qId, $question);
         $this->saveTags($qTags, $qTitle);
@@ -412,6 +413,7 @@ class questionslib {
         $cat->load($question->categoryId);
 
         $questionResult = array(
+            "questionId" => $question->questionId,
             "questionTitle" => $question->questionTitle,
             "questionDescription" => $question->questionDescription,
             "askedOn" => $question->askedOn,
