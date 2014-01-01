@@ -1,5 +1,15 @@
 <script src="<?php echo site_url('../resources/js/jquery.bootpag.min.js') ?>"></script>
 <div class="container">
+    <div class="row col-sm-12 col-md-12">
+        <div class="alert home-alert">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                ×</button>
+            <span class="glyphicon glyphicon-ok"></span> <strong>What is MobileHub</strong>
+            <hr class="message-inner-separator" id="message-inner">
+            <p>
+                MobileHub is a question and answer site for professional and enthusiast mobile developers. It's 100% free</p>
+        </div>
+    </div>
     <div>
         <ul id="myTab" class="nav nav-tabs">
             <li class="active" onclick="changeTab('recent', 0);"><a href="#home" data-toggle="tab">Recent</a></li>
@@ -62,6 +72,9 @@
 
                 $(document).ready(function() {
                     changeTab('recent', 0);
+                    if("<?php echo $name?>" !== ""){
+                        $(".alert").remove();
+                    }
                 });
 
                 function loadUI(resultsData) {
