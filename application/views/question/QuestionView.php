@@ -300,6 +300,7 @@
                     function editQuestion(qId, votes, answers) {
                         if (votes > 0 || answers > 0) {
                             //Show error that the user cannot edit this question when it has votes or answers
+                            $('#editModal').modal('hide');
                             $('#errModalBody').html("<p><center>" + "Sorry, you cannot edit this question as it has votes or answers" + "</center></p>");
                             $('#errorModal').modal('show');
                         } else {
