@@ -42,10 +42,19 @@
         <div class="col-md-1">
         </div>
         <div class="col-md-11">
+            <?php
+            if ($isQuestionEdited) {
+                echo '<div class="user_info pull-right">Edited By<div class="thumb_with_border"><img src="/MobileHub/resources/img/default.png" width="25" height="25" alt="Profile Pic">';
+                echo '<a href="/MobileHub/index.php/profile/?user=' . $editedByUserName . '"> ' . $editedByUserName . ' </a><span style="font-size: 8pt;"> • </span>';
+                echo '<h4 style="display: inline;">' . $editedUserPoints . '</h4>';
+                echo '</div><div style="float: left; line-height: .9;"></div><div style="clear: both;"></div></div>';
+            }
+            ?>
+
             <div class="user_info pull-right">
                 Asked By
                 <div class="thumb_with_border">
-                    <a href="/cood/users/52af3886a67e6/Sahan"><img src="/cood/img/answerAvatar.png" width="25" height="25" alt="Sahan picture"></a>
+                    <img src="/MobileHub/resources/img/default.png" width="25" height="25" alt="Profile Pic">
                     <a href="#" id="askerName"></a> 
                     <span style="font-size: 8pt;">•</span>
                     <h4 style="display: inline;" id="askerPoints"></h4>
@@ -64,7 +73,14 @@
         echo '<p>' . $closeReason . '</p>';
         echo '</div>';
     }
+
+    if ($isQuestionEdited) {
+        echo '<div class="alert alert-warning" id="editedReasonAlert" style="background-color: #C4C4C4">';
+        echo '<strong>This question has been last edited by<a href="/MobileHub/index.php/profile/?user=' . $editedByUserName . '"> ' . $editedByUserName . '</strong> </a>due to the following reason on <i>' . $editedDate . '</i>';
+        echo '</div>';
+    }
     ?>
+
     <br>
     <div class="row">
         <div class="col-md-12">

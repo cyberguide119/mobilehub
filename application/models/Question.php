@@ -356,6 +356,26 @@ class Question extends MY_Model {
         return $question;
     }
 
+    function isQuestionEdited($qId) {
+        $this->db->select("isEdited");
+        $this->db->where("questionId", $qId);
+        $question = $this->db->get("questions")->row();
+        return $question->isEdited;
+    }
+
+    /**
+     * 
+     * @param type $qId
+     * @return array
+     */
+    function getQuestionEditedData($qId) {
+        $this->db->select(array('questions.editedDate', 'questions.editedByUserId', 'user.username', 'user.loyality', 'user.reputation'));
+        $this->db->where(array("questionId" => $qId, "isEdited" => true));
+        $this->db->join('user', 'user.userId = questions.editedByUserId');
+        $question = $this->db->get("questions")->row();
+        return $question;
+    }
+
     /**
      * 
      * @return type array

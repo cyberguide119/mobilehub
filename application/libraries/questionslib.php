@@ -457,6 +457,14 @@ class questionslib {
         return $this->ci->Question->getQuestionClosedData($qId);
     }
 
+    public function isQuestionEdited($qId) {
+        return $this->ci->Question->isQuestionEdited($qId);
+    }
+
+    public function getQuestionEditedData($qId) {
+        return $this->ci->Question->getQuestionEditedData($qId);
+    }
+
 }
 
 ?>

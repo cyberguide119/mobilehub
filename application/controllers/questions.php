@@ -43,6 +43,20 @@ class Questions extends MY_Controller {
         $this->loadHeaderData('showQuestion');
         $showAnswerBox = false;
         $username = $this->authlib->is_loggedin();
+
+        if ($this->questionslib->isQuestionEdited($qId)) {
+            $question = $this->questionslib->getQuestionEditedData($qId);
+            $data['isQuestionEdited'] = true;
+            $dateClosed = explode(" ", $question->editedDate);
+            $data['editedDate'] = $dateClosed[0];
+            $data['editedByUserName'] = $question->username;
+            $netPoints = (($question->loyality === NULL) ? 0 : $question->loyality) + (($question->reputation === NULL) ? 0 : $question->reputation);
+            $data['editedUserPoints'] = $netPoints;
+        } else {
+            $showAnswerBox = true;
+            $data['isQuestionEdited'] = false;
+        }
+        
         if ($username) {
             if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
 
