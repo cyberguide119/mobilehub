@@ -210,40 +210,41 @@
                             $("#qTags").html(getTagsString(resultsData.questionDetails.tags));
 
                             var isAuthor = ("<?php echo $name ?>" === resultsData.questionDetails.asker.username);
-                            var hasBestAnswer = (resultsData.questionDetails.bestAnswerId !== null && resultsData.questionDetails.bestAnswerId !== 0);
+                            var hasBestAnswer = (resultsData.questionDetails.bestAnswerId !== null && resultsData.questionDetails.bestAnswerId !== "0");
 
                             if (resultsData.questionDetails.answers === null || resultsData.questionDetails.answers.length === 0) {
                                 $("#answersList").html("<h4>No answers for this question yet!</h4>");
                             } else {
-                                loadAnswerListUI(resultsData);
+                                loadAnswerListUI(resultsData, isAuthor, hasBestAnswer);
                                 $("#btnEditQuestion").attr("onclick", "editQuestion(" + resultsData.questionDetails.questionId + "," + resultsData.questionDetails.votes + "," + resultsData.questionDetails.answerCount + ")");
 
                             }
                         }
 
-                        function loadAnswerListUI(resultsData) {
-                            for (var i = 0; i < resultsData.questionDetails.answers.length; i++) {
-                                var result = resultsData.questionDetails.answers[i];
-                                var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
-                                        + "<span class='vote-count' id='ans" + result.answerId + "'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
-                                        + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up' onclick='voteAnswer(" + result.answerId + ",true);'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
-                                        + "<button type='button' class='btn btn-danger btn-xs' title='Vote down' onclick='voteAnswer(" + result.answerId + ",false);'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
-                                        + "<div class='chat-body clearfix'>";
+                    }
 
-                                answersList += (result.isBestAnswer !== null && result.isBestAnswer !== "0") ? '<span class="label label-success" title="Choosed as the best answer by the author of this question">Best Answer</span>' : "";
+                    function loadAnswerListUI(resultsData, isAuthor, hasBestAnswer) {
+                        $("#answersList").html("");
+                        for (var i = 0; i < resultsData.questionDetails.answers.length; i++) {
+                            var result = resultsData.questionDetails.answers[i];
+                            var answersList = "<li class='left clearfix'><span class='chat-img pull-left'><div class=''><div class='vote-box' title='Votes'>"
+                                    + "<span class='vote-count' id='ans" + result.answerId + "'>" + result.votes + "</span><span class='vote-label'>votes</span></div>"
+                                    + "<div class='action'><button type='button' class='btn btn-success btn-xs' title='Vote up' onclick='voteAnswer(" + result.answerId + ",true);'><span class='glyphicon glyphicon-thumbs-up'></span></button>&nbsp"
+                                    + "<button type='button' class='btn btn-danger btn-xs' title='Vote down' onclick='voteAnswer(" + result.answerId + ",false);'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
+                                    + "<div class='chat-body clearfix'>";
 
-                                answersList += "<div class='header'>"
-                                        + "<strong class='primary-font'><a href='/MobileHub/index.php/profile/?user=" + result.answerdUsername + "'>" + result.answerdUsername + "</a></strong>";
-                                answersList += (isAuthor && !hasBestAnswer) ? "<small><a href='' data-toggle='modal' data-target='#bestAnsModal'>  (Choose as Best Answer <span class='glyphicon glyphicon-star'></span>)</a></small>" : "";
-                                answersList += "<small class='pull-right text-muted'>"
-                                        + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD hh:mm Z").fromNow() + "</small></div>"
-                                        + "<p>" + result.description + "</p></div></li></ul>";
-                                $("#answersList")
-                                        .append(answersList);
-                                $("#btnChooseBestAns").attr("onclick", "chooseBestAnswer(" + resultsData.questionDetails.questionId + "," + result.answerId + ")");
+                            answersList += (result.isBestAnswer !== null && result.isBestAnswer !== "0") ? '<span class="label label-success" title="Choosed as the best answer by the author of this question">Best Answer</span>' : "";
 
-                            }
+                            answersList += "<div class='header'>"
+                                    + "<strong class='primary-font'><a href='/MobileHub/index.php/profile/?user=" + result.answerdUsername + "'>" + result.answerdUsername + "</a></strong>";
+                            answersList += (isAuthor && !hasBestAnswer) ? "<small><a onclick='setSelectedAns(" + result.answerId + "); return false;' data-toggle='modal' data-target='#bestAnsModal'>  (Choose as Best Answer <span class='glyphicon glyphicon-star'></span>)</a></small>" : "";
+                            answersList += "<small class='pull-right text-muted'>"
+                                    + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD hh:mm Z").fromNow() + "</small></div>"
+                                    + "<p>" + result.description + "</p></div></li></ul>";
+                            $("#answersList")
+                                    .append(answersList);
                         }
+                        $("#btnChooseBestAns").attr("onclick", "chooseBestAnswer(" + resultsData.questionDetails.questionId + ")");
                     }
 
                     function voteAnswer(answerId, isUpVote) {
@@ -344,19 +345,22 @@
                         }
                     }
 
-                    function chooseBestAnswer(qId, ansId) {
-                        $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>", "answerId": ansId};
+                    function setSelectedAns(ansId) {
+                        window.selectedAns = ansId;
+                    }
+
+                    function chooseBestAnswer(qId) {
+                        $('#bestAnsModal').modal('hide');
+                        ansId = window.selectedAns;
+                        $jsonObj = {'questionId': qId, 'username': "<?php echo $name; ?>", "answerId": ansId};
                         $.post("/MobileHub/index.php/api/answer/promote/", $jsonObj, function(content) {
 
                             // Deserialise the JSON
                             content = jQuery.parseJSON(content);
                             if (content.message === "Success") {
-                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                                $('#errModalBody').modal('show');
-
                                 $.get("/MobileHub/index.php/api/question/details/" + "<?php echo $questionId ?>", function(resultsData) {
                                     resultsData = jQuery.parseJSON(resultsData);
-                                    loadAnswersUI(resultsData);
+                                    loadAnswerListUI(resultsData, true, true);
                                     return true;
                                 });
                             } else {

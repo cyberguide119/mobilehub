@@ -145,15 +145,15 @@ class questionslib {
         $answer->updateAnswer($ansId, $answer, $quesId);
         return true;
     }
-    
+
     public function promoteAnswer($quesId, $ansId) {
         $answer = new Answer();
         $answer->load($ansId);
-        
+
         $question = new Question();
         $question->load($quesId);
-        
-        if($question->bestAnswerId !== NULL){
+
+        if ($question->bestAnswerId !== NULL || $question->bestAnswerId === 0) {
             return false;
         }
 
