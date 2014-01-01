@@ -30,7 +30,7 @@ class profile extends MY_Controller {
     }
 
     private function showProfile($profile) {
-        $this->loadHeaderData();
+        $this->loadHeaderData('profile');
         $data['user'] = $profile;
 
         $name = $this->authlib->is_loggedin();
@@ -61,7 +61,7 @@ class profile extends MY_Controller {
         $profile = $this->input->get('user');
         $name = $this->authlib->is_loggedin();
         if ($name === $profile) {
-            $this->loadHeaderData();
+            $this->loadHeaderData('editProfile');
             $data['user'] = $profile;
             $this->load->view('user/EditUserView', $data);
             $this->loadFooterData();
@@ -74,7 +74,7 @@ class profile extends MY_Controller {
         $profile = $this->input->get('user');
         $name = $this->authlib->is_loggedin();
         if ($name === $profile) {
-            $this->loadHeaderData();
+            $this->loadHeaderData('deleteProfile');
             $data['user'] = $profile;
             $this->load->view('user/DeleteUserView', $data);
             $this->loadFooterData();

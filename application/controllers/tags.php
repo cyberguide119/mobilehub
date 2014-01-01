@@ -29,7 +29,7 @@ class Tags extends MY_Controller {
         if ($results === false) {
             redirect('custom404');
         }
-        $this->loadHeaderData();
+        $this->loadHeaderData('tags');
         $data["results"] = $results;
         $cat = new Category();
         $categories = $cat->get();

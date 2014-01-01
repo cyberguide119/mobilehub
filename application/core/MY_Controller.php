@@ -20,18 +20,27 @@ class MY_Controller extends CI_Controller {
         $this->load->library(array('authlib', 'permlib'));
     }
 
-    public function loadHeaderData() {
+    public function loadHeaderData($page) {
+        $activeLink = array(
+            "tutorials" => "#",
+            "categories" => "#",
+            "about" => "#"
+        );
+        $activeLink[$page] = "active";
+        
         $loggedin = $this->authlib->is_loggedin();
         if ($loggedin) {
             $isAdmin = $this->permlib->isAdmin($loggedin);
             $authData['isAdmin'] = $isAdmin;
         }
         $authData['name'] = $loggedin;
+        $authData['activeLink'] = $activeLink;
         $this->load->view('common/HeaderView', $authData);
 
         $data['errmsg'] = '';
         $data['subview'] = 'login/LoginView';
         $data['notLoggedInSubview'] = 'errors/ErrorNotLoggedIn';
+        
         $this->load->view('common/PopupView', $data);
     }
 

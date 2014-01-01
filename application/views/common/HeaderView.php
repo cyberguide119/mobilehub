@@ -47,8 +47,8 @@ and open the template in the editor.
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="<?php echo site_url(); ?>">Tutorials</a></li>
-                        <li class="dropdown">
+                        <li class="<?php echo $activeLink['tutorials']?>"><a href="<?php echo site_url(); ?>">Tutorials</a></li>
+                        <li class="dropdown class="<?php echo $activeLink['categories']?>"">
                             <a href="<?php echo site_url(); ?>" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo site_url(); ?>">Android</a></li>
@@ -60,7 +60,7 @@ and open the template in the editor.
                                 <li><a href="<?php echo site_url(); ?>">General</a></li>
                             </ul>
                         </li>
-                        <li><a href="<?php echo site_url('homepage/about'); ?>">About Us</a></li>
+                        <li class="<?php echo $activeLink['about']?>"><a href="<?php echo site_url('homepage/about'); ?>">About Us</a></li>
                     </ul>
                     <div class="col-sm-3 col-md-3 pull-left">
                         <form action="/MobileHub/index.php/question/search" class="navbar-form" method="get" role="search" id="searchForm" name="searchForm">

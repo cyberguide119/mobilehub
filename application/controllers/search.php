@@ -26,7 +26,7 @@ class Search extends MY_Controller {
     }
 
     private function results($results) {
-        $this->loadHeaderData();
+        $this->loadHeaderData('search');
         $data["results"] = $results;
         $cat = new Category();
         $categories = $cat->get();

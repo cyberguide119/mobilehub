@@ -24,13 +24,13 @@ class Questions extends MY_Controller {
 
     public function ask() {
         if ($this->authlib->is_loggedin()) {
-            $this->loadHeaderData();
+            $this->loadHeaderData('ask');
             $cat = new Category();
             $categories = $cat->get();
             $this->load->view('question/AskView', array("categories" => $categories));
             $this->loadFooterData();
         } else {
-            $this->loadHeaderData();
+            $this->loadHeaderData('error');
             $this->load->view('errors/ErrorNotLoggedIn');
             $this->loadFooterData();
         }
@@ -40,7 +40,7 @@ class Questions extends MY_Controller {
         $qId = $this->input->get('id');
         $data['questionId'] = $qId;
 
-        $this->loadHeaderData();
+        $this->loadHeaderData('showQuestion');
         $showAnswerBox = false;
         $username = $this->authlib->is_loggedin();
         if ($username) {
@@ -94,7 +94,7 @@ class Questions extends MY_Controller {
 
     public function edit() {
         if ($this->authlib->is_loggedin()) {
-            $this->loadHeaderData();
+            $this->loadHeaderData('editQuestion');
             $cat = new Category();
             $categories = $cat->get();
 
@@ -105,7 +105,7 @@ class Questions extends MY_Controller {
             $this->load->view('question/EditQuestionView', $data);
             $this->loadFooterData();
         } else {
-            $this->loadHeaderData();
+            $this->loadHeaderData('error');
             $this->load->view('errors/ErrorNotLoggedIn');
             $this->loadFooterData();
         }
@@ -125,7 +125,7 @@ class Questions extends MY_Controller {
             $data['questionId'] = $qId;
             $data['answerId'] = $ansId;
 
-            $this->loadHeaderData();
+            $this->loadHeaderData('editAnswer');
             $this->load->view('question/EditAnswerView', $data);
             if ($this->permlib->userHasPermission($username, "EDIT_ANSWER")) {
                 $this->load->view('question/AnswerEditSubView');

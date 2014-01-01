@@ -25,18 +25,17 @@ class Homepage extends MY_Controller {
     }
 
     public function index() {
-        $this->loadHeaderData();
+        $this->loadHeaderData('homepage');
         $this->loadQuestions();
         $this->loadFooterData();
     }
 
     private function loadQuestions() {
-        //$questions = $this->ci->questionslib->getRecentQuestions();
         $this->load->view('home/HomepageView');
     }
 
     public function about() {
-        $this->loadHeaderData();
+        $this->loadHeaderData('about');
         $this->load->view('home/AboutView');
         $this->loadFooterData();
     }

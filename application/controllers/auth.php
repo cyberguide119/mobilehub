@@ -31,33 +31,17 @@ class auth extends MY_Controller {
     }
 
     public function register() {
-        $this->loadHeaderData();
+        $this->loadHeaderData('register');
         $data['errmsg'] = '';
         $this->load->view('login/RegisterView', $data);
         $this->loadFooterData();
     }
-
-//    public function login() {
-//        $this->loadHeaderData();
-//        $this->load->view('login/LoginView');
-//        $this->loadFooterData();
-//    }
-
+    
     public function forgot() {
-        $this->loadHeaderData();
+        $this->loadHeaderData('forgot');
         $data['errmsg'] = '';
         $this->load->view('login/ForgotPasswordView', $data);
         $this->loadFooterData();
-    }
-
-    public function authenticate() {
-        //$credentials = $_POST;
-//        $session_id = $this->session->userdata('session_id');
-//
-//        $response = $this->curl->simple_post('api/authenticate', $credentials);
-//        //$this->session->unset_userdata('session_id');
-//        $this->session->set_userdata('session_id', $session_id);
-//        echo $response;
     }
 
     public function reset() {
@@ -68,7 +52,7 @@ class auth extends MY_Controller {
         $hashExists = $this->ci->user->hashExists($email, $hash);
         if ($fullName && $hashExists) {
             // Get the first name and send the email to the user
-            $this->loadHeaderData();
+            $this->loadHeaderData('reset');
             $data['errmsg'] = '';
             $data['email'] = $email;
             $data['hash'] = $hash;
