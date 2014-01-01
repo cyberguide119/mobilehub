@@ -76,7 +76,7 @@
 
     if ($isQuestionEdited) {
         echo '<div class="alert alert-warning" id="editedReasonAlert" style="background-color: #C4C4C4">';
-        echo '<strong>This question has been last edited by<a href="/MobileHub/index.php/profile/?user=' . $editedByUserName . '"> ' . $editedByUserName . '</strong> </a>due to the following reason on <i>' . $editedDate . '</i>';
+        echo '<strong>This question has been last edited by<a href="/MobileHub/index.php/profile/?user=' . $editedByUserName . '"> ' . $editedByUserName . '</strong> </a> on <i>' . $editedDate . '</i>';
         echo '</div>';
     }
     ?>
