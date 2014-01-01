@@ -177,13 +177,13 @@
                                         var result = resultsData.questions[i];
                                         dateAsked = result.askedOn.split(' ');
                                         var listItem = "<li class='list-group-item' style='margin-bottom: 5px; border: none; border-bottom: 1px solid #ddd;'>"
-                                                + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-2'>"
+                                                + "<div class='row' style='margin-right: -40px;'><div class='col-xs-2 col-md-2' style='width: 18.666667%;'>"
                                                 + "<div class='vote-box' title='Votes'><span class='vote-count'>"
                                                 + result.votes + "</span><span class='vote-label'>votes</span></div>"
                                                 + "<div class='ans-count-box' title='Answers'><span class='ans-count'>"
                                                 + result.answerCount + "</span>"
                                                 + "<span class='ans-label'>answers</span></div></div>"
-                                                + "<div class='col-xs-10 col-md-9'><div>"
+                                                + "<div class='col-xs-10 col-md-9' style='width: 72%'><div>"
                                                 + "<a href='/MobileHub/index.php/questions/show/?id=" + result.questionId + "'>" + result.questionTitle + "</a>"
                                                 + "<div class='mic-info'> Asked by <a href='#'>" + result.askerName + "</a> on " + dateAsked[0] + "</div></div>"
                                                 + "<div class='action'>"
