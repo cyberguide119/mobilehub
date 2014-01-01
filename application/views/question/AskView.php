@@ -78,6 +78,9 @@
                                         return true;
                                     });
 
+                                    $('.bootstrap-tagsinput').tagsinput({
+                                        maxTags: 4
+                                    });
 
                                 });
 

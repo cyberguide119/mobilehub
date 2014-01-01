@@ -45,7 +45,7 @@
                     <div class="col-xs-6">
                         <input type="text" class="form-control" placeholder="Containing the phrase" id="advPhrase">
                         <br>
-                        <input type="text" class="form-control" placeholder="Containing the tags" id="advTags">
+                        <input type="text" data-role="tagsinput" class="form-control" data-provide="typeahead" class="form-control" placeholder="Containing the tags" id="advTags" style="line-height: 22px;">
                     </div>
                     <div class="col-xs-6">
                         <input type="text" class="form-control" placeholder="Containing any of the words" id="advWords">
@@ -81,6 +81,29 @@
             resultsData = jQuery.parseJSON(resultsData);
             loadUI(resultsData);
             return true;
+        });
+    });
+
+    $(function() {
+        jsonTags = new Array();
+
+        $.get("/MobileHub/index.php/api/tags/all", function(resultsData) {
+            resultsData = jQuery.parseJSON(resultsData);
+            jsonTags = resultsData;
+            var newArr = new Array();
+
+            for (x in jsonTags) {
+                newArr.push(jsonTags[x].tagName);
+            }
+            $('.bootstrap-tagsinput input[type=text]').attr("placeholder", "Containing tags");
+            $('.bootstrap-tagsinput input[type=text]').attr("style", "height: 33px; width: 112px !important");
+            $('.bootstrap-tagsinput input[type=text]').attr("data-provide", "typeahead");
+            $('.bootstrap-tagsinput input[type=text]').typeahead({source: newArr});
+            return true;
+        });
+
+        $('.bootstrap-tagsinput').tagsinput({
+            maxTags: 4
         });
     });
 
