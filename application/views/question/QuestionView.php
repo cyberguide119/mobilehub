@@ -133,6 +133,25 @@
     </div><!-- /.modal -->
 
     <!-- Modal -->
+    <div class="modal fade" id="bestAnsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="bestAnsModalLabel">Info</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to choose this answer as the best?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" id="btnChooseBestAns" onclick="">Yes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Modal -->
     <div class="modal fade" id="closeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -190,6 +209,9 @@
                             $("#askerName").attr("href", "/MobileHub/index.php/profile/?user=" + resultsData.questionDetails.asker.username);
                             $("#qTags").html(getTagsString(resultsData.questionDetails.tags));
 
+                            var isAuthor = ("<?php echo $name ?>" === resultsData.questionDetails.asker.username);
+                            var hasBestAnswer = (resultsData.questionDetails.bestAnswerId !== null && resultsData.questionDetails.bestAnswerId !== 0);
+
                             if (resultsData.questionDetails.answers === null || resultsData.questionDetails.answers.length === 0) {
                                 $("#answersList").html("<h4>No answers for this question yet!</h4>");
                             } else {
@@ -201,10 +223,12 @@
                                             + "<button type='button' class='btn btn-danger btn-xs' title='Vote down' onclick='voteAnswer(" + result.answerId + ",false);'><span class='glyphicon glyphicon-thumbs-down'></span></button></div></div></span>"
                                             + "<div class='chat-body clearfix'>";
 
-                                    answersList += (result.isBestAnswer !== "null" && result.isBestAnswer !== "0") ? '<span class="label label-success">Best Answer</span>' : "";
+                                    answersList += (result.isBestAnswer !== null && result.isBestAnswer !== "0") ? '<span class="label label-success" title="Choosed as the best answer by the author of this question">Best Answer</span>' : "";
 
                                     answersList += "<div class='header'>"
-                                            + "<strong class='primary-font'><a href='/MobileHub/index.php/profile/?user=" + result.answerdUsername + "'>" + result.answerdUsername + "</a></strong><small class='pull-right text-muted'>"
+                                            + "<strong class='primary-font'><a href='/MobileHub/index.php/profile/?user=" + result.answerdUsername + "'>" + result.answerdUsername + "</a></strong>";
+                                    answersList += (isAuthor && !hasBestAnswer) ? "<small><a href='' data-toggle='modal' data-target='#bestAnsModal'>  (Choose as Best Answer <span class='glyphicon glyphicon-star'></span>)</a></small>" : "";
+                                    answersList += "<small class='pull-right text-muted'>"
                                             + "<span class='glyphicon glyphicon-time'></span>" + moment(result.answeredOn, "YYYY-MM-DD hh:mm Z").fromNow() + "</small></div>"
                                             + "<p>" + result.description + "</p></div></li></ul>";
                                     $("#answersList")
@@ -212,6 +236,7 @@
                                 }
                             }
                             $("#btnEditQuestion").attr("onclick", "editQuestion(" + resultsData.questionDetails.questionId + "," + resultsData.questionDetails.votes + "," + resultsData.questionDetails.answerCount + ")");
+                            $("#btnChooseBestAns").attr("onclick", "chooseBestAnswer(" + resultsData.questionDetails.questionId + "," + result.answerId + ")");
                         }
                     }
                     function voteAnswer(answerId, isUpVote) {
@@ -310,6 +335,27 @@
                         } else {
                             window.location = "/MobileHub/index.php/questions/edit/?id=" + qId;
                         }
+                    }
+
+                    function chooseBestAnswer(qId, ansId) {
+//                        $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>", "reason": $reason};
+//                        $.post("/MobileHub/index.php/api/question/close/", $jsonObj, function(content) {
+//
+//                            // Deserialise the JSON
+//                            content = jQuery.parseJSON(content);
+//                            if (content.message === "Success") {
+//                                window.location = "/MobileHub/index.php/questions/show/?id=" + "<? echo $questionId; ?>";
+                                //$('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+////                                $('#errModalBody').modal('show');
+//                            } else {
+//                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+//                                $('#errorModal').modal('show');
+//                            }
+//                        }).fail(function() {
+//                            $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+//                            $('#errorModal').modal('show');
+//                        }), "json";
+//                        return true;
                     }
 
 </script>

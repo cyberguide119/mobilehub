@@ -423,7 +423,8 @@ class questionslib {
             "votes" => $question->netVotes,
             "tags" => $tagsArr,
             "answers" => $answers,
-            "category" => $cat->categoryName
+            "category" => $cat->categoryName,
+            "bestAnswerId" => $question->bestAnswerId
         );
         return $questionResult;
     }
