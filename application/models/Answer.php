@@ -66,6 +66,9 @@ class Answer extends MY_Model {
      */
     public function getNetVotes($ansId) {
         $answer = $this->db->get_where('answers', array('answerId' => $ansId))->row();
+        if(count($answer) < 1){
+            return false;
+        }
         return $answer->netVotes;
     }
 
