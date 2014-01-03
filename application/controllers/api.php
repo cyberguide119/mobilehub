@@ -57,6 +57,9 @@ class Api extends CI_Controller {
             case 'user':
                 $this->loadProfileLogic($args);
                 break;
+            case 'category':
+                $this->loadCategoryLogic($args);
+                break;
             default:
                 show_error('Unsupported resource', 404);
                 break;
@@ -148,6 +151,16 @@ class Api extends CI_Controller {
             $this->getUnansweredTags($args['unanswered'], str_replace("+", " ", $args['tag']));
         } else if (array_key_exists('alltags', $args)) {
             $this->getAllTagsForTag($args['alltags'], str_replace("+", " ", $args['tag']));
+        }
+    }
+
+    private function loadCategoryLogic($args) {
+        if (array_key_exists('recent', $args)) {
+            $this->getRecentCat($args['recent'], str_replace("+", " ", $args['category']));
+        } else if (array_key_exists('popular', $args)) {
+            $this->getPopularCat($args['popular'], str_replace("+", " ", $args['category']));
+        } else if (array_key_exists('unanswered', $args)) {
+            $this->getUnansweredCat($args['unanswered'], str_replace("+", " ", $args['category']));
         }
     }
 
@@ -566,6 +579,33 @@ class Api extends CI_Controller {
     }
 
     /**
+     * All methods related to categories
+     */
+    private function getRecentCat($offset, $catname) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getRecentQuestionsWithCat($offset, $catname);
+        $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getRecentQuestionsWithCatCount($catname);
+        echo json_encode($response);
+    }
+
+    private function getPopularCat($offset, $tagname) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getPopularQuestionsWithCat($offset, $tagname);
+        $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getPopularQuestionsWithCatCount($tagname);
+        echo json_encode($response);
+    }
+
+    private function getUnansweredCat($offset, $tagname) {
+        ($offset === NULL) ? 0 : $offset;
+        $questions = $this->ci->questionslib->getUnansweredQuestionsWithCat($offset, $tagname);
+        $response['results'] = $questions;
+        $response['totalCount'] = $this->ci->Question->getUnansweredQuestionsWithCatCount($tagname);
+        echo json_encode($response);
+    }
+
+    /**
      * All methods related to voting
      */
     private function voteUp($arg) {
@@ -779,7 +819,7 @@ class Api extends CI_Controller {
         }
         echo json_encode($response);
     }
-    
+
     private function promoteAnswer() {
         $quesId = $this->input->post('questionId');
         $promotersName = $this->input->post('username');

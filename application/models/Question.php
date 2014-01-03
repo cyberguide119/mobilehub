@@ -108,6 +108,24 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    function getRecentQuestionsWithCat($offset, $catname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
+        $this->db->order_by("questions.askedOn", "desc");
+        $this->db->where('category.categoryName', $catname);
+        $this->db->join('category', 'category.categoryId = questions.categoryId');
+        $questions = $this->db->get("questions", 10, $offset);
+        return $questions->result();
+    }
+
+    function getRecentQuestionsWithCatCount($catname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
+        $this->db->order_by("questions.askedOn", "desc");
+        $this->db->where('category.categoryName', $catname);
+        $this->db->join('category', 'category.categoryId = questions.categoryId');
+        $query = $this->db->get("questions");
+        return ceil($query->num_rows() / 10);
+    }
+
     function getRecentQuestionsWithTagCount($tagname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("questions.askedOn", "desc");
@@ -153,6 +171,24 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    function getPopularQuestionsWithCat($offset, $catname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
+        $this->db->order_by("questions.netVotes", "desc");
+        $this->db->where('category.categoryName', $catname);
+        $this->db->join('category', 'category.categoryId = questions.categoryId');
+        $questions = $this->db->get("questions", 10, $offset);
+        return $questions->result();
+    }
+
+    function getPopularQuestionsWithCatCount($catname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
+        $this->db->order_by("questions.netVotes", "desc");
+        $this->db->where('category.categoryName', $catname);
+        $this->db->join('category', 'category.categoryId = questions.categoryId');
+        $query = $this->db->get("questions");
+        return ceil($query->num_rows() / 10);
+    }
+
     function getPopularQuestionsWithTagCount($tagname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("questions.netVotes", "desc");
@@ -182,6 +218,24 @@ class Question extends MY_Model {
         $this->db->join('tags', 'tags.tagId = questions_tags.tagId');
         $questions = $this->db->get("questions", 10, $offset);
         return $questions->result();
+    }
+
+    function getUnansweredQuestionsWithCat($offset, $catname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
+        $this->db->order_by("questions.answerCount", 0);
+        $this->db->where('category.categoryName', $catname);
+        $this->db->join('category', 'category.categoryId = questions.categoryId');
+        $questions = $this->db->get("questions", 10, $offset);
+        return $questions->result();
+    }
+
+    function getUnansweredQuestionsWithCatCount($catname) {
+        $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
+        $this->db->order_by("questions.answerCount", 0);
+        $this->db->where('category.categoryName', $catname);
+        $this->db->join('category', 'category.categoryId = questions.categoryId');
+        $query = $this->db->get("questions");
+        return ceil($query->num_rows() / 10);
     }
 
     function getUnansweredQuestionsWithTagCount($tagname) {
