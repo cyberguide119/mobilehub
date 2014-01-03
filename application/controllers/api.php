@@ -161,7 +161,7 @@ class Api extends CI_Controller {
             $this->getPopularCat($args['popular'], str_replace("+", " ", $args['category']));
         } else if (array_key_exists('unanswered', $args)) {
             $this->getUnansweredCat($args['unanswered'], str_replace("+", " ", $args['category']));
-        }
+        } 
     }
 
     private function loadVoteLogic($args) {

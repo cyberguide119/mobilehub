@@ -13,7 +13,7 @@ if (!defined('BASEPATH'))
  *
  * @author DRX
  */
-class Category extends MY_Controller {
+class Categories extends MY_Controller {
 
     function __construct() {
         parent::__construct();
@@ -34,7 +34,7 @@ class Category extends MY_Controller {
         $cat = new Category();
         $categories = $cat->get();
         $data["categories"] = $categories;
-        $data["tagname"] = $results;
+        $data["categoryName"] = $results;
         $this->load->view('home/CategoryView', $data);
         $this->loadFooterData();
     }
