@@ -48,16 +48,16 @@ and open the template in the editor.
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="<?php echo $activeLink['tutorials']?>"><a href="<?php echo site_url(); ?>">Tutorials</a></li>
-                        <li class="dropdown class="<?php echo $activeLink['categories']?>"">
+                        <li class="dropdown class="<?php echo $activeLink['categories']?>">
                             <a href="<?php echo site_url(); ?>" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo site_url(); ?>">Android</a></li>
+                                <li><a href="<?php echo site_url('categories/show/android'); ?>">Android</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<?php echo site_url(); ?>">iOS</a></li>
+                                <li><a href="<?php echo site_url('categories/show/ios'); ?>">iOS</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<?php echo site_url(); ?>">Windows Phone</a></li>
+                                <li><a href="<?php echo site_url('categories/show/windows+phone'); ?>">Windows Phone</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<?php echo site_url(); ?>">General</a></li>
+                                <li><a href="<?php echo site_url('categories/show/general'); ?>">General</a></li>
                             </ul>
                         </li>
                         <li class="<?php echo $activeLink['about']?>"><a href="<?php echo site_url('homepage/about'); ?>">About Us</a></li>
