@@ -43,19 +43,21 @@
     }
 
     function sendLink() {
-        
+
         $email = $("#txtResetEmail").val();
         if (checkEmail($email)) {
-            
+
             jsonObj = {'email': $email};
             $.post("/MobileHub/index.php/api/auth/forgot", jsonObj, function(resultsData) {
                 resultsData = jQuery.parseJSON(resultsData);
                 if (resultsData.message === "Success") {
-                     alert("success");
+                    $('#resetModalBody').html("<p><center>" + resultsData.type + "</center></p>");
+                    $('#resetModal').modal('show');
                 }
                 return true;
             }).fail(function() {
-                alert("error");
+                $('#resetModalBody').html("<p><center>" + resultsData.type + "</center></p>");
+                $('#resetModal').modal('show');
             });
         }
     }
