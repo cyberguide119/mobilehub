@@ -5,7 +5,7 @@
         <li class="active">Tags</li>
     </ol>
     <div>
-        <h4>Questions tagged with <span id="tagName" class="label label-info">Default</span></h4>
+        <h4>Questions categorised with <span id="tagName" class="badge">Default</span></h4>
         <br>
         <ul id="myTab" class="nav nav-tabs">
             <li class="active" onclick="changeTab('recent', 0);"><a href="#home" data-toggle="tab">Recent</a></li>
