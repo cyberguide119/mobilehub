@@ -58,10 +58,8 @@ class auth extends MY_Controller {
             $data['hash'] = $hash;
             $this->load->view('login/ResetPasswordView', $data);
             $this->loadFooterData();
-            //return $this->sendResetLinkEmail($email, $fullName);
         } else {
             redirect('custom404');
-            // return "Your email does not exist in our database.";
         }
     }
 

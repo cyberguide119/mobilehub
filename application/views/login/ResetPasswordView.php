@@ -30,7 +30,7 @@
                 <div class="modal-body" id="errModalBody">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="redirect();">Close</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -59,18 +59,10 @@
                             $('#errModalBody').html("<p><center>" + resultsData.type + "</center></p>");
                             $('#errorModal').modal('show');
                         });
-//                        $.ajax({
-//                            type: 'POST',
-//                            url: "/MobileHub/index.php/api/auth/reset",
-//                            data: {},
-//                            success: function(data) {
-//                                console.log(data);
-//                            },
-//                            error: function(xhr, status, errorThrown) {
-//                                console.log(xhr); //could be alert if you don't use the dev tools
-//                            },
-//                            dataType: "json"
-//                        });
                     }
+                }
+                
+                function redirect(){
+                    window.location = "/MobileHub/";
                 }
 </script>

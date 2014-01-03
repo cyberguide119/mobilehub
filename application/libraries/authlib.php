@@ -64,8 +64,8 @@ class authlib {
             return "Your email does not exist in our database.";
         }
     }
-    
-    public function resetPass($email, $hash, $pass){
+
+    public function resetPass($email, $hash, $pass) {
         return $this->ci->User->updateViaHash($email, $hash, $pass);
     }
 
@@ -77,7 +77,7 @@ class authlib {
             'smtp_port' => 25,
             'smtp_user' => 'info.mobilehub@gmail.com',
             'smtp_pass' => '123456Sa',
-            'mailtype' => 'html',
+            'mailtype' => 'text',
             'multipart' => false,
             'wordwrap' => true,
             'crlf' => "\r\n",
@@ -102,30 +102,18 @@ class authlib {
             'fullName' => $fullName
         );
 
-        $message = '<!DOCTYPE html>'
-                . '<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">'
-                . '<head>'
-                . '<meta charset="utf-8"></meta>'
-                . '<title>Create a new password on MobileHub</title>'
-                . '</head>'
-                . '<body>'
-                . '<p>Hi ' . $fullName . ',</p>'
-                . '<p>Thank you!</p><p>MobileHub Team</p>'
-                . '</body>'
-                . '</html>';
-
-        //$this->email->message($this->ci->load->view('email/passResetHTML', $data, TRUE));
-        $this->ci->email->message($message);
-        if($this->ci->email->send()){
-            return true;
-        }else{
-            return false;
-        }
-        //$this->ci->email->send();
-//        
+        $message = "Hi " . $fullName . ","
+                . "\r\n\r\nForgot your password, huh? No big deal! Please visit the following link to reset your password/:"
+                . "\r\n\r\nhttp://localhost/MobileHub/index.php/auth/reset/" . $email . "/" . $emailCode
+                . "\r\n\r\nThank you!\r\n\r\nMobileHub Team";
         
+        $this->ci->email->message($message);
+        if ($this->ci->email->send()) {
+            return true;
+        } else {
+            return false;
+        }    
     }
-
 }
 
 ?>
