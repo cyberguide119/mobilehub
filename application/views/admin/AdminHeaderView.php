@@ -15,8 +15,9 @@
         <link href="<?php echo site_url('../resources/css/sb-admin.css') ?>" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo site_url('../resources/font-awesome/css/font-awesome.min.css') ?>">
         <!-- Page Specific CSS -->
-        <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <link href="<?php echo site_url('../resources/css/morris-0.4.3.min.css') ?>" rel="stylesheet">
+        <link href="<?php echo site_url('../resources/css/jquery.dataTables.css') ?>" rel="stylesheet">
+        <script src="<?php echo site_url('../resources/js/jquery-1.9.min.js') ?>"></script>
     </head>
 
     <body>
@@ -38,11 +39,11 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
-                        <li class="<?php echo $activeLink['index']?>"><a href="<?php echo site_url('admin/?user=' . $name); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                        <li class="<?php echo $activeLink['questions']?>"><a href="<?php echo site_url('admin/questions/?user=' . $name); ?>"><i class="fa fa-bar-chart-o"></i> Questions</a></li>
-                        <li class="<?php echo $activeLink['answers']?>"><a href="<?php echo site_url('admin/answers/?user=' . $name); ?>"><i class="fa fa-table"></i> Answers</a></li>
-                        <li class="<?php echo $activeLink['users']?>"><a href="<?php echo site_url('admin/users/?user=' . $name); ?>"><i class="fa fa-users"></i> Users</a></li>
-                        <li class="<?php echo $activeLink['requests']?>"><a href="<?php echo site_url('admin/requests/?user=' . $name); ?>"><i class="fa fa-flag"></i> Requests</a></li>
+                        <li class="<?php echo $activeLink['index'] ?>"><a href="<?php echo site_url('admin/?user=' . $name); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                        <li class="<?php echo $activeLink['questions'] ?>"><a href="<?php echo site_url('admin/questions/?user=' . $name); ?>"><i class="fa fa-bar-chart-o"></i> Questions</a></li>
+                        <li class="<?php echo $activeLink['answers'] ?>"><a href="<?php echo site_url('admin/answers/?user=' . $name); ?>"><i class="fa fa-table"></i> Answers</a></li>
+                        <li class="<?php echo $activeLink['users'] ?>"><a href="<?php echo site_url('admin/users/?user=' . $name); ?>"><i class="fa fa-users"></i> Users</a></li>
+                        <li class="<?php echo $activeLink['requests'] ?>"><a href="<?php echo site_url('admin/requests/?user=' . $name); ?>"><i class="fa fa-flag"></i> Requests</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right navbar-user">

@@ -149,3 +149,5 @@ http://blog.botmonster.com/2012/10/bootpag-jquery-pagination-plugin.html
 42. Search page pagination
 
 43. change db account
+
+44. flagging - user must have more than 5 points, when a qustion has more than 3 flag count. it will be reported to the admin
