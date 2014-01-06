@@ -1,10 +1,3 @@
-<!-- DataTables CSS -->
-<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
- 
-<!-- DataTables -->
-<script type="text/javascript" charset="utf8" src="<?php echo site_url('../resources/js/jquery.dataTables.min.js') ?>"></script>
-<script src="<?php echo site_url('../resources/js/bootstrap-dialog.js') ?>"></script>
-<script src="<?php echo site_url('../resources/js/datatable-refresh.js') ?>"></script>
 <div id="page-wrapper">   
     <div class="row">
         <div class="col-lg-12">
