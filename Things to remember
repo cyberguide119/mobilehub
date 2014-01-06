@@ -78,7 +78,7 @@ http://momentjs.com/
 
 15 Fix permissions - Done
 
-16 pagination
+16 pagination - done, pending for search
 
 http://bootstrappaginator.org/
 
@@ -88,22 +88,23 @@ http://bootboxjs.com/#examples
 
 18. Can we do something with points?
 
-19. User profile additions
+19. User profile additions - done
 
 20. Anything to do with the answers? Sorting?
 
 21. Admin theme from
 http://startbootstrap.com/sb-admin
 
-22. Users page?
+22. Users page? - done
 
-23 Salt for login
+23 Salt for login - done
 
-24. Fix navigation
+24. Fix navigation - done
 
-25. Breadcrum
+25. Breadcrumbs - done
 
-26. SSL
+26. SSL - done
+http://fash7y.wordpress.com/2011/12/03/solved-how-to-set-up-https-with-openssl-in-wamp/
 
 27. data table from
 http://www.datatables.net/usage/

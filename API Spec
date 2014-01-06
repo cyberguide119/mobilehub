@@ -28,9 +28,10 @@ Question (GET/POST)
 
 Answer
 	index.php/api/answer/post/
-	index.php/api/answer/details/{id}/
 	index.php/api/answer/delete/{id}/
 	index.php/api/answer/update/{id}/
+
+	index.php/api/answer/promote/ - POST
 
 Vote
 	index.php/api/vote/voteup/question/{id}

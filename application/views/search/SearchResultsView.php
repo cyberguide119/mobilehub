@@ -11,7 +11,7 @@
     function advSearch() {
         $advWords = $("#advWords").val();
         $advPhrase = $("#advPhrase").val();
-        $advTags = $("#advTags").val();
+        $advTags = sanitizeTags($('.bootstrap-tagsinput').val());
         $advCategory = (($("#advCategory")[0]).selectedIndex);
 
         $jsonObj = {"Words": $advWords, "Phrase": $advPhrase, "Tags": $advTags, "Category": $advCategory};
@@ -26,6 +26,21 @@
 
         }), "json";
         return true;
+    }
+
+    function sanitizeTags(tags) {
+        var str = '';
+        var cnt = 0;
+        for (tag in tags) {
+            if (cnt !== tags.length - 1) {
+                str += tags[tag] + ',';
+            } else {
+                str += tags[tag];
+            }
+            cnt++;
+        }
+        //str = str[str.length -1]
+        return str;
     }
 </script>
 <div class="container">
@@ -98,6 +113,7 @@
             $('.bootstrap-tagsinput input[type=text]').attr("placeholder", "Containing tags");
             $('.bootstrap-tagsinput input[type=text]').attr("style", "height: 33px; width: 112px !important");
             $('.bootstrap-tagsinput input[type=text]').attr("data-provide", "typeahead");
+            $('.bootstrap-tagsinput input[type=text]').attr("id", "advTags");
             $('.bootstrap-tagsinput input[type=text]').typeahead({source: newArr});
             return true;
         });

@@ -74,6 +74,7 @@
                                         }
                                         $('.bootstrap-tagsinput input[type=text]').attr("placeholder", " ");
                                         $('.bootstrap-tagsinput input[type=text]').attr("data-provide", "typeahead");
+                                        //$('.bootstrap-tagsinput input[type=text]').attr("id", "qTags");
                                         $('.bootstrap-tagsinput input[type=text]').typeahead({source: newArr});
                                         return true;
                                     });
@@ -96,17 +97,19 @@
                                     alwaysShow: true
                                 });
 
+
                                 function postQuestion()
                                 {
                                     $qTitle = $("#qTitle").val();
                                     $qDesc = $("#qDesc").val();
-                                    $qTags = checkTags($("#qTags").val());
+                                    $qTags = $('.bootstrap-tagsinput').val();
+                                    $qTags = sanitizeTags($qTags);
+                                    console.log($qTags);
                                     $qCategory = (($("#qCategory")[0]).selectedIndex) + 1;
                                     $qAskerName = "<?php echo $name ?>";
 
-                                    $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName};
-
                                     if (valdateForm($qTitle, $qDesc, $qTags, $qCategory)) {
+                                        $jsonObj = {"Title": $qTitle, "Description": $qDesc, "Tags": $qTags, "Category": $qCategory, "AskerName": $qAskerName};
                                         $.post("/MobileHub/index.php/api/question/post", $jsonObj, function(content) {
 
                                             // Deserialise the JSON
@@ -131,8 +134,24 @@
                                     function checkTags($tags) {
                                         return $tags;
                                     }
+                                    
+                                    function sanitizeTags(tags){
+                                        var str = '';
+                                        var cnt = 0;
+                                        for (tag in tags){
+                                            if(cnt !== tags.length-1){
+                                                str += tags[tag]+ ',';
+                                            }else{
+                                                str += tags[tag];
+                                            }
+                                            cnt++;
+                                        }
+                                        //str = str[str.length -1]
+                                        return str;
+                                    }
 
                                     function valdateForm($qTitle, $qDesc, $qTags, $qCategory) {
+                                        console.log($qTags);
                                         var errors = new Array();
                                         var errorStr = "";
                                         if ($qTitle === '' || $qDesc === '' || $qTags === '' || $qCategory === '') {
