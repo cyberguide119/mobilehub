@@ -21,6 +21,8 @@ Question (GET/POST)
 
 	index.php/api/question/close
 
+	index.php/api/question/flag
+
 	index.php/api/question/recent/offset
 	index.php/api/question/popular/offset
 	index.php/api/question/unanswered/offset

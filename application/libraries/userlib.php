@@ -153,6 +153,13 @@ class userlib {
     function isProfileActive($username){
         return $this->ci->User->isProfileActive($this->ci->User->getUserIdByName($username));
     }
+    
+    function getUserPoints($username){
+        $res = $this->ci->User->getUserPoints($this->ci->User->getUserIdByName($username));
+        ($res->reputation === NULL) ? $res->reputation = 0 : $res->reputation = $res->reputation;
+        ($res->loyality === NULL) ? $res->loyality = 0 : $res->loyality = $res->loyality;
+        return $res->reputation + $res->loyality;
+    }
 
 }
 

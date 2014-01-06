@@ -40,8 +40,14 @@
     </div>
     <div class="row" style="margin-top: 10px;">
         <div class="col-md-1">
+
         </div>
         <div class="col-md-11">
+            <?php
+            if ($name) {
+                echo '<a href ="" data-toggle="modal" data-target="#flagModal">Flag Question</a>';
+            }
+            ?>
             <?php
             if ($isQuestionEdited) {
                 echo '<div class="user_info pull-right">Edited By<div class="thumb_with_border"><img src="/MobileHub/resources/img/default.png" width="25" height="25" alt="Profile Pic">';
@@ -146,6 +152,25 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                     <button type="button" class="btn btn-primary" id="btnChooseBestAns" onclick="">Yes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="flagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="flagModalLabel">Info</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to flag this question?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" id="btnFlagQ" onclick="flagQuestion(<?php echo ''; ?>);">Yes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -323,6 +348,28 @@
                                 window.location = "/MobileHub/index.php/questions/show/?id=" + "<? echo $questionId; ?>";
 //                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
 //                                $('#errModalBody').modal('show');
+                            } else {
+                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#errorModal').modal('show');
+                            }
+                        }).fail(function() {
+                            $('#errModalBody').html("<p><center>" + "Something went wrong when updating. Please try again later" + "</center></p>");
+                            $('#errorModal').modal('show');
+                        }), "json";
+                        return true;
+                    }
+
+                    function flagQuestion(qId) {
+                        // Add validations
+                        $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>"};
+                        $.post("/MobileHub/index.php/api/question/flag/", $jsonObj, function(content) {
+
+                            // Deserialise the JSON
+                            content = jQuery.parseJSON(content);
+                            $('#flagModal').modal('hide');
+                            if (content.message === "Success") {
+                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                $('#errModalBody').modal('show');
                             } else {
                                 $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                                 $('#errorModal').modal('show');

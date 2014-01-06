@@ -503,6 +503,13 @@ class User extends MY_Model {
         return true;
     }
 
+    function getUserPoints($userId) {
+        $this->db->select('reputation, loyality');
+        $this->db->where('userId', $userId);
+        $res = $this->db->get('user')->row();
+        return $res;
+    }
+
 }
 
 ?>

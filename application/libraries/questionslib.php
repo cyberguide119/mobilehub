@@ -91,6 +91,20 @@ class questionslib {
         $question->updateQuestion($qId, $question);
         return true;
     }
+    
+    public function flagQuestion($username, $qId) {
+        $question = new Question();
+        $question->load($qId);
+        $user = new User();
+        
+        $userId = $user->getUserIdByName($username);
+
+        $question->flagCount += 1;
+        $question->closedByUserId = $userId;
+
+        $question->updateQuestion($qId, $question);
+        return true;
+    }
 
     public function deleteQuestion($username, $qId) {
         $userId = $this->ci->Question->getAskerUserId($qId);

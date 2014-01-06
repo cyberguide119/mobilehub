@@ -109,7 +109,7 @@ http://fash7y.wordpress.com/2011/12/03/solved-how-to-set-up-https-with-openssl-i
 27. data table from
 http://www.datatables.net/usage/
 
-28. Show points
+28. Show points - done
 
 29. replace with join() where possible
 
@@ -147,3 +147,5 @@ http://blog.botmonster.com/2012/10/bootpag-jquery-pagination-plugin.html
 41. Block access for admin - questions, voting, answers
 
 42. Search page pagination
+
+43. change db account

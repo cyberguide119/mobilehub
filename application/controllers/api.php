@@ -137,6 +137,8 @@ class Api extends CI_Controller {
             $this->updateQuestion($args);
         } else if (array_key_exists('close', $args)) {
             $this->closeQuestion();
+        } else if (array_key_exists('flag', $args)) {
+            $this->flagQuestion();
         }
     }
 
@@ -534,6 +536,33 @@ class Api extends CI_Controller {
 
         if ($name === false || $name !== $username) {
             $res = array("message" => "Error", "type" => "You do not have permissions to close the question");
+            echo json_encode($res);
+        }
+    }
+    
+    private function flagQuestion() {
+        $qId = $this->input->post('questionId');
+        $username = $this->input->post('username');
+        $name = $this->authlib->is_loggedin();
+
+        if ($name === $username) {
+            if ($this->userlib->getUserPoints($username) > 5) {
+                $result = $this->questionslib->flagQuestion($username, $qId);
+                if ($result === true) {
+                    $res = array("message" => "Success", "type" => "Question was flagged successfully!");
+                    echo json_encode($res);
+                } else {
+                    $res = array("message" => "Error", "type" => "Question could not be flagged!");
+                    echo json_encode($res);
+                }
+            } else {
+                $res = array("message" => "Error", "type" => "You do not have enough points to flag this question");
+                echo json_encode($res);
+            }
+        }
+
+        if ($name === false || $name !== $username) {
+            $res = array("message" => "Error", "type" => "You do not have permissions to flag the question");
             echo json_encode($res);
         }
     }

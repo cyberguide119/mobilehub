@@ -36,6 +36,7 @@ class Question extends MY_Model {
     public $isEdited;
     public $editedDate;
     public $editedByUserId;
+    public $flagCount;
 
     function __construct() {
         parent::__construct();
@@ -450,6 +451,10 @@ class Question extends MY_Model {
                 " AND '" . $formattedDate . " 23:59:59' GROUP BY queDate");
 
         return $query->result();
+    }
+    
+    function flagQuestion($qId){
+        
     }
 
 }
