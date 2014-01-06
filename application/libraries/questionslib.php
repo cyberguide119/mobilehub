@@ -19,7 +19,7 @@ class questionslib {
         // access models etc. (because we don't extend a core
         // CI class)
         $this->ci = &get_instance();
-        $this->ci->load->model(array('Question', 'User', 'Tag', 'QuestionsTags', 'QuestionVotes', 'Category', 'Answer'));
+        $this->ci->load->model(array('Question', 'User', 'Tag', 'QuestionsTags', 'QuestionsFlags', 'QuestionVotes', 'Category', 'Answer'));
         $this->ci->load->library(array('searchlib', 'permlib'));
     }
 
@@ -91,18 +91,26 @@ class questionslib {
         $question->updateQuestion($qId, $question);
         return true;
     }
-    
+
     public function flagQuestion($username, $qId) {
         $question = new Question();
         $question->load($qId);
         $user = new User();
-        
+
         $userId = $user->getUserIdByName($username);
 
         $question->flagCount += 1;
-        $question->closedByUserId = $userId;
-
         $question->updateQuestion($qId, $question);
+
+        $flag = new QuestionsFlags();
+        if ($flag->hasUserFlaggedQuestId($qId, $userId)) {
+            return false;
+        } else {
+            $flag->questionId = $qId;
+            $flag->userId = $userId;
+            $flag->save();
+        }
+
         return true;
     }
 
@@ -360,7 +368,7 @@ class questionslib {
         }
         return $questions;
     }
-    
+
     public function getRecentQuestionsWithCat($offset, $tagname) {
         $questions = array();
         $questionsList = $this->ci->Question->getRecentQuestionsWithCat($offset, $tagname);
@@ -381,7 +389,7 @@ class questionslib {
         }
         return $questions;
     }
-    
+
     public function getPopularQuestionsWithCat($offset, $catname) {
         $questions = array();
         $questionsList = $this->ci->Question->getPopularQuestionsWithCat($offset, $catname);
@@ -402,7 +410,7 @@ class questionslib {
         }
         return $questions;
     }
-    
+
     public function getUnansweredQuestionsWithCat($offset, $catname) {
         $questions = array();
         $questionsList = $this->ci->Question->getUnansweredQuestionsWithCat($offset, $catname);

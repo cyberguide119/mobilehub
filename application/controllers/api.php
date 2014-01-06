@@ -163,7 +163,7 @@ class Api extends CI_Controller {
             $this->getPopularCat($args['popular'], str_replace("+", " ", $args['category']));
         } else if (array_key_exists('unanswered', $args)) {
             $this->getUnansweredCat($args['unanswered'], str_replace("+", " ", $args['category']));
-        } 
+        }
     }
 
     private function loadVoteLogic($args) {
@@ -539,7 +539,7 @@ class Api extends CI_Controller {
             echo json_encode($res);
         }
     }
-    
+
     private function flagQuestion() {
         $qId = $this->input->post('questionId');
         $username = $this->input->post('username');
@@ -552,7 +552,7 @@ class Api extends CI_Controller {
                     $res = array("message" => "Success", "type" => "Question was flagged successfully!");
                     echo json_encode($res);
                 } else {
-                    $res = array("message" => "Error", "type" => "Question could not be flagged!");
+                    $res = array("message" => "Error", "type" => "You have already flagged this question!");
                     echo json_encode($res);
                 }
             } else {
