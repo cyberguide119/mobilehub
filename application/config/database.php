@@ -49,7 +49,7 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
+$db['default']['username'] = 'mobilehub';
 $db['default']['password'] = 'intel@123';
 $db['default']['database'] = 'mobilehub_db';
 $db['default']['dbdriver'] = 'mysql';
