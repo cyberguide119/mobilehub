@@ -15,6 +15,10 @@ class Custom404 extends MY_Controller
     public function __construct()   {
             parent::__construct();  
     }
+    
+    /**
+     * A custom 404 page
+     */
     public function index() 
     {
         $this->output->set_status_header('404');

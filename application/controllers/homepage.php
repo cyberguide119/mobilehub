@@ -24,16 +24,25 @@ class Homepage extends MY_Controller {
         $this->load->model(array('Question', 'User', 'QuestionsTags', 'Tag'));
     }
 
+    /**
+     * load the homepage
+     */
     public function index() {
         $this->loadHeaderData('homepage');
         $this->loadQuestions();
         $this->loadFooterData();
     }
 
+    /**
+     * load the questions
+     */
     private function loadQuestions() {
         $this->load->view('home/HomepageView');
     }
 
+    /**
+     * load the about page
+     */
     public function about() {
         $this->loadHeaderData('about');
         $this->load->view('home/AboutView');

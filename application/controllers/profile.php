@@ -20,6 +20,9 @@ class profile extends MY_Controller {
         $this->load->library(array('authlib', 'permlib', 'userlib'));
     }
 
+    /**
+     * Get the user profile view
+     */
     public function index() {
         $profile = $this->input->get('user');
 
@@ -29,6 +32,11 @@ class profile extends MY_Controller {
         $this->showProfile($profile);
     }
 
+    /**
+     * Show  the reuqested user's profile
+     * @param type $profile
+     * @return type
+     */
     private function showProfile($profile) {
         $this->loadHeaderData('profile');
         $data['user'] = $profile;
@@ -57,6 +65,9 @@ class profile extends MY_Controller {
         $this->loadFooterData();
     }
 
+    /**
+     * Show the  edit user profile
+     */
     public function edit() {
         $profile = $this->input->get('user');
         $name = $this->authlib->is_loggedin();
@@ -70,6 +81,9 @@ class profile extends MY_Controller {
         }
     }
 
+    /**
+     * Show dlete user profile
+     */
     public function delete() {
         $profile = $this->input->get('user');
         $name = $this->authlib->is_loggedin();

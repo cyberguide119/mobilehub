@@ -20,10 +20,16 @@ class Tags extends MY_Controller {
         $this->load->model('Category');
     }
 
+    /**
+     * Show the tags page
+     */
     public function index() {
         $this->show();
     }
 
+    /**
+     * Get the tag page and show it
+     */
     public function show() {
         $results = $this->uri->segment(3);
         if ($results === false) {

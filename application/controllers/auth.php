@@ -26,10 +26,16 @@ class auth extends MY_Controller {
         $this->ci->load->model('user');
     }
 
+    /**
+     * Show a page not found error
+     */
     public function index() {
         redirect('/Custom404/');
     }
 
+    /**
+     * Show the register user view
+     */
     public function register() {
         $this->loadHeaderData('register');
         $data['errmsg'] = '';
@@ -37,13 +43,18 @@ class auth extends MY_Controller {
         $this->loadFooterData();
     }
     
+    /**
+     * Show the forgot password view
+     */
     public function forgot() {
         $this->loadHeaderData('forgot');
         $data['errmsg'] = '';
         $this->load->view('login/ForgotPasswordView', $data);
         $this->loadFooterData();
     }
-
+    /**
+     * Show the reset PW screen
+     */
     public function reset() {
         $email = $this->uri->segment(3);
         $hash = $this->uri->segment(4);
@@ -63,6 +74,9 @@ class auth extends MY_Controller {
         }
     }
 
+    /**
+     * Logout the current user
+     */
     public function logout() {
         // Clear the session and redirect to the homepage
         $this->authlib->logout();

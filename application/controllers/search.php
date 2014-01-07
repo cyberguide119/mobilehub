@@ -25,6 +25,10 @@ class Search extends MY_Controller {
         $this->results($results);
     }
 
+    /**
+     * load the results page in which we load the results of the search query
+     * @param type $results
+     */
     private function results($results) {
         $this->loadHeaderData('search');
         $data["results"] = $results;

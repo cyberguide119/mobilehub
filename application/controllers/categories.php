@@ -20,10 +20,16 @@ class Categories extends MY_Controller {
         $this->load->model('Category');
     }
 
+    /**
+     * Show the category according to the given url
+     */
     public function index() {
         $this->show();
     }
 
+    /**
+     * Method tol load the Category view
+     */
     public function show() {
         $results = $this->uri->segment(3);
         if ($results === false) {

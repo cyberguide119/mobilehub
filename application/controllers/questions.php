@@ -22,6 +22,9 @@ class Questions extends MY_Controller {
         $this->load->library(array('permlib', 'questionslib'));
     }
 
+    /**
+     * Method to show the ask question page
+     */
     public function ask() {
         if ($this->authlib->is_loggedin()) {
             $this->loadHeaderData('ask');
@@ -36,6 +39,9 @@ class Questions extends MY_Controller {
         }
     }
 
+    /**
+     * Show question page
+     */
     public function show() {
         $qId = $this->input->get('id');
         $data['questionId'] = $qId;
@@ -106,6 +112,9 @@ class Questions extends MY_Controller {
         $this->loadFooterData();
     }
 
+    /**
+     * Edit question page
+     */
     public function edit() {
         if (($username = $this->authlib->is_loggedin())) {
             if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
@@ -130,6 +139,9 @@ class Questions extends MY_Controller {
         }
     }
 
+    /**
+     * Edit answer page
+     */
     public function editanswer() {
 
         $username = $this->authlib->is_loggedin();
