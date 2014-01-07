@@ -373,6 +373,7 @@ class Api extends CI_Controller {
             if (count($results) > 0) {
                 $response['message'] = "Success";
                 $response['results'] = $results;
+                $response['totalCount'] = $this->ci->searchlib->getSearchPageCount($query);
             } else {
                 $response['message'] = "Error";
                 $response['type'] = "Sorry, your query returned no matches!";

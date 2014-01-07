@@ -45,6 +45,10 @@ class searchlib {
         }
         return $questions;
     }
+    
+    public function getSearchPageCount($query){
+        return $this->ci->Question->basicSearchCount($query);
+    }
 
     public function advSearch($advWords, $advPhrase, $advTags, $advCategory) {
         $questions = array();
