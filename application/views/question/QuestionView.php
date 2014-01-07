@@ -236,6 +236,7 @@
 
                             var isAuthor = ("<?php echo $name ?>" === resultsData.questionDetails.asker.username);
                             var hasBestAnswer = (resultsData.questionDetails.bestAnswerId !== null && resultsData.questionDetails.bestAnswerId !== "0");
+                            $("#btnEditQuestion").attr("onclick", "editQuestion(" + resultsData.questionDetails.questionId + "," + resultsData.questionDetails.votes + "," + 0 + ")");
 
                             if (resultsData.questionDetails.answers === null || resultsData.questionDetails.answers.length === 0) {
                                 $("#answersList").html("<h4>No answers for this question yet!</h4>");
@@ -382,6 +383,9 @@
                     }
 
                     function editQuestion(qId, votes, answers) {
+//                        qId = <?php echo $questionId; ?>;
+//                        votes = parseInt($("#qVotes").val());
+//                        answers = parseInt($("#qVotes").val());
                         if (votes > 0 || answers > 0) {
                             //Show error that the user cannot edit this question when it has votes or answers
                             $('#editModal').modal('hide');
