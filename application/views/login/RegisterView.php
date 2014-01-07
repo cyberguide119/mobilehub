@@ -214,7 +214,6 @@
                         } else {
                             $serializedData['isTutor'] = false;
                         }
-                        if (checkform($registerForm)) {
                             $.post("/MobileHub/index.php/api/auth/create", $serializedData, function(content) {
 
                                 // Deserialise the JSON
@@ -228,8 +227,6 @@
                                 }
                             }), "json";
                             return true;
-                        }
-
                     }
                 });
 
