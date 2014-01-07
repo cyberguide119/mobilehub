@@ -1,7 +1,3 @@
-<!-- DataTables CSS -->
- 
-
-
 <div id="page-wrapper">   
     <div class="row">
         <div class="col-lg-12">
@@ -17,6 +13,15 @@
             <h4>All Questions</h4>
             <hr>
             <table id="qTable">
+            </table>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Flagged Questions</h4>
+            <hr>
+            <table id="qTableFlagged">
             </table>
         </div>
     </div>
@@ -44,11 +49,52 @@
 
     $(document).ready(function() {
         initQuestTable();
+        initFlaggedQuestTable();
     });
 
     function initQuestTable() {
         $('#qTable').dataTable({
             "sAjaxSource": '/MobileHub/index.php/api/admin/question/details',
+            "sServerMethod": "POST",
+            "aoColumns": [{
+                    "mData": "questionId",
+                    "sTitle": "Id"
+                }, {
+                    "mData": "questionTitle",
+                    "sTitle": "Question Title",
+                    "mRender": function(url, type, row) {
+                        return  '<a href="/MobileHub/index.php/questions/show/?id=' + row['questionId'] + '">' + url + '</a>';
+                    }
+                }, {
+                    "mData": "askedOn",
+                    "sTitle": "Asked On"
+                }, {
+                    "mData": "askerName",
+                    "sTitle": "Asked By",
+                    "mRender": function(url, type, full) {
+                        return  '<a href="/MobileHub/index.php/profile/?user=' + url + '">' + url + '</a>';
+                    }
+                }, {
+                    "mData": "answerCount",
+                    "sTitle": "Answers"
+                }, {
+                    "mData": "votes",
+                    "sTitle": "Votes"
+                }, {
+                    "sTitle": "Action",
+                    "mData": "votes",
+                    "bSortable": false,
+                    "sClass": "center",
+                    "mRender": function(url, type, row) {
+                        return  '<a href="javascript: deleteAnswer(' + row['questionId'] + ');" class="btn btn-sm btn-danger" title="Delete Question"><i class="btn-icon-only glyphicon glyphicon-trash"></i></a>';
+                    }
+                }]
+        });
+    }
+
+    function initFlaggedQuestTable() {
+        $('#qTableFlagged').dataTable({
+            "sAjaxSource": '/MobileHub/index.php/api/admin/question/flagged',
             "sServerMethod": "POST",
             "aoColumns": [{
                     "mData": "questionId",
@@ -98,6 +144,8 @@
                         $('#errorModal').modal('show');
                         var dt = $('#qTable').dataTable();
                         dt.fnReloadAjax();
+                        var dt = $('#qTableFlagged').dataTable();
+                        dt2.fnReloadAjax();
                         return true;
                     } else {
                         $('#errModalBody').html("<p><center>" + content.type + "</center></p>");

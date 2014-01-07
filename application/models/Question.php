@@ -289,6 +289,13 @@ class Question extends MY_Model {
         $questions = $this->db->get("questions");
         return $questions->result();
     }
+    
+    function getAllAdminFlaggedQuestions() {
+        $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
+        $this->db->where("flagCount >", 3);
+        $questions = $this->db->get("questions");
+        return $questions->result();
+    }
 
     function getAllQuestionsCounts() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");

@@ -41,6 +41,11 @@ class adminlib {
         $allQuestions = $this->ci->questionslib->getAllAdminQuestions();
         return $allQuestions;
     }
+    
+    public function getFlaggedQuestions() {
+        $allQuestions = $this->ci->questionslib->getAllAdminFlaggedQuestions();
+        return $allQuestions;
+    }
 
     public function getAnswers() {
 
