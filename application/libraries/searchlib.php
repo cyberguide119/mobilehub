@@ -23,10 +23,10 @@ class searchlib {
         $this->ci->load->helper('utility');
     }
 
-    public function search($query) {
+    public function search($query, $offset) {
         $questions = array();
         $query = convertQueryToString($query);
-        $res = $this->ci->Question->basicSearch($query);
+        $res = $this->ci->Question->basicSearch($query, $offset);
 
         foreach ($res as $question) {
             $tagsArr = $this->getTagsArrayForQuestionId($question->questionId);

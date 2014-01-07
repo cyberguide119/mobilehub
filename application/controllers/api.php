@@ -114,8 +114,8 @@ class Api extends CI_Controller {
         if (in_array('advanced', $args)) {
             $this->advSearchQuestions();
         } else if (array_key_exists('questions', $args)) {
-            $this->searchQuestions(); //Won't be needing this
-        }// Check the spec
+            $this->searchQuestions();
+        }
     }
 
     private function loadQuestionLogic($args) {
@@ -362,12 +362,14 @@ class Api extends CI_Controller {
      * All the methods related to index.php/api/search
      */
     private function searchQuestions() {
+        $offset = $this->input->get('page');
+        ($offset === NULL) ? 0 : $offset;
         $query = $this->input->get('query');
         if (strlen($query) < 3) {
             $response['message'] = "Error";
             $response['type'] = "You need to enter atleast 3 characters to perform a search";
         } else {
-            $results = $this->searchlib->search($query);
+            $results = $this->searchlib->search($query, $offset);
             if (count($results) > 0) {
                 $response['message'] = "Success";
                 $response['results'] = $results;

@@ -1,3 +1,4 @@
+<script src="<?php echo site_url('../resources/js/jquery.bootpag.min.js') ?>"></script>
 <script type="text/javascript">
     function getTagsString($tags)
     {
@@ -85,6 +86,7 @@
         <ul class="list-group">
         </ul>
     </div>
+    <div id="page-selection" style="width: 20%;  margin: 0 auto;"></div>
 
 </div>
 <script type="text/javascript">
@@ -150,7 +152,29 @@
                 $("ul.list-group")
                         .append(listItem);
             }
+            $('#page-selection').unbind();
+            setupPagination(resultsData.totalCount, 1);
         }
+    }
+
+    function setupPagination(totalCount, currentPage) {
+        $('#page-selection').bootpag({
+            total: totalCount,
+            page: currentPage,
+            maxVisible: 10
+        }).on('page', function(event, num) {
+            changePage(((num * 10) - 10));
+            return;
+        });
+    }
+
+    function changePage($offset) {
+
+        $.get("/MobileHub/index.php/api/search/questions?query=" + "<?php echo $results ?>" + "&page=" + $offset, function(resultsData) {
+            resultsData = jQuery.parseJSON(resultsData);
+            loadUI(resultsData);
+            return true;
+        });
     }
 
     function refineDescription(desc) {

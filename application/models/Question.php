@@ -48,11 +48,18 @@ class Question extends MY_Model {
      * @param type $query
      * @return array
      */
-    function basicSearch($query) {
+    function basicSearch($query, $offset) {
+        $this->db->like(array('questionTitle' => $query));
+        $this->db->order_by("netVotes", "desc");
+        $res = $this->db->get('questions', 10, $offset);
+        return $res->result();
+    }
+    
+    function basicSearchCount($query) {
         $this->db->like(array('questionTitle' => $query));
         $this->db->order_by("netVotes", "desc");
         $res = $this->db->get('questions');
-        return $res->result();
+        return ceil($res->num_rows() / 10);
     }
 
     /**
