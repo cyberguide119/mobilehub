@@ -170,7 +170,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-primary" id="btnFlagQ" onclick="flagQuestion(<?php echo ''; ?>);">Yes</button>
+                    <button type="button" class="btn btn-primary" id="btnFlagQ" data-dismiss="modal" onclick="flagQuestion(<?php echo $questionId; ?>);">Yes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -361,15 +361,15 @@
 
                     function flagQuestion(qId) {
                         // Add validations
-                        $jsonObj = {'questionId': "<?php echo $questionId; ?>", 'username': "<?php echo $name; ?>"};
+                        $jsonObj = {'questionId': qId, 'username': "<?php echo $name; ?>"};
                         $.post("/MobileHub/index.php/api/question/flag/", $jsonObj, function(content) {
 
                             // Deserialise the JSON
                             content = jQuery.parseJSON(content);
-                            $('#flagModal').modal('hide');
+                            //$('#flagModal').modal('hide');
                             if (content.message === "Success") {
                                 $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                                $('#errModalBody').modal('show');
+                                $('#errorModal').modal('show');
                             } else {
                                 $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
                                 $('#errorModal').modal('show');

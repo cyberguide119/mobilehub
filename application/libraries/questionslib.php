@@ -97,15 +97,23 @@ class questionslib {
         $question->load($qId);
         $user = new User();
 
-        $userId = $user->getUserIdByName($username);
+        $userToDeduct = new User();
 
-        $question->flagCount += 1;
-        $question->updateQuestion($qId, $question);
+
+        $userId = $user->getUserIdByName($username);
+        $userToDeductId = $question->askerUserId;
+        $userToDeduct->load($userToDeductId);
+        $userToDeduct->loyality = $userToDeduct->loyality - 1;
+        $userToDeduct->updateUserDetails($userToDeductId, $userToDeduct);
 
         $flag = new QuestionsFlags();
         if ($flag->hasUserFlaggedQuestId($qId, $userId)) {
             return false;
         } else {
+
+            $question->flagCount += 1;
+            $question->updateQuestion($qId, $question);
+
             $flag->questionId = $qId;
             $flag->userId = $userId;
             $flag->save();
@@ -122,6 +130,7 @@ class questionslib {
         if ($user->username === $username || $this->ci->permlib->isAdmin($username)) {
             $this->ci->db->delete('questions_tags', array('questionId' => $qId));
             $this->ci->db->delete('question_votes', array('questId' => $qId));
+            $this->ci->db->delete('question_flags', array('questionId' => $qId));
 
             $ans = $this->ci->Answer->getAnswersForQuestionId($qId);
             if ($ans != null || count($ans) > 0) {
@@ -452,7 +461,7 @@ class questionslib {
         }
         return $questions;
     }
-    
+
     public function getAllAdminFlaggedQuestions() {
         $questions = array();
         $questionsList = $this->ci->Question->getAllAdminFlaggedQuestions();

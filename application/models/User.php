@@ -24,12 +24,14 @@ class User extends MY_Model {
     public $fullName;
     public $email;
     public $profileImagePath;
-    public $userTypeId;
+    public $roleId;
     public $joinedDate;
     public $website;
     public $linkedInUrl;
     public $sOUrl;
     public $isActive;
+    public $loyality;
+    public $reputation;
 
     function __construct() {
         parent::__construct();
@@ -276,7 +278,6 @@ class User extends MY_Model {
      * @param type $details
      */
     function updateUserDetails($userId, $details) {
-        //$data = array('reputation' => $reputation);
         $this->db->where('userId', $userId);
         $this->db->update('user', $details);
     }
