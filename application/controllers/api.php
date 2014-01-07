@@ -798,7 +798,7 @@ class Api extends CI_Controller {
     /**
      * All methods related to voting
      */
-    
+
     /**
      * Vote up logic
      * @param type $arg
@@ -936,7 +936,7 @@ class Api extends CI_Controller {
     /**
      * All methods related to Answers
      */
-    
+
     /**
      * Post Answer Logic
      */
@@ -1063,7 +1063,7 @@ class Api extends CI_Controller {
     /**
      * All methods related to user profiles
      */
-    
+
     /**
      * Get a user's details via username
      * @param type $username
@@ -1174,7 +1174,7 @@ class Api extends CI_Controller {
     /**
      * All methods related to admin dashboard
      */
-    
+
     /**
      * Get Admin dashboard details
      * @param type $option
@@ -1198,6 +1198,7 @@ class Api extends CI_Controller {
     /*
      * Get admin panel questions list
      */
+
     private function getAdminQuestions() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1215,6 +1216,7 @@ class Api extends CI_Controller {
     /*
      * Get admin panel flagged questions list
      */
+
     private function getAdminFlaggedQuestions() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1232,6 +1234,7 @@ class Api extends CI_Controller {
     /*
      * Get admin panel answers list
      */
+
     private function getAdminAnswers() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1249,6 +1252,7 @@ class Api extends CI_Controller {
     /*
      * Get admin panel users list
      */
+
     private function getAdminUsers() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1266,6 +1270,7 @@ class Api extends CI_Controller {
     /*
      * Get admin panel delete user list
      */
+
     private function getAdminDeleteUsers() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1290,6 +1295,7 @@ class Api extends CI_Controller {
     /*
      * Get admin panel tutors list
      */
+
     private function getAdminTutorRequests() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1307,6 +1313,7 @@ class Api extends CI_Controller {
     /*
      * Get admin panel delete profile requests list
      */
+
     private function getAdminDeleteRequests() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1388,6 +1395,7 @@ class Api extends CI_Controller {
     /*
      * Get admin panel students to promote
      */
+
     private function getAdminStudentsPromote() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');

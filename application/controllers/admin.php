@@ -22,6 +22,9 @@ class Admin extends MY_Controller {
         $this->load->model(array('Question', 'User', 'QuestionsTags', 'Tag'));
     }
 
+    /**
+     * Check permissions when first loaded and load the admin view if, OK
+     */
     public function index() {
         $res = $this->checkPermissions();
         if ($res) {
@@ -29,6 +32,9 @@ class Admin extends MY_Controller {
         }
     }
 
+    /**
+     * Load admin questions page
+     */
     public function questions() {
         $res = $this->checkPermissions();
         if ($res) {
@@ -36,6 +42,9 @@ class Admin extends MY_Controller {
         }
     }
 
+    /**
+     * Load admin answers page
+     */
     public function answers() {
         $res = $this->checkPermissions();
         if ($res) {
@@ -43,6 +52,9 @@ class Admin extends MY_Controller {
         }
     }
 
+    /**
+     * Load admin users page
+     */
     public function users() {
         $res = $this->checkPermissions();
         if ($res) {
@@ -50,6 +62,9 @@ class Admin extends MY_Controller {
         }
     }
 
+    /**
+     * Load admin requests page
+     */
     public function requests() {
         $res = $this->checkPermissions();
         if ($res) {
@@ -57,6 +72,10 @@ class Admin extends MY_Controller {
         }
     }
 
+    /**
+     * Check for permissions
+     * @return boolean
+     */
     private function checkPermissions() {
         $profile = $this->input->get('user');
 
@@ -67,6 +86,13 @@ class Admin extends MY_Controller {
         return $profile;
     }
 
+    /**
+     * Generic method to load a view
+     * @param type $profile
+     * @param type $page
+     * @param type $url
+     * @return type
+     */
     private function loadPage($profile, $page, $url) {
         $data['user'] = $profile;
 
@@ -83,6 +109,11 @@ class Admin extends MY_Controller {
         }
     }
 
+    /**
+     * Load the admin panel header
+     * @param array $data
+     * @param type $url
+     */
     private function loadAdminHeader($data, $url) {
         $activeLink = array(
             "index" => "#",
@@ -96,6 +127,9 @@ class Admin extends MY_Controller {
         $this->load->view('admin/AdminHeaderView', $data);
     }
 
+    /**
+     * Load the admin panel footer
+     */
     private function loadAdminFooter() {
         $this->load->view('admin/AdminFooterView');
     }
