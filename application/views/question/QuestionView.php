@@ -45,7 +45,7 @@
         <div class="col-md-11">
             <?php
             if ($name) {
-                echo '<a href ="" data-toggle="modal" data-target="#flagModal">Flag Question</a>';
+                echo '<a href ="" data-toggle="modal" data-target="#flagModal" style="border: solid 1px #c4c4c4;padding: 2px;"><span class="glyphicon glyphicon-flag"></span>Flag Question</a>';
             }
             ?>
             <?php
