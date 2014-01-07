@@ -16,15 +16,19 @@ class Logins extends CI_Model {
         parent::__construct();
         $this->load->database();
     }
-
-    /*
-     * 
+    
+    /**
+     * Get all the logins
+     * @return type
      */
-
     function getAllLogins() {
         return $this->db->count_all('logins');
     }
 
+    /**
+     * Get the admin panel login chart details
+     * @return type
+     */
     function getLoginChartDetails() {
         // Get most recent 7 days
         $time = time();

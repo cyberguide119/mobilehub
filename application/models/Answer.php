@@ -31,7 +31,7 @@ class Answer extends MY_Model {
     }
 
     /**
-     * 
+     * Get answer for the given question id
      * @param type $qId
      * @return $res|null
      */
@@ -46,7 +46,7 @@ class Answer extends MY_Model {
     }
 
     /**
-     * 
+     * Get the user who answered
      * @param type $ansId
      * @return boolean
      */
@@ -61,7 +61,7 @@ class Answer extends MY_Model {
     }
 
     /**
-     * 
+     * Get all votes for the ansewr by Id
      * @param type $ansId
      * @return type
      */
@@ -74,7 +74,7 @@ class Answer extends MY_Model {
     }
 
     /**
-     * 
+     * Update answer vote
      * @param type $qId
      * @param type $isUpVote
      */
@@ -94,7 +94,7 @@ class Answer extends MY_Model {
     }
 
     /**
-     * 
+     * Get all the answers for user Id
      * @param type $userId
      * @return type
      */
@@ -105,7 +105,7 @@ class Answer extends MY_Model {
     }
 
     /**
-     * 
+     * Get the question id for answer
      * @param type $ansId
      * @return type
      */
@@ -116,7 +116,7 @@ class Answer extends MY_Model {
     }
 
     /**
-     * 
+     * Update the answer
      * @param type $ansId
      * @param type $data
      * @param type $qId
@@ -126,13 +126,18 @@ class Answer extends MY_Model {
         $this->db->update('answers', $data);
     }
     
+    /**
+     * Promote the answer
+     * @param type $quesId
+     * @param type $ansId
+     */
     function promoteAnswer($quesId, $ansId) {
         $this->db->where(array('answerId' => $ansId, 'questionId' => $quesId));
         $this->db->update('answers', array("isBestAnswer" => true));
     }
 
     /**
-     * 
+     * Get the count of all answers
      * @return type
      */
     function getAllAnswerCount() {
@@ -140,7 +145,7 @@ class Answer extends MY_Model {
     }
 
     /**
-     * 
+     * Get all the answers
      * @return type
      */
     function getAllAnswers() {
@@ -149,13 +154,17 @@ class Answer extends MY_Model {
     }
 
     /**
-     * 
+     * Delete the answer
      * @param type $ansId
      */
     function deleteAnswer($ansId) {
         $this->db->delete('answers', array('answerId' => $ansId));
     }
 
+    /**
+     * Get answer chart detail (Admin)
+     * @return type
+     */
     function getAnsChartDetails() {
         // Get most recent 7 days
         $time = time();

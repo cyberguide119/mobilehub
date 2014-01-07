@@ -18,7 +18,7 @@ class AnswerVotes extends CI_Model {
     }
 
     /**
-     * 
+     * Check whether the user has voted
      * @param type $userId
      * @param type $ansId
      * @param type $isUpVote
@@ -36,7 +36,7 @@ class AnswerVotes extends CI_Model {
     }
     
     /**
-     * 
+     * Add a vote to an answer
      * @param type $votedUserId
      * @param type $ansId
      * @param type $isUpVote

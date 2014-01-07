@@ -45,7 +45,7 @@ class Question extends MY_Model {
     }
 
     /**
-     * 
+     * Basic search done via GET
      * @param type $query
      * @return array
      */
@@ -56,6 +56,11 @@ class Question extends MY_Model {
         return $res->result();
     }
 
+    /**
+     * Get the count of the basic search query
+     * @param type $query
+     * @return type
+     */
     function basicSearchCount($query) {
         $this->db->like(array('questionTitle' => $query));
         $this->db->order_by("netVotes", "desc");
@@ -64,7 +69,7 @@ class Question extends MY_Model {
     }
 
     /**
-     * 
+     * Advanced search via POST data
      * @param type $advWords
      * @param type $advPhrase
      * @return array
@@ -119,6 +124,14 @@ class Question extends MY_Model {
         return $res->result();
     }
 
+    /**
+     * Search res count of the adv search
+     * @param type $advWords
+     * @param type $advPhrase
+     * @param type $category
+     * @param type $advTags
+     * @return type
+     */
     function advancedSearchCount($advWords, $advPhrase, $category, $advTags) {
         if (count($advTags) > 0) {
             if ($advPhrase !== '') {
@@ -172,7 +185,7 @@ class Question extends MY_Model {
     }
 
     /**
-     * 
+     * Get the question with the given title
      * @param type $qTitle
      * @return type
      */
@@ -183,7 +196,7 @@ class Question extends MY_Model {
     }
 
     /**
-     * 
+     * Get the recent questions
      * @return type
      */
     function getRecentQuestions($offset) {
@@ -193,6 +206,12 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * Get the recent  questions with the tag given
+     * @param type $offset
+     * @param type $tagname
+     * @return type
+     */
     function getRecentQuestionsWithTag($offset, $tagname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("questions.askedOn", "desc");
@@ -203,6 +222,12 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * Get recent questions with the given category
+     * @param type $offset
+     * @param type $catname
+     * @return type
+     */
     function getRecentQuestionsWithCat($offset, $catname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
         $this->db->order_by("questions.askedOn", "desc");
@@ -212,6 +237,11 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * Get the recentn questions category count
+     * @param type $catname
+     * @return type
+     */
     function getRecentQuestionsWithCatCount($catname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
         $this->db->order_by("questions.askedOn", "desc");
@@ -221,6 +251,11 @@ class Question extends MY_Model {
         return ceil($query->num_rows() / 10);
     }
 
+    /**
+     * Get the tags count of the recent questions
+     * @param type $tagname
+     * @return type
+     */
     function getRecentQuestionsWithTagCount($tagname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("questions.askedOn", "desc");
@@ -231,6 +266,10 @@ class Question extends MY_Model {
         return ceil($query->num_rows() / 10);
     }
 
+    /**
+     * Get the count of the recent questions
+     * @return type
+     */
     function getRecentQuestionsCount() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("askedOn", "desc");
@@ -239,7 +278,7 @@ class Question extends MY_Model {
     }
 
     /**
-     * 
+     * Get the populary questions
      * @return type
      */
     function getPopularQuestions($offset) {
@@ -249,6 +288,10 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * Get the popular questions all count
+     * @return type
+     */
     function getPopularQuestionsCount() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("netVotes", "desc");
@@ -256,6 +299,12 @@ class Question extends MY_Model {
         return ceil($query->num_rows() / 10);
     }
 
+    /**
+     * Get popuar questions with the tag
+     * @param type $offset
+     * @param type $tagname
+     * @return type
+     */
     function getPopularQuestionsWithTag($offset, $tagname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("questions.netVotes", "desc");
@@ -266,6 +315,12 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * Get popuar questions with the cat
+     * @param type $offset
+     * @param type $catname
+     * @return type
+     */
     function getPopularQuestionsWithCat($offset, $catname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
         $this->db->order_by("questions.netVotes", "desc");
@@ -275,6 +330,11 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * Get popuar questions with the cat count
+     * @param type $catname
+     * @return type
+     */
     function getPopularQuestionsWithCatCount($catname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
         $this->db->order_by("questions.netVotes", "desc");
@@ -284,6 +344,11 @@ class Question extends MY_Model {
         return ceil($query->num_rows() / 10);
     }
 
+    /**
+     * Get popular questions with the count of tags
+     * @param type $tagname
+     * @return type
+     */
     function getPopularQuestionsWithTagCount($tagname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->order_by("questions.netVotes", "desc");
@@ -295,7 +360,7 @@ class Question extends MY_Model {
     }
 
     /**
-     * 
+     * Get the unswered questions
      * @return type
      */
     function getUnansweredQuestions($offset) {
@@ -305,6 +370,12 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     *  Get the unswered questions with tag
+     * @param type $offset
+     * @param type $tagname
+     * @return type
+     */
     function getUnansweredQuestionsWithTag($offset, $tagname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where("questions.answerCount", 0);

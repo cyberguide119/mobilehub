@@ -19,7 +19,7 @@ class Permissions extends MY_Model {
     public $permKey;
 
     /**
-     * 
+     * Get permission id by the key
      * @param type $key
      * @return type
      */
