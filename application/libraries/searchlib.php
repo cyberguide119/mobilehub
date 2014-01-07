@@ -45,25 +45,29 @@ class searchlib {
         }
         return $questions;
     }
-    
-    public function getSearchPageCount($query){
+
+    public function getSearchPageCount($query) {
         return $this->ci->Question->basicSearchCount($query);
     }
 
-    public function advSearch($advWords, $advPhrase, $advTags, $advCategory) {
+    public function getAdvSearchPageCount($advWords, $advPhrase, $advTags, $advCategory) {
+        return $this->ci->Question->advancedSearchCount($this->splitWords($advWords), $advPhrase, $advCategory);
+    }
+
+    public function advSearch($advWords, $advPhrase, $advTags, $advCategory, $offset) {
         $questions = array();
-        $questionsArr = $this->ci->Question->advancedSearch($this->splitWords($advWords), $advPhrase);
+        $questionsArr = $this->ci->Question->advancedSearch($this->splitWords($advWords), $advPhrase, $advCategory, $offset);
         $tagsArr = $this->splitTags($advTags);
-        
-        if($advTags !== ''){
+
+        if ($advTags !== '') {
             $res = $this->filterQuestionsByTag($questionsArr, $tagsArr);
-        }else{
+        } else {
             $res = $questionsArr;
         }
-        
-        if($advCategory != 0){
-            $res = $this->filterQuestionsByCategory($res, $advCategory);
-        }
+
+//        if ($advCategory != 0) {
+//            $res = $this->filterQuestionsByCategory($res, $advCategory);
+//        }
 
         foreach ($res as $question) {
             $tagsArr = $this->getTagsArrayForQuestionId($question->questionId);
@@ -93,11 +97,11 @@ class searchlib {
         }
         return $tagsArr;
     }
-    
-    private function filterQuestionsByCategory($questionsArr, $categoryId){
+
+    private function filterQuestionsByCategory($questionsArr, $categoryId) {
         $newArr = array();
-        foreach ($questionsArr as $question){
-            if($question->categoryId === $categoryId){
+        foreach ($questionsArr as $question) {
+            if ($question->categoryId === $categoryId) {
                 $newArr[] = $question;
             }
         }
@@ -119,7 +123,7 @@ class searchlib {
     }
 
     private function splitWords($wordsStr) {
-        if($wordsStr === '')
+        if ($wordsStr === '')
             return $wordsStr;
         $splittedWords = explode(" ", $wordsStr);
         for ($i = 0; $i < count($splittedWords); $i++) {
@@ -136,6 +140,7 @@ class searchlib {
         }
         return $splittedTags;
     }
+
 }
 
 ?>

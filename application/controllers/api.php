@@ -373,7 +373,7 @@ class Api extends CI_Controller {
             if (count($results) > 0) {
                 $response['message'] = "Success";
                 $response['results'] = $results;
-                $response['totalCount'] = $this->ci->searchlib->getSearchPageCount($query);
+                $response['totalCount'] = $this->ci->searchlib->getSearchPageCount($query, "basic");
             } else {
                 $response['message'] = "Error";
                 $response['type'] = "Sorry, your query returned no matches!";
@@ -387,15 +387,17 @@ class Api extends CI_Controller {
         $advPhrase = $this->input->post('Phrase');
         $advTags = $this->input->post('Tags');
         $advCategory = $this->input->post('Category');
+        $offset = $this->input->post('Offset');
 
         if (strlen($advPhrase) < 3 && ($advWords === '' && $advTags === '' && $advCategory === '0')) {
             $response['message'] = "Error";
             $response['type'] = "Please enter more than 3 character to search";
         } else {
-            $results = $this->searchlib->advSearch($advWords, $advPhrase, $advTags, $advCategory);
+            $results = $this->searchlib->advSearch($advWords, $advPhrase, $advTags, $advCategory, $offset);
             if (count($results) > 0) {
                 $response['message'] = "Success";
                 $response['results'] = $results;
+                $response['totalCount'] = $this->ci->searchlib->getAdvSearchPageCount($advWords, $advPhrase, $advTags, $advCategory);
             } else {
                 $response['message'] = "Error";
                 $response['type'] = "Sorry, your query returned no matches!";

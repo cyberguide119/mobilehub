@@ -54,7 +54,7 @@ class Question extends MY_Model {
         $res = $this->db->get('questions', 10, $offset);
         return $res->result();
     }
-    
+
     function basicSearchCount($query) {
         $this->db->like(array('questionTitle' => $query));
         $this->db->order_by("netVotes", "desc");
@@ -68,20 +68,44 @@ class Question extends MY_Model {
      * @param type $advPhrase
      * @return array
      */
-    function advancedSearch($advWords, $advPhrase) {
+    function advancedSearch($advWords, $advPhrase, $category, $offset) {
         if ($advPhrase !== '') {
             $this->db->like(array('questionTitle' => $advPhrase));
         }
 
-        if (!($advWords === '')) {
+        if ($advWords !== '') {
             foreach ($advWords as $term) {
-                $this->db->or_like('questionTitle', $term);
-                $this->db->or_like('questionDescription', $term);
+                $this->db->like('questionTitle', $term);
             }
         }
+
+        if (intval($category) !== 0) {
+            $this->db->where("categoryId", intval(($category)));
+        }
+
+        $this->db->order_by("netVotes", "desc");
+        $res = $this->db->get('questions', 10, $offset);
+        return $res->result();
+    }
+
+    function advancedSearchCount($advWords, $advPhrase, $category) {
+        if ($advPhrase !== '') {
+            $this->db->like(array('questionTitle' => $advPhrase));
+        }
+
+        if ($advWords !== '') {
+            foreach ($advWords as $term) {
+                $this->db->like('questionTitle', $term);
+            }
+        }
+
+        if (intval($category) !== 0) {
+            $this->db->where("categoryId", intval(($category)));
+        }
+
         $this->db->order_by("netVotes", "desc");
         $res = $this->db->get('questions');
-        return $res->result();
+        return ceil($res->num_rows() / 10);
     }
 
     /**
@@ -296,7 +320,7 @@ class Question extends MY_Model {
         $questions = $this->db->get("questions");
         return $questions->result();
     }
-    
+
     function getAllAdminFlaggedQuestions() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where("flagCount >", 3);
@@ -466,8 +490,8 @@ class Question extends MY_Model {
 
         return $query->result();
     }
-    
-    function flagQuestion($qId){
+
+    function flagQuestion($qId) {
         
     }
 

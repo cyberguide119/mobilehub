@@ -9,18 +9,18 @@
         return str;
     }
 
-    function advSearch() {
+    function advSearch(offset, page) {
         $advWords = $("#advWords").val();
         $advPhrase = $("#advPhrase").val();
         $advTags = sanitizeTags($('.bootstrap-tagsinput').val());
         $advCategory = (($("#advCategory")[0]).selectedIndex);
 
-        $jsonObj = {"Words": $advWords, "Phrase": $advPhrase, "Tags": $advTags, "Category": $advCategory};
+        $jsonObj = {"Words": $advWords, "Phrase": $advPhrase, "Tags": $advTags, "Category": $advCategory, "Offset": offset};
 
         $.post("/MobileHub/index.php/api/search/questions/advanced", $jsonObj, function(content) {
             // Deserialise the JSON
             content = jQuery.parseJSON(content);
-            loadUI(content);
+            loadUI(content, "adv", page);
         }).fail(function() {
             $("#qError").addClass('alert alert-danger');
             $("#qError").text('Sorry, something went wrong when posting the question! Please try again');
@@ -75,7 +75,7 @@
                             </select>
                         </div>
                         <div class="col-xs-3">
-                            <button class="btn btn-success btn-mg" id="btnSearch" onclick="advSearch();"><span class="glyphicon glyphicon-search">
+                            <button class="btn btn-success btn-mg" id="btnSearch" onclick="advSearch(0, 1);"><span class="glyphicon glyphicon-search">
                                 </span>Search</button>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
         $("#search-term").val("<?php echo $results ?>");
         $.get("/MobileHub/index.php/api/search/questions?query=" + "<?php echo $results ?>", function(resultsData) {
             resultsData = jQuery.parseJSON(resultsData);
-            loadUI(resultsData);
+            loadUI(resultsData, "basic", 1);
             return true;
         });
     });
@@ -125,7 +125,7 @@
         });
     });
 
-    function loadUI(resultsData) {
+    function loadUI(resultsData, option, page) {
         if (resultsData.message === "Error") {
             $("ul.list-group").html("<h5><b>0</b> result(s) found</h5><p>" + resultsData.type + "</p>");
         } else {
@@ -151,30 +151,34 @@
                         + "<span class='ans-label'>answers</span></div></div></div></li>";
                 $("ul.list-group")
                         .append(listItem);
+                $('#page-selection').unbind();
+                setupPagination(resultsData.totalCount, option, page);
             }
-            $('#page-selection').unbind();
-            setupPagination(resultsData.totalCount, 1);
         }
     }
 
-    function setupPagination(totalCount, currentPage) {
+    function setupPagination(totalCount, option, currentPage) {
         $('#page-selection').bootpag({
             total: totalCount,
             page: currentPage,
             maxVisible: 10
         }).on('page', function(event, num) {
-            changePage(((num * 10) - 10));
+            changePage(option, ((num * 10) - 10));
             return;
         });
     }
 
-    function changePage($offset) {
+    function changePage(option, $offset, page) {
 
-        $.get("/MobileHub/index.php/api/search/questions?query=" + "<?php echo $results ?>" + "&page=" + $offset, function(resultsData) {
-            resultsData = jQuery.parseJSON(resultsData);
-            loadUI(resultsData);
-            return true;
-        });
+        if (option === 'basic') {
+            $.get("/MobileHub/index.php/api/search/questions?query=" + "<?php echo $results ?>" + "&page=" + $offset, function(resultsData) {
+                resultsData = jQuery.parseJSON(resultsData);
+                loadUI(resultsData, option, page);
+                return true;
+            });
+        } else {
+            advSearch($offset, page);
+        }
     }
 
     function refineDescription(desc) {
@@ -186,7 +190,7 @@
 
     $('.form-control').keypress(function(e) {
         if (e.which === 13) {
-            advSearch();
+            advSearch(0);
         }
     });
 </script>

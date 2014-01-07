@@ -42,8 +42,6 @@
                 }
 
                 function changePage(option, $offset) {
-                    console.log(option);
-
                     $.get("/MobileHub/index.php/api/question/" + option + "/" + $offset, function(resultsData) {
                         resultsData = jQuery.parseJSON(resultsData);
                         loadUI(resultsData);
