@@ -386,6 +386,12 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     *  Get the unswered questions with category
+     * @param type $offset
+     * @param type $catname
+     * @return type
+     */
     function getUnansweredQuestionsWithCat($offset, $catname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
         $this->db->order_by("questions.answerCount", 0);
@@ -395,6 +401,11 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     *  Get the unswered questions with cat count
+     * @param type $catname
+     * @return type
+     */
     function getUnansweredQuestionsWithCatCount($catname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes, questions.categoryId");
         $this->db->order_by("questions.answerCount", 0);
@@ -404,6 +415,11 @@ class Question extends MY_Model {
         return ceil($query->num_rows() / 10);
     }
 
+    /**
+     *  Get the unswered questions with tags count
+     * @param type $tagname
+     * @return type
+     */
     function getUnansweredQuestionsWithTagCount($tagname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where("questions.answerCount", 0);
@@ -414,6 +430,10 @@ class Question extends MY_Model {
         return ceil($query->num_rows() / 10);
     }
 
+    /**
+     * Get unanswered questions count
+     * @return type
+     */
     function getUnansweredQuestionsCount() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where("answerCount", 0);
@@ -422,7 +442,7 @@ class Question extends MY_Model {
     }
 
     /**
-     * 
+     * Get all the questions
      * @return type
      */
     function getAllQuestions($offset) {
@@ -431,6 +451,12 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * Get all the questions with the tag
+     * @param type $offset
+     * @param type $tagname
+     * @return type
+     */
     function getAllQuestionsWithTag($offset, $tagname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where('tags.tagName', $tagname);
@@ -440,6 +466,11 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * Get all the questions with the tag count
+     * @param type $tagname
+     * @return type
+     */
     function getAllQuestionsWithTagCount($tagname) {
         $this->db->select("questions.questionId, questions.questionTitle, questions.questionDescription, questions.askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where('tags.tagName', $tagname);
@@ -449,12 +480,20 @@ class Question extends MY_Model {
         return ceil($query->num_rows() / 10);
     }
 
+    /**
+     * Get all admin questions
+     * @return type
+     */
     function getAllAdminQuestions() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $questions = $this->db->get("questions");
         return $questions->result();
     }
 
+    /**
+     * Get all the flagged questions to the admin
+     * @return type
+     */
     function getAllAdminFlaggedQuestions() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $this->db->where("flagCount >", 3);
@@ -462,6 +501,10 @@ class Question extends MY_Model {
         return $questions->result();
     }
 
+    /**
+     * Get all the questions count
+     * @return type
+     */
     function getAllQuestionsCounts() {
         $this->db->select("questionId, questionTitle, questionDescription, askerUserId, answerCount, askedOn, netVotes,categoryId");
         $query = $this->db->get("questions");
@@ -586,6 +629,11 @@ class Question extends MY_Model {
         return $question;
     }
 
+    /**
+     * To check if the questions is edited
+     * @param type $qId
+     * @return type
+     */
     function isQuestionEdited($qId) {
         $this->db->select("isEdited");
         $this->db->where("questionId", $qId);

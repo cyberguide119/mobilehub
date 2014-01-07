@@ -25,6 +25,10 @@ class Request extends MY_Model {
         $this->load->database();
     }
 
+    /**
+     * Get al tutor requests
+     * @return type
+     */
     function getAllTutorRequests() {
         $this->db->select(array('requests.requestId', 'requests.userId', 'user.username', 'user.email', 'requests.rDate', 'request_types.rName'));
         $this->db->from('requests');
@@ -36,6 +40,10 @@ class Request extends MY_Model {
         return $query->result();
     }
     
+    /**
+     * Get all the delete profile reuqests
+     * @return type
+     */
     function getAllDeleteRequests() {
         $this->db->select(array('requests.requestId', 'requests.userId', 'user.username', 'user.email', 'requests.rDate', 'request_types.rName'));
         $this->db->from('requests');

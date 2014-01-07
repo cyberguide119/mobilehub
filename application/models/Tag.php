@@ -25,6 +25,11 @@ class Tag extends MY_Model {
         $this->load->database();
     }
 
+    /**
+     * Get the tags which needs to saved
+     * @param type $tagName
+     * @return type
+     */
     function getTagIdToSave($tagName) {
 
         $tagExists = $this->db->get_where('tags', array('tagName' => $tagName));
@@ -40,6 +45,11 @@ class Tag extends MY_Model {
         }
     }
 
+    /**
+     * Get ids of the tags
+     * @param type $strTags
+     * @return type
+     */
     function getTagIds($strTags) {
         $strTags = explode(",", $strTags);
         $this->db->select('tagId');

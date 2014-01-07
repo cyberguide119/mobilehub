@@ -20,6 +20,11 @@ class QuestionsTags extends CI_Model{
         $this->load->database();
     }
     
+    /**
+     * save the data
+     * @param type $questionId
+     * @param type $tagId
+     */
     function save($questionId, $tagId){
         $tagExists = $this->db->get_where('questions_tags', array('questionId' => $questionId, 'tagId' => $tagId));
         if ($tagExists->num_rows() === 0) {
@@ -27,6 +32,11 @@ class QuestionsTags extends CI_Model{
         }
     }
     
+    /**
+     * get tags Ids for the question
+     * @param type $questionId
+     * @return type
+     */
     function getTagIDsForQuestion($questionId)
     {
         $this->db->select('tagId');

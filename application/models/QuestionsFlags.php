@@ -24,6 +24,12 @@ class QuestionsFlags extends MY_Model {
         $this->load->database();
     }
 
+    /**
+     * Check whether a user has already flagegd
+     * @param type $qId
+     * @param type $userId
+     * @return type
+     */
     function hasUserFlaggedQuestId($qId, $userId) {
         //$this->db->select("isClosed");
         $this->db->where(array("questionId" => $qId, "userId" => $userId));

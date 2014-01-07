@@ -39,7 +39,7 @@ class User extends MY_Model {
     }
 
     /**
-     * 
+     * Register the student
      * @param type $name
      * @param type $username
      * @param type $pwd
@@ -72,7 +72,7 @@ class User extends MY_Model {
     }
 
     /**
-     * 
+     * Register the tutor
      * @param type $name
      * @param type $username
      * @param type $pwd
@@ -116,7 +116,7 @@ class User extends MY_Model {
     }
 
     /**
-     * 
+     * Generate the unique  salt
      * @return string
      */
     private function unique_salt() {
@@ -124,7 +124,7 @@ class User extends MY_Model {
     }
 
     /**
-     * 
+     * validate the PW
      * @param type $salt
      * @param type $pass
      * @param type $userPass

@@ -17,6 +17,13 @@ class QuestionVotes extends CI_Model {
         $this->load->database();
     }
 
+    /**
+     * Check whether the use has already voted
+     * @param type $userId
+     * @param type $qId
+     * @param type $isUpVote
+     * @return boolean
+     */
     function hasUserVoted($userId, $qId, $isUpVote) {
         //$this->db->select('votedUserId','questId');
         $this->db->where(array('votedUserId' => $userId, 'questId' => $qId, 'isUpVote' => $isUpVote));
@@ -28,6 +35,12 @@ class QuestionVotes extends CI_Model {
         return true;
     }
 
+    /**
+     * Add a vote to the question
+     * @param type $votedUserId
+     * @param type $qId
+     * @param type $isUpVote
+     */
     function addVote($votedUserId, $qId, $isUpVote) {
         $this->db->where(array('votedUserId' => $votedUserId, 'questId' => $qId));
         $result = $this->db->get('question_votes');
