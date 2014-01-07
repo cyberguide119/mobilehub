@@ -130,7 +130,7 @@ class questionslib {
         if ($user->username === $username || $this->ci->permlib->isAdmin($username)) {
             $this->ci->db->delete('questions_tags', array('questionId' => $qId));
             $this->ci->db->delete('question_votes', array('questId' => $qId));
-            $this->ci->db->delete('question_flags', array('questionId' => $qId));
+            $this->ci->db->delete('questions_flags', array('questionId' => $qId));
 
             $ans = $this->ci->Answer->getAnswersForQuestionId($qId);
             if ($ans != null || count($ans) > 0) {

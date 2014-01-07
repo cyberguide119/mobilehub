@@ -67,7 +67,7 @@
                                                 loadUI(resultsData.questionDetails);
                                                 return true;
                                             } else {
-                                                 window.location = "/MobileHub/index.php/custom403/";
+                                                window.location = "/MobileHub/index.php/custom403/";
                                                 return false;
                                             }
                                         }
