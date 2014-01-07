@@ -56,7 +56,7 @@ class Questions extends MY_Controller {
             $showAnswerBox = true;
             $data['isQuestionEdited'] = false;
         }
-        
+
         if ($username) {
             if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
 
@@ -107,7 +107,12 @@ class Questions extends MY_Controller {
     }
 
     public function edit() {
-        if ($this->authlib->is_loggedin()) {
+        if (($username = $this->authlib->is_loggedin())) {
+            if ($this->permlib->userHasPermission($username, "ANSWER_QUESTION")) {
+                $data['isTutor'] = true;
+            } else {
+                $data['isTutor'] = false;
+            }
             $this->loadHeaderData('editQuestion');
             $cat = new Category();
             $categories = $cat->get();
