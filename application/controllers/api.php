@@ -15,6 +15,9 @@ if (!defined('BASEPATH'))
  */
 class Api extends CI_Controller {
 
+    /**
+     * Constructor of the REST API
+     */
     function __construct() {
         parent::__construct();
         $this->load->library(array('authlib', 'searchlib', 'questionslib', 'voteslib', 'permlib', 'userlib', 'adminlib'));
@@ -23,6 +26,9 @@ class Api extends CI_Controller {
         $this->ci->load->model('user');
     }
 
+    /**
+     * Mapping the GET and POST requests
+     */
     public function _remap() {
         $request_method = $this->input->server('REQUEST_METHOD');
         switch (strtolower($request_method)) {
@@ -36,6 +42,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Mapping of the GET method from the REST Controller
+     */
     private function get() {
         $args = $this->uri->uri_to_assoc(1);
         switch (strtolower($args['api'])) {
@@ -66,6 +75,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Mapping the POST request from a client
+     */
     private function post() {
         $args = $this->uri->uri_to_assoc(1);
         switch ($args['api']) {
@@ -96,6 +108,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * All the REST methods related to authentication logic
+     * @param type $args
+     */
     private function loadAuthLogic($args) {
         if (array_key_exists('login', $args)) {
             $this->authenticate();
@@ -110,6 +126,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * All the REST methods related to search logic
+     * @param type $args
+     */
     private function loadSearchLogic($args) {
         if (in_array('advanced', $args)) {
             $this->advSearchQuestions();
@@ -118,6 +138,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * All the REST methods related to question logic
+     * @param type $args
+     */
     private function loadQuestionLogic($args) {
         if (array_key_exists('post', $args)) {
             $this->postQuestion();
@@ -142,6 +166,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * All the REST methods related to tags logic
+     * @param type $args
+     */
     private function loadTagsLogic($args) {
         if (array_key_exists('all', $args)) {
             $this->getAllTags();
@@ -156,6 +184,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * All the REST methods related to categories logic
+     * @param type $args
+     */
     private function loadCategoryLogic($args) {
         if (array_key_exists('recent', $args)) {
             $this->getRecentCat($args['recent'], str_replace("+", " ", $args['category']));
@@ -166,6 +198,11 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * All the REST methods related to voting logic
+     * @param type $args
+     * @return string
+     */
     private function loadVoteLogic($args) {
         if (array_key_exists('voteup', $args)) {
             $this->voteUp($args['voteup']);
@@ -177,6 +214,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * All the REST methods related to answers logic
+     * @param type $args
+     */
     private function loadAnswerLogic($args) {
         if (array_key_exists('post', $args)) {
             $this->postAnswer();
@@ -189,6 +230,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * All the REST methods related to user profile logic
+     * @param type $args
+     */
     private function loadProfileLogic($args) {
         if (array_key_exists('details', $args)) {
             $this->getUserDetails($args['details']);
@@ -203,6 +248,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * All the REST methods related to admin logic
+     * @param type $args
+     */
     private function loadAdminLogic($args) {
         if (array_key_exists('details', $args)) {
             $this->getDashboardDetails($args['details']);
@@ -246,6 +295,10 @@ class Api extends CI_Controller {
     /**
      * All the methods related to index.php/api/auth
      */
+
+    /**
+     * Authentication logic to authenticate a user when logging in
+     */
     private function authenticate() {
         $username = $this->input->post('uname');
         $password = $this->input->post('pword');
@@ -264,6 +317,9 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Create a user logic to create a new user
+     */
     private function createaccount() {
         $name = $this->input->post('name');
         $username = $this->input->post('uname');
@@ -305,6 +361,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Forgot password logic to reset a password of a user
+     * @return type
+     */
     private function forgotPass() {
         $email = $this->input->post('email');
         if (isset($email) && !empty($email)) {
@@ -340,6 +400,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Reset password logic to update the new password of the user
+     * @return type
+     */
     private function resetPass() {
         $email = $this->input->post('email');
         $hash = $this->input->post('hash');
@@ -360,6 +424,10 @@ class Api extends CI_Controller {
 
     /**
      * All the methods related to index.php/api/search
+     */
+
+    /**
+     * Basic search logic with pagination support
      */
     private function searchQuestions() {
         $offset = $this->input->get('page');
@@ -382,6 +450,9 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Advanced search logic with pagination support
+     */
     private function advSearchQuestions() {
         $advWords = $this->input->post('Words');
         $advPhrase = $this->input->post('Phrase');
@@ -411,6 +482,10 @@ class Api extends CI_Controller {
     /**
      * All the methods related to questions
      */
+
+    /**
+     * Question posting logic
+     */
     private function postQuestion() {
         $qTitle = $this->input->post('Title');
         $qDesc = $this->input->post('Description');
@@ -427,6 +502,10 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Get question details logic
+     * @param type $args
+     */
     private function getDetails($args) {
         $questionId = $args['details'];
         $questionDetails = $this->questionslib->getQuestionDetails($questionId);
@@ -441,6 +520,10 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Get recent questions logic
+     * @param type $offset
+     */
     private function getRecent($offset) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getRecentQuestions($offset);
@@ -449,6 +532,10 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Get popular questions logic
+     * @param type $offset
+     */
     private function getPopular($offset) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getPopularQuestions($offset);
@@ -457,6 +544,10 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Get unanswered questions logic
+     * @param type $offset
+     */
     private function getUnanswered($offset) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getUnansweredQuestions($offset);
@@ -465,6 +556,10 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Get all un ordered questions list
+     * @param type $offset
+     */
     private function getAll($offset) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getAllQuestions($offset);
@@ -473,6 +568,9 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Delete questions logic
+     */
     private function deleteQuestion() {
         $username = $this->input->post('username');
         $qId = $this->input->post('questionId');
@@ -498,6 +596,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Update a question logic
+     */
     private function updateQuestion() {
         $qTitle = $this->input->post('Title');
         $qDesc = $this->input->post('Description');
@@ -519,6 +620,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Close a question so that no further changes or answerscan be given
+     * @return type
+     */
     private function closeQuestion() {
         $qId = $this->input->post('questionId');
         $username = $this->input->post('username');
@@ -553,6 +658,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Flag question logic
+     */
     private function flagQuestion() {
         $qId = $this->input->post('questionId');
         $username = $this->input->post('username');
@@ -583,11 +691,20 @@ class Api extends CI_Controller {
     /**
      * All methods related to tags
      */
+
+    /**
+     * Get all the tags. Used for tag search and question asking screen.
+     */
     private function getAllTags() {
         $allTags = $this->Tag->get();
         echo json_encode($allTags);
     }
 
+    /**
+     * Get Tags for Recent questions
+     * @param type $offset
+     * @param type $tagname
+     */
     private function getRecentTags($offset, $tagname) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getRecentQuestionsWithTag($offset, $tagname);
@@ -596,6 +713,11 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Get tags for popular questions
+     * @param type $offset
+     * @param type $tagname
+     */
     private function getPopularTags($offset, $tagname) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getPopularQuestionsWithTag($offset, $tagname);
@@ -604,6 +726,11 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Get tags for unanswered questions
+     * @param type $offset
+     * @param type $tagname
+     */
     private function getUnansweredTags($offset, $tagname) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getUnansweredQuestionsWithTag($offset, $tagname);
@@ -612,6 +739,11 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Get tags for all questions
+     * @param type $offset
+     * @param type $tagname
+     */
     private function getAllTagsForTag($offset, $tagname) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getAllQuestionsWithTag($offset, $tagname);
@@ -623,6 +755,12 @@ class Api extends CI_Controller {
     /**
      * All methods related to categories
      */
+
+    /**
+     * Get Categories for recent tab
+     * @param type $offset
+     * @param type $catname
+     */
     private function getRecentCat($offset, $catname) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getRecentQuestionsWithCat($offset, $catname);
@@ -631,6 +769,11 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Get Categories for popular tab
+     * @param type $offset
+     * @param type $catname
+     */
     private function getPopularCat($offset, $tagname) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getPopularQuestionsWithCat($offset, $tagname);
@@ -639,6 +782,11 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Get Categories for unanswered tab
+     * @param type $offset
+     * @param type $catname
+     */
     private function getUnansweredCat($offset, $tagname) {
         ($offset === NULL) ? 0 : $offset;
         $questions = $this->ci->questionslib->getUnansweredQuestionsWithCat($offset, $tagname);
@@ -649,6 +797,12 @@ class Api extends CI_Controller {
 
     /**
      * All methods related to voting
+     */
+    
+    /**
+     * Vote up logic
+     * @param type $arg
+     * @return type
      */
     private function voteUp($arg) {
         if (strtolower($arg) === "question") {
@@ -712,6 +866,11 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Vote down logic
+     * @param type $arg
+     * @return type
+     */
     private function voteDown($arg) {
         if (strtolower($arg) === "question") {
             $qId = $this->input->post('questionId');
@@ -777,6 +936,10 @@ class Api extends CI_Controller {
     /**
      * All methods related to Answers
      */
+    
+    /**
+     * Post Answer Logic
+     */
     private function postAnswer() {
         $quesId = $this->input->post('questionId');
         $tutorName = $this->input->post('username');
@@ -807,6 +970,9 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Delete Answer Logic
+     */
     private function deleteAnswer() {
         $username = $this->input->post('username');
         $ansId = $this->input->post('answerId');
@@ -836,6 +1002,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Update Answer Logic
+     */
     private function updateAnswer() {
         $quesId = $this->input->post('questionId');
         $tutorName = $this->input->post('username');
@@ -862,6 +1031,9 @@ class Api extends CI_Controller {
         echo json_encode($response);
     }
 
+    /**
+     * Promote Answer Logic
+     */
     private function promoteAnswer() {
         $quesId = $this->input->post('questionId');
         $promotersName = $this->input->post('username');
@@ -891,6 +1063,11 @@ class Api extends CI_Controller {
     /**
      * All methods related to user profiles
      */
+    
+    /**
+     * Get a user's details via username
+     * @param type $username
+     */
     private function getUserDetails($username) {
         $res = $this->userlib->getUserDetails($username);
 
@@ -900,6 +1077,10 @@ class Api extends CI_Controller {
         echo json_encode($res);
     }
 
+    /**
+     * Get a user's full details via username
+     * @param type $username
+     */
     private function getFullUserDetails($username) {
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {
@@ -913,6 +1094,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Update a user's details via username
+     * @param type $username
+     */
     private function updateUserDetails($username) {
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {
@@ -927,6 +1112,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Delete a user profile
+     * @return type
+     */
     private function deleteUserProfile() {
         $name = $this->authlib->is_loggedin();
         $username = $this->input->post('username');
@@ -955,6 +1144,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Change a user's password via username
+     * @param type $username
+     */
     private function changeUserPassword($username) {
         $name = $this->authlib->is_loggedin();
         if ($name === $username) {
@@ -981,6 +1174,11 @@ class Api extends CI_Controller {
     /**
      * All methods related to admin dashboard
      */
+    
+    /**
+     * Get Admin dashboard details
+     * @param type $option
+     */
     private function getDashboardDetails($option) {
         if ($option === 'basic') {
             $name = $this->authlib->is_loggedin();
@@ -997,6 +1195,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /*
+     * Get admin panel questions list
+     */
     private function getAdminQuestions() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1011,6 +1212,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /*
+     * Get admin panel flagged questions list
+     */
     private function getAdminFlaggedQuestions() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1025,6 +1229,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /*
+     * Get admin panel answers list
+     */
     private function getAdminAnswers() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1039,6 +1246,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /*
+     * Get admin panel users list
+     */
     private function getAdminUsers() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1053,6 +1263,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /*
+     * Get admin panel delete user list
+     */
     private function getAdminDeleteUsers() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1074,6 +1287,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /*
+     * Get admin panel tutors list
+     */
     private function getAdminTutorRequests() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1088,6 +1304,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /*
+     * Get admin panel delete profile requests list
+     */
     private function getAdminDeleteRequests() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
@@ -1102,6 +1321,10 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Update tutors requests in the admin panel
+     * @param type $isAccept
+     */
     private function updateAdminTutorRequests($isAccept) {
         $name = $this->authlib->is_loggedin();
         $userId = $this->input->post('tutorId');
@@ -1134,6 +1357,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /**
+     * Get user profiles waiting to get deleted
+     */
     private function getAdminDeleteUserOnRequest() {
         $rId = $this->input->post('rId');
         $req = new Request();
@@ -1142,6 +1368,9 @@ class Api extends CI_Controller {
         $this->getAdminDeleteUsers();
     }
 
+    /**
+     * Get students list to admin panel
+     */
     private function getAdminStudents() {
         $name = $this->authlib->is_loggedin();
 
@@ -1156,6 +1385,9 @@ class Api extends CI_Controller {
         }
     }
 
+    /*
+     * Get admin panel students to promote
+     */
     private function getAdminStudentsPromote() {
         $name = $this->authlib->is_loggedin();
         //$username = $this->input->post('username');
