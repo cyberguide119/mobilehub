@@ -51,25 +51,17 @@ class searchlib {
     }
 
     public function getAdvSearchPageCount($advWords, $advPhrase, $advTags, $advCategory) {
+        $advTags = $this->ci->Tag->getTagIds($advTags);
+        //var_dump($advTags);
         return $this->ci->Question->advancedSearchCount($this->splitWords($advWords), $advPhrase, $advCategory, $advTags);
     }
 
     public function advSearch($advWords, $advPhrase, $advTags, $advCategory, $offset) {
         $questions = array();
-        $questionsArr = $this->ci->Question->advancedSearch($this->splitWords($advWords), $advPhrase, $advCategory, $offset);
-        $tagsArr = $this->splitTags($advTags);
-
-        if ($advTags !== '') {
-            $res = $this->filterQuestionsByTag($questionsArr, $tagsArr);
-        } else {
-            $res = $questionsArr;
-        }
-
-//        if ($advCategory != 0) {
-//            $res = $this->filterQuestionsByCategory($res, $advCategory);
-//        }
-
-        foreach ($res as $question) {
+        $advTags = $this->ci->Tag->getTagIds($advTags);
+        $questionsArr = $this->ci->Question->advancedSearch($this->splitWords($advWords), $advPhrase, $advCategory, $offset, $advTags);
+        
+        foreach ($questionsArr as $question) {
             $tagsArr = $this->getTagsArrayForQuestionId($question->questionId);
             $user = new User();
             $username = $user->getUserById($question->askerUserId);

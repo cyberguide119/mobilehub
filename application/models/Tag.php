@@ -26,20 +26,25 @@ class Tag extends MY_Model {
     }
 
     function getTagIdToSave($tagName) {
-        
+
         $tagExists = $this->db->get_where('tags', array('tagName' => $tagName));
         if ($tagExists->num_rows() > 0) {
             $tg = $tagExists->result();
             return $tg[0]->tagId;
-        }else{
+        } else {
             $data = array('tagName' => $tagName);
-            $this->db->insert('tags',$data);
+            $this->db->insert('tags', $data);
             $tagExists = $this->db->get_where('tags', array('tagName' => $tagName));
             $tg = $tagExists->result();
             return $tg[0]->tagId;
         }
     }
 
+    function getTagIds($strTags) {
+        $strTags = explode(",", $strTags);
+        $this->db->select('tagId');
+        $this->db->or_where_in('tagName', $strTags);
+        return $this->db->get('tags')->result_array();
+    }
 }
-
 ?>

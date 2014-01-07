@@ -41,6 +41,7 @@ class Question extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->load->database();
+        $this->load->model('Tag');
     }
 
     /**
@@ -68,43 +69,103 @@ class Question extends MY_Model {
      * @param type $advPhrase
      * @return array
      */
-    function advancedSearch($advWords, $advPhrase, $category, $offset) {
-        if ($advPhrase !== '') {
-            $this->db->like(array('questionTitle' => $advPhrase));
-        }
-
-        if ($advWords !== '') {
-            foreach ($advWords as $term) {
-                $this->db->like('questionTitle', $term);
+    function advancedSearch($advWords, $advPhrase, $category, $offset, $advTags) {
+        if (count($advTags) > 0) {
+            if ($advPhrase !== '') {
+                $this->db->like(array('questions.questionTitle' => $advPhrase));
             }
-        }
 
-        if (intval($category) !== 0) {
-            $this->db->where("categoryId", intval(($category)));
-        }
+            if ($advWords !== '') {
+                foreach ($advWords as $term) {
+                    $this->db->like('questions.questionTitle', $term);
+                }
+            }
 
-        $this->db->order_by("netVotes", "desc");
-        $res = $this->db->get('questions', 10, $offset);
+            if (intval($category) !== 0) {
+                $this->db->where("questions.categoryId", intval(($category)));
+            }
+
+            $arr = array();
+            foreach ($advTags as $tag) {
+                $arr[] = $tag['tagId'];
+            }
+            $this->db->from('questions');
+            $this->db->join('questions_tags', 'questions_tags.questionId = questions.questionId');
+            //$this->db->where_in('questions_tags.tagId', $arr);
+            $this->db->where_in('questions_tags.tagId', $arr);
+
+            $this->db->select(array("questions.questionId", "questions.questionTitle", "questions.questionDescription", "questions.askerUserId", "questions.answerCount", "questions.askedOn", "questions.upVotes", "questions.downVotes", "questions.netVotes", "questions.categoryId", "questions.bestAnswerId", "questions.isClosed", "questions.closeReason", "questions.closedDate", "questions.closedByUserId", "questions.isEdited", "questions.editedByUserId", "questions.editedDate", "questions.flagCount"));
+            $this->db->order_by("questions.netVotes", "desc");
+            $this->db->distinct();
+            $this->db->limit(10, $offset);
+            $res = $this->db->get();
+        } else {
+            if ($advPhrase !== '') {
+                $this->db->like(array('questionTitle' => $advPhrase));
+            }
+
+            if ($advWords !== '') {
+                foreach ($advWords as $term) {
+                    $this->db->like('questionTitle', $term);
+                }
+            }
+
+            if (intval($category) !== 0) {
+                $this->db->where("categoryId", intval(($category)));
+            }
+
+            $res = $this->db->get('questions', 10, $offset);
+        }
         return $res->result();
     }
 
-    function advancedSearchCount($advWords, $advPhrase, $category) {
-        if ($advPhrase !== '') {
-            $this->db->like(array('questionTitle' => $advPhrase));
-        }
-
-        if ($advWords !== '') {
-            foreach ($advWords as $term) {
-                $this->db->like('questionTitle', $term);
+    function advancedSearchCount($advWords, $advPhrase, $category, $advTags) {
+        if (count($advTags) > 0) {
+            if ($advPhrase !== '') {
+                $this->db->like(array('questions.questionTitle' => $advPhrase));
             }
+
+            if ($advWords !== '') {
+                foreach ($advWords as $term) {
+                    $this->db->like('questions.questionTitle', $term);
+                }
+            }
+
+            if (intval($category) !== 0) {
+                $this->db->where("questions.categoryId", intval(($category)));
+            }
+
+            $arr = array();
+            foreach ($advTags as $tag) {
+                $arr[] = $tag['tagId'];
+            }
+            $this->db->from('questions');
+            $this->db->join('questions_tags', 'questions_tags.questionId = questions.questionId');
+            //$this->db->where_in('questions_tags.tagId', $arr);
+            $this->db->where_in('questions_tags.tagId', $arr);
+
+            $this->db->select(array("questions.questionId", "questions.questionTitle", "questions.questionDescription", "questions.askerUserId", "questions.answerCount", "questions.askedOn", "questions.upVotes", "questions.downVotes", "questions.netVotes", "questions.categoryId", "questions.bestAnswerId", "questions.isClosed", "questions.closeReason", "questions.closedDate", "questions.closedByUserId", "questions.isEdited", "questions.editedByUserId", "questions.editedDate", "questions.flagCount"));
+            $this->db->order_by("questions.netVotes", "desc");
+            $this->db->distinct();
+            $res = $this->db->get();
+        } else {
+            if ($advPhrase !== '') {
+                $this->db->like(array('questionTitle' => $advPhrase));
+            }
+
+            if ($advWords !== '') {
+                foreach ($advWords as $term) {
+                    $this->db->like('questionTitle', $term);
+                }
+            }
+
+            if (intval($category) !== 0) {
+                $this->db->where("categoryId", intval(($category)));
+            }
+
+            $res = $this->db->get('questions');
         }
 
-        if (intval($category) !== 0) {
-            $this->db->where("categoryId", intval(($category)));
-        }
-
-        $this->db->order_by("netVotes", "desc");
-        $res = $this->db->get('questions');
         $counts["totalResCount"] = $res->num_rows();
         $counts["totalCount"] = ceil($res->num_rows() / 10);
         return $counts;
