@@ -129,7 +129,7 @@
         if (resultsData.message === "Error") {
             $("ul.list-group").html("<h5><b>0</b> result(s) found</h5><p>" + resultsData.type + "</p>");
         } else {
-            $("ul.list-group").html("<h5><b>" + resultsData.results.length + "</b> result(s) found</h5>");
+            $("ul.list-group").html("<h5><b>" + resultsData.totalResCount + "</b> result(s) found</h5>");
             for (var i = 0; i < resultsData.results.length; i++) {
                 var result = resultsData.results[i];
                 dateAsked = result.askedOn.split(' ');
@@ -190,7 +190,7 @@
 
     $('.form-control').keypress(function(e) {
         if (e.which === 13) {
-            advSearch(0);
+            advSearch(0, 1);
         }
     });
 </script>

@@ -105,7 +105,9 @@ class Question extends MY_Model {
 
         $this->db->order_by("netVotes", "desc");
         $res = $this->db->get('questions');
-        return ceil($res->num_rows() / 10);
+        $counts["totalResCount"] = $res->num_rows();
+        $counts["totalCount"] = ceil($res->num_rows() / 10);
+        return $counts;
     }
 
     /**

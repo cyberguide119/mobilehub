@@ -397,7 +397,9 @@ class Api extends CI_Controller {
             if (count($results) > 0) {
                 $response['message'] = "Success";
                 $response['results'] = $results;
-                $response['totalCount'] = $this->ci->searchlib->getAdvSearchPageCount($advWords, $advPhrase, $advTags, $advCategory);
+                $totCount = $this->ci->searchlib->getAdvSearchPageCount($advWords, $advPhrase, $advTags, $advCategory);
+                $response['totalCount'] = $totCount['totalCount'];
+                $response['totalResCount'] = $totCount['totalResCount'];
             } else {
                 $response['message'] = "Error";
                 $response['type'] = "Sorry, your query returned no matches!";

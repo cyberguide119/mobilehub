@@ -51,7 +51,7 @@ class searchlib {
     }
 
     public function getAdvSearchPageCount($advWords, $advPhrase, $advTags, $advCategory) {
-        return $this->ci->Question->advancedSearchCount($this->splitWords($advWords), $advPhrase, $advCategory);
+        return $this->ci->Question->advancedSearchCount($this->splitWords($advWords), $advPhrase, $advCategory, $advTags);
     }
 
     public function advSearch($advWords, $advPhrase, $advTags, $advCategory, $offset) {
@@ -96,16 +96,6 @@ class searchlib {
             $tagsArr[] = $tag->tagName;
         }
         return $tagsArr;
-    }
-
-    private function filterQuestionsByCategory($questionsArr, $categoryId) {
-        $newArr = array();
-        foreach ($questionsArr as $question) {
-            if ($question->categoryId === $categoryId) {
-                $newArr[] = $question;
-            }
-        }
-        return $newArr;
     }
 
     private function filterQuestionsByTag($questionsArr, $tagsArr) {
