@@ -22,7 +22,7 @@ http://zurb.com/playground/reveal-modal-plugin
  http://html.toserblog.net/nowknow/
 
 4. Add the mic control
-<input class="form-control" id="srch-term" name="q" placeholder="Search" type="text" x-webkit-speech="true">
+<input class="form-control" id="srch-term" name="q" placeholder="Search" type="text" x-webkit-speech="true"> - done
 
 5. Answer box
 http://bootsnipp.com/snippets/featured/message-box-with-counter

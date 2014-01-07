@@ -214,21 +214,22 @@
                         } else {
                             $serializedData['isTutor'] = false;
                         }
+                        if (checkform($registerForm)) {
+                            $.post("/MobileHub/index.php/api/auth/create", $serializedData, function(content) {
 
-                        console.log($serializedData);
-                        $.post("/MobileHub/index.php/api/auth/create", $serializedData, function(content) {
+                                // Deserialise the JSON
+                                content = jQuery.parseJSON(content);
+                                if (content.message === "Success") {
+                                    $('#succModalBody').html("<p><center>" + content.type + "</center></p>");
+                                    $('#succModal').modal('show');
+                                } else {
+                                    $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
+                                    $('#errorModal').modal('show');
+                                }
+                            }), "json";
+                            return true;
+                        }
 
-                            // Deserialise the JSON
-                            content = jQuery.parseJSON(content);
-                            if (content.message === "Success") {
-                                $('#succModalBody').html("<p><center>" + content.type + "</center></p>");
-                                $('#succModal').modal('show');
-                            } else {
-                                $('#errModalBody').html("<p><center>" + content.type + "</center></p>");
-                                $('#errorModal').modal('show');
-                            }
-                        }), "json";
-                        return true;
                     }
                 });
 
@@ -236,7 +237,9 @@
                     window.location = '/MobileHub/';
                 }
 
+                function sendToServer() {
 
+                }
 </script>
 
 <script type="text/javascript">
@@ -258,11 +261,11 @@
         var why = "";
 
         if (theform.txtInput.value === "") {
-            why += "- Security code should not be empty.\n";
+            why += "Security code should not be empty.\n";
         }
         if (theform.txtInput.value !== "") {
             if (ValidCaptcha(theform.txtInput.value) === false) {
-                why += "- Security code did not match.\n";
+                why += "Security code did not match.\n";
             }
         }
         if (why !== "") {
