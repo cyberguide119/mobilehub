@@ -1,4 +1,4 @@
-Angular Image Resizer Service
+MobileHub Question Answering System
 =====================
 
 What is MobileHub?
