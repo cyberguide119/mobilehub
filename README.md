@@ -1,3 +1,5 @@
+> Note: This project's a bit old now :) However, you are free to branch it out and commit PRs
+
 MobileHub Question Answering System
 =====================
 
