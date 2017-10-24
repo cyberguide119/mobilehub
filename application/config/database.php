@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'mobilehub';
-$db['default']['password'] = 'intel@123';
+$db['default']['password'] = '------------';
 $db['default']['database'] = 'mobilehub_db';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
