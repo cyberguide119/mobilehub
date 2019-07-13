@@ -12,11 +12,13 @@ if (!defined('BASEPATH'))
  *
  * @author DRX
  */
-class Homepage extends MY_Controller {
+class Homepage extends MY_Controller
+{
 
     //put your code here
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->library(array('authlib', 'searchlib', 'questionslib'));
 
@@ -27,7 +29,8 @@ class Homepage extends MY_Controller {
     /**
      * load the homepage
      */
-    public function index() {
+    public function index()
+    {
         $this->loadHeaderData('homepage');
         $this->loadQuestions();
         $this->loadFooterData();
@@ -36,19 +39,18 @@ class Homepage extends MY_Controller {
     /**
      * load the questions
      */
-    private function loadQuestions() {
+    private function loadQuestions()
+    {
         $this->load->view('home/HomepageView');
     }
 
     /**
      * load the about page
      */
-    public function about() {
+    public function about()
+    {
         $this->loadHeaderData('about');
         $this->load->view('home/AboutView');
         $this->loadFooterData();
     }
-
 }
-
-?>
